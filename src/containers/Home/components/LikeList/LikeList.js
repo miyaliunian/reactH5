@@ -20,12 +20,7 @@ export default class LikeList extends Component {
     componentDidMount() {
         if (this.props.pageCount < 3) {
             document.addEventListener("scroll", this.handleScroll)
-        }
-        //利用缓存层
-        if (this.props.pageCount === 0) {
             this.props.fetchData()
-        } else {
-            this.removeListener = true
         }
     }
 

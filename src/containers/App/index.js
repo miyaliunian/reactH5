@@ -4,8 +4,8 @@ import {bindActionCreators} from 'redux'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {connect} from "react-redux";
 import ErrorToast from '../../components/ErrorToast'
-import {actions as appActions, getError} from "../../redux/modules/app";
-import Home from '../Home'
+import {actions as appActions, getError} from "../../reduxs/modules/app";
+import Home from '../Home/HomeContainer'
 
 class App extends Component {
     render() {
@@ -26,7 +26,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
         error: getError(state)
     }

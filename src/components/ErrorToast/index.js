@@ -24,3 +24,4 @@ export default class ErrorToast extends Component {
         )
     }
 }
+

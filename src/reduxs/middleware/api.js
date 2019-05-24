@@ -7,10 +7,27 @@
  *
  */
 import {get} from "../../utils/httpUtil"
+/*
+
+store => next => action => {}
+等同于
+export default function (store) {
+        //一级操作
+    return function (next) {
+        //当前的操作
+        return function (action) {
+        //三级操作
+        }
+    }
+}
+*
+* */
+
 
 //经过中间件处理的action所具有的标识
 export const FETCH_DATA = 'FETCH DATA'
 
+//next 代表了 中间件当中 当前这个中间件的下一个中间件所提供的 dispatch 方法
 export default store => next => action => {
 
     //判断哪个action需要中间件处理
@@ -22,11 +39,10 @@ export default store => next => action => {
         return next(action)
     }
 
+    const {targetURL, schema, types} = callAPI
 
-    const {endPoint, schema, types} = callAPI
-
-    // endPoint:代表的是url
-    if (typeof endPoint !== 'string') {
+    // targetURL:代表的是url
+    if (typeof targetURL !== 'string') {
         throw new Error('endpoint必须为字符串类型的URL')
     }
 
@@ -56,7 +72,7 @@ export default store => next => action => {
     //有一个请求即将被发送
     next(actionWith({type: requestType}))
     //对数据进行请求
-    return fetchData(endPoint, schema).then(
+    return fetchData(targetURL, schema).then(
         response => next(actionWith({
             type: successType,
             response
@@ -69,8 +85,8 @@ export default store => next => action => {
 }
 
 //执行网络请求
-const fetchData = (endPoint, schema) => {
-    return get(endPoint).then(data => {
+const fetchData = (targetURL, schema) => {
+    return get(targetURL).then(data => {
         return normalizeData(data, schema)
     })
 }

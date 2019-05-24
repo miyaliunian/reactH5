@@ -35,6 +35,7 @@ function get(url) {
  * @returns {Promise<Response>}
  */
 function post(url, data) {
+    headers.append('Cookie',`token=${data}`)
     return fetch(url, {
         method: 'POST',
         headers: headers,

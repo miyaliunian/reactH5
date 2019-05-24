@@ -16,10 +16,10 @@
     containers:容器型组件:业务组件文件夹
         |
         |--------App 项目根组件
-                   |------- index.js 
+                   |------- HomeContainer.js 
                    |-------  style.css 根样式
         |--------Home 首页组件
-                   |------- index.js 
+                   |------- HomeContainer.js 
                    |-------  style.css 根样式   
                            
     images: 静态图片
@@ -54,5 +54,23 @@ redux模块采用的是ducks设计模式：
         }
         }
      }  
+````
+
+
+````$xslt
+
+不使用中间件
+    loadList: () => {
+        return (dispatch, getState) => {
+            dispatch(fetchListRequest())
+            return get(url.getProductList('likes', initialState.likes.pageCount, 10))
+                .then(data => {
+                    dispatch(fetchListSuccess(data))
+
+                }).catch(err => {
+                    dispatch(fetchListFailure(err))
+                })
+        }
+    }
 ````
 react-slick : 滚动组件
