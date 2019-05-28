@@ -94,7 +94,6 @@ class Tabs extends Component {
                                                 onClick={() => this.tabItemSel(item, 1)}>{item.title}</div>
                                         })}
                                     </div>
-                                    {/*<div className={'tabs__tab3__btn'}>确定</div>*/}
                                 </div>
                                 <div>
                                     <div>
@@ -149,6 +148,9 @@ class Tabs extends Component {
                     tabMaskIsSHow: !this.state.tab3focused,
                 })
                 return
+
+            default:
+                return
         }
     }
 
@@ -176,7 +178,7 @@ class Tabs extends Component {
             let lx = JSON.parse(JSON.stringify((this.state.sx_lx)))
             lx.title = item.title
             lx.data.map((dataItem) => {
-                if (dataItem.value == item.value) {
+                if (dataItem.value === item.value) {
                     dataItem.isSel = true
                 } else {
                     dataItem.isSel = false
@@ -189,7 +191,7 @@ class Tabs extends Component {
             let dj = JSON.parse(JSON.stringify((this.state.sx_dj)))
             dj.title = item.title
             dj.data.map((dataItem) => {
-                if (dataItem.value == item.value) {
+                if (dataItem.value === item.value) {
                     dataItem.isSel = true
                 } else {
                     dataItem.isSel = false
@@ -223,13 +225,10 @@ class Tabs extends Component {
         this.props.handelTabItemSel(param)
     }
 
-
     componentDidMount() {
         this.props.tabActions.loadCitys()
     }
-
 }
-
 
 const mapStateToProps = (state) => {
     return {
@@ -237,12 +236,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-
 const mapDispatchToProps = (dispatch) => {
     return {
         tabActions: bindActionCreators(tabActions, dispatch)
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tabs)

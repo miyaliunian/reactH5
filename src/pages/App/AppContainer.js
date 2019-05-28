@@ -8,8 +8,8 @@ import {actions as appActions, getError} from "../../reduxs/modules/app";
 import Home from '../Home/HomeContainer'
 import ProductDetailContainer from "../ProductDetail/ProductDetailContainer";
 import HospitalsContainer from "../Hospitals/HospitalsContainer";
-import LoginContainer from "../Login/LoginContainer"; //登录界面
-
+import LoginContainer from "../Login/LoginContainer";
+import LoadingMask from "../../components/Loading/LoadingMask";
 //登录
 
 
@@ -26,6 +26,7 @@ class AppContainer extends Component {
                         <Route path="/login" component={LoginContainer}/>
                         <Route path="/hospitals" component={HospitalsContainer}/>
                         <Route path="/detail/:id" component={ProductDetailContainer}/>
+                        <Route path="/loading" component={LoadingMask}/>
                         <Route path="/" component={Home}/>
 
                     </Switch>

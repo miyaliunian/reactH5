@@ -61,7 +61,6 @@ export default store => next => action => {
     const [requestType, successType, failureType] = types
     next(actionWith({type: requestType}))
 
-
     //对数据进行请求
     return fetchData(targetURL, action.param).then(
         response => next(actionWith({

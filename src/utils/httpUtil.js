@@ -35,7 +35,7 @@ function get(url) {
  * @returns {Promise<Response>}
  */
 function post(url, data = '') {
-    if (-1 != url.search('.do')) {
+    if (-1 !== url.search('.do')) {
         headers.append('Cookie', `token=${data}`)
     }
     return fetch(url, {

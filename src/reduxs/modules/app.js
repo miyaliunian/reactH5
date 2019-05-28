@@ -20,7 +20,7 @@ export const types = {
 //action creators
 export const actions = {
     clearError: () => ({
-        type: types.CLEAR_ERROR
+        type: types.CLEAR_ERROR,
     })
 }
 
@@ -34,6 +34,9 @@ const reducer = (state = initialState, action) => {
     } else if (error) {
         return {...state, error: error}
     }
+
+
+
     return state
 }
 

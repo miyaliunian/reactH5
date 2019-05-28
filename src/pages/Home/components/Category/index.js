@@ -66,7 +66,7 @@ export default class Category extends Component {
                                 {
                                     section.map((item, i) => {
                                         return (
-                                            <div key={i} className='category__section' onClick={()=>{alert(i)}}>
+                                            <div key={i} className='category__section' onClick={()=>this.props.category(i)}>
                                                 <img className="category__icon" src={item.src} alt={'没有图片'}/>
                                                 <span className='category__text'>{item.name}</span>
                                             </div>

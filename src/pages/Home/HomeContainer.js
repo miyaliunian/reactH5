@@ -18,31 +18,30 @@ import Footer from "../../components/Footer/Footer";
 import Activity from "./components/Activity/Activity";
 import './style.css'
 
-
-
-
-
-
 class Home extends Component {
 
 
     render() {
-        const {likes, discounts, pageCount} = this.props
         return (
             <div>
-                <HomeHeader/>
                 <Banner/>
-                <Category/>
+                <Category category={(index)=>{this.categoryClick(index)}}/>
                 <HeadLine/>
                 <Activity/>
-                <LikeList data={likes} pageCount={pageCount} fetchData={this.fetchMoreLikes}/>
-                <Footer/>
             </div>
         )
     }
 
     componentDidMount() {
         // this.props.homeActions.loadDiscounts()
+    }
+
+
+    categoryClick(index){
+        switch (index){
+            case 0 :
+                this.props.history.push('/hospitals')
+        }
     }
 
     fetchMoreLikes = () => {

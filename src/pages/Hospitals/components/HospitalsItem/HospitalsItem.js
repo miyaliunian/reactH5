@@ -11,11 +11,6 @@ import './style.css'
 
 export default class HospitalsItem extends Component {
 
-    constructor(props) {
-        super(props)
-
-    }
-
     componentDidMount() {
         this.scroll = new Bscroll(this.refs.hospitalsItem)
     }

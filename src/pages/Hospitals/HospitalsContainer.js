@@ -11,12 +11,14 @@ import HospitalsItem from "./components/HospitalsItem/HospitalsItem";
 import Tabs from "./components/Tabs/Tabs";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {actions as hospitalActions, getHospitalList} from '../../reduxs/modules/hospital'
+import {actions as hospitalActions, getHospitalList, getFetchingStatus} from '../../reduxs/modules/hospital'
 import './style.css'
+import LoadingMask from "../../components/Loading/LoadingMask";
 
 class HospitalsContainer extends Component {
 
     render() {
+        const {fetchingStatus} = this.props
         return (
             <div className={'hospitalsContainer'}>
                 <Header title={'医院列表'} onBack={this.handleBack}/>
@@ -25,6 +27,12 @@ class HospitalsContainer extends Component {
                     handelTabItemSel={(item) => this.handelTabItemSel(item)}
                 />
                 <HospitalsItem data={this.props.hospitalList}/>
+                {fetchingStatus
+                    ?
+                    <LoadingMask/>
+                    :
+                    null
+                }
             </div>
         )
     }
@@ -57,7 +65,8 @@ class HospitalsContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        hospitalList: getHospitalList(state)
+        hospitalList: getHospitalList(state),
+        fetchingStatus: getFetchingStatus(state),
     }
 }
 

@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import LikeItem from './LikeItem/LikeItem'
-import Loading from '../../../../components/Loading/Loading'
+import Loading from '../../../../components/Loading/LoadingMask'
 import './style.css'
 
 export default class LikeList extends Component {

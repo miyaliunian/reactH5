@@ -11,7 +11,9 @@ import {cityID} from '../../static/DictionaryConstant'
 import {FETCH_DATA} from "../middleware/api";
 
 const initialState = {
-    areas: ['全部区域'],
+    areas: [
+        {id: '', name: '全部区域'}
+    ],
 }
 
 
@@ -51,9 +53,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_AREAS_REQUEST:
             return {...state, isFetching: true}
         case actionTypes.FETCH_AREAS_SUCCESS:
-            return {...state,
+            return {
+                ...state,
                 isFetching: false,
-                areas:action.response.data
+                areas: state.areas.concat(action.response.data)
             }
         case actionTypes.FETCH_AREAS_FAILURE:
             return {...state, isFetching: false}

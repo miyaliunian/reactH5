@@ -1,4 +1,4 @@
-import {cityID, SX_YYDJ, SX_YYLX} from "../../static/DictionaryConstant";
+import {cityID} from "../../static/DictionaryConstant";
 import url from "../../utils/httpUrl";
 import {FETCH_DATA} from "../middleware/api";
 
@@ -18,7 +18,7 @@ const initialState = {
     hosCategory: '',//医院类型
     hosGrade: '',// 医院等级
 
-
+    isFetching:false,
     page: 1,//翻页
     data: [] //列表数据
 }
@@ -130,4 +130,8 @@ export default reducer
 //selectors
 export const getHospitalList = (state) => {
     return state.hospital.data
+}
+
+export const getFetchingStatus=(state)=>{
+    return state.hospital.isFetching
 }

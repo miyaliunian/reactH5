@@ -10,7 +10,7 @@ import './style.css'
 export default class BuyButton extends Component {
     render() {
         return (
-            <a className="buyButton">
+            <a className="buyButton" ref={'/'}>
                 立即购买
             </a>
         )
