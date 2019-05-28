@@ -135,3 +135,7 @@ export const getHospitalList = (state) => {
 export const getFetchingStatus=(state)=>{
     return state.hospital.isFetching
 }
+
+export const getIsLastPage = (state)=>{
+    return state.hospital.isFetching
+}

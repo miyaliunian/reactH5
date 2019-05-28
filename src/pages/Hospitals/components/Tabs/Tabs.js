@@ -19,7 +19,9 @@ class Tabs extends Component {
         super(props)
         this.state = {
             tab1focused: false,
+            tab1focused_title:'全部区域',
             tab2focused: false,
+            tab2focused_title:'综合排序',
             tab3focused: false,
             tabMaskIsSHow: false,
             sx_lx: SX_YYLX,
@@ -37,11 +39,12 @@ class Tabs extends Component {
                 <div className={'tabs__searchTOPWrapper'}>
                     <div className={this.state.tab1focused ? 'searchItemSeled' : 'searchItem'}
                          onClick={() => this.tabSelc(1)}>
-                        全部区域
+                        {this.state.tab1focused_title}
                         <div className={this.state.tab1focused ? 'searchItemSeledLine' : ''}/>
                     </div>
                     <div className={this.state.tab2focused ? 'searchItem2Seled' : 'searchItem2'}
-                         onClick={() => this.tabSelc(2)}>综合排序
+                         onClick={() => this.tabSelc(2)}>
+                        {this.state.tab2focused_title}
                         <div className={this.state.tab2focused ? 'searchItemSeledLine' : ''}/>
                     </div>
                     <div className={this.state.tab3focused ? 'searchItemSeled' : 'searchItem'}
@@ -159,13 +162,15 @@ class Tabs extends Component {
         if (tabIndex === 1) {
             this.setState({
                 tabMaskIsSHow: false,
-                tab_qylb_value: item.code
+                tab_qylb_value: item.code,
+                tab1focused_title:item.name
             })
 
         } else {
             this.setState({
                 tabMaskIsSHow: false,
-                tab_zhpx_value: item.value
+                tab_zhpx_value: item.value,
+                tab2focused_title:item.title
             })
         }
         //容器回调

@@ -8,8 +8,8 @@
 
 
 //登录前缀
-const BASE_URL = 'http://58.208.84.112:10086/t-core'
-// const BASE_URL = 'http://ykt.nn12333.com:7070/t-core/'
+// const BASE_URL = 'http://58.208.84.112:10086/t-core'
+const BASE_URL = 'http://ykt.nn12333.com:7070/t-core/'
 
 //业务
 export default {
