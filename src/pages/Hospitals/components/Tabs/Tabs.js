@@ -19,9 +19,9 @@ class Tabs extends Component {
         super(props)
         this.state = {
             tab1focused: false,
-            tab1focused_title:'全部区域',
+            tab1focused_title: '全部区域',
             tab2focused: false,
-            tab2focused_title:'综合排序',
+            tab2focused_title: '综合排序',
             tab3focused: false,
             tabMaskIsSHow: false,
             sx_lx: SX_YYLX,
@@ -60,7 +60,7 @@ class Tabs extends Component {
                             className={this.state.tab1focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
                             {areasList.map((item) => {
                                 return <div className={'tabs__Bottom__Item'}
-                                            key={item.code} onClick={() => this.tabRowSel(item, 1)}>{item.name}</div>
+                                            key={item.name} onClick={() => this.tabRowSel(item, 1)}>{item.name}</div>
                             })}
 
                         </div>
@@ -127,31 +127,48 @@ class Tabs extends Component {
     tabSelc(index) {
         switch (index) {
             case 1:
-                this.setState({
-                    tab1focused: !this.state.tab1focused,
-                    tab2focused: false,
-                    tab3focused: false,
-                    tabMaskIsSHow: !this.state.tab1focused,
-
-                })
+                if (this.state.tab1focused) {
+                    this.setState({
+                        tabMaskIsSHow:!this.state.tabMaskIsSHow
+                    })
+                } else {
+                    this.setState({
+                        tab1focused: !this.state.tab1focused,
+                        tab2focused: false,
+                        tab3focused: false,
+                        tabMaskIsSHow:!this.state.tab1focused
+                    })
+                }
                 return
             case 2:
-                this.setState({
-                    tab1focused: false,
-                    tab2focused: !this.state.tab2focused,
-                    tab3focused: false,
-                    tabMaskIsSHow: !this.state.tab2focused,
-                })
+                if (this.state.tab2focused) {
+                    this.setState({
+                        tabMaskIsSHow:!this.state.tabMaskIsSHow
+                    })
+                } else {
+                    this.setState({
+                        tab1focused: false,
+                        tab2focused: !this.state.tab2focused,
+                        tab3focused: false,
+                        tabMaskIsSHow:!this.state.tab2focused
+                    })
+                }
+
                 return
             case 3:
-                this.setState({
-                    tab1focused: false,
-                    tab2focused: false,
-                    tab3focused: !this.state.tab3focused,
-                    tabMaskIsSHow: !this.state.tab3focused,
-                })
+                if (this.state.tab3focused) {
+                    this.setState({
+                        tabMaskIsSHow:!this.state.tabMaskIsSHow
+                    })
+                } else {
+                    this.setState({
+                        tab1focused: false,
+                        tab2focused: false,
+                        tab3focused: !this.state.tab3focused,
+                        tabMaskIsSHow:!this.state.tab3focused
+                    })
+                }
                 return
-
             default:
                 return
         }
@@ -163,14 +180,14 @@ class Tabs extends Component {
             this.setState({
                 tabMaskIsSHow: false,
                 tab_qylb_value: item.code,
-                tab1focused_title:item.name
+                tab1focused_title: item.name
             })
 
         } else {
             this.setState({
                 tabMaskIsSHow: false,
                 tab_zhpx_value: item.value,
-                tab2focused_title:item.title
+                tab2focused_title: item.title
             })
         }
         //容器回调
