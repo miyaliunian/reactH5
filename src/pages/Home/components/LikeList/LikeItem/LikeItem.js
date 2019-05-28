@@ -3,6 +3,8 @@
  * Author: wufei
  * Date: 2019/5/23
  * Description: 列表子元素
+ *      传递对象
+ *    <Link to={`/detail/${JSON.stringify(data)}`} className={'likeItem'}>
  *
  */
 import React, {Component} from 'react'
@@ -21,8 +23,13 @@ export default class LikeItem extends Component {
             oldPrice,
             saleDesc
         } = this.props.item
+        const data = {
+            id: id,
+            shop: shop,
+            tag: tag,
+        }
         return (
-            <Link to={`/detail/${id}`} className={'likeItem'} href='/'>
+            <Link to={`/detail/${id}`} className={'likeItem'}>
                 <div className={'likeItem__picContainer'}>
                     <div className={'likeItem__picTag'}>{tag}</div>
                     <img className={'likeItem__pic'} src={picture} alt={''}/>

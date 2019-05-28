@@ -11,13 +11,19 @@ import entities from './entities' //业务数据状态
 import app from './app'
 import detail from './detail'
 import home from './home'
+import tabs from './tabs'
+import hospital from './hospital'
+import login from './login'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
     entities,
+    login,
     app,
     detail,
-    home
+    home,
+    tabs,
+    hospital
 })
 
 export default rootReducer

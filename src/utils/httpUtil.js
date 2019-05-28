@@ -5,9 +5,9 @@
  * Description:  网络请求
  */
 
-const headers = new Headers({
-    "Accept": "application/json",
-    "Content-Type": "application/json"
+let headers = new Headers({
+    'Connection': 'keep-alive',
+    'Content-Type': 'application/json',
 })
 
 /**
@@ -34,12 +34,14 @@ function get(url) {
  * @param data
  * @returns {Promise<Response>}
  */
-function post(url, data) {
-    headers.append('Cookie',`token=${data}`)
+function post(url, data = '') {
+    if (-1 != url.search('.do')) {
+        headers.append('Cookie', `token=${data}`)
+    }
     return fetch(url, {
         method: 'POST',
         headers: headers,
-        body: data
+        body: JSON.stringify(data)
     }).then(response => {
         return handelResponse(response, url)
     }).catch(error => {

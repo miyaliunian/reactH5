@@ -8,7 +8,6 @@
 import React, {Component} from 'react'
 import HomeHeader from "./components/HomeHeader/HomeHeader";
 import {bindActionCreators} from 'redux'
-
 import {actions as homeActions, getPageCountOfLikes, getDiscounts, getLists} from '../../reduxs/modules/home'
 import {connect} from 'react-redux'
 import Banner from './components/Banner'
@@ -20,7 +19,13 @@ import Activity from "./components/Activity/Activity";
 import './style.css'
 
 
+
+
+
+
 class Home extends Component {
+
+
     render() {
         const {likes, discounts, pageCount} = this.props
         return (
@@ -53,7 +58,6 @@ const mapStateToProps = (state, props) => {
         pageCount: getPageCountOfLikes(state)
     }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
     return {

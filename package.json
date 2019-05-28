@@ -3,20 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
+    "antd-mobile": "^2.2.13",
+    "better-scroll": "^1.15.2",
+    "cssnano": "^4.1.10",
+    "cssnano-preset-advanced": "^4.0.7",
+    "postcss-aspect-ratio-mini": "^1.0.1",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-px-to-viewport": "^1.1.0",
+    "postcss-viewport-units": "^0.1.6",
+    "postcss-write-svg": "^3.0.1",
     "react": "^16.8.6",
+    "react-app-rewire-postcss": "^3.0.2",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "3.0.1",
     "react-slick": "^0.24.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "react-router-dom": "4.3.1"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,5 +43,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.11.2",
+    "customize-cra": "^0.2.12",
+    "react-app-rewired": "^2.1.3"
   }
 }

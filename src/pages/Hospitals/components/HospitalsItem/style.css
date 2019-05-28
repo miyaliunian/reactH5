@@ -1,0 +1,36 @@
+.hospitalsItem {
+    position: absolute;
+    top: 82px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: white;
+    overflow: hidden;
+}
+.hospitalsItem__con{
+    padding: 20px;
+    border-bottom: solid 1px #e1e1e1;
+    overflow: hidden;
+
+}
+
+.hospitalsItem__title {
+    font-size: 16px
+}
+
+.hospitalsItem__middle {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.hospitalsItem__innerTxt {
+    margin-right: 20px;
+    width: 10%;
+    font-size: 10px;
+    color: cornflowerblue;
+}
+
+.hospitalsItem__bottom {
+    font-size: 13px;
+    color: #666666;
+}

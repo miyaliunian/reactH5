@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import './style.css';
 import {bindActionCreators} from 'redux'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router,Route, Switch} from 'react-router-dom'
 import {connect} from "react-redux";
 import ErrorToast from '../../components/ErrorToast'
 import {actions as appActions, getError} from "../../reduxs/modules/app";
 import Home from '../Home/HomeContainer'
+import ProductDetailContainer from "../ProductDetail/ProductDetailContainer";
+import HospitalsContainer from "../Hospitals/HospitalsContainer";
+import LoginContainer from "../Login/LoginContainer"; //登录界面
 
-class App extends Component {
+//登录
+
+
+class AppContainer extends Component {
     render() {
         const {
             error,
@@ -17,7 +23,11 @@ class App extends Component {
             <div className="App">
                 <Router>
                     <Switch>
+                        <Route path="/login" component={LoginContainer}/>
+                        <Route path="/hospitals" component={HospitalsContainer}/>
+                        <Route path="/detail/:id" component={ProductDetailContainer}/>
                         <Route path="/" component={Home}/>
+
                     </Switch>
                 </Router>
                 {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
@@ -42,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(App);
+)(AppContainer);

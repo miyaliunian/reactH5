@@ -15,8 +15,8 @@ export default class HomeHeader extends Component {
             <div className={'homeHeader'}>
                 <header className={'homeHeader__wrapper'}>
                     <a className={'homeHeader__city'} href='/'>沈阳</a>
-                    <Link to='/search' className={'homeHeader__search'} >查询列表</Link>
-                    <Link to='/user' className={'homeHeader__self'} href='/'>
+                    <Link to='/detail' className={'homeHeader__search'} >查询列表</Link>
+                    <Link to='/hospitals' className={'homeHeader__self'}>
                         <div className={'homeHeader__portrait'} ></div>
                     </Link>
                 </header>
