@@ -17,6 +17,7 @@
     "react": "^16.8.6",
     "react-app-rewire-postcss": "^3.0.2",
     "react-dom": "^16.8.6",
+    "react-poppop": "^1.5.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "3.0.1",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.11.2",
     "customize-cra": "^0.2.12",
+    "react-app-rewire-stylus-modules": "^0.0.2",
     "react-app-rewired": "^2.1.3"
   }
 }

@@ -11,7 +11,7 @@ import './style.css'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as tabActions, getAreasList} from "../../../../reduxs/modules/tabs";
-
+import PopPop from 'react-poppop';
 
 class Tabs extends Component {
 

@@ -6,7 +6,9 @@
  *  按需加载
  */
 
+const rewireStyl = require("react-app-rewire-stylus-modules");
 const {override, fixBabelImports} = require('customize-cra');
+
 const addCustomize = () => config => {
     require('react-app-rewire-postcss')(config, {
         plugins: loader => [
@@ -40,6 +42,9 @@ const addCustomize = () => config => {
     });
     return config;
 }
+
+
+
 module.exports = override(
     fixBabelImports('import', {
         libraryName: 'antd-mobile',
@@ -47,3 +52,15 @@ module.exports = override(
     }),
     addCustomize(),
 );
+
+
+// module.exports = override((config, env) => {
+//     config = rewireStyl(config, env);
+//
+//     fixBabelImports('import', {
+//         libraryName: 'antd-mobile',
+//         style: 'css',
+//     }),
+//         addCustomize()
+//     return config
+// })
