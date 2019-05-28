@@ -58,9 +58,8 @@ export const actions = {
         }
     },
 
-    loginOut: () => ({
-        type: actionTypes.LOGOUT
-    }),
+
+
     setUserName: (username) => ({
         type: actionTypes.SET_USERNAME,
         username
@@ -106,7 +105,6 @@ const reducer = (state = initialState, action) => {
             return {...state, password: action.password}
         default:
             return state
-
     }
 }
 

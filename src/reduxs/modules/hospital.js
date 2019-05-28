@@ -1,4 +1,4 @@
-import {cityID} from "../../static/DictionaryConstant";
+import {cityID, SX_YYDJ, SX_YYLX} from "../../static/DictionaryConstant";
 import url from "../../utils/httpUrl";
 import {FETCH_DATA} from "../middleware/api";
 
@@ -13,10 +13,12 @@ import {FETCH_DATA} from "../middleware/api";
 
 
 const initialState = {
-    zhpx: 'register',//综合排序
     areaId: '',//区域列表
+    sort: 'register',//综合排序:第二个tab默认传综合排序
     hosCategory: '',//医院类型
     hosGrade: '',// 医院等级
+
+
     page: 1,//翻页
     data: [] //列表数据
 }
@@ -27,22 +29,46 @@ const actionTypes = {
     FETCH_HOSPITAL_REQUEST: 'HOSPITAL/FETCH_HOSPITAL_REQUEST',
     FETCH_HOSPITAL_SUCCESS: 'HOSPITAL/FETCH_HOSPITAL_SUCCESS',
     FETCH_HOSPITAL_FAILURE: 'HOSPITAL/FETCH_HOSPITAL_FAILURE',
+
+    SET_AREA: 'HOSPITAL/SET_AREA',
+    SET_SORT: 'HOSPITAL/SET_SORT',
+    SET_FILTER: 'HOSPITAL/SET_FILTER'
 }
 
 
 // action creators
 export const actions = {
+    //加载列表
     loadHosipitalList: () => {
         return (dispatch, getstate) => {
-            const targetURL = url.API_HOSPITAL_LIST(cityID, 'register', 1)
+            const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page)
             let param = {
-                areaId: getstate().areaId || null,
-                hosCategory: getstate().hosCategory || null,
-                hosGrade: getstate().hosGrade || null
+                areaId: getstate().hospital.areaId || null,
+                hosCategory: getstate().hospital.hosCategory || null,
+                hosGrade: getstate().hospital.hosGrade || null
             }
             return dispatch(fetchHosipitalList(targetURL, param))
         }
-    }
+    },
+
+    //区域
+    setAreaId: (code) => ({
+        type: actionTypes.SET_AREA,
+        code
+    }),
+
+    //综合排序
+    setSord: (value) => ({
+        type: actionTypes.SET_SORT,
+        value
+    }),
+
+    //医院类型、医院等级
+    setCategoryGrade: (value) => ({
+        type: actionTypes.SET_FILTER,
+        value
+    })
+
 }
 
 
@@ -72,6 +98,26 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_HOSPITAL_FAILURE:
             return {...state, isFetching: false}
+
+        case actionTypes.SET_AREA:
+            return {
+                ...state,
+                areaId: action.code
+            }
+
+        case actionTypes.SET_SORT:
+            return {
+                ...state,
+                sort: action.value
+            }
+        case actionTypes.SET_FILTER:
+            return {
+                ...state,
+                hosCategory: action.value.yylx,
+                hosGrade: action.value.yydj
+            }
+
+
         default:
             return state
 

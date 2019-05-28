@@ -12,7 +12,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Redirect} from 'react-router-dom'
 import {actions as loginActions, isLogin, getPassword, getUserName} from '../../reduxs/modules/login'
-import {PUBLIC_LEY} from "../../static";
+
 
 
 

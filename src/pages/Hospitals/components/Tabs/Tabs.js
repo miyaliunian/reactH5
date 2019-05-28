@@ -159,13 +159,15 @@ class Tabs extends Component {
                 tabMaskIsSHow: false,
                 tab_qylb_value: item.code
             })
-            return
+
         } else {
             this.setState({
                 tabMaskIsSHow: false,
                 tab_zhpx_value: item.value
             })
         }
+        //容器回调
+        this.props.handelTabRowSel(item, tabIndex)
     }
 
     //列选中
@@ -201,11 +203,24 @@ class Tabs extends Component {
 
     //列选中->确定按钮
     tabItemBtnClick() {
-        let lx = this.state.sx_lx.title
-        let dj = this.state.sx_dj.title
+        let lx = ''
+        let dj = ''
+        this.state.sx_lx.data.map((dataItem) => {
+            if (dataItem.isSel) {
+                lx = dataItem.value
+            }
+        })
+
+        this.state.sx_dj.data.map((dataItem) => {
+            if (dataItem.isSel) {
+                dj = dataItem.value
+            }
+        })
         this.setState({
             tabMaskIsSHow: false
         })
+        let param = {yylx: lx, yydj: dj}
+        this.props.handelTabItemSel(param)
     }
 
 
