@@ -7,6 +7,7 @@ import './assets/styles/reset.css'
 import './assets/styles/border.css'
 import App from './pages/App/AppContainer';
 
+
 ReactDOM.render(
     <Provider store={store}>
         <App/>
