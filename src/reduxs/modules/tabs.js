@@ -7,7 +7,7 @@
  */
 
 import url from "../../utils/httpUrl"
-import {cityID} from '../../static/DictionaryConstant'
+import {cityID} from '../../assets/static/DictionaryConstant'
 import {FETCH_DATA} from "../middleware/api";
 
 const initialState = {

@@ -1,4 +1,4 @@
-import {cityID} from "../../static/DictionaryConstant";
+import {cityID} from "../../assets/static/DictionaryConstant";
 import url from "../../utils/httpUrl";
 import {FETCH_DATA} from "../middleware/api";
 

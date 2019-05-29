@@ -6,7 +6,7 @@
  *
  */
 import React, {Component} from 'react'
-import {ZHPX, SX_YYLX, SX_YYDJ} from '../../../../static/DictionaryConstant'
+import {ZHPX, SX_YYLX, SX_YYDJ} from '../../../../assets/static/DictionaryConstant'
 import './style.css'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'

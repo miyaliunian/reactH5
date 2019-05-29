@@ -6,7 +6,7 @@
  *
  */
 import url from "../../utils/httpUrl"
-import {PUBLIC_LEY} from "../../static";
+import {PUBLIC_LEY} from "../../assets/static";
 import {schema} from "./entities/loginEntity";
 import {FETCH_DATA} from "../middleware/api";
 
