@@ -25,7 +25,9 @@ class Home extends Component {
         return (
             <div>
                 <Banner/>
-                <Category category={(index)=>{this.categoryClick(index)}}/>
+                <Category category={(index) => {
+                    this.categoryClick(index)
+                }}/>
                 <HeadLine/>
                 <Activity/>
             </div>
@@ -37,10 +39,14 @@ class Home extends Component {
     }
 
 
-    categoryClick(index){
-        switch (index){
+    categoryClick(index) {
+        switch (index) {
             case 0 :
                 this.props.history.push('/hospitals')
+                break
+            case 1 :
+                this.props.history.push('/login')
+                break
         }
     }
 

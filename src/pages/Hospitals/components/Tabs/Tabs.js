@@ -11,7 +11,7 @@ import './style.css'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as tabActions, getAreasList} from "../../../../reduxs/modules/tabs";
-import PopPop from 'react-poppop';
+
 
 class Tabs extends Component {
 
@@ -53,11 +53,17 @@ class Tabs extends Component {
                     </div>
                 </div>
                 <div
-                    className={this.state.tabMaskIsSHow ? 'tabs__BottomWrapper__con__show' : 'tabs__BottomWrapper__con'}>
+                    id="tabsBottomWrapperCon"
+                    className={this.state.tabMaskIsSHow ? 'tabs__BottomWrapper__con__show' : 'tabs__BottomWrapper__con'}
+                    onClick={() => this.close()}
+                    onTouchMove={(e)=>this.handleTouchMove(e)}
+
+                >
                     {this.state.tab1focused
                         ?
                         <div
-                            className={this.state.tab1focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
+                            className={this.state.tab1focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}
+                        >
                             {areasList.map((item) => {
                                 return <div className={'tabs__Bottom__Item'}
                                             key={item.name} onClick={() => this.tabRowSel(item, 1)}>{item.name}</div>
@@ -84,7 +90,9 @@ class Tabs extends Component {
                         ?
                         <div
                             className={this.state.tab3focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
-                            <div className={'tabs__BottomWrapper__tab3__con'}>
+                            <div className={'tabs__BottomWrapper__tab3__con'} onClick={(e) => {
+                                e.stopPropagation()
+                            }}>
                                 <div>
                                     <div>
                                         医院类型: {this.state.sx_lx.title}
@@ -94,7 +102,7 @@ class Tabs extends Component {
                                             return <div
                                                 className={item.isSel ? 'tabs3__innerTextSel' : 'tabs3__innerText'}
                                                 key={item.value}
-                                                onClick={() => this.tabItemSel(item, 1)}>{item.title}</div>
+                                                onClick={(e) => this.tabItemSel(e, item, 1)}>{item.title}</div>
                                         })}
                                     </div>
                                 </div>
@@ -107,7 +115,7 @@ class Tabs extends Component {
                                             return <div
                                                 className={item.isSel ? 'tabs3__innerTextSel' : 'tabs3__innerText'}
                                                 key={item.value}
-                                                onClick={() => this.tabItemSel(item, 2)}>{item.title}</div>
+                                                onClick={(e) => this.tabItemSel(e, item, 2)}>{item.title}</div>
                                         })}
                                     </div>
                                     <div className={'tabs__tab3__btn'} onClick={() => this.tabItemBtnClick()}>确定</div>
@@ -129,28 +137,28 @@ class Tabs extends Component {
             case 1:
                 if (this.state.tab1focused) {
                     this.setState({
-                        tabMaskIsSHow:!this.state.tabMaskIsSHow
+                        tabMaskIsSHow: !this.state.tabMaskIsSHow
                     })
                 } else {
                     this.setState({
                         tab1focused: !this.state.tab1focused,
                         tab2focused: false,
                         tab3focused: false,
-                        tabMaskIsSHow:!this.state.tab1focused
+                        tabMaskIsSHow: !this.state.tab1focused
                     })
                 }
                 return
             case 2:
                 if (this.state.tab2focused) {
                     this.setState({
-                        tabMaskIsSHow:!this.state.tabMaskIsSHow
+                        tabMaskIsSHow: !this.state.tabMaskIsSHow
                     })
                 } else {
                     this.setState({
                         tab1focused: false,
                         tab2focused: !this.state.tab2focused,
                         tab3focused: false,
-                        tabMaskIsSHow:!this.state.tab2focused
+                        tabMaskIsSHow: !this.state.tab2focused
                     })
                 }
 
@@ -158,14 +166,14 @@ class Tabs extends Component {
             case 3:
                 if (this.state.tab3focused) {
                     this.setState({
-                        tabMaskIsSHow:!this.state.tabMaskIsSHow
+                        tabMaskIsSHow: !this.state.tabMaskIsSHow
                     })
                 } else {
                     this.setState({
                         tab1focused: false,
                         tab2focused: false,
                         tab3focused: !this.state.tab3focused,
-                        tabMaskIsSHow:!this.state.tab3focused
+                        tabMaskIsSHow: !this.state.tab3focused
                     })
                 }
                 return
@@ -195,7 +203,8 @@ class Tabs extends Component {
     }
 
     //列选中
-    tabItemSel(item, tabIndex) {
+    tabItemSel(e, item, tabIndex) {
+        e.stopPropagation();
         if (tabIndex === 1) {
             let lx = JSON.parse(JSON.stringify((this.state.sx_lx)))
             lx.title = item.title
@@ -209,6 +218,7 @@ class Tabs extends Component {
             this.setState({
                 sx_lx: lx
             })
+            return
         } else {
             let dj = JSON.parse(JSON.stringify((this.state.sx_dj)))
             dj.title = item.title
@@ -222,6 +232,7 @@ class Tabs extends Component {
             this.setState({
                 sx_dj: dj
             })
+            return
         }
     }
 
@@ -247,8 +258,25 @@ class Tabs extends Component {
         this.props.handelTabItemSel(param)
     }
 
+    close() {
+        this.setState({
+            tabMaskIsSHow: false
+        })
+    }
+
+    handleTouchMove(event){
+        // event.preventDefault();
+    }
+
     componentDidMount() {
         this.props.tabActions.loadCitys()
+
+        document.getElementById('tabsBottomWrapperCon').addEventListener("touchmove", (event) => {
+            // 执行滚动回调
+            // event.preventDefault();
+        }, {
+            passive: false //  禁止 passive 效果
+        })
     }
 }
 

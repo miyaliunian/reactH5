@@ -25,7 +25,10 @@ class HospitalsContainer extends Component {
     render() {
         const {fetchingStatus, isLastPage} = this.props
         return (
-            <div className={'hospitalsContainer'}>
+            <div
+                id='hospitalsContainer'
+                onTouchMove={(e)=>this.handleTouchMove(e)}
+                className={'hospitalsContainer'}>
                 <Header title={'医院列表'} onBack={this.handleBack}/>
                 <Tabs
                     handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
@@ -46,7 +49,18 @@ class HospitalsContainer extends Component {
         this.props.history.goBack()
     }
 
+    handleTouchMove(event){
+    }
+
     componentDidMount() {
+
+        document.getElementById('hospitalsContainer').addEventListener("touchmove", (event) => {
+            // 执行滚动回调
+            event.preventDefault();
+        }, {
+            passive: false //  禁止 passive 效果
+        })
+
         this.props.hospitalActions.loadHosipitalList()
     }
 
