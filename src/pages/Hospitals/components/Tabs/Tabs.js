@@ -37,19 +37,17 @@ class Tabs extends Component {
         return (
             <div className={'tabs'}>
                 <div className={'tabs__searchTOPWrapper'}>
-                    <div className={this.state.tab1focused ? 'searchItemSeled' : 'searchItem'}
+                    <div className={this.state.tab1focused ? 'searchItem  itemSelected' : 'searchItem'}
                          onClick={() => this.tabSelc(1)}>
                         {this.state.tab1focused_title}
-                        <div className={this.state.tab1focused ? 'searchItemSeledLine' : ''}/>
                     </div>
                     <div className={this.state.tab2focused ? 'searchItem2Seled' : 'searchItem2'}
                          onClick={() => this.tabSelc(2)}>
                         {this.state.tab2focused_title}
                         <div className={this.state.tab2focused ? 'searchItemSeledLine' : ''}/>
                     </div>
-                    <div className={this.state.tab3focused ? 'searchItemSeled' : 'searchItem'}
+                    <div className={this.state.tab3focused ? 'searchItem  itemSelected' : 'searchItem'}
                          onClick={() => this.tabSelc(3)}>筛选
-                        <div className={this.state.tab3focused ? 'searchItemSeledLine' : ''}/>
                     </div>
                 </div>
                 <div
