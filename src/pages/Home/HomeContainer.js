@@ -16,7 +16,7 @@ import HeadLine from './components/HeadLine'
 import LikeList from './components/LikeList/LikeList'
 import Footer from "../../components/Footer/Footer";
 import Activity from "./components/Activity/Activity";
-import './style.css'
+import './style.less'
 
 class Home extends Component {
 

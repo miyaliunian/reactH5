@@ -6,7 +6,7 @@
  *
  */
 import React, {Component} from 'react'
-import './style.css'
+import './style.less'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class LoadingMask extends Component {

@@ -17,7 +17,7 @@ import {
     getFetchingStatus,
     getIsLastPage
 } from '../../reduxs/modules/hospital'
-import './style.css'
+import './style.less'
 import LoadingMask from "../../components/Loading/LoadingMask";
 
 class HospitalsContainer extends Component {

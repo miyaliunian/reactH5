@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import Bscroll from 'better-scroll'
-import './style.css'
+import './style.less'
 
 export default class HospitalsItem extends Component {
 

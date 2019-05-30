@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './style.css';
+import './style.less';
 import {bindActionCreators} from 'redux'
 import {BrowserRouter as Router,Route, Switch} from 'react-router-dom'
 import {connect} from "react-redux";
@@ -32,7 +32,6 @@ class AppContainer extends Component {
                     </Switch>
                 </Router>
                 {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
-
             </div>
         );
     }

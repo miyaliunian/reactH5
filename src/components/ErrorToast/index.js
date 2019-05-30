@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import './style.css'
+import './style.less'
 
 export default class ErrorToast extends Component {
 

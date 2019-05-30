@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import './style.css'
+import './style.less'
 
 export default class ProductOverview extends Component {
     render() {

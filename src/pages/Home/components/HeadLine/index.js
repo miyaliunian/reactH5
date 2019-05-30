@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import Slider from 'react-slick'
-import './style.css'
+import './style.less'
 
 const dataSource = [
     {

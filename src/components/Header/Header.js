@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {NavBar, Icon} from 'antd-mobile';
-import './style.css'
+import './style.less'
 export default class Header extends Component {
     render() {
         const {title, onBack} = this.props;

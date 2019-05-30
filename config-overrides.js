@@ -46,24 +46,13 @@ const addCustomize = () => config => {
 module.exports = override(
     fixBabelImports('import', {
         libraryName: 'antd-mobile',
+        libraryDirectory: 'es',
         style: true,
     }),
     addLessLoader({
         javascriptEnabled:true,
-        // modifyVars:{"@primary-color":"#1DA57A"}
+        modifyVars: { '@primary-color': '#1DA57A' },
 
     }),
     addCustomize(),
 );
-
-
-// module.exports = override((config, env) => {
-//     config = rewireStyl(config, env);
-//
-//     fixBabelImports('import', {
-//         libraryName: 'antd-mobile',
-//         style: 'css',
-//     }),
-//         addCustomize()
-//     return config
-// })

@@ -6,7 +6,7 @@
  *
  */
 import React, { Component } from "react";
-import "./style.css";
+import "./style.less";
 
 class Activity extends Component {
     render() {

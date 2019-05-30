@@ -7,10 +7,9 @@
  */
 import React, {Component} from 'react'
 import {ZHPX, SX_YYLX, SX_YYDJ} from '../../../../assets/static/DictionaryConstant'
-import './style.css'
+import './style.less'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import Button from '@material-ui/core/Button';
 import {actions as tabActions, getAreasList} from "../../../../reduxs/modules/tabs";
 
 
