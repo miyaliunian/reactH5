@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/5/24
  * Description:
- *  医院列表容器
+ *              医院列表容器
  */
 import React, {Component} from 'react'
 import Header from "../../components/Header/Header";
@@ -63,7 +63,6 @@ class HospitalsContainer extends Component {
 
         this.props.hospitalActions.loadHosipitalList()
     }
-
     //处理行选中
     handelTabRowSel(item, index) {
         if (index == 1) { // 区域
@@ -73,7 +72,6 @@ class HospitalsContainer extends Component {
         }
         this.props.hospitalActions.loadHosipitalList()
     }
-
     //处理列选中
     handelTabItemSel(item) {
         this.props.hospitalActions.setCategoryGrade(item)
