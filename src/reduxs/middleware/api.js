@@ -7,33 +7,9 @@
  *
  */
 import {post} from "../../utils/httpUtil"
-/*
-
-store => next => action => {}
-等同于
-export default function (store) {
-        //一级操作
-    return function (next) {
-        //当前的操作
-        return function (action) {
-        //三级操作
-        }
-    }
-}
-*
-* */
-
-
-//经过中间件处理的action所具有的标识
 export const FETCH_DATA = 'FETCH DATA'
-
-//next 代表了 中间件当中 当前这个中间件的下一个中间件所提供的 dispatch 方法
 export default store => next => action => {
-
-
     const callAPI = action[FETCH_DATA]
-
-    //类型判断 不是用来处理网络请求的action,如果不是则交给后边的中间件处理
     if (typeof callAPI === 'undefined') {
         return next(action)
     }

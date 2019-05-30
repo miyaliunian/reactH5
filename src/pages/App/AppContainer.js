@@ -32,6 +32,7 @@ class AppContainer extends Component {
                     </Switch>
                 </Router>
                 {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
+
             </div>
         );
     }

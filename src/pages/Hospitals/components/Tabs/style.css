@@ -13,6 +13,7 @@
     text-align: center;
     height: 35px;
     line-height: 35px;
+    font-size: 14px;
     background: white;
     text-decoration: underline;
 }
@@ -25,6 +26,7 @@
     height: 35px;
     line-height: 32px;
     background: white;
+    font-size: 16px;
     color: #00a0dc;
     text-decoration: underline;
     align-items: center;
@@ -43,6 +45,7 @@
     height: 35px;
     line-height: 35px;
     background: white;
+    font-size: 14px;
     border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
     text-decoration: underline;
@@ -57,6 +60,7 @@
     line-height: 32px;
     background: white;
     color: #00a0dc;
+    font-size: 16px;
     border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
     text-decoration: underline;

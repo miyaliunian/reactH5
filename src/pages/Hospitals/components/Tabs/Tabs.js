@@ -10,6 +10,7 @@ import {ZHPX, SX_YYLX, SX_YYDJ} from '../../../../assets/static/DictionaryConsta
 import './style.css'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import Button from '@material-ui/core/Button';
 import {actions as tabActions, getAreasList} from "../../../../reduxs/modules/tabs";
 
 
@@ -56,7 +57,7 @@ class Tabs extends Component {
                     id="tabsBottomWrapperCon"
                     className={this.state.tabMaskIsSHow ? 'tabs__BottomWrapper__con__show' : 'tabs__BottomWrapper__con'}
                     onClick={() => this.close()}
-                    onTouchMove={(e)=>this.handleTouchMove(e)}
+                    onTouchMove={(e) => this.handleTouchMove(e)}
 
                 >
                     {this.state.tab1focused
@@ -66,10 +67,11 @@ class Tabs extends Component {
                         >
                             {areasList.map((item) => {
                                 return <div className={'tabs__Bottom__Item'}
-                                            key={item.name} onClick={() => this.tabRowSel(item, 1)}>{item.name}</div>
+                                            key={item.name}
+                                            onClick={() => this.tabRowSel(item, 1)}>{item.name}</div>
                             })}
-
                         </div>
+
                         :
                         null
                     }
@@ -77,6 +79,7 @@ class Tabs extends Component {
                         ?
                         <div
                             className={this.state.tab2focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
+
                             {ZHPX.map((item) => {
                                 return <div className={'tabs__Bottom__Item'}
                                             key={item.value}
@@ -98,6 +101,7 @@ class Tabs extends Component {
                                         医院类型: {this.state.sx_lx.title}
                                     </div>
                                     <div className={'tabs__tab3__inner'}>
+
                                         {this.state.sx_lx.data.map((item) => {
                                             return <div
                                                 className={item.isSel ? 'tabs3__innerTextSel' : 'tabs3__innerText'}
@@ -105,6 +109,7 @@ class Tabs extends Component {
                                                 onClick={(e) => this.tabItemSel(e, item, 1)}>{item.title}</div>
                                         })}
                                     </div>
+
                                 </div>
                                 <div>
                                     <div>
@@ -264,11 +269,14 @@ class Tabs extends Component {
         })
     }
 
-    handleTouchMove(event){
+    handleTouchMove(event) {
         // event.preventDefault();
     }
 
     componentDidMount() {
+        if (this.props.areasList && this.props.areasList.length !== 1) {
+            return
+        }
         this.props.tabActions.loadCitys()
 
         document.getElementById('tabsBottomWrapperCon').addEventListener("touchmove", (event) => {
