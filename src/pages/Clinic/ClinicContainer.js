@@ -82,6 +82,7 @@ export default class ClinicContainer extends Component {
 
 
     render() {
+        console.log(this.props.location.state)
         return (
             <div className={'clinic'}>
                 <Header title={'南通大学附属医院'} onBack={this.handleBack} isRight={false}/>

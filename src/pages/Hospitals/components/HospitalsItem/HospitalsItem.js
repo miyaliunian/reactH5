@@ -8,9 +8,10 @@
 import React, {Component} from 'react'
 import Bscroll from 'better-scroll'
 import './style.less'
+import {withRouter} from 'react-router-dom'
 
-export default class HospitalsItem extends Component {
 
+class HospitalsItem extends Component {
     componentDidMount() {
         this.scroll = new Bscroll(this.refs.hospitalsItem, {
             scrollY: true,
@@ -24,9 +25,7 @@ export default class HospitalsItem extends Component {
             <div className={'hospitalsItem'} ref={'hospitalsItem'}>
                 <div>
                     {data.map((item, index) => {
-                        return (<div className="hospitalsItem__con" key={index} onClick={() => {
-                            alert(JSON.stringify(item))
-                        }}>
+                        return (<div className="hospitalsItem__con" key={index} onClick={() => this.navPage(item)}>
                             <div className="hospitalsItem__title">{item.name}</div>
                             <div className="hospitalsItem__middle">
                                 <span className={'hospitalsItem__innerTxt'}>{item.hosGradeShortName}</span>
@@ -52,5 +51,16 @@ export default class HospitalsItem extends Component {
             </div>
         )
     }
+
+
+    navPage(item) {
+        let data = item
+        let path = {
+            pathname: 'clinic',
+            state: data
+        }
+        this.props.history.push(path)
+    }
 }
 
+export default withRouter(HospitalsItem)

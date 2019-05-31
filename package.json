@@ -16,6 +16,7 @@
     "postcss-px-to-viewport": "^1.1.0",
     "postcss-viewport-units": "^0.1.6",
     "postcss-write-svg": "^3.0.1",
+    "prop-types": "^15.7.2",
     "rc-queue-anim": "^1.6.12",
     "rc-tween-one": "^2.4.1",
     "react": "^16.8.6",
