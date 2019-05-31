@@ -20,7 +20,6 @@ class LoginContainer extends Component {
 
 
     componentDidMount() {
-
     }
 
     render() {

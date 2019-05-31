@@ -5,8 +5,8 @@
  * Description:
  *              医院列表容器
  */
-import React, {Component} from 'react'
-import Header from "../../components/Header/Header";
+import React, {PureComponent} from 'react'
+import Header from "../../components/Header/NavBar";
 import HospitalsItem from "./components/HospitalsItem/HospitalsItem";
 import Tabs from "./components/Tabs/Tabs";
 import {connect} from 'react-redux'
@@ -20,7 +20,7 @@ import {
 import './style.less'
 import LoadingMask from "../../components/Loading/LoadingMask";
 
-class HospitalsContainer extends Component {
+class HospitalsContainer extends PureComponent {
 
     render() {
         const {fetchingStatus, isLastPage} = this.props
@@ -29,7 +29,7 @@ class HospitalsContainer extends Component {
                 id='hospitalsContainer'
                 onTouchMove={(e)=>this.handleTouchMove(e)}
                 className={'hospitalsContainer'}>
-                <Header title={'医院列表'} onBack={this.handleBack}/>
+                <Header title={'医院列表'} onBack={this.handleBack} isRight={true}/>
                 <Tabs
                     handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
                     handelTabItemSel={(item) => this.handelTabItemSel(item)}
@@ -53,7 +53,6 @@ class HospitalsContainer extends Component {
     }
 
     componentDidMount() {
-
         document.getElementById('hospitalsContainer').addEventListener("touchmove", (event) => {
             // 执行滚动回调
             event.preventDefault();
@@ -63,9 +62,13 @@ class HospitalsContainer extends Component {
 
         this.props.hospitalActions.loadHosipitalList()
     }
+
+    componentWillUnmount(){
+        // alert('销毁')
+    }
     //处理行选中
     handelTabRowSel(item, index) {
-        if (index == 1) { // 区域
+        if (index === 1) { // 区域
             this.props.hospitalActions.setAreaId(item.code)
         } else { // 综合排序
             this.props.hospitalActions.setSord(item.value)

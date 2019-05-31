@@ -12,7 +12,10 @@ import './style.less'
 export default class HospitalsItem extends Component {
 
     componentDidMount() {
-        this.scroll = new Bscroll(this.refs.hospitalsItem)
+        this.scroll = new Bscroll(this.refs.hospitalsItem, {
+            scrollY: true,
+            click: true
+        })
     }
 
     render() {
@@ -20,8 +23,10 @@ export default class HospitalsItem extends Component {
         return (
             <div className={'hospitalsItem'} ref={'hospitalsItem'}>
                 <div>
-                    {data.map(item => {
-                        return (<div className="hospitalsItem__con" key={item.id}>
+                    {data.map((item, index) => {
+                        return (<div className="hospitalsItem__con" key={index} onClick={() => {
+                            alert(JSON.stringify(item))
+                        }}>
                             <div className="hospitalsItem__title">{item.name}</div>
                             <div className="hospitalsItem__middle">
                                 <span className={'hospitalsItem__innerTxt'}>{item.hosGradeShortName}</span>

@@ -13,7 +13,7 @@ import ShopInfo from "./components/ShopInfo/ShopInfo";
 import Detail from "./components/Detail/Detail";
 import Remark from "./components/Remark/Remark";
 import BuyButton from "./components/BuyButton/BuyButton";
-import Header from "../../components/Header/Header";
+import Header from "../../components/Header/NavBar";
 
 
 import {actions as detailActions, getProduct, getRelatedShop} from '../../reduxs/modules/detail'
