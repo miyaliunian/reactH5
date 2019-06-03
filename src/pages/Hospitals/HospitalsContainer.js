@@ -61,10 +61,10 @@ class HospitalsContainer extends PureComponent {
         })
 
         this.props.hospitalActions.loadHosipitalList()
+
     }
 
     componentWillUnmount(){
-        // alert('销毁')
     }
     //处理行选中
     handelTabRowSel(item, index) {

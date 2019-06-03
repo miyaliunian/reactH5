@@ -10,6 +10,7 @@ import Header from '../../components/Header/NavBar'
 import {Icon} from 'antd-mobile';
 import Bscroll from 'better-scroll'
 import './style.less'
+import {Button} from 'antd-mobile'
 
 const leftData = [
     {txt: '内外'},

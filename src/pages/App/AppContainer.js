@@ -10,7 +10,6 @@ import HospitalsContainer from "../Hospitals/HospitalsContainer";
 import LoginContainer from "../Login/LoginContainer";
 import LoadingMask from "../../components/Loading/LoadingMask";
 import ClinicContainer from "../Clinic/ClinicContainer";
-//登录
 
 
 class AppContainer extends Component {
