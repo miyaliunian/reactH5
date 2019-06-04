@@ -9,11 +9,12 @@ import {combineReducers} from 'redux'
 import entities from './entities' //业务数据状态
 //################################# 页面对应的UI状态
 import app from './app'
+import login from './login'
 import detail from './detail'
 import home from './home'
 import tabs from './tabs'
 import hospital from './hospital'
-import login from './login'
+import division from './division'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     detail,
     home,
     tabs,
-    hospital
+    hospital,
+    division
 })
 
 export default rootReducer

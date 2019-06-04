@@ -7,17 +7,28 @@
  *
  */
 import {post} from "../../utils/httpUtil"
+import {dataConversionDic} from '../../assets/static'
+
 export const FETCH_DATA = 'FETCH DATA'
 export default store => next => action => {
-    const callAPI = action[FETCH_DATA]
+
+    let callAPI = action[FETCH_DATA]
     if (typeof callAPI === 'undefined') {
         return next(action)
     }
 
-    const {targetURL, types} = callAPI
+    let {targetURL, schema, types} = callAPI
 
     if (typeof targetURL !== 'string') {
         throw new Error('endpoint必须为字符串类型的URL')
+    }
+
+    // if (!schema) {
+    //     throw new Error('必须指定业务实体的schema')
+    // }
+
+    if (typeof schema === 'undefined') {
+        schema = ''
     }
 
     if (!Array.isArray(types) && types.length !== 3) {
@@ -36,7 +47,7 @@ export default store => next => action => {
 
     const [requestType, successType, failureType] = types
     next(actionWith({type: requestType}))
-    return fetchData(targetURL, action.param).then(
+    return fetchData(targetURL, action.param, schema).then(
         response => next(actionWith({
             type: successType,
             response
@@ -48,8 +59,30 @@ export default store => next => action => {
     )
 }
 
-const fetchData = (targetURL, param) => {
+const fetchData = (targetURL, param, schema) => {
     return post(targetURL, param).then(data => {
-        return data
+        return normalizeData(data, schema)
     })
+}
+
+const normalizeData = (data, schema) => {
+    if (schema == '') {
+        return data
+    } else {
+        const {name} = schema
+        switch (name) {
+            case dataConversionDic.divisionList:
+                data.data.map((item, index) => {
+                    if (index == 0) {
+                        item.isSel = true
+                    } else {
+                        item.isSel = false
+                    }
+                })
+                return data
+            default:
+                return
+        }
+    }
+    // return data
 }

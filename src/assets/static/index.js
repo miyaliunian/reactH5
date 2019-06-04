@@ -12,3 +12,9 @@ export const PUBLIC_LEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnUs9BxN1vawplB
     "l/mFbvL555EhriFkgOBfQ4J1tyIUatItIp4gvl2cDDeyrmmKOzYPrzcChVv4Bg0Y\r" +
     "94Wx4dSddCxQ172NyXXWV4MEPYkvwMucHeJjSrdchPqw+SRlYj2tmuRs56RXaf1r\r" +
     "4eiyI0MzArHfSArejwIDAQAB"
+
+
+//哪些数据需要转换
+export const dataConversionDic = {
+    divisionList: 'division',//医院列表->科室列表
+}

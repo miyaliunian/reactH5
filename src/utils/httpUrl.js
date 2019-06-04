@@ -25,5 +25,8 @@ export default {
     //医院列表
     API_HOSPITAL_LIST:(cityId,orderType,page)=>`${BASE_URL}/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`,
     //医院列表对应的科室列表
-    API_HOSPITAL_DIVSION_LIST:(hosid)=>`${BASE_URL}/division/v1.0/list/${hosid}.action`
+    API_HOSPITAL_DIVSION_LIST:(hosid)=>`${BASE_URL}/division/v1.0/list/${hosid}.action`,
+    //科室列表对应的门诊列表
+    API_DIVSION__DEPARTMENT_LIST:(hosid,divisionid)=>`${BASE_URL}/hisdept/v1.0/list/${hosid}/${divisionid}.action`
+
 }
