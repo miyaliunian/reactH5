@@ -5,12 +5,17 @@
  * Description:
  *    首页->医院列表->科室选择
  */
-import React, {Component } from 'react'
+import React, {Component} from 'react'
 import Header from '../../components/Header/NavBar'
 import {Icon} from 'antd-mobile';
 import Bscroll from 'better-scroll'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import './style.less'
-import {Button} from 'antd-mobile'
+import {
+    actions as divisionActions
+} from "../../reduxs/modules/division";
+
 
 const leftData = [
     {txt: '内外'},
@@ -71,14 +76,13 @@ const leftData = [
     {txt: '内外'},
 ]
 
-export default class ClinicContainer extends Component {
+class DivisionContainer extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             disabled: false,
         }
-
     }
 
     render() {
@@ -94,16 +98,18 @@ export default class ClinicContainer extends Component {
                 <div className={'clinic__container'}>
                     <div className={'clinic__left'} ref={'clinic__left'}>
                         <div>
-                            {leftData.map((item,index) => {
-                                return <div key={index} className={'clinic__left__item'} onClick={()=>alert(index)}>{item.txt}</div>
+                            {leftData.map((item, index) => {
+                                return <div key={index} className={'clinic__left__item'}
+                                            onClick={() => alert(index)}>{item.txt}</div>
                             })}
                         </div>
                     </div>
                     <div className={'clinic__right'} ref={'clinic__right'}>
                         <div>
                             <div>
-                                {leftData.map((item,index) => {
-                                    return <div key={index} className={'clinic__right__item'} onClick={()=>alert(index)}>{item.txt}</div>
+                                {leftData.map((item, index) => {
+                                    return <div key={index} className={'clinic__right__item'}
+                                                onClick={() => alert(index)}>{item.txt}</div>
                                 })}
                             </div>
                         </div>
@@ -113,19 +119,37 @@ export default class ClinicContainer extends Component {
         )
     }
 
-    componentDidMount(){
-        this.scroll = new Bscroll(this.refs.clinic__left,{
+    componentDidMount() {
+        this.scroll = new Bscroll(this.refs.clinic__left, {
             scrollY: true,
             click: true
         })
-        this.scroll = new Bscroll(this.refs.clinic__right,{
+        this.scroll = new Bscroll(this.refs.clinic__right, {
             scrollY: true,
             click: true
         })
+        this.props.divisionActions.loadDivisionList()
     }
 
     handleBack = () => {
         this.props.history.goBack()
     }
 
-}    
+}
+
+
+const mapStateToProps = (state) => {
+    return {
+        // hospitalList: getHospitalList(state),
+        // fetchingStatus: getFetchingStatus(state),
+        // isLastPage: getIsLastPage(state)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        divisionActions: bindActionCreators(divisionActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DivisionContainer)

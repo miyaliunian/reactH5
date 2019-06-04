@@ -23,5 +23,7 @@ export default {
     //医院列表->区域选择
     API_AREA_LIST:(cityId)=>`${BASE_URL}/city/v1.0/list/${cityId}.ch`,
     //医院列表
-    API_HOSPITAL_LIST:(cityId,orderType,page)=>`${BASE_URL}/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`
+    API_HOSPITAL_LIST:(cityId,orderType,page)=>`${BASE_URL}/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`,
+    //医院列表对应的科室列表
+    API_HOSPITAL_DIVSION_LIST:(hosid)=>`${BASE_URL}/division/v1.0/list/${hosid}.action`
 }

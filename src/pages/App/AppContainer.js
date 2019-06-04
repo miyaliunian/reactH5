@@ -9,7 +9,7 @@ import Home from '../Home/HomeContainer'
 import HospitalsContainer from "../Hospitals/HospitalsContainer";
 import LoginContainer from "../Login/LoginContainer";
 import LoadingMask from "../../components/Loading/LoadingMask";
-import ClinicContainer from "../Clinic/ClinicContainer";
+import DivisionContainer from "../Division/DivisionContainer";
 
 
 class AppContainer extends Component {
@@ -22,7 +22,7 @@ class AppContainer extends Component {
             <div className="App">
                 <Router>
                     <Switch>
-                        <Route path="/clinic" component={ClinicContainer}/>
+                        <Route path="/clinic" component={DivisionContainer}/>
                         <Route path="/login" component={LoginContainer}/>
                         <Route path="/hospitals" component={HospitalsContainer}/>
                         <Route path="/loading" component={LoadingMask}/>
