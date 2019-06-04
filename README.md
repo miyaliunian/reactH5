@@ -1,9 +1,8 @@
 #React WebApp：
 
 #####React+React-Redux+Redux-Thunk+ Ant Mobile UI
-##创建项目
-* yarn 安装依赖
-* yarn yarn create react-app 项目名
+##使用
+* yarn
 * yarn start
 ## IDE调试：WebStorm
 * 添加debug配置 debug 的方式为:JavaScript Debug  

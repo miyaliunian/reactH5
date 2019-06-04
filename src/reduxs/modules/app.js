@@ -9,7 +9,8 @@
 
 
 const initialState = {
-    error: null
+    error: null,
+    fetStatus: false
 }
 
 
@@ -25,7 +26,6 @@ export const actions = {
 }
 
 
-
 //reducer
 const reducer = (state = initialState, action) => {
     const {type, error} = action
@@ -36,7 +36,6 @@ const reducer = (state = initialState, action) => {
     }
 
 
-
     return state
 }
 
@@ -45,4 +44,8 @@ export default reducer
 // selectors
 export const getError = (state) => {
     return state.app.error
+}
+
+export const getFetchStatus = (state) => {
+    return state.app.fetStatus
 }

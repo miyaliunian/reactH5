@@ -41,6 +41,7 @@ class HospitalsContainer extends PureComponent {
                     :
                     null
                 }
+
             </div>
         )
     }
@@ -90,7 +91,6 @@ const mapStateToProps = (state) => {
         isLastPage: getIsLastPage(state)
     }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
     return {

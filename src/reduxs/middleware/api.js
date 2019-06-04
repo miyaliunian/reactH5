@@ -36,8 +36,6 @@ export default store => next => action => {
 
     const [requestType, successType, failureType] = types
     next(actionWith({type: requestType}))
-
-    //对数据进行请求
     return fetchData(targetURL, action.param).then(
         response => next(actionWith({
             type: successType,
@@ -50,57 +48,8 @@ export default store => next => action => {
     )
 }
 
-
-//执行网络请求
 const fetchData = (targetURL, param) => {
     return post(targetURL, param).then(data => {
         return data
     })
 }
-
-
-/**
- *
- *
- //根据schema, 将获取的数据扁平化处理
- const normalizeData = (data, schema) => {
-    const {id, name} = schema
-    let kvObj = {}
-    let ids = []
-    //登录特殊处理
-    if (schema.name == "loginData") {
-        let token = {}
-        token.access_token = data.data.loginData.access_token
-        token.refresh_token = data.data.loginData.refresh_token
-        //token 信息
-        localStorage.setItem('token', JSON.stringify(token))
-        // 用户信息
-        localStorage.setItem('user', JSON.stringify(data.data.loginData.user))
-        return
-    }
-
-    if (Array.isArray(data)) {
-        data.forEach(item => {
-            kvObj[item[id]] = item
-            ids.push(item[id])
-        })
-    } else {
-        kvObj[data[id]] = data
-        ids.push(data[id])
-    }
-    return {
-        [name]: kvObj,
-        ids
-    }
-}
-
-
- //执行网络请求
- const fetchData = (targetURL, schema) => {
-    return post(targetURL, {}).then(data => {
-        return normalizeData(data, schema)
-    })
-}
-
- *
- * */

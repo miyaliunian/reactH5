@@ -81,12 +81,12 @@ export default class ClinicContainer extends Component {
 
     }
 
-
     render() {
         console.log(this.props.location.state)
+        const {name} = this.props.location.state
         return (
             <div className={'clinic'}>
-                <Header title={'南通大学附属医院'} onBack={this.handleBack} isRight={false}/>
+                <Header title={name} onBack={this.handleBack} isRight={false}/>
                 <div className={'clinic__bar'}>
                     <div>进入医院主页</div>
                     <Icon className={'clinic__bar__icon'} type={'right'}/>
@@ -113,7 +113,6 @@ export default class ClinicContainer extends Component {
         )
     }
 
-
     componentDidMount(){
         this.scroll = new Bscroll(this.refs.clinic__left,{
             scrollY: true,
@@ -125,8 +124,8 @@ export default class ClinicContainer extends Component {
         })
     }
 
-
     handleBack = () => {
         this.props.history.goBack()
     }
+
 }    
