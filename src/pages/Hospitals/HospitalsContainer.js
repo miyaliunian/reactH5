@@ -27,14 +27,19 @@ class HospitalsContainer extends PureComponent {
         return (
             <div
                 id='hospitalsContainer'
-                onTouchMove={(e)=>this.handleTouchMove(e)}
+                onTouchMove={(e) => this.handleTouchMove(e)}
                 className={'hospitalsContainer'}>
                 <Header title={'医院列表'} onBack={this.handleBack} isRight={true}/>
                 <Tabs
                     handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
                     handelTabItemSel={(item) => this.handelTabItemSel(item)}
                 />
-                <HospitalsItem data={this.props.hospitalList} isLastPage={isLastPage}/>
+                <HospitalsItem
+                    data={this.props.hospitalList}
+                    isLastPage={isLastPage}
+                    pullingDownHandler={() => this.pullingDownHandler()}
+                    pullingUpHandler={() => this.pullingUpHandler()}
+                />
                 {fetchingStatus
                     ?
                     <LoadingMask/>
@@ -46,11 +51,26 @@ class HospitalsContainer extends PureComponent {
         )
     }
 
+
+    pullingDownHandler() {
+        console.log('pullingDownHandler')
+        // this.props.hospitalActions.restPage(1)
+        // this.props.hospitalActions.loadHosipitalList()
+    }
+
+    pullingUpHandler() {
+        const {isLastPage} = this.props
+        if (!isLastPage) {
+            this.props.hospitalActions.loadHosipitalList()
+        }
+    }
+
     handleBack = () => {
+        this.resetData()
         this.props.history.goBack()
     }
 
-    handleTouchMove(event){
+    handleTouchMove(event) {
     }
 
     componentDidMount() {
@@ -65,8 +85,14 @@ class HospitalsContainer extends PureComponent {
 
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
+        this.resetData()
     }
+
+    resetData() {
+        this.props.hospitalActions.reset()
+    }
+
     //处理行选中
     handelTabRowSel(item, index) {
         if (index === 1) { // 区域
@@ -76,6 +102,7 @@ class HospitalsContainer extends PureComponent {
         }
         this.props.hospitalActions.loadHosipitalList()
     }
+
     //处理列选中
     handelTabItemSel(item) {
         this.props.hospitalActions.setCategoryGrade(item)

@@ -87,7 +87,7 @@ class DivisionContainer extends Component {
     componentWillReceiveProps(nextProps) {
         const {divisionActions} = this.props
         if (nextProps.divisionList.length > 0) {
-            if (this.props.divisionList.length != nextProps.divisionList.length) {
+            if (this.props.divisionList.length !== nextProps.divisionList.length) {
                 divisionActions.setDivisionid(nextProps.divisionList[0].id)
                 divisionActions.loadDepartmentListByHostId()
             }

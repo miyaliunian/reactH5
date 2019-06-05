@@ -66,14 +66,14 @@ const fetchData = (targetURL, param, schema) => {
 }
 
 const normalizeData = (data, schema) => {
-    if (schema == '') {
+    if (schema === '') {
         return data
     } else {
         const {name} = schema
         switch (name) {
             case dataConversionDic.divisionList:
                 data.data.map((item, index) => {
-                    if (index == 0) {
+                    if (index === 0) {
                         item.isSel = true
                     } else {
                         item.isSel = false

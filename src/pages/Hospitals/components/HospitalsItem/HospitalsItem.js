@@ -9,18 +9,35 @@ import React, {Component} from 'react'
 import Bscroll from 'better-scroll'
 import './style.less'
 import {withRouter} from 'react-router-dom'
-
+import RefreshFooter from "../../../../components/Refresh/Footer/RefreshFooter";
 
 class HospitalsItem extends Component {
     componentDidMount() {
-        this.scroll = new Bscroll(this.refs.hospitalsItem, {
-            scrollY: true,
-            click: true
+        this.bscroll = new Bscroll(this.refs.hospitalsItem, {
+            mouseWheel: true,
+            probeType: 3,
+            click: true,
+            tap: true,
+            pullDownRefresh: {
+                threshold: 50,
+                stop: 20
+            },
+            pullUpLoad: {
+                threshold: 50
+            }
         })
+        this.bscroll.on('pullingDown', this.props.pullingDownHandler)
+        this.bscroll.on('pullingUp', this.props.pullingUpHandler);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isLastPage) {
+            this.bscroll.finishPullUp()
+        }
     }
 
     render() {
-        const {data} = this.props
+        const {data, isLastPage} = this.props
         return (
             <div className={'hospitalsItem'} ref={'hospitalsItem'}>
                 <div>
@@ -47,11 +64,17 @@ class HospitalsItem extends Component {
                             <div className="hospitalsItem__bottom">地址：{item.fullAddress}</div>
                         </div>)
                     })}
+                    {isLastPage
+                        ?
+                        <RefreshFooter/>
+                        :
+                        <div/>
+                    }
+
                 </div>
             </div>
         )
     }
-
 
     navPage(item) {
         let data = item

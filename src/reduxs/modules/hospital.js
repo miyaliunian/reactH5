@@ -18,7 +18,8 @@ const initialState = {
     hosCategory: '',//医院类型
     hosGrade: '',// 医院等级
 
-    isFetching:false,
+    isFetching: false,
+    isLastPage: false,
     page: 1,//翻页
     data: [] //列表数据
 }
@@ -30,9 +31,11 @@ const actionTypes = {
     FETCH_HOSPITAL_SUCCESS: 'HOSPITAL/FETCH_HOSPITAL_SUCCESS',
     FETCH_HOSPITAL_FAILURE: 'HOSPITAL/FETCH_HOSPITAL_FAILURE',
 
+    SET_PAGE: 'HOSPITAL/SET_PAGE',
     SET_AREA: 'HOSPITAL/SET_AREA',
     SET_SORT: 'HOSPITAL/SET_SORT',
-    SET_FILTER: 'HOSPITAL/SET_FILTER'
+    SET_FILTER: 'HOSPITAL/SET_FILTER',
+    RESET: 'HOSPITAL/RESET',
 }
 
 
@@ -51,6 +54,12 @@ export const actions = {
         }
     },
 
+
+    restPage: (page) => ({
+        type: actionTypes.SET_PAGE,
+        page
+    }),
+
     //区域
     setAreaId: (code) => ({
         type: actionTypes.SET_AREA,
@@ -67,6 +76,11 @@ export const actions = {
     setCategoryGrade: (value) => ({
         type: actionTypes.SET_FILTER,
         value
+    }),
+
+    //清空
+    reset: () => ({
+        type: actionTypes.SET_PAGE,
     })
 
 }
@@ -85,7 +99,6 @@ const fetchHosipitalList = (targetURL, param) => ({
     param
 })
 
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_HOSPITAL_REQUEST:
@@ -94,17 +107,22 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                data: action.response.data.list
+                isLastPage: action.response.data.lastPage,
+                page: state.page += 1,
+                data: state.data.concat(action.response.data.list)
             }
         case actionTypes.FETCH_HOSPITAL_FAILURE:
             return {...state, isFetching: false}
-
+        case actionTypes.SET_PAGE:
+            return {
+                ...state,
+                page: 1
+            }
         case actionTypes.SET_AREA:
             return {
                 ...state,
                 areaId: action.code
             }
-
         case actionTypes.SET_SORT:
             return {
                 ...state,
@@ -117,13 +135,23 @@ const reducer = (state = initialState, action) => {
                 hosGrade: action.value.yydj
             }
 
-
+        case actionTypes.RESET:
+            return {
+                ...state,
+                areaId: '',
+                sort: 'register',
+                hosCategory: '',
+                hosGrade: '',
+                isFetching: false,
+                isLastPage: false,
+                page: 1,
+                data: []
+            }
         default:
             return state
 
     }
 }
-
 export default reducer
 
 
@@ -132,10 +160,10 @@ export const getHospitalList = (state) => {
     return state.hospital.data
 }
 
-export const getFetchingStatus=(state)=>{
+export const getFetchingStatus = (state) => {
     return state.hospital.isFetching
 }
 
-export const getIsLastPage = (state)=>{
-    return state.hospital.isFetching
+export const getIsLastPage = (state) => {
+    return state.hospital.isLastPage
 }
