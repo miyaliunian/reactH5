@@ -6,7 +6,6 @@
  */
 
 let headers = new Headers({
-    'Connection': 'keep-alive',
     'Content-Type': 'application/json',
 })
 
