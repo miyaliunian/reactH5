@@ -37,7 +37,7 @@ class HospitalsItem extends Component {
                 stop: 20
             },
             pullUpLoad: {
-                threshold: 50
+                threshold: 80
             },
             useTransition: false
         })
