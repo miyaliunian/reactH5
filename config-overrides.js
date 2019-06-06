@@ -52,6 +52,9 @@ module.exports = override(
         '@assets': path.resolve(__dirname, 'src/assets'),
         '@components': path.resolve(__dirname, 'src/components'),
         '@containers': path.resolve(__dirname, 'src/containers'),
+        '@images': path.resolve(__dirname, 'src/images'),
+        '@reduxs': path.resolve(__dirname, 'src/reduxs'),
+        '@routes': path.resolve(__dirname, 'src/routes'),
         '@utils': path.resolve(__dirname, 'src/utils'),
 
     }),

@@ -9,8 +9,8 @@ import React, {Component} from 'react'
 import Bscroll from 'better-scroll'
 import './style.less'
 import {withRouter} from 'react-router-dom'
-import RefreshFooter from "../../../../components/Refresh/Footer/RefreshFooter";
-import RefreshHeader from "../../../../components/Refresh/Header/RefreshHeader";
+import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
+import RefreshHeader from "@components/Refresh/Header/RefreshHeader";
 
 class HospitalsItem extends Component {
 

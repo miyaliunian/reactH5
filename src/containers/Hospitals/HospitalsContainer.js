@@ -6,7 +6,7 @@
  *              医院列表容器
  */
 import React, {PureComponent} from 'react'
-import Header from "../../components/Header/NavBar";
+import Header from "@components/Header/NavBar";
 import HospitalsItem from "./components/HospitalsItem/HospitalsItem";
 import Tabs from "./components/Tabs/Tabs";
 import {connect} from 'react-redux'

@@ -3,12 +3,12 @@ import './style.less';
 import {bindActionCreators} from 'redux'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {connect} from "react-redux";
-import ErrorToast from '../../components/ErrorToast'
-import {actions as appActions, getError} from "../../reduxs/modules/app";
+import ErrorToast from '@components/ErrorToast'
+import {actions as appActions, getError} from "@reduxs/modules/app";
 import Home from '../Home/HomeContainer'
 import HospitalsContainer from "../Hospitals/HospitalsContainer";
 import LoginContainer from "../Login/LoginContainer";
-import LoadingMask from "../../components/Loading/LoadingMask";
+import LoadingMask from "@components/Loading/LoadingMask";
 import DivisionContainer from "../Division/DivisionContainer";
 
 class AppContainer extends Component {

@@ -6,11 +6,11 @@
  *
  */
 import React, {Component} from 'react'
-import {ZHPX, SX_YYLX, SX_YYDJ} from '../../../../assets/static/DictionaryConstant'
+import {ZHPX, SX_YYLX, SX_YYDJ} from '@assets/static/DictionaryConstant'
 import './style.less'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {actions as tabActions, getAreasList} from "../../../../reduxs/modules/tabs";
+import {actions as tabActions, getAreasList} from "@reduxs/modules/tabs";
 
 
 class Tabs extends Component {

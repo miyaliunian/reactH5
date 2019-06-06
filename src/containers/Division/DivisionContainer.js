@@ -6,8 +6,8 @@
  *    首页->医院列表->科室选择
  */
 import React, {Component} from 'react'
-import Header from '../../components/Header/NavBar'
-import LoadingMask from "../../components/Loading/LoadingMask";
+import Header from '@components/Header/NavBar'
+import LoadingMask from "@components/Loading/LoadingMask";
 import {Icon} from 'antd-mobile';
 import Bscroll from 'better-scroll'
 import {connect} from 'react-redux'
@@ -18,7 +18,7 @@ import {
     getFetchingStatus,
     getDivisionList,
     getDepartmentList
-} from "../../reduxs/modules/division";
+} from "@reduxs/modules/division";
 
 class DivisionContainer extends Component {
 
