@@ -27,9 +27,12 @@ const initialState = {
 
 // action types
 const actionTypes = {
+
     FETCH_HOSPITAL_REQUEST: 'HOSPITAL/FETCH_HOSPITAL_REQUEST',
     FETCH_HOSPITAL_SUCCESS: 'HOSPITAL/FETCH_HOSPITAL_SUCCESS',
     FETCH_HOSPITAL_FAILURE: 'HOSPITAL/FETCH_HOSPITAL_FAILURE',
+
+    REFRESH_HOSPITAL_SUCCESS: 'HOSPITAL/REFRESH_HOSPITAL_SUCCESS',
 
     SET_PAGE: 'HOSPITAL/SET_PAGE',
     SET_AREA: 'HOSPITAL/SET_AREA',
@@ -54,11 +57,17 @@ export const actions = {
         }
     },
 
-
-    restPage: (page) => ({
-        type: actionTypes.SET_PAGE,
-        page
-    }),
+    refreshHosipitalList: () => {
+        return (dispatch, getstate) => {
+            const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, '1')
+            let param = {
+                areaId: getstate().hospital.areaId || null,
+                hosCategory: getstate().hospital.hosCategory || null,
+                hosGrade: getstate().hospital.hosGrade || null
+            }
+            return dispatch(refreshHosipitalList(targetURL, param))
+        }
+    },
 
     //区域
     setAreaId: (code) => ({
@@ -80,7 +89,7 @@ export const actions = {
 
     //清空
     reset: () => ({
-        type: actionTypes.SET_PAGE,
+        type: actionTypes.RESET,
     })
 
 }
@@ -99,6 +108,19 @@ const fetchHosipitalList = (targetURL, param) => ({
     param
 })
 
+
+const refreshHosipitalList = (targetURL, param) => ({
+    [FETCH_DATA]: {
+        types: [
+            actionTypes.FETCH_HOSPITAL_REQUEST,
+            actionTypes.REFRESH_HOSPITAL_SUCCESS,
+            actionTypes.FETCH_HOSPITAL_FAILURE,
+        ],
+        targetURL,
+    },
+    param
+})
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_HOSPITAL_REQUEST:
@@ -110,6 +132,14 @@ const reducer = (state = initialState, action) => {
                 isLastPage: action.response.data.lastPage,
                 page: state.page += 1,
                 data: state.data.concat(action.response.data.list)
+            }
+        case actionTypes.REFRESH_HOSPITAL_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                isLastPage: action.response.data.lastPage,
+                page: 2,
+                data: action.response.data.list
             }
         case actionTypes.FETCH_HOSPITAL_FAILURE:
             return {...state, isFetching: false}
@@ -134,7 +164,6 @@ const reducer = (state = initialState, action) => {
                 hosCategory: action.value.yylx,
                 hosGrade: action.value.yydj
             }
-
         case actionTypes.RESET:
             return {
                 ...state,

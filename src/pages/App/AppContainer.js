@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
-import {BrowserRouter as Router,Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {connect} from "react-redux";
 import ErrorToast from '../../components/ErrorToast'
 import {actions as appActions, getError} from "../../reduxs/modules/app";
@@ -11,7 +11,6 @@ import LoginContainer from "../Login/LoginContainer";
 import LoadingMask from "../../components/Loading/LoadingMask";
 import DivisionContainer from "../Division/DivisionContainer";
 
-
 class AppContainer extends Component {
     render() {
         const {
@@ -20,7 +19,7 @@ class AppContainer extends Component {
         } = this.props;
         return (
             <div className="App">
-                <Router>
+                <Router forceRefresh={false}>
                     <Switch>
                         <Route path="/clinic" component={DivisionContainer}/>
                         <Route path="/login" component={LoginContainer}/>

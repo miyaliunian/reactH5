@@ -20,6 +20,7 @@ import {
 import './style.less'
 import LoadingMask from "../../components/Loading/LoadingMask";
 
+
 class HospitalsContainer extends PureComponent {
 
     render() {
@@ -36,6 +37,7 @@ class HospitalsContainer extends PureComponent {
                 />
                 <HospitalsItem
                     data={this.props.hospitalList}
+                    fetchingStatus={fetchingStatus}
                     isLastPage={isLastPage}
                     pullingDownHandler={() => this.pullingDownHandler()}
                     pullingUpHandler={() => this.pullingUpHandler()}
@@ -51,11 +53,8 @@ class HospitalsContainer extends PureComponent {
         )
     }
 
-
     pullingDownHandler() {
-        console.log('pullingDownHandler')
-        // this.props.hospitalActions.restPage(1)
-        // this.props.hospitalActions.loadHosipitalList()
+        this.props.hospitalActions.refreshHosipitalList()
     }
 
     pullingUpHandler() {
@@ -75,14 +74,17 @@ class HospitalsContainer extends PureComponent {
 
     componentDidMount() {
         document.getElementById('hospitalsContainer').addEventListener("touchmove", (event) => {
-            // 执行滚动回调
             event.preventDefault();
         }, {
             passive: false //  禁止 passive 效果
         })
 
-        this.props.hospitalActions.loadHosipitalList()
+        this.initailData()
+    }
 
+    initailData() {
+        this.resetData()
+        this.props.hospitalActions.loadHosipitalList()
     }
 
     componentWillUnmount() {

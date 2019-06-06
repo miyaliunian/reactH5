@@ -94,7 +94,6 @@ class DivisionContainer extends Component {
         }
     }
 
-
     leftItemClick(item) {
         this.props.divisionList.map(oldItem => {
             if (oldItem.id === item.id) {

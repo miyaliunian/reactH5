@@ -10,8 +10,17 @@ import Bscroll from 'better-scroll'
 import './style.less'
 import {withRouter} from 'react-router-dom'
 import RefreshFooter from "../../../../components/Refresh/Footer/RefreshFooter";
+import RefreshHeader from "../../../../components/Refresh/Header/RefreshHeader";
 
 class HospitalsItem extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            isShowRefreshHeader: false
+        }
+    }
+
     componentDidMount() {
         this.bscroll = new Bscroll(this.refs.hospitalsItem, {
             mouseWheel: true,
@@ -19,14 +28,15 @@ class HospitalsItem extends Component {
             click: true,
             tap: true,
             pullDownRefresh: {
-                threshold: 50,
+                threshold: 30,
                 stop: 20
             },
             pullUpLoad: {
                 threshold: 50
-            }
+            },
+            useTransition: false
         })
-        this.bscroll.on('pullingDown', this.props.pullingDownHandler)
+        this.bscroll.on('pullingDown', this.pullingDownHandler)
         this.bscroll.on('pullingUp', this.props.pullingUpHandler);
     }
 
@@ -41,6 +51,12 @@ class HospitalsItem extends Component {
         return (
             <div className={'hospitalsItem'} ref={'hospitalsItem'}>
                 <div>
+                    {this.state.isShowRefreshHeader
+                        ?
+                        <RefreshHeader/>
+                        :
+                        <div/>
+                    }
                     {data.map((item, index) => {
                         return (<div className="hospitalsItem__con" key={index} onClick={() => this.navPage(item)}>
                             <div className="hospitalsItem__title">{item.name}</div>
@@ -64,13 +80,7 @@ class HospitalsItem extends Component {
                             <div className="hospitalsItem__bottom">地址：{item.fullAddress}</div>
                         </div>)
                     })}
-                    {isLastPage
-                        ?
-                        <RefreshFooter/>
-                        :
-                        <div/>
-                    }
-
+                    <RefreshFooter refreshStatus={isLastPage}/>
                 </div>
             </div>
         )
@@ -83,6 +93,22 @@ class HospitalsItem extends Component {
             state: data
         }
         this.props.history.push(path)
+    }
+
+    pullingDownHandler = () => {
+        this.setState({
+            isShowRefreshHeader: true
+        })
+        this.props.pullingDownHandler()
+        setTimeout(() => {
+            if (!this.props.fetchingStatus) {
+                this.setState({
+                    isShowRefreshHeader: false
+                })
+                this.bscroll.finishPullDown()
+            }
+        }, 500)
+
     }
 }
 
