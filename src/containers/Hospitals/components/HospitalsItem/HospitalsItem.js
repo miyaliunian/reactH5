@@ -49,6 +49,14 @@ class HospitalsItem extends Component {
         if (nextProps.isLastPage) {
             this.bscroll.finishPullUp()
         }
+        setTimeout(() => {
+            if (!this.props.fetchingStatus) {
+                this.setState({
+                    isShowRefreshHeader: false
+                })
+                this.bscroll.finishPullDown()
+            }
+        }, 200)
     }
 
     render() {
@@ -121,15 +129,6 @@ class HospitalsItem extends Component {
             isShowRefreshHeader: true
         })
         this.props.pullingDownHandler()
-        setTimeout(() => {
-            if (!this.props.fetchingStatus) {
-                this.setState({
-                    isShowRefreshHeader: false
-                })
-                this.bscroll.finishPullDown()
-            }
-        }, 500)
-
     }
 }
 
