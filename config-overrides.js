@@ -6,9 +6,12 @@
  *  按需加载
  */
 
-const {override, fixBabelImports, addLessLoader, addWebpackAlias} = require('customize-cra');
-const path = require('path')
-
+const {
+    override,
+    fixBabelImports,
+    addWebpackAlias,
+    addLessLoader,
+} = require('customize-cra');
 const addCustomize = () => config => {
     require('react-app-rewire-postcss')(config, {
         plugins: loader => [
@@ -42,20 +45,23 @@ const addCustomize = () => config => {
     });
     return config;
 }
-
-
+const theme = require('./package.json').theme
+const path = require('path')
 module.exports = override(
     addWebpackAlias({
-        '@': path.resolve(__dirname, 'src')
+        '@assets': path.resolve(__dirname, 'src/assets'),
+        '@components': path.resolve(__dirname, 'src/components'),
+        '@containers': path.resolve(__dirname, 'src/containers'),
+        '@utils': path.resolve(__dirname, 'src/utils'),
+
     }),
-    addCustomize(),
     fixBabelImports('import', {
-        ident: 'postcss',
         libraryName: 'antd-mobile',
         style: true
     }),
     addLessLoader({
         javascriptEnabled: true,
-        modifyVars: {"@primary-color": "#f47983"}
+        modifyVars: theme
     }),
+    addCustomize(),
 );

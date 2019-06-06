@@ -12,8 +12,7 @@ export default class RefreshHeader extends Component {
     render() {
         return (
             <div className={'refreshHeader'}>
-                {/*<div className="loading__img"/>*/}
-                <ReactLoading type={'spokes'} width={20} height={20} color={'rgb(201,201,201)'}/>
+                <ReactLoading type={'spokes'} width={20} height={20} color={'#696969'}/>
             </div>
         )
     }

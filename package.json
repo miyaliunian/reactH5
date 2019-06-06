@@ -62,26 +62,22 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.4.4",
     "css-loader": "^2.1.1",
     "style-loader": "^0.23.1"
   },
-  "babel": {
-    "plugins": [
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ]
-    ],
-    "presets": [
-      "react-app"
-    ]
+  "theme": {
+    "@brand-primary": "#007FFE",
+    "@brand-primary-tap": "#0072E3",
+    "@brand-success": "#79ceb8",
+    "@brand-warning": "#ffdb00",
+    "@brand-error": "#e95f5c",
+    "@brand-important": "#ff5b05",
+    "@brand-wait": "#b7b7b7",
+    "@comment-text-bg": "#F4F6F5",
+    "@tab-bar-fill": "@brand-primary",
+    "@nav-bar-fill": "@brand-primary",
+    "@fill-tap": "@brand-primary-tap",
+    "@fill-grey": "#f7f7f7"
   }
 }

@@ -7,6 +7,7 @@
  */
 import React, {Component} from 'react'
 import PropTypes from "prop-types";
+import ReactLoading from 'react-loading';
 import './style.less'
 
 export default class RefreshFooter extends Component {
@@ -25,7 +26,7 @@ export default class RefreshFooter extends Component {
                     :
                     (
                         <div className={'refreshFooter__loading'}>
-                            <div className="loading__img"/>
+                            <ReactLoading type={'spokes'} width={20} height={20} color={'#696969'}/>
                             <div className={'refreshFooter__txt'}>正在加载...</div>
                         </div>
                     )
