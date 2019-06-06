@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import Slider from 'react-slick'
-import BannerImg from '../../../../images/Home/banner_01.jpg'
+import BannerImg from '@images/Home/banner_01.jpg'
 import './style.less'
 export default class Banner extends Component {
     render() {

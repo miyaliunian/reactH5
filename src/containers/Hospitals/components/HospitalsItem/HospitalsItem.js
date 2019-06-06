@@ -11,6 +11,11 @@ import './style.less'
 import {withRouter} from 'react-router-dom'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import RefreshHeader from "@components/Refresh/Header/RefreshHeader";
+//图标
+import icon_sj from '@images/Home/三甲图标IOS.png';
+import icon_bg from '@images/Home/报告图标IOS.png';
+import icon_zh from '@images/Home/综合图标IOS.png';
+import icon_yy from '@images/Home/预约图标IOS.png';
 
 class HospitalsItem extends Component {
 
@@ -61,18 +66,34 @@ class HospitalsItem extends Component {
                         return (<div className="hospitalsItem__con" key={index} onClick={() => this.navPage(item)}>
                             <div className="hospitalsItem__title">{item.name}</div>
                             <div className="hospitalsItem__middle">
-                                <span className={'hospitalsItem__innerTxt'}>{item.hosGradeShortName}</span>
-                                <span className={'hospitalsItem__innerTxt'}>{item.hosCategory}</span>
+
+                                <div className={'hospitalsItem__middle__item'}>
+                                    <img src={icon_sj} className={'hospitalsItem__middle__icon'} alt=''/>
+                                    <span className={'hospitalsItem__middle__innerTxt'}>{item.hosGradeShortName}</span>
+                                </div>
+
+                                <div className={'hospitalsItem__middle__item'}>
+                                    <img src={icon_zh} className={'hospitalsItem__middle__icon'} alt=''/>
+                                    <span className={'hospitalsItem__middle__innerTxt'}>{item.hosCategory}</span>
+                                </div>
+
                                 {item.regOpened
                                     ?
-                                    <span className={'hospitalsItem__innerTxt'}>可预约</span>
+                                    <div className={'hospitalsItem__middle__item'}>
+                                        <img src={icon_yy} className={'hospitalsItem__middle__icon'} alt=''/>
+                                        <span className={'hospitalsItem__middle__innerTxt'}>可预约</span>
+                                    </div>
+
                                     :
                                     null
                                 }
 
                                 {item.reportOpened
                                     ?
-                                    <span className={'hospitalsItem__innerTxt'}>查报告</span>
+                                    <div className={'hospitalsItem__middle__item'}>
+                                        <img src={icon_bg} className={'hospitalsItem__middle__icon'} alt=''/>
+                                        <span className={'hospitalsItem__middle__innerTxt'}>查报告</span>
+                                    </div>
                                     :
                                     null
                                 }

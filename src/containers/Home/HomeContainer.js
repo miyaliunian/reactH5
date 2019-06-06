@@ -13,11 +13,10 @@ import Banner from './components/Banner'
 import Category from './components/Category'
 import HeadLine from './components/HeadLine'
 import Activity from "./components/Activity/Activity";
+
 import './style.less'
 
 class Home extends Component {
-
-
     render() {
         return (
             <div>
@@ -49,7 +48,7 @@ class Home extends Component {
                 this.props.history.push('/login')
                 break
             case 2 :
-                this.props.history.push('/clinic')
+                // this.props.history.push('/clinic')
                 break
         }
     }
