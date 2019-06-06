@@ -78,7 +78,6 @@ class HospitalsContainer extends PureComponent {
         }, {
             passive: false //  禁止 passive 效果
         })
-
         this.initailData()
     }
 

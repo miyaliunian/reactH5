@@ -1,2 +1,45 @@
-.App {
+/*push*/
+.app4-push-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.app4-push-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms ease;
+}
+
+.app4-push-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.app4-push-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 500ms ease;
+}
+
+/*pop*/
+.app4-pop-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.app4-pop-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms ease;
+}
+
+.app4-pop-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.app4-pop-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 500ms ease;
 }
