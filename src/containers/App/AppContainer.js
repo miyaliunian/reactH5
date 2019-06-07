@@ -15,7 +15,6 @@ import DivisionContainer from "../Division/DivisionContainer";
 const RouteModule = function (props) {
     return (
         <TransitionGroup
-            style={{position: 'relative'}}
             childFactory={child => React.cloneElement(
                 child,
                 {classNames: props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
