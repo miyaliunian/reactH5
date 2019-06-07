@@ -12,6 +12,7 @@ import LoginContainer from "../Login/LoginContainer";
 import LoadingMask from "@components/Loading/LoadingMask";
 import DivisionContainer from "../Division/DivisionContainer";
 
+
 const RouteModule = function (props) {
     return (
         <TransitionGroup
@@ -39,6 +40,7 @@ const RouteModule = function (props) {
         </TransitionGroup>
     );
 };
+
 
 class AppContainer extends Component {
     render() {
