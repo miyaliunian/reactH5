@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
-import {BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch,withRouter} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
@@ -15,7 +15,7 @@ import DivisionContainer from "../Division/DivisionContainer";
 const RouteModule = function (props) {
     return (
         <TransitionGroup
-            style={{position: 'releative'}}
+            style={{position: 'relative'}}
             childFactory={child => React.cloneElement(
                 child,
                 {classNames: props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}

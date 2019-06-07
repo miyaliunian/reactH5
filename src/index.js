@@ -6,13 +6,10 @@ import './index.css';
 import '@assets/less/reset.css'
 import '@assets/less/border.less'
 import App from '@containers/App/AppContainer';
-import {Provider as KeepAliveProvider} from 'react-keep-alive';
 
 ReactDOM.render(
     <Provider store={store}>
-        <KeepAliveProvider>
             <App/>
-        </KeepAliveProvider>
     </Provider>,
     document.getElementById('root')
 );
