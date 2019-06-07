@@ -27,11 +27,11 @@ const RouteModule = function (props) {
                 classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
             >
                 <Switch location={props.location}>
-                        <Route path="/clinic" component={DivisionContainer}/>
-                        <Route path="/login" component={LoginContainer}/>
-                        <Route path="/hospitals" component={HospitalsContainer}/>
-                        <Route path="/loading" component={LoadingMask}/>
-                        <Route path="/" component={Home}/>
+                    <Route path="/clinic" component={DivisionContainer}/>
+                    <Route path="/login" component={LoginContainer}/>
+                    <Route path="/hospitals" component={HospitalsContainer}/>
+                    <Route path="/loading" component={LoadingMask}/>
+                    <Route path="/" component={Home}/>
                 </Switch>
             </CSSTransition>
         </TransitionGroup>

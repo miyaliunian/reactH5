@@ -76,19 +76,19 @@ class HospitalsItem extends Component {
                             <div className="hospitalsItem__middle">
 
                                 <div className={'hospitalsItem__middle__item'}>
-                                    <img src={icon_sj} className={'hospitalsItem__middle__icon'} alt=''/>
+                                    <img src={icon_sj} alt='' className={'hospitalsItem__middle__icon'} />
                                     <span className={'hospitalsItem__middle__innerTxt'}>{item.hosGradeShortName}</span>
                                 </div>
 
                                 <div className={'hospitalsItem__middle__item'}>
-                                    <img src={icon_zh} className={'hospitalsItem__middle__icon'} alt=''/>
+                                    <img src={icon_zh} alt='' className={'hospitalsItem__middle__icon'} />
                                     <span className={'hospitalsItem__middle__innerTxt'}>{item.hosCategory}</span>
                                 </div>
 
                                 {item.regOpened
                                     ?
                                     <div className={'hospitalsItem__middle__item'}>
-                                        <img src={icon_yy} className={'hospitalsItem__middle__icon'} alt=''/>
+                                        <img src={icon_yy} alt='/' className={'hospitalsItem__middle__icon'} />
                                         <span className={'hospitalsItem__middle__innerTxt'}>可预约</span>
                                     </div>
 

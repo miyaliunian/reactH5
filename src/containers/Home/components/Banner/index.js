@@ -22,7 +22,7 @@ export default class Banner extends Component {
             <div>
                 <Slider {...settings}>
                     <img src={BannerImg} alt='' className='banner__icon' onClick={()=>{alert(1)}}/>
-                    <img src={BannerImg} alt='' className='banner__icon' onClick={()=>{alert(2)}}/>
+                    <img src={BannerImg} alt='' className='banner__icon' onClick={()=>{alert(1)}}/>
                 </Slider>
             </div>
         )
