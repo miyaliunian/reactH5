@@ -53,10 +53,13 @@ class HospitalsContainer extends PureComponent {
         )
     }
 
+
+    //下拉刷新
     pullingDownHandler() {
         this.props.hospitalActions.refreshHosipitalList()
     }
 
+    //
     pullingUpHandler() {
         const {isLastPage} = this.props
         if (!isLastPage) {
@@ -101,13 +104,13 @@ class HospitalsContainer extends PureComponent {
         } else { // 综合排序
             this.props.hospitalActions.setSord(item.value)
         }
-        this.props.hospitalActions.loadHosipitalList()
+        this.props.hospitalActions.fetchHosipitalListBy()
     }
 
     //处理列选中
     handelTabItemSel(item) {
         this.props.hospitalActions.setCategoryGrade(item)
-        this.props.hospitalActions.loadHosipitalList()
+        this.props.hospitalActions.fetchHosipitalListBy()
     }
 }
 
