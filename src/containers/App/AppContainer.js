@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component,Fragment} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
 import { BrowserRouter as Router, Route, Switch,withRouter} from "react-router-dom"
@@ -15,6 +15,7 @@ import DivisionContainer from "../Division/DivisionContainer";
 const RouteModule = function (props) {
     return (
         <TransitionGroup
+            style={{position: 'releative'}}
             childFactory={child => React.cloneElement(
                 child,
                 {classNames: props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
@@ -26,13 +27,11 @@ const RouteModule = function (props) {
                 classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
             >
                 <Switch location={props.location}>
-                    <Switch>
                         <Route path="/clinic" component={DivisionContainer}/>
                         <Route path="/login" component={LoginContainer}/>
                         <Route path="/hospitals" component={HospitalsContainer}/>
                         <Route path="/loading" component={LoadingMask}/>
                         <Route path="/" component={Home}/>
-                    </Switch>
                 </Switch>
             </CSSTransition>
         </TransitionGroup>
@@ -44,12 +43,12 @@ class AppContainer extends Component {
         const {error, appActions: {clearError}} = this.props;
         const Routes = withRouter(RouteModule);
         return (
-            <div>
+            <Fragment>
                 <Router forceRefresh={false}>
                     <Routes/>
                 </Router>
                 {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
-            </div>
+            </Fragment>
         );
     }
 }
