@@ -6,6 +6,7 @@
  *
  */
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Bscroll from 'better-scroll'
 import './style.less'
 import {withRouter} from 'react-router-dom'
@@ -71,43 +72,47 @@ class HospitalsItem extends Component {
                         <div/>
                     }
                     {data.map((item, index) => {
-                        return (<div className="hospitalsItem__con" key={index} onClick={() => this.navPage(item)}>
-                            <div className="hospitalsItem__title">{item.name}</div>
-                            <div className="hospitalsItem__middle">
+                        return (
+                            <Link to={`/clinic/${item.id}/${item.name}`}
+                                  key={index}
+                            >
+                                <div className="hospitalsItem__con">
+                                    <div className="hospitalsItem__title">{item.name}</div>
+                                    <div className="hospitalsItem__middle">
+                                        <div className={'hospitalsItem__middle__item'}>
+                                            <img src={icon_sj} alt='' className={'hospitalsItem__middle__icon'}/>
+                                            <span
+                                                className={'hospitalsItem__middle__innerTxt'}>{item.hosGradeShortName}</span>
+                                        </div>
+                                        <div className={'hospitalsItem__middle__item'}>
+                                            <img src={icon_zh} alt='' className={'hospitalsItem__middle__icon'}/>
+                                            <span
+                                                className={'hospitalsItem__middle__innerTxt'}>{item.hosCategory}</span>
+                                        </div>
+                                        {item.regOpened
+                                            ?
+                                            <div className={'hospitalsItem__middle__item'}>
+                                                <img src={icon_yy} alt='/' className={'hospitalsItem__middle__icon'}/>
+                                                <span className={'hospitalsItem__middle__innerTxt'}>可预约</span>
+                                            </div>
 
-                                <div className={'hospitalsItem__middle__item'}>
-                                    <img src={icon_sj} alt='' className={'hospitalsItem__middle__icon'} />
-                                    <span className={'hospitalsItem__middle__innerTxt'}>{item.hosGradeShortName}</span>
-                                </div>
-
-                                <div className={'hospitalsItem__middle__item'}>
-                                    <img src={icon_zh} alt='' className={'hospitalsItem__middle__icon'} />
-                                    <span className={'hospitalsItem__middle__innerTxt'}>{item.hosCategory}</span>
-                                </div>
-
-                                {item.regOpened
-                                    ?
-                                    <div className={'hospitalsItem__middle__item'}>
-                                        <img src={icon_yy} alt='/' className={'hospitalsItem__middle__icon'} />
-                                        <span className={'hospitalsItem__middle__innerTxt'}>可预约</span>
+                                            :
+                                            null
+                                        }
+                                        {item.reportOpened
+                                            ?
+                                            <div className={'hospitalsItem__middle__item'}>
+                                                <img src={icon_bg} className={'hospitalsItem__middle__icon'} alt=''/>
+                                                <span className={'hospitalsItem__middle__innerTxt'}>查报告</span>
+                                            </div>
+                                            :
+                                            null
+                                        }
                                     </div>
-
-                                    :
-                                    null
-                                }
-
-                                {item.reportOpened
-                                    ?
-                                    <div className={'hospitalsItem__middle__item'}>
-                                        <img src={icon_bg} className={'hospitalsItem__middle__icon'} alt=''/>
-                                        <span className={'hospitalsItem__middle__innerTxt'}>查报告</span>
-                                    </div>
-                                    :
-                                    null
-                                }
-                            </div>
-                            <div className="hospitalsItem__bottom">地址：{item.fullAddress}</div>
-                        </div>)
+                                    <div className="hospitalsItem__bottom">地址：{item.fullAddress}</div>
+                                </div>
+                            </Link>
+                        )
                     })}
                     <RefreshFooter refreshStatus={isLastPage}/>
                 </div>

@@ -1,7 +1,7 @@
-import React, {Component,Fragment} from 'react';
+import React, {Component, Fragment} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
-import { BrowserRouter as Router, Route, Switch,withRouter} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch, withRouter} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
@@ -26,13 +26,15 @@ const RouteModule = function (props) {
                 timeout={500}
                 classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
             >
-                <Switch location={props.location}>
-                    <Route path="/clinic" component={DivisionContainer}/>
-                    <Route path="/login" component={LoginContainer}/>
-                    <Route path="/hospitals" component={HospitalsContainer}/>
-                    <Route path="/loading" component={LoadingMask}/>
-                    <Route path="/" component={Home}/>
-                </Switch>
+                <div>
+                    <Switch location={props.location}>
+                        <Route path="/clinic/:id/:name" component={DivisionContainer}/>
+                        <Route path="/login" component={LoginContainer}/>
+                        <Route path="/hospitals" component={HospitalsContainer}/>
+                        <Route path="/loading" component={LoadingMask}/>
+                        <Route exact path="/" component={Home}/>
+                    </Switch>
+                </div>
             </CSSTransition>
         </TransitionGroup>
     );
@@ -65,7 +67,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

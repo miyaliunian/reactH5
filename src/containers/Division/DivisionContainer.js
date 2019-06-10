@@ -31,7 +31,7 @@ class DivisionContainer extends Component {
     }
 
     render() {
-        const {name} = this.props.location.state
+        const {name} = this.props.match.params
         const {fetchingStatus, divisionList, departmentList} = this.props
         return (
             <div className={'clinic'}>
@@ -80,7 +80,7 @@ class DivisionContainer extends Component {
             scrollY: true,
             click: true
         })
-        const {id} = this.props.location.state
+        const {id} = this.props.match.params
         this.props.divisionActions.setHosid(id)
         this.props.divisionActions.loadDivisionList()
     }

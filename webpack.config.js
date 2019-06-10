@@ -1,5 +1,8 @@
 /**
- * 不是真实的 webpack 配置，仅为兼容 webstorm  代码跳转
+ * Author: wufei
+ * Date: 2019/6/6
+ * Description:
+ *      不是真实的 webpack 配置，仅为兼容 webstorm  代码跳转
  */
 
 module.exports = {
