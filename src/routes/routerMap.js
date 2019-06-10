@@ -1,9 +1,9 @@
 /**
  * Class: routerMap
  * Author: wufei
- * Date: 2019/6/6
+ * Date: 2019/6/10
  * Description:
- *  路由映射
+ *  路由映射: 路由组件化
  */
 
 import Home from '@containers/Home/HomeContainer'
