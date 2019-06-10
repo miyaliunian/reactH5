@@ -6,11 +6,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
-import Home from '../Home/HomeContainer'
-import HospitalsContainer from "../Hospitals/HospitalsContainer";
-import LoginContainer from "../Login/LoginContainer";
-import LoadingMask from "@components/Loading/LoadingMask";
-import DivisionContainer from "../Division/DivisionContainer";
+import routerMap from '@routes/routerMap'
 
 const RouteModule = function (props) {
     return (
@@ -28,11 +24,15 @@ const RouteModule = function (props) {
             >
                 <div>
                     <Switch location={props.location}>
-                        <Route path="/clinic/:id/:name" component={DivisionContainer}/>
-                        <Route path="/login" component={LoginContainer}/>
-                        <Route path="/hospitals" component={HospitalsContainer}/>
-                        <Route path="/loading" component={LoadingMask}/>
-                        <Route exact path="/" component={Home}/>
+                        {
+                            routerMap.map((v, i) => {
+                                if (v.exact) {
+                                    return <Route key={i} exact path={v.path} component={v.component}/>
+                                } else {
+                                    return <Route key={i} path={v.path} component={v.component}/>
+                                }
+                            })
+                        }
                     </Switch>
                 </div>
             </CSSTransition>
