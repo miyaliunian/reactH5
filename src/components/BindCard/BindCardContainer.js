@@ -12,7 +12,8 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
     actions as bindCardActions,
-    getFetchingStatus
+    getFetchingStatus,
+    getBindCardList
 } from "@reduxs/modules/bindCard";
 
 
@@ -22,7 +23,8 @@ class BindCardContainer extends Component {
     }
 
     render() {
-
+        const {list} = this.props
+        console.log(list)
         return (
             <div className={'bindCard'}>
                 <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
@@ -32,7 +34,7 @@ class BindCardContainer extends Component {
 
 
     componentDidMount() {
-       this.props.bindCardActions.loadList()
+        this.props.bindCardActions.loadList()
     }
 }
 
@@ -41,6 +43,7 @@ const
     mapStateToProps = (state) => {
         return {
             fetchingStatus: getFetchingStatus(state),
+            list: getBindCardList(state)
         }
     }
 
@@ -51,8 +54,4 @@ const
         }
     }
 
-export default connect(mapStateToProps, mapDispatchToProps)
-
-(
-    BindCardContainer
-)
+export default connect(mapStateToProps, mapDispatchToProps)(BindCardContainer)
