@@ -1,6 +1,6 @@
 #React WebApp：
 
-#####React+React-Redux+Redux-Thunk+ Ant Mobile UI
+#####React+React-Redux+Redux-Thunk+Ant-Mobile
 ##使用
 * yarn
 * yarn start
@@ -28,3 +28,11 @@
                                  |---------------- httpUrl.js       网络请求url 统一管理 
                                  |---------------- httpUtil.js      网络请求封装
 ````
+##### 已解决问题
+    * ant-mobile 按需加载，全局颜色管理
+    * proxy 代理解决跨域
+    * alias 访问资源文件
+    * vm 高清解决方案、UI按照375*664 为基础换算
+    * 动态路由配置
+    * 不依赖外部传入url
+##### 待解决    
