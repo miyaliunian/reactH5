@@ -48,7 +48,7 @@ class Home extends Component {
                 this.props.history.push('/login')
                 break
             case 2 :
-                // this.props.history.push('/clinic')
+                this.props.history.push('/bindCard')
                 break
         }
     }

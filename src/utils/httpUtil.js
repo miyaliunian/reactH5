@@ -6,8 +6,10 @@
  */
 
 let headers = new Headers({
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
+    'Connection': 'keep-alive'
 })
+
 
 /**
  *  GET 请求
@@ -35,7 +37,8 @@ function get(url) {
  */
 function post(url, data = '') {
     if (-1 !== url.search('.do')) {
-        headers.append('Cookie', `token=${data}`)
+        let tid = JSON.parse(localStorage.getItem('token')).access_token
+        headers.append("tid", tid)
     }
     return fetch(url, {
         method: 'POST',
@@ -65,4 +68,4 @@ function handelResponse(resposne, url) {
     }
 }
 
-export {get, post}
+export {post}

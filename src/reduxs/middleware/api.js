@@ -20,7 +20,7 @@ export default store => next => action => {
     let {targetURL, schema, types} = callAPI
 
     if (typeof targetURL !== 'string') {
-        throw new Error('endpoint必须为字符串类型的URL')
+        throw new Error('targetURL必须为字符串类型的URL')
     }
 
     // if (!schema) {
@@ -79,6 +79,12 @@ const normalizeData = (data, schema) => {
                         item.isSel = false
                     }
                 })
+                return data
+            case dataConversionDic.token:
+                let token = {}
+                token.access_token = data.data.loginData.access_token
+                token.refresh_token = data.data.loginData.refresh_token
+                localStorage.setItem('token', JSON.stringify(token))
                 return data
             default:
                 return

@@ -15,6 +15,7 @@ import home from './home'
 import tabs from './tabs'
 import hospital from './hospital'
 import division from './division'
+import bindCard from './bindCard'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     home,
     tabs,
     hospital,
-    division
+    division,
+    bindCard
 })
 
 export default rootReducer

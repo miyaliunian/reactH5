@@ -7,8 +7,13 @@
  */
 import url from "../../utils/httpUrl"
 import {PUBLIC_LEY} from "../../assets/static";
-import {schema} from "./entities/loginEntity";
 import {FETCH_DATA} from "../middleware/api";
+import {dataConversionDic} from '../../assets/static'
+
+
+export const schema = {
+    name: dataConversionDic.token,
+}
 
 const initialState = {
     username: '',

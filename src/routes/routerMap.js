@@ -11,6 +11,7 @@ import Hospitals from "@containers/Hospitals/HospitalsContainer";
 import Login from "@containers/Login/LoginContainer";
 import LoadingMask from "@components/Loading/LoadingMask";
 import Division from "@containers/Division/DivisionContainer";
+import BindCard from "@components/BindCard/BindCardContainer"
 
 const routerMap = [
     {
@@ -33,6 +34,10 @@ const routerMap = [
     {
         path: '/clinic/:id/:name',
         component: Division
+    },
+    {
+        path: '/bindCard',
+        component: BindCard
     },
 ]
 

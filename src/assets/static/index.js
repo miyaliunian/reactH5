@@ -17,4 +17,5 @@ export const PUBLIC_LEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnUs9BxN1vawplB
 //哪些数据需要转换
 export const dataConversionDic = {
     divisionList: 'division',//医院列表->科室列表
+    token: 'token',//登录token
 }
