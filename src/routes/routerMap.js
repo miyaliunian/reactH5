@@ -12,6 +12,7 @@ import Login from "@containers/Login/LoginContainer";
 import LoadingMask from "@components/Loading/LoadingMask";
 import Division from "@containers/Division/DivisionContainer";
 import BindCard from "@components/BindCard/BindCardContainer"
+import BindCardList from "@components/BindCard/components/BindCardList";
 
 const routerMap = [
     {
@@ -38,6 +39,10 @@ const routerMap = [
     {
         path: '/bindCard',
         component: BindCard
+    },
+    {
+        path: '/bindCardList',
+        component: BindCardList
     },
 ]
 

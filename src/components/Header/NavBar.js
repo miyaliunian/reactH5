@@ -14,7 +14,8 @@ export default class Header extends PureComponent {
 
     static propTypes = {
         title: PropTypes.string.isRequired,
-        isRight: PropTypes.bool.isRequired
+        isRight: PropTypes.bool.isRequired,
+        onBack:PropTypes.func.isRequired
     };
 
     render() {

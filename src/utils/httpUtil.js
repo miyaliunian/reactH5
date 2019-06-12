@@ -5,9 +5,11 @@
  * Description:  网络请求
  */
 
-let headers = new Headers({
-    'Content-Type': 'application/json;charset=UTF-8',
-})
+
+function resetHeader() {
+    let headers = new Headers()
+    return headers.append('Content-Type', 'application/json;charset=UTF-8')
+}
 
 
 /**
@@ -16,6 +18,9 @@ let headers = new Headers({
  * @returns {Promise<Response>}
  */
 function get(url) {
+    let headers = new Headers({
+        'Content-Type': 'application/json;charset=UTF-8',
+    })
     return fetch(url, {
         method: 'GET',
         headers: headers
@@ -35,6 +40,9 @@ function get(url) {
  * @returns {Promise<Response>}
  */
 function post(url, data = '') {
+    let headers = new Headers({
+        'Content-Type': 'application/json;charset=UTF-8',
+    })
     if (-1 !== url.search('.do')) {
         let tid = JSON.parse(localStorage.getItem('token')).access_token
         headers.append("tid", tid)
@@ -67,4 +75,4 @@ function handelResponse(resposne, url) {
     }
 }
 
-export {get,post}
+export {get, post}

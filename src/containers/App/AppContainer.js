@@ -49,7 +49,7 @@ class AppContainer extends Component {
                 <Router forceRefresh={false}>
                     <Routes/>
                 </Router>
-                {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
+                {/*{error ? <ErrorToast msg={error} clearError={clearError}/> : null}*/}
             </Fragment>
         );
     }

@@ -8,13 +8,15 @@
 import React, {Component} from 'react'
 import './style.less'
 import Header from "@components/Header/NavBar";
+
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+
 import {
     actions as bindCardActions,
-    getFetchingStatus,
     getBindCardList
 } from "@reduxs/modules/bindCard";
+import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
 
 
 class BindCardContainer extends Component {
@@ -24,10 +26,10 @@ class BindCardContainer extends Component {
 
     render() {
         const {list} = this.props
-        console.log(list)
         return (
             <div className={'bindCard'}>
                 <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
+                <BindCardItem data={list}/>
             </div>
         )
     }
@@ -39,19 +41,16 @@ class BindCardContainer extends Component {
 }
 
 
-const
-    mapStateToProps = (state) => {
-        return {
-            fetchingStatus: getFetchingStatus(state),
-            list: getBindCardList(state)
-        }
+const mapStateToProps = (state) => {
+    return {
+        list: getBindCardList(state)
     }
+}
 
-const
-    mapDispatchToProps = (dispatch) => {
-        return {
-            bindCardActions: bindActionCreators(bindCardActions, dispatch)
-        }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        bindCardActions: bindActionCreators(bindCardActions, dispatch)
     }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(BindCardContainer)

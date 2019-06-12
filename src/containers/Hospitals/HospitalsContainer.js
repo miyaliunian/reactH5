@@ -76,6 +76,7 @@ class HospitalsContainer extends PureComponent {
     }
 
     componentDidMount() {
+        console.log('componentDidMount')
         document.getElementById('hospitalsContainer').addEventListener("touchmove", (event) => {
             event.preventDefault();
         }, {
