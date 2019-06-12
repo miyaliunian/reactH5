@@ -17,6 +17,10 @@ const actionTypes = {
     FETCH_BIND_CARD_REQUEST: 'BINDCARD/FETCH_BIND_CARD_REQUEST',
     FETCH_BIND_CARD_SUCCESS: 'BINDCARD/FETCH_BIND_CARD_SUCCESS',
     FETCH_BIND_CARD_FAILURE: 'BINDCARD/FETCH_BIND_CARD_FAILURE',
+
+
+    SET_BINDCARD_ITEM: 'BINDCARD/SET_BINDCARD_ITEM',
+    RESET_BINDCARD_ITEM: 'BINDCARD/RESET_BINDCARD_ITEM'
 }
 
 
@@ -26,7 +30,18 @@ export const actions = {
             const targetURL = url.API__BIND_CARD_LIST()
             return dispatch(loadBindCardList(targetURL))
         }
-    }
+    },
+
+    //状态初始值
+    setBindCard: (item) => ({
+        type: actionTypes.SET_BINDCARD_ITEM,
+        item
+    }),
+
+    //数据清空
+    resetBindCard: () => ({
+        type: actionTypes.RESET_BINDCARD_ITEM
+    })
 }
 
 
@@ -54,6 +69,19 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_BIND_CARD_FAILURE:
             return {...state, isFetching: false}
+
+        case actionTypes.SET_BINDCARD_ITEM:
+            return {
+                ...state,
+                isFetching: false,
+                data: action.item
+            }
+        case actionTypes.RESET_BINDCARD_ITEM:
+            return {
+                ...state,
+                isFetching: false,
+                data: []
+            }
         default:
             return state
     }

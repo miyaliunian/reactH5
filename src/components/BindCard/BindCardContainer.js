@@ -8,7 +8,6 @@
 import React, {Component} from 'react'
 import './style.less'
 import Header from "@components/Header/NavBar";
-
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -20,7 +19,13 @@ import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardI
 
 
 class BindCardContainer extends Component {
+
+    constructor(props) {
+        super(props)
+    }
+
     handleBack = () => {
+        this.props.bindCardActions.resetBindCard()
         this.props.history.goBack()
     }
 
@@ -29,15 +34,22 @@ class BindCardContainer extends Component {
         return (
             <div className={'bindCard'}>
                 <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
-                <BindCardItem data={list}/>
+                <BindCardItem data={list} isRefresh={this.refresh}/>
             </div>
         )
     }
 
 
     componentDidMount() {
-        this.props.bindCardActions.loadList()
+        const {list} = this.props
+        if (!list.length > 0) {
+            this.props.bindCardActions.loadList()
+        } else {
+
+        }
     }
+
+
 }
 
 
