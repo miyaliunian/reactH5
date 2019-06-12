@@ -29,8 +29,17 @@
                                  |---------------- httpUtil.js      网络请求封装
 ````
 ##### 开发流程
+* 跨域请求 只需要在维护请求url的文件内新增需要跨域请求的地址，框架内自动处理跨域的请求
+```angular2html
+    httpUrl中新增请求的地址: 格式如下
+          API__BIND_CARD_LIST: () => `/baseURL/bindcard/v1.0/list.do`,            
 
-
+```
+* 不需要跨域的请求 
+```angular2html
+    httpUrl中新增请求的地址: 格式如下
+          API_AREA_LIST: (cityId) => `${BASE_URL}/city/v1.0/list/${cityId}.ch`,         
+```
 
 ##### 已解决问题
     * ant-mobile 按需加载，全局颜色管理

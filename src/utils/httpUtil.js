@@ -7,7 +7,6 @@
 
 let headers = new Headers({
     'Content-Type': 'application/json;charset=UTF-8',
-    'Connection': 'keep-alive'
 })
 
 
@@ -68,4 +67,4 @@ function handelResponse(resposne, url) {
     }
 }
 
-export {post}
+export {get,post}

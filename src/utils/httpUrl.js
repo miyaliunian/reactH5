@@ -19,13 +19,13 @@ export default {
 
 
     //登录
-    API_LOGIN: (username, password) => `/baseURL/login/v1.0/${username}/${password}.action`,
+    API_LOGIN: (username, password) => `${BASE_URL}/login/v1.0/${username}/${password}.action`,
     //医院列表->区域选择
-    API_AREA_LIST: (cityId) => `/baseURL/city/v1.0/list/${cityId}.ch`,
+    API_AREA_LIST: (cityId) => `${BASE_URL}/city/v1.0/list/${cityId}.ch`,
     //医院列表
-    API_HOSPITAL_LIST: (cityId, orderType, page) => `/baseURL/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`,
+    API_HOSPITAL_LIST: (cityId, orderType, page) => `${BASE_URL}/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`,
     //医院列表对应的科室列表
-    API_HOSPITAL_DIVSION_LIST: (hosid) => `/baseURL/division/v1.0/list/${hosid}.action`,
+    API_HOSPITAL_DIVSION_LIST: (hosid) => `${BASE_URL}/division/v1.0/list/${hosid}.action`,
     //科室列表对应的门诊列表
     API_DIVSION__DEPARTMENT_LIST: (hosid, divisionid) => `${BASE_URL}/hisdept/v1.0/list/${hosid}/${divisionid}.action`,
 
