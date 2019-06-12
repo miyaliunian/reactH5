@@ -27,7 +27,7 @@ export default {
     //医院列表对应的科室列表
     API_HOSPITAL_DIVSION_LIST: (hosid) => `/baseURL/division/v1.0/list/${hosid}.action`,
     //科室列表对应的门诊列表
-    API_DIVSION__DEPARTMENT_LIST: (hosid, divisionid) => `/baseUR/hisdept/v1.0/list/${hosid}/${divisionid}.action`,
+    API_DIVSION__DEPARTMENT_LIST: (hosid, divisionid) => `${BASE_URL}/hisdept/v1.0/list/${hosid}/${divisionid}.action`,
 
 
     //家庭成员选择:卡绑定
