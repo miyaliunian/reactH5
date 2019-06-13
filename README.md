@@ -29,6 +29,16 @@
                                  |---------------- httpUtil.js      网络请求封装
 ````
 ##### 开发流程
+* 登录权限控制,框架会自动处理登录逻辑跳转
+```angularjs
+          只需要在 /routers/routerMap.js 按照如下定义路由规则
+            {
+                path: '/bindCard',
+                name: 'BindCard',
+                auth: true,  // 如果auth: true则框架会验证是否已经登录 如果没登录则自动跳转到登录页面，反之则不会进行登录验证
+                component: BindCard
+            },
+```  
 * 跨域请求 只需要在维护请求url的文件内新增需要跨域请求的地址，框架内自动处理跨域的请求
 ```angular2html
     httpUrl中新增请求的地址: 格式如下
@@ -52,5 +62,7 @@
 
 
 
+##### 框架更新版本日志
+* 新增登录权限验证 
 
 

@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
-import {BrowserRouter as Router, Route, Switch, withRouter} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
+import {isLogin} from '@utils/token'
 import routerMap from '@routes/routerMap'
 
 const RouteModule = function (props) {
@@ -24,15 +25,15 @@ const RouteModule = function (props) {
             >
                 <div>
                     <Switch location={props.location}>
-                        {
-                            routerMap.map((v, i) => {
-                                if (v.exact) {
-                                    return <Route key={i} exact path={v.path} component={v.component}/>
-                                } else {
-                                    return <Route key={i} path={v.path} component={v.component}/>
-                                }
-                            })
-                        }
+                        {routerMap.map((v, index) => {
+                            return <Route key={index} path={v.path} exact render={props =>
+                                (!v.auth ? (<v.component {...props} />) : (isLogin() ? <v.component {...props} /> :
+                                        <Redirect to={{
+                                            pathname: '/login',
+                                            state: {from: props.location}
+                                        }}/>)
+                                )}/>
+                        })}
                     </Switch>
                 </div>
             </CSSTransition>
@@ -49,7 +50,7 @@ class AppContainer extends Component {
                 <Router forceRefresh={false}>
                     <Routes/>
                 </Router>
-                {/*{error ? <ErrorToast msg={error} clearError={clearError}/> : null}*/}
+                {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
             </Fragment>
         );
     }
@@ -57,7 +58,7 @@ class AppContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        error: getError(state)
+        error: getError(state),
     }
 }
 

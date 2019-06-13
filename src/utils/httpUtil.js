@@ -4,14 +4,6 @@
  * Date: 2019-05-22
  * Description:  网络请求
  */
-
-
-function resetHeader() {
-    let headers = new Headers()
-    return headers.append('Content-Type', 'application/json;charset=UTF-8')
-}
-
-
 /**
  *  GET 请求
  * @param url

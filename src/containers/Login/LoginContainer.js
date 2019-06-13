@@ -20,6 +20,7 @@ class LoginContainer extends Component {
 
 
     componentDidMount() {
+        console.log(this.props)
     }
 
     render() {
@@ -52,6 +53,7 @@ class LoginContainer extends Component {
 
     onSubmit = () => {
         this.props.loginActions.login()
+        this.props.history.goBack()
     }
 }
 

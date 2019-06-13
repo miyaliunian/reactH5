@@ -17,31 +17,39 @@ import BindCardList from "@components/BindCard/components/BindCardList";
 const routerMap = [
     {
         path: '/',
+        name: 'Home',
         component: Home,
         exact: true
     },
     {
         path: '/loading',
+        name: 'LoadingMask',
         component: LoadingMask
     },
     {
         path: '/hospitals',
+        name: 'Hospitals',
         component: Hospitals
     },
     {
         path: '/login',
+        name: 'Login',
         component: Login
     },
     {
         path: '/clinic/:id/:name',
+        name: 'Division',
         component: Division
     },
     {
         path: '/bindCard',
+        name: 'BindCard',
+        auth: true,
         component: BindCard
     },
     {
         path: '/bindCardList',
+        name: 'BindCardList',
         component: BindCardList
     },
 ]

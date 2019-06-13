@@ -2,7 +2,7 @@
  * Class:
  * Author: wufei
  * Date: 2019-05-22
- * Description:  通用基础状态：登录状态、错误状态
+ * Description:  通用基础状态：登录状态、错误状态,登录拦截处理
  *
  */
 
@@ -10,6 +10,7 @@
 
 const initialState = {
     error: null,
+    token: null,
     fetStatus: false
 }
 
@@ -44,6 +45,10 @@ export default reducer
 // selectors
 export const getError = (state) => {
     return state.app.error
+}
+
+export const getToken = (state) => {
+    return state.app.token
 }
 
 export const getFetchStatus = (state) => {

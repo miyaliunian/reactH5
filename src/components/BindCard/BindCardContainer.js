@@ -44,9 +44,8 @@ class BindCardContainer extends Component {
         const {list} = this.props
         if (!list.length > 0) {
             this.props.bindCardActions.loadList()
-        } else {
-
         }
+
     }
 
 

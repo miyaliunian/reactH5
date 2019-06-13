@@ -76,7 +76,6 @@ class HospitalsContainer extends PureComponent {
     }
 
     componentDidMount() {
-        console.log('componentDidMount')
         document.getElementById('hospitalsContainer').addEventListener("touchmove", (event) => {
             event.preventDefault();
         }, {
@@ -88,10 +87,6 @@ class HospitalsContainer extends PureComponent {
     initailData() {
         this.resetData()
         this.props.hospitalActions.loadHosipitalList()
-    }
-
-    componentWillUnmount() {
-        this.resetData()
     }
 
     resetData() {
