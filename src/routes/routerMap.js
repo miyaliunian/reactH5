@@ -19,7 +19,6 @@ const routerMap = [
         path: '/',
         name: 'Home',
         component: Home,
-        exact: true
     },
     {
         path: '/loading',

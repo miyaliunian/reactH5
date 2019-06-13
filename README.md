@@ -1,14 +1,12 @@
 #React WebApp：
-
-#####React+React-Redux+Redux-Thunk+Ant-Mobile
 ##使用
-* yarn
-* yarn start
+* 下载依赖文件 在命令行中执行：yarn
+* 启动项目：yarn start
 ## IDE调试：WebStorm
-* 添加debug配置 debug 的方式为:JavaScript Debug  
-* 在url出填写 'http://localhost:3000/'
-* yarn start 启动项目
-* 点击虫子开启debug
+* 1：添加debug配置 debug 的方式为:JavaScript Debug  
+* 2：在url出填写 'http://localhost:3000/'
+* 3：yarn start 启动项目
+* 4：点击虫子开启debug
 ##目录结构
 ````$xslt
     public：这个文件夹是静态文件 不会参与到打包
@@ -29,6 +27,18 @@
                                  |---------------- httpUtil.js      网络请求封装
 ````
 ##### 开发流程
+* /containers 创建业务容器组件
+    * 容器组件 xx.js 
+    * 容器样式 style.less
+* /reduxs 创建业务对应的redux
+    * 新增的redux 需要在 /redux/index.js 也增加一份
+* /utils/httpUrl 新增网络请求url
+    * 如果请求存在跨域的问题，在往下看   
+* /images 图片资源
+    * 新增的图片资源引入方式
+                    import xxx from '@image/xxx/xxxx'
+
+##### 关键点
 * 登录权限控制,框架会自动处理登录逻辑跳转
 ```angularjs
           只需要在 /routers/routerMap.js 按照如下定义路由规则
@@ -52,14 +62,16 @@
 ```
 
 ##### 已解决问题
-    * ant-mobile 按需加载，全局颜色管理
-    * proxy 代理解决跨域
-    * alias 访问资源文件
-    * vm 高清解决方案、UI按照375*664 为基础换算
-    * 动态路由配置
-    * 不依赖外部传入url
+* ant-mobile 按需加载，全局颜色管理
+* proxy 代理解决跨域
+* alias 访问资源文件
+* vm 高清解决方案、UI按照375*664 为基础换算
+* 动态路由配置
+* 不依赖外部传入url
 ##### 待解决    
-
+* 懒加载
+* PWA
+* webpack优化
 
 
 ##### 框架更新版本日志
