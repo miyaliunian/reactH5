@@ -44,7 +44,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error"
+    }
   },
   "browserslist": {
     "production": [
@@ -61,6 +67,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "css-loader": "^2.1.1",
+    "eslint-plugin-react-hooks": "^1.6.0",
     "style-loader": "^0.23.1"
   },
   "theme": {
