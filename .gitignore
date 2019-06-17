@@ -5,6 +5,17 @@
 /.pnp
 .pnp.js
 
+# IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+classes
+gen-external-apklibs
+
+#yarn
+yarn.lock
+
 # testing
 /coverage
 
