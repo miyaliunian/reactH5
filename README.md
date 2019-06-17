@@ -30,6 +30,13 @@
 * /containers 创建业务容器组件
     * 容器组件 xx.js 
     * 容器样式 style.less
+* /routes  新增需要跳转的页面
+    * routerMap.js  
+         有三个参数:
+          path: 跳转的路由 (必传)
+          name: 路由名     (必传)
+          auth: true/false   (如果需要登录验证则传递true,否则可以不传)  
+          component: 路由组件  (比传)   
 * /reduxs 创建业务对应的redux
     * 新增的redux 需要在 /redux/index.js 也增加一份
 * /utils/httpUrl 新增网络请求url

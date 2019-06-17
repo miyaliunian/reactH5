@@ -69,7 +69,6 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_BIND_CARD_FAILURE:
             return {...state, isFetching: false}
-
         case actionTypes.SET_BINDCARD_ITEM:
             return {
                 ...state,

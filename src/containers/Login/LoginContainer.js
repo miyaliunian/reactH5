@@ -13,16 +13,7 @@ import {bindActionCreators} from 'redux'
 import {Redirect} from 'react-router-dom'
 import {actions as loginActions, isLogin, getPassword, getUserName} from '../../reduxs/modules/login'
 
-
-
-
 class LoginContainer extends Component {
-
-
-    componentDidMount() {
-        console.log(this.props)
-    }
-
     render() {
         const {username, password, login} = this.props
 

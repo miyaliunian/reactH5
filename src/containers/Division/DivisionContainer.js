@@ -7,7 +7,8 @@
  */
 import React, {Component} from 'react'
 import Header from '@components/Header/NavBar'
-import { Toast} from 'antd-mobile';
+import {Toast} from 'antd-mobile';
+import {Link} from 'react-router-dom'
 import LoadingMask from "@components/Loading/LoadingMask";
 import {Icon} from 'antd-mobile';
 import Bscroll from 'better-scroll'
@@ -54,8 +55,11 @@ class DivisionContainer extends Component {
                         <div>
                             <div>
                                 {departmentList.map((item, index) => {
-                                    return <div key={index} className={'clinic__right__item'}
-                                                onClick={() => Toast.info('This is a toast tips !!!', 1)}>{item.name}</div>
+                                    return (
+                                        <Link to={`/doctorList/${item.name}`}>
+                                            <div key={index} className={'clinic__right__item'}>{item.name}</div>
+                                        </Link>
+                                    )
                                 })}
                             </div>
                         </div>

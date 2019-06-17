@@ -53,7 +53,6 @@ class HospitalsContainer extends PureComponent {
         )
     }
 
-
     //下拉刷新
     pullingDownHandler() {
         this.props.hospitalActions.refreshHosipitalList()

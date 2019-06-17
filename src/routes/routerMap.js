@@ -13,6 +13,7 @@ import LoadingMask from "@components/Loading/LoadingMask";
 import Division from "@containers/Division/DivisionContainer";
 import BindCard from "@components/BindCard/BindCardContainer"
 import BindCardList from "@components/BindCard/components/BindCardList";
+import DoctorList from "@containers/DoctorList/DoctorListContainer";
 
 const routerMap = [
     {
@@ -39,6 +40,11 @@ const routerMap = [
         path: '/clinic/:id/:name',
         name: 'Division',
         component: Division
+    },
+    {
+        path: '/doctorList/:name',
+        name: 'DoctorList',
+        component: DoctorList
     },
     {
         path: '/bindCard',
