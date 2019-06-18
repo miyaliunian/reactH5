@@ -42,7 +42,7 @@ const routerMap = [
         component: Division
     },
     {
-        path: '/doctorList/:name',
+        path: '/doctorList/:id/:name',
         name: 'DoctorList',
         component: DoctorList
     },

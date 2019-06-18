@@ -35,7 +35,7 @@ function post(url, data = '') {
     let headers = new Headers({
         'Content-Type': 'application/json;charset=UTF-8',
     })
-    if (-1 !== url.search('.do')) {
+    if ( url.endsWith('.do')) {
         let tid = JSON.parse(localStorage.getItem('token')).access_token
         headers.append("tid", tid)
     }

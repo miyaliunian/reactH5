@@ -1,0 +1,79 @@
+@import "../../../../assets/less/varibles";
+
+.doctorItem {
+  .doctorItem__item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    background: white;
+    padding: 10px 10px 15px 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #D3D3D3;
+    .doctorItem__avator {
+      width: 55px;
+      height: 55px;
+      border-radius: 27.5px;
+      background: rgb(234, 234, 234);
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .avatar_txt {
+        font-size: 40px;
+        color: rgb(253, 253, 250);
+        font-weight: bold;
+      }
+    }
+    .doctorItem__info {
+      display: flex;
+      height: 55px;
+      width: calc(100% - 55px);
+      flex-direction: column;
+      justify-content: space-between;
+      .doctorItem__name_title {
+        display: flex;
+        flex-direction: row;
+        .doctorItem__name {
+          font-size: 15px;
+          margin-right: 10px;
+        }
+        .doctorItem__title {
+          font-size: 13px;
+          color: #7e8c8d;
+        }
+      }
+      .doctorItem__skills {
+        font-size: 13px;
+        color: #7e8c8d;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .doctorItem__right__icon {
+      position: absolute;
+      top: 0;
+      right: 15px;
+      overflow: hidden;
+      .doctorItem__icon {
+        width: 40px;
+        height: 20px;
+      }
+      .icon_h_txt {
+        z-index: 2;
+        position: absolute;
+        top: 3px;
+        color: white;
+        right: 7px;
+      }
+      .icon_h_txt {
+        z-index: 2;
+        position: absolute;
+        top: 5px;
+        font-size: 3px;
+        right: 10px;
+      }
+    }
+  }
+}

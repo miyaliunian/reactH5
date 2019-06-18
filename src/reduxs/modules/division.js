@@ -86,6 +86,8 @@ const fetchDivisionList = (targetURL) => ({
         schema
     },
 })
+
+
 const fetchDepartmentList = (targetURL) => ({
     [FETCH_DATA]: {
         types: [
@@ -96,6 +98,8 @@ const fetchDepartmentList = (targetURL) => ({
         targetURL,
     },
 })
+
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_HOSID:

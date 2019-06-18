@@ -5,11 +5,9 @@
  * Description:  网络请求url 常量
  */
 
-
-
 //登录前缀
-//export  const BASE_URL = 'http://58.208.84.112:10086/t-core'
-export const BASE_URL = 'http://ykt.nn12333.com:7070/t-core'
+export const BASE_URL = 'http://58.208.84.112:10086/t-core'
+// export const BASE_URL = 'http://ykt.nn12333.com:7070/t-core'
 
 //业务
 export default {
@@ -28,6 +26,15 @@ export default {
     API_HOSPITAL_DIVSION_LIST: (hosid) => `${BASE_URL}/division/v1.0/list/${hosid}.action`,
     //科室列表对应的门诊列表
     API_DIVSION__DEPARTMENT_LIST: (hosid, divisionid) => `${BASE_URL}/hisdept/v1.0/list/${hosid}/${divisionid}.action`,
+    //医生列表
+    API_DOCTOR_LIST: (type, deptId, order, page) => `${BASE_URL}/doctor/v1.0/list/${type}/${deptId}/${order}/${page}.action`,
+
+
+
+
+
+
+
 
 
     //家庭成员选择:卡绑定

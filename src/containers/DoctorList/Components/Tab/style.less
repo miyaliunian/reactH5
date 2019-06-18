@@ -1,0 +1,32 @@
+@import "../../../../assets/less/varibles";
+
+.doctorTabs {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  border-bottom: @border-LightGrey;
+
+  .doctorTabs__tabsLeft {
+    width: calc(50% - 0.5px);
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    background: white;
+  }
+
+  .doctorTabs__tabsRight {
+    flex: 1;
+    border-left: @border-LightGrey;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    background: white;
+  }
+
+  .itemSelected {
+    font-size: 14px;
+    color: @theme-font-color;
+  }
+}

@@ -54,10 +54,10 @@ class DivisionContainer extends Component {
                     <div className={'clinic__right'} ref={'clinic__right'}>
                         <div>
                             <div>
-                                {departmentList.map((item, index) => {
+                                {departmentList.map((item) => {
                                     return (
-                                        <Link to={`/doctorList/${item.name}`}>
-                                            <div key={index} className={'clinic__right__item'}>{item.name}</div>
+                                        <Link to={`/doctorList/${item.id}/${item.name}`} key={item.id}>
+                                            <div className={'clinic__right__item'}>{item.name}</div>
                                         </Link>
                                     )
                                 })}

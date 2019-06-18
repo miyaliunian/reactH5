@@ -7,10 +7,10 @@
  */
 
 
-// export const cityID = '320600'
+export const cityID = '320600'
 
 
-export const cityID = '450100'
+// export const cityID = '450100'
 
 //预约挂号-医院列表
 //
@@ -79,3 +79,29 @@ export const SX_YYDJ = {
         }
     ]
 }
+
+//医生类别
+export const DoctorOrderType = {
+    doctordefalut: 'doctordefalut',
+    title: 'title',
+    hosgrade: 'hosgrade'
+}
+
+/**
+ * 平台类型
+ * 0：医院科室  1：平台科室
+ */
+export const PlatformType = {
+    HospitalDepartments: 0,
+    PlatformDepartment: 1
+}
+
+//医院等级
+export const HosGradeAppType = {
+    threeAGrade: 'threeAGrade',
+    threeGrade: 'threeGrade',
+    twoGrade: 'twoGrade',
+    oneGrade: 'oneGrade',
+    othersGrade: 'othersGrade'
+}
+

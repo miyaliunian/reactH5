@@ -17,6 +17,7 @@ import hospital from './hospital'
 import division from './division'
 import bindCard from './bindCard'
 import bindCardIList from './bindCardIList'
+import doctorList from './doctorList'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     hospital,
     division,
     bindCard,
-    bindCardIList
+    bindCardIList,
+    doctorList
 })
 
 export default rootReducer
