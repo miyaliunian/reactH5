@@ -9,6 +9,7 @@ import React, {Component} from 'react';
 import CalendarHeader from './CalendarHeader'
 import CalendarMain from './CalendarMain'
 import './style.less'
+import {getDate} from "@utils/getDate";
 
 const displayDaysPerMonth = (year) => {
     //定义每个月的天数，如果是闰年第二月改为29天
@@ -60,6 +61,14 @@ const displayDaysPerMonth = (year) => {
         })
 }
 
+const getMonths = (data) => {
+    let months = []
+    data.map((item) => {
+        let {oDay,cDay} = getDate(item)
+        months.push(oDay)
+    })
+    return months
+}
 export default class Calendar extends Component {
     constructor(props) {
         super(props)
@@ -123,10 +132,10 @@ export default class Calendar extends Component {
         this.state.picked = true
     }
 
-
     render() {
         let props = {
-            viewData: displayDaysPerMonth(this.state.year)
+            viewData: displayDaysPerMonth(this.state.year),
+            fillterMonths : getMonths([1560873600000, 1560960000000, 1561046400000, 1561132800000, 1561219200000])
         }
 
         return (
