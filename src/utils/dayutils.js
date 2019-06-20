@@ -28,3 +28,16 @@ export function getcurrentDate() {
         D = date.getDate();
     return Y + M + D
 }
+
+/**
+ * 时间戳格式化成 YYYY-MM-DD
+ * @param str
+ * @returns {string}
+ */
+export function formateTimeStep(str) {
+    let date = new Date(str),
+        Y = date.getFullYear() + '-',
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-',
+        D = date.getDate();
+    return Y + M + D
+}

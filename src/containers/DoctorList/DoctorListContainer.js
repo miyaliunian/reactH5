@@ -11,6 +11,7 @@ import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
 import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
 import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";
 import Calendar from "@components/Calendar/Calendar";
+import {getDate, formateTimeStep} from "@utils/dayutils";
 import {connect} from "react-redux";
 import {
     actions as doctorListActions,
@@ -20,7 +21,18 @@ import {
 } from "@reduxs/modules/doctorList";
 import {bindActionCreators} from "redux";
 import './style.less'
+import LoadingMask from "@components/Loading/LoadingMask";
 
+
+const getMonths = (data) => {
+    let months = []
+    data.map((item) => {
+        let {oDay, oweekDay} = getDate(item)
+        let Obj = {oDay, oweekDay}
+        months.push(getDate(item))
+    })
+    return months
+}
 
 class DoctorListContainer extends Component {
 
@@ -28,7 +40,7 @@ class DoctorListContainer extends Component {
 
     render() {
         const {name} = this.props.match.params
-        const {doctors, reservations} = this.props
+        const {fetchingStatus, doctors, reservations} = this.props
         return (
             <div className={'doctorList'}>
                 <Header title={name} isRight={false} onBack={this.handleBack}/>
@@ -38,6 +50,7 @@ class DoctorListContainer extends Component {
                 </div>
                 <DoctorItem data={doctors} tabSel={1}/>
                 {/*<Calendar/>*/}
+                {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )
     }
@@ -54,16 +67,27 @@ class DoctorListContainer extends Component {
 
     }
 
+    /**
+     * 按专家、日期预约 条件筛选 数据
+     * @param target(1: 专家、2:日期)
+     */
     tabSel(target) {
+        const {id} = this.props.match.params
+        const {reservations} = this.props
+        const date = formateTimeStep(reservations[0])
         if (target === 1) {
+            //按专家预约
             this.resizeReservationsBox()
+            this.props.doctorListActions.loadDoctorList(id)
         } else {
+            //按日期预约
             this.refs.reservations.style.height = "60px"
+            this.props.doctorListActions.loadDoctorList(id, date)
         }
     }
 
     /**
-     * 默认状态隐藏预约日期
+     * 默认状态:隐藏预约日期
      */
     resizeReservationsBox() {
         this.refs.reservations.style.height = 0

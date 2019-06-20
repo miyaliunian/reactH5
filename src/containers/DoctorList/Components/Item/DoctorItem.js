@@ -13,7 +13,6 @@ import './style.less'
 export default class DoctorItem extends Component {
     render() {
         const {data, tabSel} = this.props
-        console.log('tabSel=' + tabSel)
         return (
             <div className={tabSel === 1 ? 'doctorItem' : 'doctorItem showCalendarBox'}>
                 {data.map(item => {

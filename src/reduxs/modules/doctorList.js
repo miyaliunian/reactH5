@@ -37,16 +37,15 @@ const actionTypes = {
  * @type {{loadDoctorList: function(*=), loadReservationList: function(*=)}}
  */
 export const actions = {
-    loadDoctorList: (id) => {
+    loadDoctorList: (id, seeDate = '') => {
         return (dispatch, getstate) => {
             let param = {
                 doctorTitle: null,
                 hosGrade: null,
+                seeDate: null
             }
-            if (getstate().doctorList.seeDate) {
-                param.seeDate = null
-            } else {
-                param.seeDate = null
+            if (seeDate != '') {
+                param.seeDate = seeDate
             }
             const targetURL = url.API_DOCTOR_LIST(PlatformType.HospitalDepartments, id, DoctorOrderType.title, getstate().doctorList.page)
             return dispatch(fetchDoctorList(targetURL, param))
