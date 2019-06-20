@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/6/18
  * Description:
- *  医生列表
+ *  医生列表->每一个单元格
  */
 import React, {Component} from 'react'
 import ico_doctor_status from '@images/Home/ico_doctor_status.png'
@@ -14,7 +14,7 @@ export default class DoctorItem extends Component {
     render() {
         const {data, tabSel} = this.props
         return (
-            <div className={tabSel === 1 ? 'doctorItem' : 'doctorItem showCalendarBox'}>
+            <div className={'doctorItem'}>
                 {data.map(item => {
                     return (
                         <div className={'doctorItem__item'} key={item.id}>
@@ -51,7 +51,6 @@ export default class DoctorItem extends Component {
             </div>
         )
     }
-
     drawReact(data) {
         let str = data[data.length - 1]
         return <div className={'avatar_txt'}>{str}</div>

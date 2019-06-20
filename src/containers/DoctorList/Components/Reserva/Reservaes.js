@@ -11,23 +11,36 @@ import {getDate} from "@utils/dayutils";
 
 const getMonths = (data) => {
     let months = []
-    data.map((item) => {
+    data.map((item, index) => {
         let {oDay, oweekDay} = getDate(item)
         let Obj = {oDay, oweekDay}
-        months.push(getDate(item))
+        if (index === 0) {
+            Obj.isSel = true
+        } else {
+            Obj.isSel = false
+        }
+        months.push(Obj)
     })
     return months
 }
 
 export default class Reservaes extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            days: []
+        }
+
+    }
+
     render() {
-        const {reservations} = this.props
-        let days = getMonths(reservations)
         return (
             <div className={'reservaes'}>
-                {days.map((day,index) => {
+                {this.state.days.map((day, index) => {
                     return (
-                        <div key={index}  className={'reservaes__box'} >
+                        <div key={index} className={day.isSel ? 'reservaes__box boxSel' : 'reservaes__box'}
+                             onClick={() => this.boxClick(day.oDay)}>
                             <div className={'reservaes__top'}>{day.oweekDay}</div>
                             <div className={'reservaes__bottom'}>{day.oDay}</div>
                         </div>
@@ -36,6 +49,33 @@ export default class Reservaes extends Component {
                 <div className={'reservaes__more'}>更多>></div>
             </div>
         )
+    }
+
+
+    componentWillReceiveProps(nextPros) {
+        if (nextPros.reservations) {
+            let days = getMonths(nextPros.reservations)
+            this.setState({
+                days: days
+            })
+        }
+    }
+
+
+    boxClick(day) {
+        const {reservations} = this.props
+        let days = getMonths(reservations)
+        days.map((item) => {
+            if (item.oDay === day) {
+                item.isSel = true
+            } else {
+                item.isSel = false
+            }
+        })
+
+        this.setState({
+            days: days
+        })
     }
 }    
 

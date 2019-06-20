@@ -48,7 +48,7 @@ class DoctorListContainer extends Component {
                 <div ref={'reservations'}>
                     <Reservaes reservations={reservations}/>
                 </div>
-                <DoctorItem data={doctors} tabSel={1}/>
+                <DoctorItem data={doctors}/>
                 {/*<Calendar/>*/}
                 {fetchingStatus ? <LoadingMask/> : null}
             </div>
