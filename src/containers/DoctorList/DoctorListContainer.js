@@ -33,7 +33,9 @@ class DoctorListContainer extends Component {
             <div className={'doctorList'}>
                 <Header title={name} isRight={false} onBack={this.handleBack}/>
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
-                <Reservaes reservations={reservations}/>
+                <div ref={'reservations'}>
+                    <Reservaes reservations={reservations}/>
+                </div>
                 <DoctorItem data={doctors} tabSel={1}/>
                 {/*<Calendar/>*/}
             </div>
@@ -45,13 +47,26 @@ class DoctorListContainer extends Component {
     }
 
     componentDidMount() {
+        this.resizeReservationsBox()
         const {id} = this.props.match.params
         this.props.doctorListActions.loadDoctorList(id)
         this.props.doctorListActions.loadReservationList(id)
+
     }
 
     tabSel(target) {
+        if (target === 1) {
+            this.resizeReservationsBox()
+        } else {
+            this.refs.reservations.style.height = "60px"
+        }
+    }
 
+    /**
+     * 默认状态隐藏预约日期
+     */
+    resizeReservationsBox() {
+        this.refs.reservations.style.height = 0
     }
 
 }

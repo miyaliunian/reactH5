@@ -1,4 +1,5 @@
 @import "../../../../assets/less/varibles";
+
 .reservaes {
   background: white;
   display: flex;
@@ -6,7 +7,10 @@
   align-items: center;
   border-bottom: @border-LightGrey;
   padding: 10px;
-  .reservaes__box{
+  height: 60px;
+  box-sizing: border-box;
+  position: relative;
+  .reservaes__box {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,12 +20,17 @@
     width: 40px;
     height: 40px;
     border: 0.5px solid gainsboro;
-    .reservaes__top{
+    .reservaes__top {
       margin-bottom: 5px;
       font-size: 13px;
     }
-    .reservaes__bottom{
+    .reservaes__bottom {
       font-size: 13px;
     }
+  }
+  .reservaes__more {
+    position: absolute;
+    right: 10px;
+    color: grey;
   }
 }
