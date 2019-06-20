@@ -40,7 +40,7 @@ export default class Reservaes extends Component {
                 {this.state.days.map((day, index) => {
                     return (
                         <div key={index} className={day.isSel ? 'reservaes__box boxSel' : 'reservaes__box'}
-                             onClick={() => this.boxClick(day.oDay)}>
+                             onClick={() => this.boxClick(day,index)}>
                             <div className={'reservaes__top'}>{day.oweekDay}</div>
                             <div className={'reservaes__bottom'}>{day.oDay}</div>
                         </div>
@@ -62,11 +62,16 @@ export default class Reservaes extends Component {
     }
 
 
-    boxClick(day) {
+
+    /**
+     * 更新数据状态
+     * @param dayObj
+     */
+    boxClick(dayObj,index) {
         const {reservations} = this.props
         let days = getMonths(reservations)
         days.map((item) => {
-            if (item.oDay === day) {
+            if (item.oDay === dayObj.oDay) {
                 item.isSel = true
             } else {
                 item.isSel = false
@@ -76,6 +81,7 @@ export default class Reservaes extends Component {
         this.setState({
             days: days
         })
+        this.props.fetchDoctors(reservations[index])
     }
 }    
 

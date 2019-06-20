@@ -46,7 +46,7 @@ class DoctorListContainer extends Component {
                 <Header title={name} isRight={false} onBack={this.handleBack}/>
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
                 <div ref={'reservations'}>
-                    <Reservaes reservations={reservations}/>
+                    <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}/>
                 </div>
                 <DoctorItem data={doctors}/>
                 {/*<Calendar/>*/}
@@ -91,6 +91,16 @@ class DoctorListContainer extends Component {
      */
     resizeReservationsBox() {
         this.refs.reservations.style.height = 0
+    }
+
+    /**
+     * 通过日期过滤数据
+     * @param param
+     */
+    fetchDoctors(dayObj) {
+        const {id} = this.props.match.params
+        const date = formateTimeStep(dayObj)
+        this.props.doctorListActions.loadDoctorList(id, date)
     }
 
 }
