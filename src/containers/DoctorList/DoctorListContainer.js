@@ -50,7 +50,7 @@ class DoctorListContainer extends Component {
                     <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}/>
                 </div>
                 <DoctorItem data={doctors}/>
-                {/*<Calendar/>*/}
+                <Calendar reservations={reservations}/>
                 {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )

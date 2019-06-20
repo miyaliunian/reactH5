@@ -31,13 +31,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        // this.props.homeActions.loadDiscounts()
     }
-
-    componentWillUnmount(){
-
-    }
-
 
     categoryClick(index) {
         switch (index) {

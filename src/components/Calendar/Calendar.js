@@ -47,16 +47,24 @@ const displayDaysPerMonth = (year) => {
                 monthData = []
             //补足上一个月
             for (; addDays > 0; addDays--) {
-                monthData.unshift(daysCountPrevious--)
+                // monthData.unshift(daysCountPrevious--)
+                monthData.unshift([])
+
             }
             //添入当前月
             for (let i = 0; i < daysCount;) {
                 monthData.push(++i)
             }
+
             //补足下一个月
-            for (let i = 42 - monthData.length, j = 0; j < i;) {
-                monthData.push(++j)
-            }
+            monthData.push(new Array(42 - monthData.length).fill(null))
+
+            // for (let i = 42 - monthData.length, j = 0; j < i;) {
+            //     monthData.push(++j)
+            //     // monthData.push([])
+            // }
+
+
             return monthData
         })
 }
@@ -64,12 +72,14 @@ const displayDaysPerMonth = (year) => {
 const getMonths = (data) => {
     let months = []
     data.map((item) => {
-        let {oDay,cDay} = getDate(item)
+        let {oDay, cDay} = getDate(item)
         months.push(oDay)
     })
     return months
 }
+
 export default class Calendar extends Component {
+
     constructor(props) {
         super(props)
         let now = new Date()
@@ -80,7 +90,6 @@ export default class Calendar extends Component {
             picked: false
         }
     }
-
 
     /*
     * 切换到上一个月
@@ -114,7 +123,6 @@ export default class Calendar extends Component {
         }
     }
 
-
     //选择日期
     datePick(day) {
         this.setState({day})
@@ -135,7 +143,7 @@ export default class Calendar extends Component {
     render() {
         let props = {
             viewData: displayDaysPerMonth(this.state.year),
-            fillterMonths : getMonths([1560873600000, 1560960000000, 1561046400000, 1561132800000, 1561219200000])
+            fillterMonths: getMonths(this.props.reservations)
         }
 
         return (

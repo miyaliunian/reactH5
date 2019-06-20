@@ -15,10 +15,6 @@ export default class CalendarMain extends Component {
         // document.getElementById('calendar_body_row').addEventListener('click', changeColor, false);
     }
 
-    componentDidUpdate() {
-        console.log('CalendarMain:componentDidUpdate')
-    }
-
     render() {
         return (
             <div className="calendar_layout">
