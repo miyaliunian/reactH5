@@ -34,13 +34,14 @@ export default class Reservaes extends Component {
 
     }
 
+
     render() {
         return (
             <div className={'reservaes'}>
                 {this.state.days.map((day, index) => {
                     return (
                         <div key={index} className={day.isSel ? 'reservaes__box boxSel' : 'reservaes__box'}
-                             onClick={() => this.boxClick(day,index)}>
+                             onClick={() => this.boxClick(day, index)}>
                             <div className={'reservaes__top'}>{day.oweekDay}</div>
                             <div className={'reservaes__bottom'}>{day.oDay}</div>
                         </div>
@@ -53,7 +54,7 @@ export default class Reservaes extends Component {
 
 
     componentWillReceiveProps(nextPros) {
-        if (nextPros.reservations) {
+        if (nextPros.reservations.length > 0 && this.state.days.length === 0) {
             let days = getMonths(nextPros.reservations)
             this.setState({
                 days: days
@@ -61,13 +62,15 @@ export default class Reservaes extends Component {
         }
     }
 
-
+    shouldComponentUpdate(){
+        return true
+    }
 
     /**
      * 更新数据状态
      * @param dayObj
      */
-    boxClick(dayObj,index) {
+    boxClick(dayObj, index) {
         const {reservations} = this.props
         let days = getMonths(reservations)
         days.map((item) => {

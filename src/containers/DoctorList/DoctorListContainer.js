@@ -17,7 +17,8 @@ import {
     actions as doctorListActions,
     getFetchStatus,
     getDoctorList,
-    getReservationList
+    getReservationList,
+    getSeeDate
 } from "@reduxs/modules/doctorList";
 import {bindActionCreators} from "redux";
 import './style.less'
@@ -40,7 +41,7 @@ class DoctorListContainer extends Component {
 
     render() {
         const {name} = this.props.match.params
-        const {fetchingStatus, doctors, reservations} = this.props
+        const {fetchingStatus, doctors, reservations, seeDate} = this.props
         return (
             <div className={'doctorList'}>
                 <Header title={name} isRight={false} onBack={this.handleBack}/>
@@ -100,24 +101,32 @@ class DoctorListContainer extends Component {
     fetchDoctors(dayObj) {
         const {id} = this.props.match.params
         const date = formateTimeStep(dayObj)
+        this.props.doctorListActions.setSeeDate(dayObj)
         this.props.doctorListActions.loadDoctorList(id, date)
     }
 
 }
 
 /**
- * 刷新状态、医生列表、可预约日历
+ * 刷新状态、医生列表、可预约日历,上一次选中的日期
  * @param state
- * @returns {{fetchingStatus: *, doctors: *, Reservations: *}}
+ * @returns {{fetchingStatus: *, doctors: *, reservations: *, seeDate: *}}
  */
 const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchStatus(state),
         doctors: getDoctorList(state),
-        reservations: getReservationList(state)
+        reservations: getReservationList(state),
+        seeDate: getSeeDate(state)
     }
 }
 
+
+/**
+ * store.dispatch
+ * @param dispatch
+ * @returns {{doctorListActions: {loadDoctorList: function(*=), loadReservationList: function(*=)}|ActionCreator<any>|ActionCreatorsMapObject<any>}}
+ */
 const mapDispatchToProps = (dispatch) => {
     return {
         doctorListActions: bindActionCreators(doctorListActions, dispatch)

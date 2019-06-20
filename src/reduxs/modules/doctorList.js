@@ -10,10 +10,9 @@ import url from "@utils/httpUrl";
 
 import {PlatformType, DoctorOrderType, cityID} from '@assets/static/DictionaryConstant'
 import {FETCH_DATA} from "@reduxs/middleware/api";
-import {getcurrentDate} from '@utils/dayutils'
+
 
 const initialState = {
-    deptid: '',
     seeDate: null,
     doctorTitle: null,
     hosGrade: null,
@@ -29,6 +28,8 @@ const actionTypes = {
     FETCH_DOCTOR_LIST_FAILURE: 'DOCTOR_LIST/FETCH_DOCTOR_LIST_FAILURE',
     FETCH_RESERVATION_LIST_SUCCESS: 'DOCTOR_LIST/FETCH_RESERVATION_LIST_SUCCESS',
     FETCH_RESERVATION_LIST_FAILURE: 'DOCTOR_LIST/FETCH_RESERVATION_LIST_FAILURE',
+
+    SET_SEEDATE: 'DOCTOR_LIST/SET_SEEDATE'
 }
 
 
@@ -51,12 +52,22 @@ export const actions = {
             return dispatch(fetchDoctorList(targetURL, param))
         }
     },
+
+
     loadReservationList: (id) => {
         return (dispatch, getstate) => {
             const targetURL = url.API_RESERVATION_LIST(PlatformType.HospitalDepartments, id, 7)
             return dispatch(fetchReservationList(targetURL))
         }
-    }
+    },
+
+    //选中的日期过滤条件
+    setSeeDate: (value) => ({
+        type: actionTypes.SET_SEEDATE,
+        value
+    })
+
+
 }
 
 
@@ -105,6 +116,8 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.FETCH_RESERVATION_LIST_FAILURE:
             return {...state, isFetching: false}
+        case actionTypes.SET_SEEDATE:
+            return {...state, seeDate: action.value}
         default:
             return state
     }
@@ -116,6 +129,11 @@ export default reducer
 export const getFetchStatus = (state) => {
     return state.doctorList.isFetching
 }
+
+export const getSeeDate = (state) => {
+    return state.doctorList.seeDate
+}
+
 export const getDoctorList = (state) => {
     return state.doctorList.data
 }
