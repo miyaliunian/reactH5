@@ -7,7 +7,9 @@ export default class CalendarMain extends Component {
         week_names: ['日', '一', '二', '三', '四', '五', '六'],
     }
 
-    //绑定颜色改变事件
+    /**
+     * 绑定颜色改变事件
+     */
     componentDidMount() {
         let changeColor = this.changeColor()
         // document.getElementById('calendar_body_row').addEventListener('click', changeColor, false);
@@ -26,6 +28,10 @@ export default class CalendarMain extends Component {
         )
     }
 
+    /**
+     * 渲染日历头部
+     * @returns {*}
+     */
     renderWeekHeader() {
         return (
             <div className="calendar_header" ref="header" style={{height: 45}}>
@@ -43,6 +49,10 @@ export default class CalendarMain extends Component {
         );
     }
 
+    /**
+     * 渲染日历内容
+     * @returns {*}
+     */
     renderWeekBody() {
         //作色的日期
         let fillterMonths = this.props.fillterMonths
@@ -122,7 +132,6 @@ export default class CalendarMain extends Component {
         </div>)
     }
 
-
     //处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
     handleDatePick(index, styleName) {
         switch (styleName) {
@@ -139,12 +148,10 @@ export default class CalendarMain extends Component {
         }
     }
 
-    /*
-    *
-    * 处理选择时选中的样式效果
-    利用闭包保存上一次选择的元素，
-    在月份切换和重新选择日期时重置上一次选择的元素的样式
-    */
+    /**
+     处理选择时选中的样式效果,利用闭包保存上一次选择的元素，在月份切换和重新选择日期时重置上一次选择的元素的样式
+     * @returns {Function}
+     */
     changeColor() {
         let previousEl = null
         return function (event) {

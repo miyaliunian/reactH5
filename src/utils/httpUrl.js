@@ -28,13 +28,8 @@ export default {
     API_DIVSION__DEPARTMENT_LIST: (hosid, divisionid) => `${BASE_URL}/hisdept/v1.0/list/${hosid}/${divisionid}.action`,
     //医生列表
     API_DOCTOR_LIST: (type, deptId, order, page) => `${BASE_URL}/doctor/v1.0/list/${type}/${deptId}/${order}/${page}.action`,
-
-
-
-
-
-
-
+    //医生列表-预约日期
+    API_RESERVATION_LIST: (type, deptId, days) => `${BASE_URL}/schedule/v1.0/list/day/${type}/${deptId}/${days}.action`,
 
 
     //家庭成员选择:卡绑定

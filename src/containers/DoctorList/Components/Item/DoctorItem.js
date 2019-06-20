@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/6/18
  * Description:
- *
+ *  医生列表
  */
 import React, {Component} from 'react'
 import ico_doctor_status from '@images/Home/ico_doctor_status.png'
@@ -12,9 +12,10 @@ import './style.less'
 
 export default class DoctorItem extends Component {
     render() {
-        const {data} = this.props
+        const {data, tabSel} = this.props
+        console.log('tabSel=' + tabSel)
         return (
-            <div className={'doctorItem'}>
+            <div className={tabSel === 1 ? 'doctorItem' : 'doctorItem showCalendarBox'}>
                 {data.map(item => {
                     return (
                         <div className={'doctorItem__item'} key={item.id}>
@@ -28,8 +29,8 @@ export default class DoctorItem extends Component {
                                 </div>
                                 <div
                                     className={'doctorItem__skills'}>
-                                    擅长: {item.skills}
-                                    </div>
+                                    擅长: {item.skills ? item.skills : '暂无'}
+                                </div>
                             </div>
                             {
                                 item.appoint

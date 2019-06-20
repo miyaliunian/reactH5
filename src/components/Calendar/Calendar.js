@@ -9,7 +9,7 @@ import React, {Component} from 'react';
 import CalendarHeader from './CalendarHeader'
 import CalendarMain from './CalendarMain'
 import './style.less'
-import {getDate} from "@utils/getDate";
+import {getDate} from "@utils/dayutils";
 
 const displayDaysPerMonth = (year) => {
     //定义每个月的天数，如果是闰年第二月改为29天
