@@ -10,6 +10,7 @@ import Header from "@components/Header/NavBar";
 import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
 import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
 import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";
+import {Modal} from 'antd-mobile'
 import Calendar from "@components/Calendar/Calendar";
 import {getDate, formateTimeStep} from "@utils/dayutils";
 import {connect} from "react-redux";
@@ -37,7 +38,9 @@ const getMonths = (data) => {
 
 class DoctorListContainer extends Component {
 
-    state = {};
+    state = {
+        isShow: false
+    };
 
     render() {
         const {name} = this.props.match.params
@@ -47,10 +50,21 @@ class DoctorListContainer extends Component {
                 <Header title={name} isRight={false} onBack={this.handleBack}/>
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
                 <div ref={'reservations'}>
-                    <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}/>
+                    <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
+                               showModal={() => this.showModal()}/>
                 </div>
                 <DoctorItem data={doctors}/>
-                <Calendar reservations={reservations}/>
+                <Modal
+                    visible={this.state.isShow}
+                    title="选择出诊日期"
+                    afterClose={() => {
+                        alert('afterClose');
+                    }}
+                >
+                    <div className={'calendar_box'}>
+                        <Calendar reservations={reservations}/>
+                    </div>
+                </Modal>
                 {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )
@@ -60,13 +74,23 @@ class DoctorListContainer extends Component {
         this.props.history.goBack()
     }
 
+    /**
+     * 日历:显示/隐藏
+     */
+    showModal() {
+        this.setState({
+            isShow: true
+        })
+    }
+
     componentDidMount() {
         this.resizeReservationsBox()
+        this.refs.reservations.style.height = 0
         const {id} = this.props.match.params
         this.props.doctorListActions.loadDoctorList(id)
         this.props.doctorListActions.loadReservationList(id)
-
     }
+
 
     /**
      * 按专家、日期预约 条件筛选 数据
@@ -74,13 +98,16 @@ class DoctorListContainer extends Component {
      */
     tabSel(target) {
         const {id} = this.props.match.params
-        const {reservations} = this.props
-        const date = formateTimeStep(reservations[0])
         if (target === 1) {
             //按专家预约
             this.resizeReservationsBox()
             this.props.doctorListActions.loadDoctorList(id)
         } else {
+            const {reservations} = this.props
+            if (!reservations) {
+                return
+            }
+            const date = formateTimeStep(reservations[0])
             //按日期预约
             this.refs.reservations.style.height = "60px"
             this.props.doctorListActions.loadDoctorList(id, date)

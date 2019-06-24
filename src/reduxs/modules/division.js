@@ -9,6 +9,7 @@
 import url from "../../utils/httpUrl";
 import {FETCH_DATA} from "../middleware/api";
 import {dataConversionDic} from '../../assets/static'
+import {post} from '@utils/httpUtil'
 
 export const schema = {
     name: dataConversionDic.divisionList,
@@ -25,8 +26,6 @@ const initialState = {
 
 const actionTypes = {
 
-    SET_HOSID: 'DIVISION/SET_HOSID',//医院id
-    SET_DIVISIONID: 'DIVISION/SET_DIVISIONID',//平台大科id
 
     SET_DIVISION_NULL: 'DIVISION/SET_DIVISION_NULL',//清空右侧数据
 
@@ -46,46 +45,62 @@ const actionTypes = {
 // action creators
 export const actions = {
 
-    //状态初始值
-    setHosid: (id) => ({
-        type: actionTypes.SET_HOSID,
-        id
-    }),
-
-    setDivisionid: (id) => ({
-        type: actionTypes.SET_DIVISIONID,
-        id
-    }),
 
     //加载左侧列表
-    loadDivisionList: () => {
+    // loadDivisionList: (hosid) => {
+    //     return (dispatch, getstate) => {
+    //         const targetURL = url.API_HOSPITAL_DIVSION_LIST(hosid)
+    //         return dispatch(fetchDivisionList(targetURL))
+    //     }
+    // },
+
+
+    //加载左侧列表
+    loadDivisionList: (hosid) => {
         return (dispatch, getstate) => {
-            const targetURL = url.API_HOSPITAL_DIVSION_LIST(getstate().division.hosid)
-            return dispatch(fetchDivisionList(targetURL))
+            const targetURL = url.API_HOSPITAL_DIVSION_LIST(hosid)
+            return post(targetURL).then(
+                data => {
+                    data.data.map((item, index) => {
+                        if (index === 0) {
+                            item.isSel = true
+                        } else {
+                            item.isSel = false
+                        }
+                    })
+                    dispatch(fetchDivisionListSuccess(data.data))
+                    const targetURL = url.API_DIVSION__DEPARTMENT_LIST(hosid, data.data[0].id)
+                    return dispatch(fetchDepartmentList(targetURL))
+                },
+                error => {
+
+                }
+            )
         }
     },
 
+
     //加载右侧列表
-    loadDepartmentListByHostId: () => {
+    loadDepartmentListByHostId: (hosid, divisionid) => {
         return (dispatch, getstate) => {
-            const targetURL = url.API_DIVSION__DEPARTMENT_LIST(getstate().division.hosid, getstate().division.divisionid)
+            const targetURL = url.API_DIVSION__DEPARTMENT_LIST(hosid, divisionid)
             return dispatch(fetchDepartmentList(targetURL))
         }
     },
 }
 
 
-const fetchDivisionList = (targetURL) => ({
-    [FETCH_DATA]: {
-        types: [
-            actionTypes.FETCH_DIVISION_REQUEST,
-            actionTypes.FETCH_DIVISION_SUCCESS,
-            actionTypes.FETCH_DIVISION_FAILURE,
-        ],
-        targetURL,
-        schema
-    },
-})
+// const fetchDivisionList = (targetURL) => ({
+//     [FETCH_DATA]: {
+//         types: [
+//             actionTypes.FETCH_DIVISION_REQUEST,
+//             actionTypes.FETCH_DIVISION_SUCCESS,
+//             actionTypes.FETCH_DIVISION_FAILURE,
+//         ],
+//         targetURL,
+//         schema
+//     },
+// })
 
 
 const fetchDepartmentList = (targetURL) => ({
@@ -99,6 +114,11 @@ const fetchDepartmentList = (targetURL) => ({
     },
 })
 
+
+const fetchDivisionListSuccess = (data) => ({
+    type: actionTypes.FETCH_DIVISION_SUCCESS,
+    data
+})
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -118,7 +138,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                data: action.response.data
+                // data: action.response.data
+                data: action.data
             }
         case actionTypes.FETCH_DIVISION_FAILURE:
             return {...state, isFetching: false}
@@ -143,6 +164,11 @@ export default reducer
 export const getFetchingStatus = (state) => {
     return state.division.isFetching
 }
+
+export const getHostId = (state) => {
+    return state.division.hosid
+}
+
 export const getDivisionList = (state) => {
     return state.division.data
 }

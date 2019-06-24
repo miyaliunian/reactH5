@@ -47,14 +47,14 @@ export default class Reservaes extends Component {
                         </div>
                     )
                 })}
-                <div className={'reservaes__more'}>更多>></div>
+                <div className={'reservaes__more'} onClick={this.props.showModal}>更多>></div>
             </div>
         )
     }
 
 
     componentWillReceiveProps(nextPros) {
-        if (nextPros.reservations.length > 0 && this.state.days.length === 0) {
+        if (nextPros.reservations && nextPros.reservations.length > 0 && this.state.days.length === 0) {
             let days = getMonths(nextPros.reservations)
             this.setState({
                 days: days
@@ -62,7 +62,7 @@ export default class Reservaes extends Component {
         }
     }
 
-    shouldComponentUpdate(){
+    shouldComponentUpdate() {
         return true
     }
 

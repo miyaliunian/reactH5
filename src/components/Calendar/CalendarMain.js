@@ -109,9 +109,10 @@ export default class CalendarMain extends Component {
                                 row.map((day) => {
                                     return (
                                         <div className={'calendar_body_box'}
-                                             onClick={
-                                                 this.handleDatePick.bind
-                                                 (this, i, styleOfDays[i])}
+                                             // onClick={
+                                             //     this.handleDatePick.bind
+                                             //     (this, i, styleOfDays[i])}
+                                             onClick={()=>this.handleDatePick(day)}
                                              key={i++}>
                                             <div
                                                 className={day.isCur ? 'calendar_body_txt boxCurSel' : (day.isStatus ? 'calendar_body_txt boxSel' : 'calendar_body_txt')}>
@@ -129,19 +130,25 @@ export default class CalendarMain extends Component {
     }
 
     //处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
-    handleDatePick(index, styleName) {
-        switch (styleName) {
-            case 'thisMonth':
-                let month = this.props.viewData[this.props.month]
-                this.props.datePick(month[index])
-                break
-            case 'prevMonth':
-                this.props.prevMonth()
-                break
-            case 'nextMonth':
-                this.props.nextMonth()
-                break
-        }
+    // handleDatePick(index, styleName) {
+    //     switch (styleName) {
+    //         case 'thisMonth':
+    //             let month = this.props.viewData[this.props.month]
+    //             this.props.datePick(month[index])
+    //             break
+    //         case 'prevMonth':
+    //             this.props.prevMonth()
+    //             break
+    //         case 'nextMonth':
+    //             this.props.nextMonth()
+    //             break
+    //     }
+    // }
+
+
+    handleDatePick(data){
+        console.log(data)
+
     }
 
     /**

@@ -18,6 +18,7 @@ import './style.less'
 import {
     actions as divisionActions,
     getFetchingStatus,
+    getHostId,
     getDivisionList,
     getDepartmentList
 } from "@reduxs/modules/division";
@@ -26,9 +27,8 @@ class DivisionContainer extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            disabled: false,
-        }
+        this.state = {}
+
     }
 
     render() {
@@ -85,18 +85,7 @@ class DivisionContainer extends Component {
             click: true
         })
         const {id} = this.props.match.params
-        this.props.divisionActions.setHosid(id)
-        this.props.divisionActions.loadDivisionList()
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const {divisionActions} = this.props
-        if (nextProps.divisionList.length > 0) {
-            if (this.props.divisionList.length !== nextProps.divisionList.length) {
-                divisionActions.setDivisionid(nextProps.divisionList[0].id)
-                divisionActions.loadDepartmentListByHostId()
-            }
-        }
+        this.props.divisionActions.loadDivisionList(id)
     }
 
     leftItemClick(item) {
@@ -107,8 +96,8 @@ class DivisionContainer extends Component {
                 oldItem.isSel = false
             }
         })
-        this.props.divisionActions.setDivisionid(item.id)
-        this.props.divisionActions.loadDepartmentListByHostId()
+        const {id} = this.props.match.params
+        this.props.divisionActions.loadDepartmentListByHostId(id, item.id)
     }
 
     handleBack = () => {
@@ -120,6 +109,7 @@ class DivisionContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        hosid: getHostId(state),
         fetchingStatus: getFetchingStatus(state),
         divisionList: getDivisionList(state),
         departmentList: getDepartmentList(state),
