@@ -60,13 +60,14 @@ class DoctorListContainer extends Component {
                 />
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
                 <div ref={'reservations'}>
-                    {reservations ?
+                    {!reservations ?
+                        null
+                        :
                         <Reservaes reservations={reservations}
                                    fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
                                    filterConditions={this.filterConditions}
                                    showModal={() => this.showModal()}
                         />
-                        : null
                     }
                 </div>
                 <DoctorItem data={doctors}/>
@@ -91,6 +92,8 @@ class DoctorListContainer extends Component {
 
 
     componentDidMount() {
+        // 清空数据
+
         this.resizeReservationsBox()
         this.refs.reservations.style.height = 0
         const {id} = this.props.match.params
