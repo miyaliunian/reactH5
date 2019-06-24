@@ -51,15 +51,17 @@ class DoctorListContainer extends Component {
                 <Header title={name} isRight={false} onBack={this.handleBack}/>
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
                 <div ref={'reservations'}>
-                    <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
-                               showModal={() => this.showModal()}/>
+                    {reservations ?
+                        <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
+                                   showModal={() => this.showModal()}/>
+                        : null
+                    }
                 </div>
                 <DoctorItem data={doctors}/>
                 <Modal
                     visible={this.state.isShow}
                     title=""
                     afterClose={() => {
-                        // alert('afterClose');
                     }}
                 >
                     <div className={'calendar_box'}>
@@ -74,12 +76,6 @@ class DoctorListContainer extends Component {
         )
     }
 
-
-    markSelDate(date) {
-        this.closeModal()
-        console.log(date)
-        // console.log('markSelDate')
-    }
 
     componentDidMount() {
         this.resizeReservationsBox()
@@ -110,6 +106,19 @@ class DoctorListContainer extends Component {
             this.refs.reservations.style.height = "60px"
             this.props.doctorListActions.loadDoctorList(id, date)
         }
+    }
+
+
+    /**
+     * 日历Modal 层选择日历
+     * 1：关闭Modal,
+     * 2: 通过过滤条件，过滤数据
+     * @param date
+     */
+    markSelDate(date) {
+        this.closeModal()
+        const {id} = this.props.match.params
+        this.props.doctorListActions.loadDoctorList(id, date)
     }
 
     /**
