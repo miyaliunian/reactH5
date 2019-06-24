@@ -36,6 +36,7 @@ export default class Reservaes extends Component {
 
 
     render() {
+        const {filterConditions} = this.props
         return (
             <div className={'reservaes'}>
                 {this.state.days.map((day, index) => {
@@ -47,7 +48,13 @@ export default class Reservaes extends Component {
                         </div>
                     )
                 })}
-                <div className={'reservaes__more'} onClick={this.props.showModal}>更多>></div>
+                {filterConditions.length > 0
+                    ?
+                    <div className={'reservaes__more'} onClick={this.props.showModal}>{filterConditions} >></div>
+                    :
+                    <div className={'reservaes__more'} onClick={this.props.showModal}>更多 >></div>
+                }
+
             </div>
         )
     }

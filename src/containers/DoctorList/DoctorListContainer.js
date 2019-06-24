@@ -39,21 +39,31 @@ const getMonths = (data) => {
 
 class DoctorListContainer extends Component {
 
-    state = {
-        isShow: false
-    };
+    constructor(props) {
+        super(props)
+        this.state = {
+            isShow: false
+        };
+        //日期右侧过滤条件
+        this.filterConditions = []
+    }
 
     render() {
         const {name} = this.props.match.params
         const {fetchingStatus, doctors, reservations, seeDate} = this.props
         return (
             <div className={'doctorList'}>
-                <Header title={name} isRight={false} onBack={this.handleBack}/>
+                <Header
+                    title={name}
+                    isRight={false}
+                    onBack={this.handleBack}
+                />
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
                 <div ref={'reservations'}>
                     {reservations ?
                         <Reservaes reservations={reservations}
                                    fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
+                                   filterConditions={this.filterConditions}
                                    showModal={() => this.showModal()}
                         />
                         : null
@@ -68,9 +78,10 @@ class DoctorListContainer extends Component {
                 >
                     <div className={'calendar_box'}>
                         <Header title={'选择出诊日期'} isRight={false} onBack={() => this.closeModal()}/>
-                        <Calendar reservations={reservations} markSelDate={(date) => {
-                            this.markSelDate(date)
-                        }}/>
+                        <Calendar reservations={reservations}
+                                  markSelDate={(date) => {
+                                      this.markSelDate(date)
+                                  }}/>
                     </div>
                 </Modal>
                 {fetchingStatus ? <LoadingMask/> : null}
@@ -120,6 +131,7 @@ class DoctorListContainer extends Component {
     markSelDate(date) {
         this.closeModal()
         const {id} = this.props.match.params
+        this.filterConditions = date
         this.props.doctorListActions.loadDoctorList(id, date)
     }
 

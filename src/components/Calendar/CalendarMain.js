@@ -99,7 +99,6 @@ export default class CalendarMain extends Component {
                 rowsInMonth.push(newMonths)
             }
         })
-        console.log(this.props.isRender)
         return (<div className={'calendar_body'}>
             {
                 rowsInMonth.map((row, rowIndex) => {
@@ -145,12 +144,16 @@ export default class CalendarMain extends Component {
      */
     handleDatePick(e, day) {
         if (!Array.isArray(day.day)) {
+            let previousEl = null
+            previousEl = e.target
+            previousEl.style = ''
             let date = new Date(),
                 Y = date.getFullYear() + '-',
-                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-',
+                D = (day.day < 10 ? '0' + day.day : day.day)
             // console.log(Y + M + day.day)
-            // e.target.style = "background:#F8F8F8;color:#000"
-            this.props.datePick(Y + M + day.day)
+            e.target.style = "background:#007FFE;color:#000"
+            this.props.datePick(Y + M + D)
         }
     }
 
