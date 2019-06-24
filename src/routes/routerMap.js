@@ -38,7 +38,7 @@ const routerMap = [
         component: Login
     },
     {
-        path: '/clinic/:id/:name',
+        path: '/division/:id/:name',
         name: 'Division',
         component: Division
     },

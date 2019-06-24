@@ -73,7 +73,7 @@ class HospitalsItem extends Component {
                     }
                     {data.map((item, index) => {
                         return (
-                            <Link to={`/clinic/${item.id}/${item.name}`}
+                            <Link to={`/division/${item.id}/${item.name}`}
                                   key={index}
                             >
                                 <div className="hospitalsItem__con">
