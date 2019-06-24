@@ -44,6 +44,9 @@ class Home extends Component {
             case 2 :
                 this.props.history.push('/bindCard')
                 break
+            case 5 :
+                this.props.history.push('/intelligentWaiting')
+                break
         }
     }
 

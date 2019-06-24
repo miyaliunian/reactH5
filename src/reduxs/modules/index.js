@@ -18,6 +18,7 @@ import division from './division'
 import bindCard from './bindCard'
 import bindCardIList from './bindCardIList'
 import doctorList from './doctorList'
+import intelligentWaiting from './intelligentWaiting'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
     division,
     bindCard,
     bindCardIList,
-    doctorList
+    doctorList,
+    intelligentWaiting
 })
 
 export default rootReducer

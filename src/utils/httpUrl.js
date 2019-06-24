@@ -33,6 +33,9 @@ export default {
 
 
     //家庭成员选择:卡绑定
-    API__BIND_CARD_LIST: () => `/baseURL/bindcard/v1.0/list.do`,
+    // API__BIND_CARD_LIST: () => `/baseURL/bindcard/v1.0/list.do`,
+    API__BIND_CARD_LIST: () => `${BASE_URL}/bindcard/v1.0/list.do`,
+    //智能候诊:获取候诊列表
+    API__INTELLIGENT_WAITING_LIST: (personid) => `/baseURL/register/v1.0/getSeenNoByPerson/${personid}.do`,
 
 }
