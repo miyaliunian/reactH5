@@ -46,6 +46,8 @@ class BindCardContainer extends Component {
             this.props.bindCardActions.loadList()
         }
 
+
+
     }
 
 

@@ -7,11 +7,12 @@ export default class CalendarMain extends Component {
         week_names: ['日', '一', '二', '三', '四', '五', '六'],
     }
 
+
     /**
      * 绑定颜色改变事件
      */
     componentDidMount() {
-        let changeColor = this.changeColor()
+        // let changeColor = this.changeColor()
         // document.getElementById('calendar_body_row').addEventListener('click', changeColor, false);
     }
 
@@ -109,10 +110,10 @@ export default class CalendarMain extends Component {
                                 row.map((day) => {
                                     return (
                                         <div className={'calendar_body_box'}
-                                             // onClick={
-                                             //     this.handleDatePick.bind
-                                             //     (this, i, styleOfDays[i])}
-                                             onClick={()=>this.handleDatePick(day)}
+                                            // onClick={
+                                            //     this.handleDatePick.bind
+                                            //     (this, i, styleOfDays[i])}
+                                             onClick={(e) => this.handleDatePick(e, day)}
                                              key={i++}>
                                             <div
                                                 className={day.isCur ? 'calendar_body_txt boxCurSel' : (day.isStatus ? 'calendar_body_txt boxSel' : 'calendar_body_txt')}>
@@ -128,6 +129,26 @@ export default class CalendarMain extends Component {
             }
         </div>)
     }
+
+
+    /**
+     *  处理日期点击
+     * @param e 虚拟Dom 更改选中的颜色
+     * @param data  点击的日期
+     */
+    handleDatePick(e, day) {
+        if (!Array.isArray(day.day)) {
+            let date = new Date(),
+                Y = date.getFullYear() + '-',
+                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+            // console.log(Y + M + day.day)
+            // e.target.style = "background:#F8F8F8;color:#000"
+            this.props.datePick(Y + M + day.day)
+        }
+    }
+
+
+
 
     //处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
     // handleDatePick(index, styleName) {
@@ -145,11 +166,6 @@ export default class CalendarMain extends Component {
     //     }
     // }
 
-
-    handleDatePick(data){
-        console.log(data)
-
-    }
 
     /**
      处理选择时选中的样式效果,利用闭包保存上一次选择的元素，在月份切换和重新选择日期时重置上一次选择的元素的样式

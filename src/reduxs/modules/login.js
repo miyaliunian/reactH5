@@ -99,7 +99,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGIN_REQUEST:
             return {...state, isFetching: true}
         case actionTypes.LOGIN_SUCCESS:
-            return {...state, isFetching: false, statue: false}
+            return {...state, isFetching: false}
         case actionTypes.LOGIN_FAILURE:
             return {...state, isFetching: false}
         case actionTypes.LOGOUT:

@@ -7,6 +7,7 @@
  */
 import React, {Component, Fragment} from 'react';
 import Header from "@components/Header/NavBar";
+import {Icon} from 'antd-mobile';
 import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
 import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
 import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";
@@ -56,13 +57,16 @@ class DoctorListContainer extends Component {
                 <DoctorItem data={doctors}/>
                 <Modal
                     visible={this.state.isShow}
-                    title="选择出诊日期"
+                    title=""
                     afterClose={() => {
-                        alert('afterClose');
+                        // alert('afterClose');
                     }}
                 >
                     <div className={'calendar_box'}>
-                        <Calendar reservations={reservations}/>
+                        <Header title={'选择出诊日期'} isRight={false} onBack={() => this.closeModal()}/>
+                        <Calendar reservations={reservations} markSelDate={(date) => {
+                            this.markSelDate(date)
+                        }}/>
                     </div>
                 </Modal>
                 {fetchingStatus ? <LoadingMask/> : null}
@@ -70,17 +74,11 @@ class DoctorListContainer extends Component {
         )
     }
 
-    handleBack = () => {
-        this.props.history.goBack()
-    }
 
-    /**
-     * 日历:显示/隐藏
-     */
-    showModal() {
-        this.setState({
-            isShow: true
-        })
+    markSelDate(date) {
+        this.closeModal()
+        console.log(date)
+        // console.log('markSelDate')
     }
 
     componentDidMount() {
@@ -130,6 +128,28 @@ class DoctorListContainer extends Component {
         const date = formateTimeStep(dayObj)
         this.props.doctorListActions.setSeeDate(dayObj)
         this.props.doctorListActions.loadDoctorList(id, date)
+    }
+
+
+    handleBack = () => {
+        this.props.history.goBack()
+    }
+
+    /**
+     * 日历:显示/隐藏
+     */
+    showModal() {
+        this.setState({
+            isShow: true
+        })
+    }
+
+
+    /**
+     * 日历Modal:隐藏
+     */
+    closeModal() {
+        this.setState({isShow: false})
     }
 
 }

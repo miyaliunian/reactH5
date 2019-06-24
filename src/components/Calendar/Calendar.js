@@ -157,7 +157,7 @@ export default class Calendar extends Component {
                     <CalendarMain {...props}
                                   prevMonth={() => this.prevMonth()}
                                   nextMonth={() => this.nextMonth()}
-                                  datePick={() => this.datePick()}
+                                  datePick={(date) => this.props.markSelDate(date)}
                                   year={this.state.year}
                                   month={this.state.month}
                                   day={this.state.day}/>

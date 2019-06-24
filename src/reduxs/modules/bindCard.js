@@ -11,12 +11,15 @@ import {FETCH_DATA} from "@reduxs/middleware/api";
 const initialState = {
     isFetching: false,
     data: [], //列表数据
+
 }
 
 const actionTypes = {
     FETCH_BIND_CARD_REQUEST: 'BINDCARD/FETCH_BIND_CARD_REQUEST',
     FETCH_BIND_CARD_SUCCESS: 'BINDCARD/FETCH_BIND_CARD_SUCCESS',
     FETCH_BIND_CARD_FAILURE: 'BINDCARD/FETCH_BIND_CARD_FAILURE',
+
+
 
 
     SET_BINDCARD_ITEM: 'BINDCARD/SET_BINDCARD_ITEM',
@@ -67,6 +70,10 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 data: action.response.data
             }
+
+
+
+
         case actionTypes.FETCH_BIND_CARD_FAILURE:
             return {...state, isFetching: false}
         case actionTypes.SET_BINDCARD_ITEM:
