@@ -52,8 +52,10 @@ class DoctorListContainer extends Component {
                 <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
                 <div ref={'reservations'}>
                     {reservations ?
-                        <Reservaes reservations={reservations} fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
-                                   showModal={() => this.showModal()}/>
+                        <Reservaes reservations={reservations}
+                                   fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
+                                   showModal={() => this.showModal()}
+                        />
                         : null
                     }
                 </div>
@@ -110,7 +112,7 @@ class DoctorListContainer extends Component {
 
 
     /**
-     * 日历Modal 层选择日历
+     * MODAL日历:选择某天，然后关闭
      * 1：关闭Modal,
      * 2: 通过过滤条件，过滤数据
      * @param date

@@ -64,7 +64,6 @@ const displayDaysPerMonth = (year) => {
             //     // monthData.push([])
             // }
 
-
             return monthData
         })
 }
@@ -89,12 +88,18 @@ export default class Calendar extends Component {
             day: now.getDate(),
             picked: false
         }
+        /**
+         *  只有是当前月的时候才显示
+         * @type {number}
+         */
+        this.isCurrentMonth = 0
     }
 
     /*
     * 切换到上一个月
     * */
     prevMonth() {
+        this.isCurrentMonth -= 1
         if (this.state.month === 0) {
             this.setState({
                 year: --this.state.year,
@@ -111,6 +116,7 @@ export default class Calendar extends Component {
      * 切换到下一个月
      * */
     nextMonth() {
+        this.isCurrentMonth += 1
         if (this.state.month === 11) {
             this.setState({
                 year: ++this.state.year,
@@ -155,9 +161,8 @@ export default class Calendar extends Component {
                                     month={this.state.month}
                                     day={this.state.day}/>
                     <CalendarMain {...props}
-                                  prevMonth={() => this.prevMonth()}
-                                  nextMonth={() => this.nextMonth()}
                                   datePick={(date) => this.props.markSelDate(date)}
+                                  isRender={this.isCurrentMonth}
                                   year={this.state.year}
                                   month={this.state.month}
                                   day={this.state.day}/>

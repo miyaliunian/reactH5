@@ -66,7 +66,6 @@ export default class CalendarMain extends Component {
                 arr.fill('nextMonth', j)
                 return arr
             })()
-
         //把每一个月的显示数据以7天为一组等分
         month.forEach((day, index) => {
             if (index % 7 === 0) {
@@ -100,7 +99,7 @@ export default class CalendarMain extends Component {
                 rowsInMonth.push(newMonths)
             }
         })
-
+        console.log(this.props.isRender)
         return (<div className={'calendar_body'}>
             {
                 rowsInMonth.map((row, rowIndex) => {
@@ -115,10 +114,18 @@ export default class CalendarMain extends Component {
                                             //     (this, i, styleOfDays[i])}
                                              onClick={(e) => this.handleDatePick(e, day)}
                                              key={i++}>
-                                            <div
-                                                className={day.isCur ? 'calendar_body_txt boxCurSel' : (day.isStatus ? 'calendar_body_txt boxSel' : 'calendar_body_txt')}>
-                                                {day.day}
-                                            </div>
+                                            {this.props.isRender === 0
+                                                ?
+                                                <div
+                                                    className={day.isCur ? 'calendar_body_txt boxCurSel' : (day.isStatus ? 'calendar_body_txt boxSel' : 'calendar_body_txt')}>
+                                                    {day.day}
+                                                </div>
+                                                :
+                                                <div
+                                                    className={'calendar_body_txt'}>
+                                                    {day.day}
+                                                </div>
+                                            }
                                         </div>
                                     )
                                 })
@@ -146,8 +153,6 @@ export default class CalendarMain extends Component {
             this.props.datePick(Y + M + day.day)
         }
     }
-
-
 
 
     //处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
