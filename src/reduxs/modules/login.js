@@ -47,7 +47,7 @@ export const actions = {
             let encrypt = new window.JSEncrypt()
             encrypt.setPublicKey(PUBLIC_LEY);
             let pwdencry = encrypt.encrypt(password);
-            console.log(pwdencry)
+            // console.log(pwdencry)
             const targetURL = url.API_LOGIN(username, pwdencry)
             return dispatch(fetchLogin(targetURL))
             /**

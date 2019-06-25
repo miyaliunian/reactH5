@@ -6,9 +6,10 @@
  *
  */
 import React, {Component} from 'react'
-import Bscroll from 'better-scroll'
-import './style.less'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
+import Bscroll from 'better-scroll'
+import {Icon} from 'antd-mobile'
+import './style.less'
 
 const dataSources = [
     {
@@ -103,11 +104,21 @@ export default class DoctorVisiting extends Component {
     }
 
     render() {
+        const {clinicData} = this.props
+        // console.log(clinicData)
+        let defSelClinic = ''
+        if (clinicData.length > 0) {
+            defSelClinic = clinicData[0].name
+        }
         return (
             <div className={'doctorVisiting'}>
                 <div className={'doctorVisiting__title'}>
                     <div>出诊时间</div>
-                    <div>儿科中心</div>
+                    <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick()}>
+                        <div>{defSelClinic}</div>
+                        <Icon type={'left'}/>
+                    </div>
+
                 </div>
                 <div className={'doctorVisiting__list'} ref={'doctorVisitingList'}>
                     <div>
@@ -141,8 +152,14 @@ export default class DoctorVisiting extends Component {
         this.scroll.on('pullingUp', this.props.pullingUpHandler);
         setTimeout(() => (
             this.setState({
-                isRefresh:true
+                isRefresh: true
             })
         ), 3000)
+    }
+
+
+    //右侧箭头被点击
+    arrowClick() {
+        console.log('右侧箭头被点击')
     }
 }    

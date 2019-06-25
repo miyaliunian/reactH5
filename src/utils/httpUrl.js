@@ -26,6 +26,9 @@ export default {
     API_AREA_LIST: (cityId) => `${BASE_URL}/city/v1.0/list/${cityId}.ch`,
     //医院列表
     API_HOSPITAL_LIST: (cityId, orderType, page) => `${BASE_URL}/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`,
+
+
+    /*---------------------------------------------科室-门诊列表---*/
     //医院列表对应的科室列表
     API_HOSPITAL_DIVSION_LIST: (hosid) => `${BASE_URL}/division/v1.0/list/${hosid}.action`,
     //科室列表对应的门诊列表
@@ -41,9 +44,9 @@ export default {
 
     /*---------------------------------------------医生详情---*/
     //医生详情->科室列表
-    API_DOCTOR_VISITING_DIVISION: (doctid) => `${BASE_URL}/hisdept/v1.0/list/${doctid}.action`,
+    API_DOCTOR_CLINIC_LIST: (doctid) => `${BASE_URL}/hisdept/v1.0/list/${doctid}.action`,
     //医生详情->预约列表
-    API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, date, pageno) => `${BASE_URL}/schedule/v1.2/list/${hosid}/${deptid}/${doctid}/${date}/${pageno}.action`,
+    API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, date = null, pageno) => `${BASE_URL}/schedule/v1.2/list/${hosid}/${deptid}/${doctid}/${date}/${pageno}.action`,
 
 
     /*---------------------------------------------家庭成员---*/

@@ -15,6 +15,7 @@ import {Modal} from 'antd-mobile'
 import Calendar from "@components/Calendar/Calendar";
 import {getDate, formateTimeStep} from "@utils/dayutils";
 import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
 import {
     actions as doctorListActions,
     getFetchStatus,
@@ -22,7 +23,7 @@ import {
     getReservationList,
     getSeeDate
 } from "@reduxs/modules/doctorList";
-import {bindActionCreators} from "redux";
+
 import './style.less'
 import LoadingMask from "@components/Loading/LoadingMask";
 
