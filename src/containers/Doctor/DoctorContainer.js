@@ -27,7 +27,7 @@ class DoctorContainer extends Component {
         const {fetchingStatus,clinicData,reservationData} = this.props
         return (
             <div className={'doctor'}>
-                <Header title={'医生详情'} isRight={false} onBack={() => this.handleBack()}/>
+                <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
                 <DoctorTitle data={this.props.location.state}/>
                 <DoctorDesc/>
                 <div className={'doctor__interval'}/>
@@ -53,7 +53,7 @@ class DoctorContainer extends Component {
         console.log('上啦刷新')
     }
 
-    handleBack() {
+    handleBack = () => {
         this.props.history.goBack()
     }
 }

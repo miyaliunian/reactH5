@@ -105,7 +105,6 @@ export default class DoctorVisiting extends Component {
 
     render() {
         const {clinicData} = this.props
-        // console.log(clinicData)
         let defSelClinic = ''
         if (clinicData.length > 0) {
             defSelClinic = clinicData[0].name

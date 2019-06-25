@@ -94,7 +94,6 @@ class DoctorListContainer extends Component {
 
     componentDidMount() {
         // 清空数据
-
         this.resizeReservationsBox()
         this.refs.reservations.style.height = 0
         const {id} = this.props.match.params
