@@ -31,7 +31,6 @@ export default class RefreshFooter extends Component {
                         </div>
                     )
                 }
-
             </div>
         )
     }

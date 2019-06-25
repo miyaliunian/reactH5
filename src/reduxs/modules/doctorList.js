@@ -59,7 +59,7 @@ export const actions = {
 
     loadReservationList: (id) => {
         return (dispatch, getstate) => {
-            const targetURL = url.API_RESERVATION_LIST(PlatformType.HospitalDepartments, id, 7)
+            const targetURL = url.API_DOCTOR_RESERVATION_LIST(PlatformType.HospitalDepartments, id, 7)
             return dispatch(fetchReservationList(targetURL))
         }
     },

@@ -20,11 +20,17 @@ export default class DoctorContainer extends Component {
                 <DoctorTitle/>
                 <DoctorDesc/>
                 <div className={'doctor__interval'}/>
-                <DoctorVisiting/>
+                <DoctorVisiting
+                    pullingUpHandler={() => this.pullingUpHandler()}
+                />
             </div>
         )
     }
 
+
+    pullingUpHandler() {
+        console.log('上啦刷新')
+    }
 
     handleBack() {
         this.props.history.goBack()
