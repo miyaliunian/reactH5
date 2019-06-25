@@ -14,6 +14,7 @@ import Division from "@containers/Division/DivisionContainer";
 import BindCard from "@components/BindCard/BindCardContainer"
 import BindCardList from "@components/BindCard/components/BindCardList";
 import DoctorList from "@containers/DoctorList/DoctorListContainer";
+import Doctor from "@containers/Doctor/DoctorContainer"
 import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
 
 const routerMap = [
@@ -46,6 +47,11 @@ const routerMap = [
         path: '/doctorList/:id/:name',
         name: 'DoctorList',
         component: DoctorList
+    },
+    {
+        path: '/doctor',
+        name: 'Doctor',
+        component: Doctor
     },
     {
         path: '/bindCard',

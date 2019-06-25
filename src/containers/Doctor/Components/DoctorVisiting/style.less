@@ -1,0 +1,47 @@
+@import "../../../../assets/less/varibles";
+
+.doctorVisiting {
+  .doctorVisiting__title {
+    height: 40px;
+    background: white;
+    display: flex;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: @border-LightGrey;
+  }
+  .doctorVisiting__list {
+    .doctorVisiting__item {
+      height: 35px;
+      padding: 10px 20px;
+      display: flex;
+      box-sizing: border-box;
+      background: white;
+      align-items: center;
+      border-bottom: @border-LightGrey;
+      justify-content: space-between;
+      .item__right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .item__right__price {
+          color: #007FFE;
+          margin-right: 10px;
+          font-size: 12px;
+        }
+        .item__right__icon {
+          background: #007FFE;
+          width: 30px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          box-sizing: border-box;
+          font-size: 10px;
+          border-radius: 3px;
+          color: white;
+        }
+      }
+    }
+  }
+}
