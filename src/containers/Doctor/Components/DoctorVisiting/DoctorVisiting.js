@@ -6,6 +6,7 @@
  *
  */
 import React, {Component} from 'react'
+import Bscroll from 'better-scroll'
 import './style.less'
 
 const dataSources = [
@@ -467,18 +468,29 @@ export default class DoctorVisiting extends Component {
                     <div>出诊时间</div>
                     <div>儿科中心</div>
                 </div>
-                <div className={'doctorVisiting__list'}>
-                    {dataSources.map((item, index) => {
-                        return <div className={'doctorVisiting__item'}>
-                            <div>{item.time}</div>
-                            <div className={'item__right'}>
-                                <div className={'item__right__price'}>{item.price}</div>
-                                <div className={'item__right__icon'}>预约</div>
-                            </div>
-                        </div>
-                    })}
+                <div className={'doctorVisiting__list'} ref={'doctorVisitingList'}>
+                    <div>
+                        {dataSources.map((item, index) => {
+                            return (
+                                <div className={'doctorVisiting__item'} key={index}>
+                                    <div>{item.time}</div>
+                                    <div className={'item__right'}>
+                                        <div className={'item__right__price'}>{item.price}</div>
+                                        <div className={'item__right__icon'}>预约</div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         )
+    }
+
+    componentDidMount() {
+        this.scroll = new Bscroll(this.refs.doctorVisitingList, {
+            scrollY: true,
+            click: true
+        })
     }
 }    
