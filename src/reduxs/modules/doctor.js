@@ -8,6 +8,7 @@
 
 import URL from '@utils/httpUrl'
 import {FETCH_DATA} from "@reduxs/middleware/api";
+import {post} from "@utils/httpUtil";
 
 const initialState = {
     isFetching: false,//标识请求是否进行中
@@ -26,12 +27,38 @@ const actionTypes = {
 
 
 export const actions = {
-    loadClinicList: (doctid) => {
+    // loadClinicList: (doctid) => {
+    //     return (dispatch, getstate) => {
+    //         const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
+    //         return dispatch(fetchClinicList(target))
+    //     }
+    // },
+
+
+    loadClinicList: (hosId,doctid) => {
         return (dispatch, getstate) => {
             const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
-            return dispatch(fetchClinicList(target))
+            return post(target).then(
+                data => {
+                    data.data.map((item, index) => {
+                        if (index === 0) {
+                            item.isSel = true
+                        } else {
+                            item.isSel = false
+                        }
+                    })
+                    dispatch(fetchClinicListSuccess(data.data))
+                    const target = URL.API_DOCTOR_VISITING_LIST(hosId, data.data[0].id, doctid, null, getstate().doctor.page)
+                    return dispatch(fetchReservationList(target))
+                },
+                error => {
+
+                }
+            )
         }
     },
+
+
     loadReservationList: (hosId, deptId, doctid, date) => {
         return (dispatch, getstate) => {
             const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, getstate().doctor.page)
@@ -40,15 +67,20 @@ export const actions = {
     }
 }
 
-const fetchClinicList = (targetURL) => ({
-    [FETCH_DATA]: {
-        types: [
-            actionTypes.FETCH_DOCTOR_REQUEST,
-            actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,
-            actionTypes.FETCH_DOCTOR_FAILURE,
-        ],
-        targetURL,
-    },
+// const fetchClinicList = (targetURL) => ({
+//     [FETCH_DATA]: {
+//         types: [
+//             actionTypes.FETCH_DOCTOR_REQUEST,
+//             actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,
+//             actionTypes.FETCH_DOCTOR_FAILURE,
+//         ],
+//         targetURL,
+//     },
+// })
+
+const fetchClinicListSuccess = (data) => ({
+    type: actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,
+    data
 })
 
 const fetchReservationList = (targetURL) => ({
@@ -71,13 +103,14 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                clinics: action.response.data
+                // clinics: action.response.data
+                clinics: action.data
             }
         case actionTypes.FETCH_DOCTOR_RESERVATIONS_SUCCESS:
             return {
                 ...state,
                 isFetching: false,
-                reservations: action.response.data
+                reservations: action.response.data.list
             }
         case actionTypes.FETCH_DOCTOR_FAILURE:
             return {...state, isFetching: false}

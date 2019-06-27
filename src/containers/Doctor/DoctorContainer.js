@@ -24,7 +24,7 @@ import './style.less'
 class DoctorContainer extends Component {
     render() {
 
-        const {fetchingStatus,clinicData,reservationData} = this.props
+        const {fetchingStatus, clinicData, reservationData} = this.props
         return (
             <div className={'doctor'}>
                 <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
@@ -34,6 +34,7 @@ class DoctorContainer extends Component {
                 <DoctorVisiting
                     clinicData={clinicData}
                     reservationData={reservationData}
+                    fetchReservationList={(item) => this.fetchReservationList(item)}
                     pullingUpHandler={() => this.pullingUpHandler()}
                 />
                 {fetchingStatus ? <LoadingMask/> : null}
@@ -44,8 +45,8 @@ class DoctorContainer extends Component {
     componentDidMount() {
         const {id, hosId, deptId} = this.props.location.state
         // console.log(`doctid=${id},hosid=${hosId},deptid=${deptId}`)
-        this.props.doctorActions.loadClinicList(id)
-        this.props.doctorActions.loadReservationList(hosId, deptId, id, null)
+        this.props.doctorActions.loadClinicList(hosId,id)
+        // this.props.doctorActions.loadReservationList(hosId, deptId, id, null)
     }
 
 
@@ -56,14 +57,21 @@ class DoctorContainer extends Component {
     handleBack = () => {
         this.props.history.goBack()
     }
+
+    fetchReservationList(data) {
+        const {hosId, id} = data
+        const {deptId} = this.props.location.state
+        this.props.doctorActions.loadReservationList(hosId, id, 11368, null)
+        console.log(data)
+    }
 }
 
 
 const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchStatus(state),
-        clinicData:getClinicsData(state),
-        reservationData:getReservationsData(state)
+        clinicData: getClinicsData(state),
+        reservationData: getReservationsData(state)
     }
 }
 

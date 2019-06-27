@@ -10,88 +10,184 @@ import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
 import {Icon} from 'antd-mobile'
 import posed from 'react-pose'
+import {getDate} from '@utils/dayutils'
 import './style.less'
 
 const dataSources = [
     {
-        'time': '01 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561564800000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '02 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '03 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '04 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '05 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 1
     },
     {
-        'time': '6 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561564800000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '7 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '8 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '9 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '10 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 1
     },
     {
-        'time': '11 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561564800000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '12 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '13 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '14 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '15 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 1
     },
     {
-        'time': '16 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561564800000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '17 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '18 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561651200000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '19 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
     },
     {
-        'time': '20 周三  上午  普通门诊',
-        'price': '￥25'
+        'seeDate': 1561737600000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 1
+    },
+    {
+        'seeDate': 1561564800000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
+    },
+    {
+        'seeDate': 1561651200000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
+    },
+    {
+        'seeDate': 1561651200000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
+    },
+    {
+        'seeDate': 1561737600000,
+        'noon': '上午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 2
+    },
+    {
+        'seeDate': 1561737600000,
+        'noon': '下午',
+        'reglevlName': "普通门诊",
+        'regFee': '12',
+        'status': 1
     },
 ]
 
@@ -111,7 +207,7 @@ export default class DoctorVisiting extends Component {
     }
 
     render() {
-        const {clinicData} = this.props
+        const {clinicData, reservationData} = this.props
         let defSelClinic = ''
         if (Array.isArray(clinicData) && clinicData.length > 0) {
             defSelClinic = clinicData[0].name
@@ -131,7 +227,8 @@ export default class DoctorVisiting extends Component {
                         <ul>
                             {clinicData.map(item => {
                                 return (
-                                    <span key={item.id} className={'box__item'}>{item.name}</span>
+                                    <span key={item.id} className={'box__item'}
+                                          onClick={() => this.itemClick(item)}>{item.name}</span>
                                 )
                             })}
                         </ul>
@@ -142,10 +239,12 @@ export default class DoctorVisiting extends Component {
                         {dataSources.map((item, index) => {
                             return (
                                 <div className={'doctorVisiting__item'} key={index}>
-                                    <div>{item.time}</div>
+                                    {this.renderDesc(item)}
                                     <div className={'item__right'}>
-                                        <div className={'item__right__price'}>{item.price}</div>
-                                        <div className={'item__right__icon'}>预约</div>
+                                        <div className={'item__right__price'}>￥{item.regFee}</div>
+                                        <div
+                                            className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
+                                        </div>
                                     </div>
                                 </div>
                             )
@@ -157,11 +256,13 @@ export default class DoctorVisiting extends Component {
         )
     }
 
+
     componentDidMount() {
 
 
         //预约滚动列表
         this.scroll = new Bscroll(this.refs.doctorVisitingList, {
+            mouseWheel: true,
             click: true,
             tap: true,
             pullUpLoad: {
@@ -179,6 +280,7 @@ export default class DoctorVisiting extends Component {
 
         //诊室滚动列表
         this.clinicScroll = new Bscroll(this.refs.clinic__box, {
+            mouseWheel: true,
             click: true,
             tap: true,
             useTransition: false
@@ -191,5 +293,27 @@ export default class DoctorVisiting extends Component {
     arrowClick(clinicData) {
         this.setState({isVisible: !this.state.isVisible})
         console.log(clinicData)
+    }
+
+    /**
+     * 门诊下拉列表选中
+     * @param data
+     */
+    itemClick(data) {
+        this.props.fetchReservationList(data)
+    }
+
+
+    /**
+     * 格式化字符串
+     * @param data
+     * @returns {*}
+     */
+    renderDesc(data) {
+        const {seeDate, noon, reglevlName} = data
+        const {oMonth, oDay, oweekDay} = getDate(seeDate)
+        return (
+            <div>{oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}</div>
+        )
     }
 }    
