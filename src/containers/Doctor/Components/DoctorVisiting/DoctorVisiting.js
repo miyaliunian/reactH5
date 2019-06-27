@@ -288,11 +288,9 @@ export default class DoctorVisiting extends Component {
 
     }
 
-
     //右侧箭头被点击
     arrowClick(clinicData) {
         this.setState({isVisible: !this.state.isVisible})
-        console.log(clinicData)
     }
 
     /**

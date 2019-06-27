@@ -45,8 +45,7 @@ class DoctorContainer extends Component {
     componentDidMount() {
         const {id, hosId, deptId} = this.props.location.state
         // console.log(`doctid=${id},hosid=${hosId},deptid=${deptId}`)
-        this.props.doctorActions.loadClinicList(hosId,id)
-        // this.props.doctorActions.loadReservationList(hosId, deptId, id, null)
+        this.props.doctorActions.loadClinicList(hosId, id)
     }
 
 
@@ -59,10 +58,10 @@ class DoctorContainer extends Component {
     }
 
     fetchReservationList(data) {
-        const {hosId, id} = data
-        const {deptId} = this.props.location.state
-        this.props.doctorActions.loadReservationList(hosId, id, 11368, null)
-        console.log(data)
+        const {hosId, id} = this.props.location.state;
+        let doctId = id;
+        let deptId = data.id;
+        this.props.doctorActions.loadReservationList(hosId, deptId, doctId, null)
     }
 }
 
