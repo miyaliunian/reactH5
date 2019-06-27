@@ -1,6 +1,7 @@
 @import "../../../../assets/less/varibles";
 
 .doctorVisiting {
+  position: relative;
   .doctorVisiting__title {
     height: 40px;
     background: white;
@@ -15,12 +16,35 @@
       flex-direction: row;
       align-items: center;
     }
-    .am-icon{
+    .am-icon {
       margin-left: 30px;
       transform: rotate(-90deg);
     }
   }
+  .clinic__box {
+    position: absolute;
+    right: 50px;
+    width: 80px;
+    height: 150px;
+    background: white;
+    border: @border-LightGrey;
+    transform-origin: 50% 100%;
+    overflow: hidden;
+    .box__item {
+      display: block;
+      height: 30px;
+      line-height: 20px;
+      padding: 5px 5px 0;
+      font-size: 12px;
+      color: rgb(130,130,130);
+      border-bottom: @border-LightGrey;
+      box-sizing: border-box;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
   .doctorVisiting__list {
+    z-index: -1;
     position: fixed;
     top: 279px;
     left: 0px;

@@ -9,6 +9,7 @@ import React, {Component} from 'react'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
 import {Icon} from 'antd-mobile'
+import posed from 'react-pose'
 import './style.less'
 
 const dataSources = [
@@ -94,31 +95,48 @@ const dataSources = [
     },
 ]
 
+const Box = posed.div({
+    hidden: {opacity: 0},
+    visible: {opacity: 1}
+})
+
 export default class DoctorVisiting extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            isRefresh: false
+            isRefresh: false,
+            isVisible: false
         }
     }
 
     render() {
         const {clinicData} = this.props
         let defSelClinic = ''
-        if (clinicData.length > 0) {
+        if (Array.isArray(clinicData) && clinicData.length > 0) {
             defSelClinic = clinicData[0].name
         }
+        const {isVisible} = this.state
         return (
             <div className={'doctorVisiting'}>
                 <div className={'doctorVisiting__title'}>
                     <div>出诊时间</div>
-                    <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick()}>
+                    <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick(clinicData)}>
                         <div>{defSelClinic}</div>
                         <Icon type={'left'}/>
                     </div>
-
                 </div>
+                <Box className="clinic__box" pose={isVisible ? 'visible' : 'hidden'} ref={'clinic__box'}>
+                    <div>
+                        <ul>
+                            {clinicData.map(item => {
+                                return (
+                                    <span key={item.id} className={'box__item'}>{item.name}</span>
+                                )
+                            })}
+                        </ul>
+                    </div>
+                </Box>
                 <div className={'doctorVisiting__list'} ref={'doctorVisitingList'}>
                     <div>
                         {dataSources.map((item, index) => {
@@ -140,6 +158,9 @@ export default class DoctorVisiting extends Component {
     }
 
     componentDidMount() {
+
+
+        //预约滚动列表
         this.scroll = new Bscroll(this.refs.doctorVisitingList, {
             click: true,
             tap: true,
@@ -154,11 +175,21 @@ export default class DoctorVisiting extends Component {
                 isRefresh: true
             })
         ), 3000)
+
+
+        //诊室滚动列表
+        this.clinicScroll = new Bscroll(this.refs.clinic__box, {
+            click: true,
+            tap: true,
+            useTransition: false
+        })
+
     }
 
 
     //右侧箭头被点击
-    arrowClick() {
-        console.log('右侧箭头被点击')
+    arrowClick(clinicData) {
+        this.setState({isVisible: !this.state.isVisible})
+        console.log(clinicData)
     }
 }    
