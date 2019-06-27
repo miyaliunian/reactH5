@@ -313,7 +313,7 @@ export default class DoctorVisiting extends Component {
         const {seeDate, noon, reglevlName} = data
         const {oMonth, oDay, oweekDay} = getDate(seeDate)
         return (
-            <div>{oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}</div>
+            <div className={'doctorVisiting__item__desc'}>{oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}</div>
         )
     }
 }    
