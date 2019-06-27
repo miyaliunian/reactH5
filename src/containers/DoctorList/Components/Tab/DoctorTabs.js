@@ -18,10 +18,10 @@ export default class DoctorTabs extends Component {
         return (
             <div className={'doctorTabs'}>
                 <div onClick={() => this.tabSel(1)}
-                     className={this.state.tabSel === 1 ? 'doctorTabs__tabsLeft itemSelected' : 'doctorTabs__tabsLeft'}>按专家预约
+                     className={this.state.tabSel === 1 ? 'doctorTabs__tabsLeft border-bottom itemSelected' : 'doctorTabs__tabsLeft border-bottom'}>按专家预约
                 </div>
                 <div onClick={() => this.tabSel(2)}
-                     className={this.state.tabSel === 2 ? 'doctorTabs__tabsRight itemSelected' : 'doctorTabs__tabsRight'}>按日期预约
+                     className={this.state.tabSel === 2 ? 'doctorTabs__tabsRight border-left  itemSelected border-bottom' : 'doctorTabs__tabsRight border-left border-bottom '}>按日期预约
                 </div>
             </div>
         );

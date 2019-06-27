@@ -222,12 +222,12 @@ export default class DoctorVisiting extends Component {
                         <Icon type={'left'}/>
                     </div>
                 </div>
-                <Box className="clinic__box" pose={isVisible ? 'visible' : 'hidden'} ref={'clinic__box'}>
+                <Box className="clinic__box border" pose={isVisible ? 'visible' : 'hidden'} ref={'clinic__box'}>
                     <div>
                         <ul>
                             {clinicData.map(item => {
                                 return (
-                                    <span key={item.id} className={'box__item'}
+                                    <span key={item.id} className={'box__item border-bottom'}
                                           onClick={() => this.itemClick(item)}>{item.name}</span>
                                 )
                             })}
@@ -238,7 +238,7 @@ export default class DoctorVisiting extends Component {
                     <div>
                         {dataSources.map((item, index) => {
                             return (
-                                <div className={'doctorVisiting__item'} key={index}>
+                                <div className={'doctorVisiting__item border-bottom'} key={index}>
                                     {this.renderDesc(item)}
                                     <div className={'item__right'}>
                                         <div className={'item__right__price'}>￥{item.regFee}</div>

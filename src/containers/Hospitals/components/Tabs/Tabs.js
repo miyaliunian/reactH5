@@ -36,7 +36,7 @@ class Tabs extends Component {
         const {areasList} = this.props
         return (
             <div className={'tabs'}>
-                <div className={'tabs__searchTOPWrapper'}>
+                <div className={'tabs__searchTOPWrapper border-bottom'}>
                     <div className={this.state.tab1focused ? 'searchItem  itemSelected' : 'searchItem'}
                          onClick={() => this.tabSelc(1)}>
                         {this.state.tab1focused_title}
@@ -63,7 +63,7 @@ class Tabs extends Component {
                             className={this.state.tab1focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}
                         >
                             {areasList.map((item) => {
-                                return <div className={'tabs__Bottom__Item'}
+                                return <div className={'tabs__Bottom__Item border-bottom'}
                                             key={item.name}
                                             onClick={() => this.tabRowSel(item, 1)}>{item.name}</div>
                             })}
@@ -78,7 +78,7 @@ class Tabs extends Component {
                             className={this.state.tab2focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
 
                             {ZHPX.map((item) => {
-                                return <div className={'tabs__Bottom__Item'}
+                                return <div className={'tabs__Bottom__Item border-bottom'}
                                             key={item.value}
                                             onClick={() => this.tabRowSel(item, 2)}>{item.title}</div>
                             })}

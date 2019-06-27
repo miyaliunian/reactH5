@@ -38,7 +38,7 @@ export default class Reservaes extends Component {
     render() {
         const {filterConditions} = this.props
         return (
-            <div className={'reservaes'}>
+            <div className={'reservaes border-bottom'}>
                 {this.state.days.map((day, index) => {
                     return (
                         <div key={index} className={day.isSel ? 'reservaes__box boxSel' : 'reservaes__box'}
