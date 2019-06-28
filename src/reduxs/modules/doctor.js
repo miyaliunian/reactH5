@@ -24,12 +24,14 @@ const actionTypes = {
     FETCH_DOCTOR_REQUEST: 'DOCTOR/FETCH_DOCTOR_REQUEST',
     FETCH_DOCTOR_CLINICS_SUCCESS: 'DOCTOR/FETCH_DOCTOR_CLINICS_SUCCESS',
     FETCH_DOCTOR_RESERVATIONS_SUCCESS: 'DOCTOR/FETCH_DOCTOR_RESERVATIONS_SUCCESS',
+    LOAD_DOCTOR_RESERVATIONS_SUCCESS: 'DOCTOR/LOAD_DOCTOR_RESERVATIONS_SUCCESS',
     FETCH_DOCTOR_FAILURE: 'DOCTOR/FETCH_DOCTOR_FAILURE',
 }
 
 
 export const actions = {
 
+    //获取科室
     loadClinicList: (hosId, doctid) => {
         return (dispatch, getstate) => {
             const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
@@ -42,9 +44,9 @@ export const actions = {
                             item.isSel = false
                         }
                     })
-                    dispatch(fetchClinicListSuccess(data.data))
+                    dispatch(loadClinicListSuccess(data.data))
                     const target = URL.API_DOCTOR_VISITING_LIST(hosId, data.data[0].id, doctid, null, getstate().doctor.page)
-                    return dispatch(fetchReservationList(target))
+                    return dispatch(loadReservationList(target))
                 },
                 error => {
 
@@ -53,7 +55,7 @@ export const actions = {
         }
     },
 
-
+    //默认获取科室列表第一个对应的(可预约)信息
     loadReservationList: (hosId, deptId, doctid, date, isPage) => {
         let pageNu = 1
         return (dispatch, getstate) => {
@@ -61,15 +63,36 @@ export const actions = {
                 pageNu = getstate().doctor.page
             }
             const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, pageNu)
+            return dispatch(loadReservationList(target))
+        }
+    },
+
+
+    //点击科室下拉列表，获取(可预约)数据
+    fetchReservationList: (hosId, deptId, doctid, date) => {
+        return (dispatch, getstate) => {
+            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, 1)
             return dispatch(fetchReservationList(target))
         }
-    }
+    },
 }
 
 
-const fetchClinicListSuccess = (data) => ({
+const loadClinicListSuccess = (data) => ({
     type: actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,
     data
+})
+
+
+const loadReservationList = (targetURL) => ({
+    [FETCH_DATA]: {
+        types: [
+            actionTypes.FETCH_DOCTOR_REQUEST,
+            actionTypes.LOAD_DOCTOR_RESERVATIONS_SUCCESS,
+            actionTypes.FETCH_DOCTOR_FAILURE,
+        ],
+        targetURL,
+    },
 })
 
 
@@ -84,7 +107,6 @@ const fetchReservationList = (targetURL) => ({
     },
 })
 
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_DOCTOR_REQUEST:
@@ -97,6 +119,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
                 clinics: action.data
+            }
+        case actionTypes.LOAD_DOCTOR_RESERVATIONS_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                isLastPage: action.response.data.lastPage,
+                page: action.response.data.lastPage ? state.page : state.page += 1,
+                reservations: state.reservations.concat(action.response.data.list)
             }
         case actionTypes.FETCH_DOCTOR_RESERVATIONS_SUCCESS:
             return {
@@ -119,7 +149,7 @@ export default reducer
 
 
 //selectors
-export const getFetchStatus = (state) => {
+export const getFetchingStatus = (state) => {
     return state.doctor.isFetching
 }
 

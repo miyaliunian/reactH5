@@ -15,7 +15,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {
     actions as doctorActions,
-    getFetchStatus,
+    getFetchingStatus,
     getIsLastPage,
     getClinicsData,
     getReservationsData
@@ -25,7 +25,7 @@ import './style.less'
 class DoctorContainer extends Component {
     render() {
 
-        const {fetchingStatus, clinicData, reservationData} = this.props
+        const {fetchingStatus,isLastPage, clinicData, reservationData} = this.props
         return (
             <div className={'doctor'}>
                 <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
@@ -36,6 +36,7 @@ class DoctorContainer extends Component {
                     clinicData={clinicData}
                     reservationData={reservationData}
                     fetchReservationList={(item) => this.fetchReservationList(item)}
+                    isLastPage={isLastPage}
                     pullingUpHandler={() => this.pullingUpHandler()}
                 />
                 {fetchingStatus ? <LoadingMask/> : null}
@@ -60,14 +61,14 @@ class DoctorContainer extends Component {
     fetchReservationList(data) {
         const {hosId, id: doctId} = this.props.location.state;
         const {id: deptId} = data
-        this.props.doctorActions.loadReservationList(hosId, deptId, doctId, null, false)
+        this.props.doctorActions.fetchReservationList(hosId, deptId, doctId, null)
     }
 }
 
 
 const mapStateToProps = (state) => {
     return {
-        fetchingStatus: getFetchStatus(state),
+        fetchingStatus: getFetchingStatus(state),
         isLastPage: getIsLastPage(state),
         clinicData: getClinicsData(state),
         reservationData: getReservationsData(state)

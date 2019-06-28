@@ -208,7 +208,7 @@ export default class DoctorVisiting extends Component {
     }
 
     render() {
-        const {clinicData, reservationData} = this.props
+        const {isLastPage,clinicData, reservationData} = this.props
         if (this.defSelClinic === '') {
             if (Array.isArray(clinicData) && clinicData.length > 0) {
                 this.defSelClinic = clinicData[0].name
@@ -251,7 +251,7 @@ export default class DoctorVisiting extends Component {
                                 </div>
                             )
                         })}
-                        <RefreshFooter refreshStatus={this.state.isRefresh}/>
+                        <RefreshFooter refreshStatus={isLastPage}/>
                     </div>
                 </div>
             </div>
