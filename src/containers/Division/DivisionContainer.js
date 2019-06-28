@@ -37,7 +37,7 @@ class DivisionContainer extends Component {
         return (
             <div className={'clinic'}>
                 <Header title={name} onBack={this.handleBack} isRight={false}/>
-                <div className={'clinic__bar'}>
+                <div className={'clinic__bar border-bottom'}>
                     <div>进入医院主页</div>
                     <Icon className={'clinic__bar__icon'} type={'right'}/>
                 </div>
