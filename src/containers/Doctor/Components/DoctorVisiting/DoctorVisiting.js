@@ -201,7 +201,6 @@ export default class DoctorVisiting extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isRefresh: false,
             isVisible: false
         }
         this.defSelClinic = ''
@@ -217,7 +216,7 @@ export default class DoctorVisiting extends Component {
         const {isVisible} = this.state
         return (
             <div className={'doctorVisiting'}>
-                <div className={'doctorVisiting__title'}>
+                <div className={'doctorVisiting__title border-bottom'}>
                     <div>出诊时间</div>
                     <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick(clinicData)}>
                         <div>{this.defSelClinic}</div>
@@ -273,11 +272,6 @@ export default class DoctorVisiting extends Component {
             useTransition: false
         })
         this.scroll.on('pullingUp', this.props.pullingUpHandler);
-        setTimeout(() => (
-            this.setState({
-                isRefresh: true
-            })
-        ), 3000)
 
 
         //诊室滚动列表
@@ -318,7 +312,9 @@ export default class DoctorVisiting extends Component {
         const {oMonth, oDay, oweekDay} = getDate(seeDate)
         return (
             <div
-                className={'doctorVisiting__item__desc'}>{oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}</div>
+                className={'doctorVisiting__item__desc'}>
+                {oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}
+            </div>
         )
     }
 }    
