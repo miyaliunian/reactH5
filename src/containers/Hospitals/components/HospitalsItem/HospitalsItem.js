@@ -76,7 +76,7 @@ class HospitalsItem extends Component {
                             <Link to={`/division/${item.id}/${item.name}`}
                                   key={index}
                             >
-                                <div className="hospitalsItem__con border-bottom">
+                                <div className="hospitalsItem__con">
                                     <div className="hospitalsItem__title">{item.name}</div>
                                     <div className="hospitalsItem__middle">
                                         <div className={'hospitalsItem__middle__item'}>
