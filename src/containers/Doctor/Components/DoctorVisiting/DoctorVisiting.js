@@ -204,13 +204,15 @@ export default class DoctorVisiting extends Component {
             isRefresh: false,
             isVisible: false
         }
+        this.defSelClinic = ''
     }
 
     render() {
         const {clinicData, reservationData} = this.props
-        let defSelClinic = ''
-        if (Array.isArray(clinicData) && clinicData.length > 0) {
-            defSelClinic = clinicData[0].name
+        if (this.defSelClinic === '') {
+            if (Array.isArray(clinicData) && clinicData.length > 0) {
+                this.defSelClinic = clinicData[0].name
+            }
         }
         const {isVisible} = this.state
         return (
@@ -218,7 +220,7 @@ export default class DoctorVisiting extends Component {
                 <div className={'doctorVisiting__title'}>
                     <div>出诊时间</div>
                     <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick(clinicData)}>
-                        <div>{defSelClinic}</div>
+                        <div>{this.defSelClinic}</div>
                         <Icon type={'left'}/>
                     </div>
                 </div>
@@ -236,7 +238,7 @@ export default class DoctorVisiting extends Component {
                 </Box>
                 <div className={'doctorVisiting__list'} ref={'doctorVisitingList'}>
                     <div>
-                        {dataSources.map((item, index) => {
+                        {reservationData.map((item, index) => {
                             return (
                                 <div className={'doctorVisiting__item border-bottom'} key={index}>
                                     {this.renderDesc(item)}
@@ -294,10 +296,14 @@ export default class DoctorVisiting extends Component {
     }
 
     /**
-     * 门诊下拉列表选中
+     * 门诊下拉列表选中,并关闭
      * @param data
      */
     itemClick(data) {
+        this.setState({
+            isVisible: false
+        })
+        this.defSelClinic = data.name
         this.props.fetchReservationList(data)
     }
 
@@ -311,7 +317,8 @@ export default class DoctorVisiting extends Component {
         const {seeDate, noon, reglevlName} = data
         const {oMonth, oDay, oweekDay} = getDate(seeDate)
         return (
-            <div className={'doctorVisiting__item__desc'}>{oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}</div>
+            <div
+                className={'doctorVisiting__item__desc'}>{oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}</div>
         )
     }
 }    

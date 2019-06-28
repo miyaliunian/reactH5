@@ -16,6 +16,7 @@ import {bindActionCreators} from "redux";
 import {
     actions as doctorActions,
     getFetchStatus,
+    getIsLastPage,
     getClinicsData,
     getReservationsData
 } from "@reduxs/modules/doctor";
@@ -59,7 +60,7 @@ class DoctorContainer extends Component {
     fetchReservationList(data) {
         const {hosId, id: doctId} = this.props.location.state;
         const {id: deptId} = data
-        this.props.doctorActions.loadReservationList(hosId, deptId, doctId, null)
+        this.props.doctorActions.loadReservationList(hosId, deptId, doctId, null, false)
     }
 }
 
@@ -67,6 +68,7 @@ class DoctorContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchStatus(state),
+        isLastPage: getIsLastPage(state),
         clinicData: getClinicsData(state),
         reservationData: getReservationsData(state)
     }

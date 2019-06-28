@@ -13,8 +13,10 @@ import {post} from "@utils/httpUtil";
 const initialState = {
     isFetching: false,//标识请求是否进行中
     page: 1,//翻页
+    isLastPage: false,//是否存在翻页
     clinics: [],//门诊
     reservations: []//可以预约的时间
+
 }
 
 
@@ -27,15 +29,8 @@ const actionTypes = {
 
 
 export const actions = {
-    // loadClinicList: (doctid) => {
-    //     return (dispatch, getstate) => {
-    //         const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
-    //         return dispatch(fetchClinicList(target))
-    //     }
-    // },
 
-
-    loadClinicList: (hosId,doctid) => {
+    loadClinicList: (hosId, doctid) => {
         return (dispatch, getstate) => {
             const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
             return post(target).then(
@@ -59,29 +54,24 @@ export const actions = {
     },
 
 
-    loadReservationList: (hosId, deptId, doctid, date) => {
+    loadReservationList: (hosId, deptId, doctid, date, isPage) => {
+        let pageNu = 1
         return (dispatch, getstate) => {
-            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, getstate().doctor.page)
+            if (isPage) {
+                pageNu = getstate().doctor.page
+            }
+            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, pageNu)
             return dispatch(fetchReservationList(target))
         }
     }
 }
 
-// const fetchClinicList = (targetURL) => ({
-//     [FETCH_DATA]: {
-//         types: [
-//             actionTypes.FETCH_DOCTOR_REQUEST,
-//             actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,
-//             actionTypes.FETCH_DOCTOR_FAILURE,
-//         ],
-//         targetURL,
-//     },
-// })
 
 const fetchClinicListSuccess = (data) => ({
     type: actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,
     data
 })
+
 
 const fetchReservationList = (targetURL) => ({
     [FETCH_DATA]: {
@@ -98,22 +88,29 @@ const fetchReservationList = (targetURL) => ({
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_DOCTOR_REQUEST:
-            return {...state, isFetching: true}
+            return {
+                ...state,
+                isFetching: true
+            }
         case actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS:
             return {
                 ...state,
                 isFetching: false,
-                // clinics: action.response.data
                 clinics: action.data
             }
         case actionTypes.FETCH_DOCTOR_RESERVATIONS_SUCCESS:
             return {
                 ...state,
                 isFetching: false,
+                isLastPage: action.response.data.lastPage,
+                page: action.response.data.lastPage ? state.page : state.page += 1,
                 reservations: action.response.data.list
             }
         case actionTypes.FETCH_DOCTOR_FAILURE:
-            return {...state, isFetching: false}
+            return {
+                ...state,
+                isFetching: false
+            }
         default:
             return state
     }
@@ -126,6 +123,9 @@ export const getFetchStatus = (state) => {
     return state.doctor.isFetching
 }
 
+export const getIsLastPage = (state) => {
+    return state.doctor.isLastPage
+}
 
 export const getClinicsData = (state) => {
     return state.doctor.clinics
@@ -134,3 +134,6 @@ export const getClinicsData = (state) => {
 export const getReservationsData = (state) => {
     return state.doctor.reservations
 }
+
+
+
