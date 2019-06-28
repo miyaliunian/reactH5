@@ -35,7 +35,7 @@ class DivisionContainer extends Component {
         const {name} = this.props.match.params
         const {fetchingStatus, divisionList, departmentList} = this.props
         return (
-            <div className={'clinic'}>
+            <div className={'clinic border-bottom'}>
                 <Header title={name} onBack={this.handleBack} isRight={false}/>
                 <div className={'clinic__bar'}>
                     <div>进入医院主页</div>
@@ -46,7 +46,7 @@ class DivisionContainer extends Component {
                         <div>
                             {divisionList.map((item, index) => {
                                 return <div key={index}
-                                            className={item.isSel ? 'clinic__left__item item_sel' : 'clinic__left__item'}
+                                            className={item.isSel ? 'clinic__left__item border-bottom  item_sel' : 'clinic__left__item border-bottom '}
                                             onClick={() => this.leftItemClick(item)}>{item.name}</div>
                             })}
                         </div>
