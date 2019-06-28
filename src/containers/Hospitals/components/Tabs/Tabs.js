@@ -41,7 +41,7 @@ class Tabs extends Component {
                          onClick={() => this.tabSelc(1)}>
                         {this.state.tab1focused_title}
                     </div>
-                    <div className={this.state.tab2focused ? 'searchItem2Seled' : 'searchItem2'}
+                    <div className={this.state.tab2focused ? 'searchItem2Seled ' : 'searchItem2'}
                          onClick={() => this.tabSelc(2)}>
                         {this.state.tab2focused_title}
                         <div className={this.state.tab2focused ? 'searchItemSeledLine' : ''}/>
@@ -52,7 +52,7 @@ class Tabs extends Component {
                 </div>
                 <div
                     id="tabsBottomWrapperCon"
-                    className={this.state.tabMaskIsSHow ? 'tabs__BottomWrapper__con__show' : 'tabs__BottomWrapper__con'}
+                    className={this.state.tabMaskIsSHow ? 'tabs__BottomWrapper__con__show border-top' : 'tabs__BottomWrapper__con'}
                     onClick={() => this.close()}
                     onTouchMove={(e) => this.handleTouchMove(e)}
 
