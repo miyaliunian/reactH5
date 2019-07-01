@@ -206,6 +206,7 @@ export default class DoctorVisiting extends Component {
         this.defSelClinic = ''
     }
 
+
     render() {
         const {isLastPage,clinicData, reservationData} = this.props
         if (this.defSelClinic === '') {
@@ -284,10 +285,12 @@ export default class DoctorVisiting extends Component {
 
     }
 
+
     //右侧箭头被点击
     arrowClick(clinicData) {
         this.setState({isVisible: !this.state.isVisible})
     }
+
 
     /**
      * 门诊下拉列表选中,并关闭

@@ -19,6 +19,7 @@ import bindCard from './bindCard'
 import bindCardIList from './bindCardIList'
 import doctorList from './doctorList'
 import doctor from './doctor'
+import reservation from './reservation'
 import intelligentWaiting from './intelligentWaiting'
 
 //合并成根Reducer
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
     bindCardIList,
     doctorList,
     doctor,
+    reservation,
     intelligentWaiting
 })
 

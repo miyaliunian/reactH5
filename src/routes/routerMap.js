@@ -15,7 +15,9 @@ import BindCard from "@components/BindCard/BindCardContainer"
 import BindCardList from "@components/BindCard/components/BindCardList";
 import DoctorList from "@containers/DoctorList/DoctorListContainer";
 import Doctor from "@containers/Doctor/DoctorContainer"
+import ReservationContainer from "@containers/Reservation/ReservationContainer";
 import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
+
 
 const routerMap = [
     {
@@ -52,6 +54,11 @@ const routerMap = [
         path: '/doctor',
         name: 'Doctor',
         component: Doctor
+    },
+    {
+        path: '/reservation',
+        name: 'Reservation',
+        component: ReservationContainer
     },
     {
         path: '/bindCard',
