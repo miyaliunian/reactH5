@@ -11,6 +11,7 @@ import Bscroll from 'better-scroll'
 import {Icon} from 'antd-mobile'
 import posed from 'react-pose'
 import {getDate} from '@utils/dayutils'
+import {Link} from 'react-router-dom'
 import './style.less'
 
 const dataSources = [
@@ -208,7 +209,7 @@ export default class DoctorVisiting extends Component {
 
 
     render() {
-        const {isLastPage,clinicData, reservationData} = this.props
+        const {isLastPage, clinicData, reservationData} = this.props
         if (this.defSelClinic === '') {
             if (Array.isArray(clinicData) && clinicData.length > 0) {
                 this.defSelClinic = clinicData[0].name
@@ -240,15 +241,19 @@ export default class DoctorVisiting extends Component {
                     <div>
                         {reservationData.map((item, index) => {
                             return (
-                                <div className={'doctorVisiting__item border-bottom'} key={index}>
-                                    {this.renderDesc(item)}
-                                    <div className={'item__right'}>
-                                        <div className={'item__right__price'}>￥{item.regFee}</div>
-                                        <div
-                                            className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
+                                <Link to={'/reservation'} key={index}>
+                                    <div className={'doctorVisiting__item border-bottom'} key={index}
+                                         // onClick={() => this.navPage(item)}
+                                    >
+                                        {this.renderDesc(item)}
+                                        <div className={'item__right'}>
+                                            <div className={'item__right__price'}>￥{item.regFee}</div>
+                                            <div
+                                                className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             )
                         })}
                         <RefreshFooter refreshStatus={isLastPage}/>
@@ -319,5 +324,14 @@ export default class DoctorVisiting extends Component {
                 {oMonth < 10 ? ("0" + oMonth + "-" + oDay) : (oMonth + "-" + oDay)} {oweekDay} {noon} {reglevlName}
             </div>
         )
+    }
+
+
+    /**
+     * 跳转页面
+     * @param data
+     */
+    navPage(data) {
+        console.log(data)
     }
 }    
