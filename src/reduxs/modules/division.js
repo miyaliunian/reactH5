@@ -46,14 +46,6 @@ const actionTypes = {
 export const actions = {
 
 
-    //加载左侧列表
-    // loadDivisionList: (hosid) => {
-    //     return (dispatch, getstate) => {
-    //         const targetURL = url.API_HOSPITAL_DIVSION_LIST(hosid)
-    //         return dispatch(fetchDivisionList(targetURL))
-    //     }
-    // },
-
 
     //加载左侧列表
     loadDivisionList: (hosid) => {

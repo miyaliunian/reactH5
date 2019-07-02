@@ -19,20 +19,32 @@ class BindCardItem extends Component {
     };
 
     render() {
-        const {data} = this.props
+        const {leftAvatar, data, rightArrowIcon} = this.props
         return (
 
-            <div className={'bindCard__list'} onClick={() => this.navPage(data)}>
+            <div className={'bindCard__list border-bottom'} onClick={() => this.navPage(data)}>
                 <div className={'bindCard__left'}>
-                    <img src={ico_user} className={'bindCard__icon'}/>
+                    {leftAvatar
+                        ?
+                        <img src={ico_user} className={'bindCard__icon'}/>
+                        :
+                        null
+                    }
+
                     {data.map(item => {
                         if (item.def) {
                             return (<div key={item.id}>{item.name}</div>)
                         }
                     })}
                 </div>
+
                 <div>
-                    <Icon type="right" color={'#007FFE'}/>
+                    {rightArrowIcon
+                        ?
+                        <Icon type="right" color={'#007FFE'}/>
+                        :
+                        null
+                    }
                 </div>
             </div>
 

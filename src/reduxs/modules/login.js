@@ -6,14 +6,9 @@
  *
  */
 import url from "../../utils/httpUrl"
+import {post} from '@utils/httpUtil'
 import {PUBLIC_LEY} from "../../assets/static";
-import {FETCH_DATA} from "../middleware/api";
-import {dataConversionDic} from '../../assets/static'
 
-
-export const schema = {
-    name: dataConversionDic.token,
-}
 
 const initialState = {
     username: '',
@@ -23,7 +18,6 @@ const initialState = {
 }
 
 
-// action types
 const actionTypes = {
     LOGIN_REQUEST: 'LOGIN/LOGIN_REQUEST',
     LOGIN_SUCCESS: 'LOGIN/LOGIN_SUCCESS',
@@ -34,35 +28,37 @@ const actionTypes = {
     LOGOUT: 'LOGIN/LOGOUT',
 }
 
-// action creators：一
+
 export const actions = {
-    login: () => {
+    login: (props) => {
         return (dispatch, getstate) => {
             const {username, password} = getstate().login
             if (!(username && username.length > 0 && password && password.length > 0)) {
                 return dispatch(loginFailure('用户名密码不能为空'))
             }
-
             //RAS:处理加密
             let encrypt = new window.JSEncrypt()
             encrypt.setPublicKey(PUBLIC_LEY);
             let pwdencry = encrypt.encrypt(password);
-            // console.log(pwdencry)
             const targetURL = url.API_LOGIN(username, pwdencry)
-            return dispatch(fetchLogin(targetURL))
-            /**
-             *
-             return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    dispatch(loginSuccess())
-                    resolve()
-                }, 1000)
-            })
-             * */
-
+            return post(targetURL).then(
+                data => {
+                    if (data.infocode === -1) {
+                        dispatch(loginFailure(data.infomessage))
+                    } else {
+                        let token = {}
+                        token.access_token = data.data.loginData.access_token
+                        token.refresh_token = data.data.loginData.refresh_token
+                        localStorage.setItem('token', JSON.stringify(token))
+                        props.history.goBack()
+                    }
+                },
+                error => {
+                    console.log(error)
+                }
+            )
         }
     },
-
 
 
     setUserName: (username) => ({
@@ -75,17 +71,10 @@ export const actions = {
     })
 }
 
-// action creators：二
-const fetchLogin = (targetURL) => ({
-    [FETCH_DATA]: {
-        types: [
-            actionTypes.LOGIN_REQUEST,
-            actionTypes.LOGIN_SUCCESS,
-            actionTypes.LOGIN_FAILURE,
-        ],
-        targetURL,
-        schema
-    }
+
+const loginSuccess = ()=>({
+    type:actions.LOGIN_SUCCESS,
+
 })
 
 const loginFailure = error => ({
@@ -115,7 +104,7 @@ const reducer = (state = initialState, action) => {
 
 export default reducer
 
-//selectors
+
 export const getUserName = (state) => {
     return state.login.username
 }
@@ -129,3 +118,4 @@ export const getPassword = (state) => {
 export const isLogin = (state) => {
     return state.login.status;
 }
+

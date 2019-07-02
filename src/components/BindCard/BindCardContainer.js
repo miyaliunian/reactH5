@@ -10,7 +10,7 @@ import './style.less'
 import Header from "@components/Header/NavBar";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-
+import PropTypes from 'prop-types'
 import {
     actions as bindCardActions,
     getBindCardList
@@ -20,21 +20,19 @@ import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardI
 
 class BindCardContainer extends Component {
 
-    constructor(props) {
-        super(props)
+    static propTypes = {
+        showNavBar: PropTypes.bool.isRequired,
+        rightArrowIcon:PropTypes.bool.isRequired,
+        leftAvatar:PropTypes.bool.isRequired
     }
 
-    handleBack = () => {
-        this.props.bindCardActions.resetBindCard()
-        this.props.history.goBack()
-    }
 
     render() {
-        const {list} = this.props
+        const {list, showNavBar,leftAvatar,rightArrowIcon} = this.props
         return (
             <div className={'bindCard'}>
-                <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
-                <BindCardItem data={list} isRefresh={this.refresh}/>
+                {showNavBar ? <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/> : null}
+                <BindCardItem data={list} isRefresh={this.refresh} avatar={leftAvatar} rightArrowIcon={rightArrowIcon}/>
             </div>
         )
     }
@@ -45,9 +43,12 @@ class BindCardContainer extends Component {
         if (!list.length > 0) {
             this.props.bindCardActions.loadList()
         }
+    }
 
 
-
+    handleBack = () => {
+        this.props.bindCardActions.resetBindCard()
+        this.props.history.goBack()
     }
 
 

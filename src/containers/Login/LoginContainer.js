@@ -43,8 +43,8 @@ class LoginContainer extends Component {
     }
 
     onSubmit = () => {
-        this.props.loginActions.login()
-        this.props.history.goBack()
+        this.props.loginActions.login(this.props)
+        // this.props.history.goBack()
     }
 }
 

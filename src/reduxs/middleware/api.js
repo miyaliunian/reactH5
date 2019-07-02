@@ -80,12 +80,6 @@ const normalizeData = (data, schema) => {
                     }
                 })
                 return data
-            case dataConversionDic.token:
-                let token = {}
-                token.access_token = data.data.loginData.access_token
-                token.refresh_token = data.data.loginData.refresh_token
-                localStorage.setItem('token', JSON.stringify(token))
-                return data
             default:
                 return
         }

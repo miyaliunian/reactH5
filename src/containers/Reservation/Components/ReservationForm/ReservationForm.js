@@ -8,6 +8,7 @@
 import React, {Component} from 'react'
 import {Icon} from 'antd-mobile'
 import {IOSSwitch} from '@components/IOSSwitch/IOSSwitch'
+import BindCardContainer from '@components/BindCard/BindCardContainer'
 import './style.less'
 
 
@@ -20,9 +21,11 @@ export default class ReservationForm extends Component {
     render() {
         return (
             <div className={'reservationForm'}>
-                <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
+                <div className={'reservationForm__cell border-bottom'}>
                     <span className={'reservationForm__cell__title'}>就诊人</span>
-                    <span className={'reservationForm__cell__right__name'}>范育军</span>
+                    <div className={'reservationForm__bindCard'}>
+                        <BindCardContainer showNavBar={false} rightArrowIcon={false} leftAvatar={false}/>
+                    </div>
                     <span className={'reservationForm__cell__right__icon'}>
                         <Icon type={'right'}/>
                     </span>

@@ -38,7 +38,7 @@ export default class ReservationHeader extends Component {
                         <div className={'reservationHeader__right_colu'}>
                             <span
                                 className={'reservationHeader__right_colu__txt'}>{fromateTimeStepStr(seeDate)}{noon} </span>
-                            <span className={'reservationHeader__right_colu__txt'}> 13：30-17：30</span>
+                            {/*<span className={'reservationHeader__right_colu__txt'}> 13：30-17：30</span>*/}
                         </div>
                     </div>
                     <div className={'reservationHeader__cell'}>
