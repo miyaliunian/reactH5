@@ -11,7 +11,7 @@ import Bscroll from 'better-scroll'
 import {Icon} from 'antd-mobile'
 import posed from 'react-pose'
 import {getDate} from '@utils/dayutils'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import './style.less'
 
 const dataSources = [
@@ -197,7 +197,7 @@ const Box = posed.div({
     visible: {opacity: 1}
 })
 
-export default class DoctorVisiting extends Component {
+class DoctorVisiting extends Component {
 
     constructor(props) {
         super(props)
@@ -241,19 +241,18 @@ export default class DoctorVisiting extends Component {
                     <div>
                         {reservationData.map((item, index) => {
                             return (
-                                <Link to={'/reservation'} key={index}>
-                                    <div className={'doctorVisiting__item border-bottom'} key={index}
-                                         // onClick={() => this.navPage(item)}
-                                    >
-                                        {this.renderDesc(item)}
-                                        <div className={'item__right'}>
-                                            <div className={'item__right__price'}>￥{item.regFee}</div>
-                                            <div
-                                                className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
-                                            </div>
+
+                                <div className={'doctorVisiting__item border-bottom'} key={index}
+                                     onClick={() => this.navPage(item)}
+                                >
+                                    {this.renderDesc(item)}
+                                    <div className={'item__right'}>
+                                        <div className={'item__right__price'}>￥{item.regFee}.00</div>
+                                        <div
+                                            className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             )
                         })}
                         <RefreshFooter refreshStatus={isLastPage}/>
@@ -291,7 +290,10 @@ export default class DoctorVisiting extends Component {
     }
 
 
-    //右侧箭头被点击
+    /**
+     * 右侧箭头被点击
+     * @param clinicData
+     */
     arrowClick(clinicData) {
         this.setState({isVisible: !this.state.isVisible})
     }
@@ -332,6 +334,12 @@ export default class DoctorVisiting extends Component {
      * @param data
      */
     navPage(data) {
-        console.log(data)
+        let path = {
+            pathname: '/reservation',
+            state: {doctorInfo: this.props.doctorInfo, reservationInfo: data}
+        }
+        this.props.history.push(path)
     }
-}    
+}
+
+export default withRouter(DoctorVisiting)

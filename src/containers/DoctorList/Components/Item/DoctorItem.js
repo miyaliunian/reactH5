@@ -70,7 +70,7 @@ class DoctorItem extends Component {
 
 
     /**
-     * 跳转页面
+     * 跳转页面:
      * @param data
      */
     handelPageNav(data) {

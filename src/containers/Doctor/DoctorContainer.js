@@ -33,6 +33,7 @@ class DoctorContainer extends Component {
                 <DoctorDesc/>
                 <div className={'doctor__interval'}/>
                 <DoctorVisiting
+                    doctorInfo={this.props.location.state}
                     clinicData={clinicData}
                     reservationData={reservationData}
                     fetchReservationList={(item) => this.fetchReservationList(item)}

@@ -38,6 +38,21 @@ export function formateTimeStep(str) {
     let date = new Date(str),
         Y = date.getFullYear() + '-',
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-',
-        D = date.getDate();
+        D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' '
     return Y + M + D
+}
+
+
+/**
+ * 时间戳格式化 YYYY-MM-DD weekDay
+ * @param str
+ */
+export function fromateTimeStepStr(str) {
+    let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    let date = new Date(str),
+        Y = date.getFullYear() + '年',
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
+        D = date.getDate() < 10 ? '0' + date.getDate() + '日 ' : date.getDate() + '日 ',
+        W = weekDays[date.getDay()]+' '
+    return Y + M + D + W
 }
