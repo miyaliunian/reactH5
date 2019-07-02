@@ -26,6 +26,9 @@ const actionTypes = {
     FETCH_DOCTOR_RESERVATIONS_SUCCESS: 'DOCTOR/FETCH_DOCTOR_RESERVATIONS_SUCCESS',
     LOAD_DOCTOR_RESERVATIONS_SUCCESS: 'DOCTOR/LOAD_DOCTOR_RESERVATIONS_SUCCESS',
     FETCH_DOCTOR_FAILURE: 'DOCTOR/FETCH_DOCTOR_FAILURE',
+
+
+    RESET: 'DOCTOR/RESET',
 }
 
 
@@ -75,6 +78,12 @@ export const actions = {
             return dispatch(fetchReservationList(target))
         }
     },
+
+
+    //清空
+    reset: () => ({
+        type: actionTypes.RESET,
+    })
 }
 
 
@@ -140,6 +149,14 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false
+            }
+        case actionTypes.RESET:
+            return {
+                ...state,
+                page: 1,//翻页
+                isLastPage: false,//是否存在翻页
+                clinics: [],//门诊
+                reservations: []//可以预约的时间
             }
         default:
             return state

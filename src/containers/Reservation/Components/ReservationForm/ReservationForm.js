@@ -11,9 +11,6 @@ import {IOSSwitch} from '@components/IOSSwitch/IOSSwitch'
 import './style.less'
 
 
-
-
-
 export default class ReservationForm extends Component {
 
     state = {
@@ -37,7 +34,7 @@ export default class ReservationForm extends Component {
                         <Icon type={'right'}/>
                     </span>
                 </div>
-                <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(2)}>
+                <div className={'reservationForm__cell border-bottom'}>
                     <span className={'reservationForm__cell__title'}>医疗类别</span>
                     <span className={'reservationForm__cell__right__name'}>普通门诊</span>
                 </div>

@@ -25,7 +25,7 @@ import './style.less'
 class DoctorContainer extends Component {
     render() {
 
-        const {fetchingStatus,isLastPage, clinicData, reservationData} = this.props
+        const {fetchingStatus, isLastPage, clinicData, reservationData} = this.props
         return (
             <div className={'doctor'}>
                 <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
@@ -45,6 +45,12 @@ class DoctorContainer extends Component {
     }
 
     componentDidMount() {
+        this.initailData()
+    }
+
+
+    initailData() {
+        this.props.doctorActions.reset()
         const {hosId, id: doctId} = this.props.location.state
         this.props.doctorActions.loadClinicList(hosId, doctId)
     }
