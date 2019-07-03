@@ -108,7 +108,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PAY_TYPE_REQUEST:
             return {
                 ...state,
-                isFetching: action.data
+                isFetching: true
             }
         case actionTypes.FETCH_PAY_TYPE_SUCCESS:
             return {
@@ -123,6 +123,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_MEDICAL_TYPE_SUCCESS:
             return {
                 ...state,
+                isFetching: false,
                 medicalTypeData: action.data
             }
         case actionTypes.FETCH_PAY_TYPE_FAILURE:

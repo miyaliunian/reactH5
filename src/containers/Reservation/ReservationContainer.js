@@ -19,13 +19,14 @@ import {
     getMedicalType
 } from '@reduxs/modules/reservation'
 import './style.less'
+import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class ReservationContainer extends Component {
     render() {
         const {doctorInfo, reservationInfo} = this.props.location.state
         // console.log(this.props.payTypeData)
-        const {medicalType} = this.props
+        const {fetchingStatus, medicalType} = this.props
         return (
             <div className={'reservation'}>
                 <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
@@ -35,6 +36,7 @@ class ReservationContainer extends Component {
                 <div className={'reservationForm__btn'}>
                     <Button txt={'确认预约'}/>
                 </div>
+                {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )
     }
