@@ -48,7 +48,6 @@ class BindCardList extends Component {
                                 </div>
                                 <div className={'bindCardList__middle__bottom'}>{item.siNo}</div>
                             </div>
-                            {/*<div></div>*/}
                         </div>
                     )
                 })}
@@ -66,7 +65,6 @@ class BindCardList extends Component {
             }
         })
         this.props.bindCardActions.setBindCard(state)
-        // localStorage.setItem('bindCard',JSON.stringify(state))
         this.props.history.goBack()
     }
 }

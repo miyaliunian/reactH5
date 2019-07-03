@@ -5,55 +5,70 @@
  * Description:  网络请求url 常量
  */
 
-//登录前缀
+/**
+ * 登录前缀
+ * @type {string}
+ */
 export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 
-//业务请求URL
+/**
+ * 业务请求URL
+ */
 export default {
+    /* 0:-------------------------------------------Demo---*/
     getProductList: (path, rowIndex, pageSize) => `/mock/products/${path}.json?rowIndex=${rowIndex}&pageSize=${pageSize}`,
     getProductDetail: (id) => `/mock/product_detail/${id}.json`,
     getShopById: (id) => `/mock/shops/${id}.json`,
 
 
-    /*---------------------------------------------登录---*/
+    /* 1:---------------------------------------------登录---*/
     //登录
     API_LOGIN: (username, password) => `${BASE_URL}/login/v1.0/${username}/${password}.action`,
 
 
-    /*---------------------------------------------医院列表---*/
+    /* 2:---------------------------------------------医院列表---*/
     //医院列表->区域选择
     API_AREA_LIST: (cityId) => `${BASE_URL}/city/v1.0/list/${cityId}.ch`,
     //医院列表
     API_HOSPITAL_LIST: (cityId, orderType, page) => `${BASE_URL}/hospital/v1.0/list/${cityId}/${orderType}/${page}.action`,
 
 
-    /*---------------------------------------------科室-门诊列表---*/
+    /* 3:---------------------------------------------科室-门诊列表---*/
     //医院列表对应的科室列表
     API_HOSPITAL_DIVSION_LIST: (hosid) => `${BASE_URL}/division/v1.0/list/${hosid}.action`,
     //科室列表对应的门诊列表
     API_DIVSION__DEPARTMENT_LIST: (hosid, divisionid) => `${BASE_URL}/hisdept/v1.0/list/${hosid}/${divisionid}.action`,
 
 
-    /*---------------------------------------------医生列表---*/
+    /* 4:---------------------------------------------医生列表---*/
     //医生列表
     API_DOCTOR_LIST: (type, deptId, order, page) => `${BASE_URL}/doctor/v1.0/list/${type}/${deptId}/${order}/${page}.action`,
     //医生列表-预约日期
     API_DOCTOR_RESERVATION_LIST: (type, deptId, days) => `${BASE_URL}/schedule/v1.0/list/day/${type}/${deptId}/${days}.action`,
 
 
-    /*---------------------------------------------医生详情---*/
+    /* 5:---------------------------------------------医生详情---*/
     //医生详情->科室列表
     API_DOCTOR_CLINIC_LIST: (doctid) => `${BASE_URL}/hisdept/v1.0/list/${doctid}.action`,
     //医生详情->预约列表
     API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, date = null, pageno) => `${BASE_URL}/schedule/v1.2/list/${hosid}/${deptid}/${doctid}/${date}/${pageno}.action`,
 
 
-    /*---------------------------------------------家庭成员---*/
+    /* 6:---------------------------------------------预约信息----------*/
+    //支付方式:当日挂号或预约挂号
+    API_REGISTER_PAY_TYPE: (hosid, scheduleid) => `/baseURL/paymethod/v1.2/regster/${hosid}/${scheduleid}.do`,
+    //获取医疗类别:使用家庭成员的SiTypeCode
+    API_REGISTER_MEDICAL_TYPE: (sitypeCode) => `/baseURL/mdicaltype/v1.0/getList/${sitypeCode}.do`,
+    //挂号统一接口
+    API_REGISTER_UNION: () => `/baseURL/register/v1.5/regist.do`,
+
+
+    /* 7:---------------------------------------------家庭成员---*/
     //家庭成员选择:卡绑定
     API__BIND_CARD_LIST: () => `/baseURL/bindcard/v1.0/list.do`,
 
 
-    /*--------------------------------------------------------*/
+    /* 8:--------------------------------------------------------*/
     //智能候诊:获取候诊列表
     API__INTELLIGENT_WAITING_LIST: (personid) => `/baseURL/register/v1.0/getSeenNoByPerson/${personid}.do`,
 

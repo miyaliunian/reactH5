@@ -12,7 +12,7 @@ import Login from "@containers/Login/LoginContainer";
 import LoadingMask from "@components/Loading/LoadingMask";
 import Division from "@containers/Division/DivisionContainer";
 import BindCard from "@components/BindCard/BindCardContainer"
-import BindCardList from "@components/BindCard/components/BindCardList";
+import BindCardList from "@components/BindCard/components/BindCardList/BindCardList";
 import DoctorList from "@containers/DoctorList/DoctorListContainer";
 import Doctor from "@containers/Doctor/DoctorContainer"
 import ReservationContainer from "@containers/Reservation/ReservationContainer";
