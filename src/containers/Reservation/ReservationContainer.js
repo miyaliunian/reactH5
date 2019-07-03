@@ -33,9 +33,9 @@ class ReservationContainer extends Component {
                 <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}/>
                 <div className={'reservation__interval'}/>
                 <ReservationForm medicalType={medicalType}/>
-                <div className={'reservationForm__btn'}>
-                    <Button txt={'确认预约'}/>
-                </div>
+                {/*<div className={'reservationForm__btn'}>*/}
+                    {/*<Button txt={'确认预约'}/>*/}
+                {/*</div>*/}
                 {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )
@@ -52,8 +52,6 @@ class ReservationContainer extends Component {
     handleBack = () => {
         this.props.history.goBack()
     }
-
-
 }
 
 const mapStateToProps = (state) => {

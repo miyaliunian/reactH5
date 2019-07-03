@@ -14,8 +14,10 @@ import './style.less'
 
 export default class ReservationForm extends Component {
 
+
     state = {
         switchChecked: false,
+        clicked: '初诊',
     }
 
     render() {
@@ -34,21 +36,33 @@ export default class ReservationForm extends Component {
                 </div>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(1)}>
                     <span className={'reservationForm__cell__title'}>初/复诊</span>
-                    <span className={'reservationForm__cell__right__name'}>初诊</span>
+                    <span className={'reservationForm__cell__right__name'}>{this.state.clicked}</span>
                     <span className={'reservationForm__cell__right__icon'}>
                         <Icon type={'right'}/>
                     </span>
                 </div>
-                <div className={'reservationForm__cell border-bottom'}>
+                <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(2)}>
                     <span className={'reservationForm__cell__title'}>医疗类别</span>
-                    {medicalType.map(item => {
-                        return (
-                            <span key={item.id}
-                                  className={'reservationForm__cell__right__name'}>
+                    {medicalType.map((item, index) => {
+                        if (index === 0) {
+                            return (
+                                <span key={item.id}
+                                      className={'reservationForm__cell__right__name'}>
                                 {item.mdicaltype_name}
                                 </span>
-                        )
+                            )
+                        }
                     })}
+
+                    {medicalType.length > 1
+                        ?
+                        <span className={'reservationForm__cell__right__icon'}>
+                        <Icon type={'right'}/>
+                    </span>
+                        :
+                        null
+
+                    }
 
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
@@ -69,7 +83,26 @@ export default class ReservationForm extends Component {
     }
 
     rowClick(target) {
-        console.log(target)
+        switch (target) {
+            case 1:
+
+                const BUTTONS = ['初诊', '复诊', '取消'];
+                ActionSheet.showActionSheetWithOptions({
+                        options: BUTTONS,
+                        maskClosable: true,
+                        // 'data-seed': 'logId',
+                    },
+                    (buttonIndex) => {
+                        if (buttonIndex !== 2) {
+                            this.setState({clicked: BUTTONS[buttonIndex]});
+                        }
+                    });
+
+            case 2:
+                return
+            default:
+                return
+        }
     }
 
 
