@@ -16,6 +16,8 @@ import {
     actions as reservationActions,
     getFetchingStatus,
     getPayTypeData,
+    getBindCard,
+    getSwitchInfo,
     getMedicalType
 } from '@reduxs/modules/reservation'
 import './style.less'
@@ -23,19 +25,22 @@ import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class ReservationContainer extends Component {
+
     render() {
         const {doctorInfo, reservationInfo} = this.props.location.state
-        // console.log(this.props.payTypeData)
-        const {fetchingStatus, medicalType} = this.props
+        const {fetchingStatus, switchInfo,medicalType} = this.props
         return (
             <div className={'reservation'}>
                 <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
                 <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}/>
                 <div className={'reservation__interval'}/>
-                <ReservationForm medicalType={medicalType}/>
-                {/*<div className={'reservationForm__btn'}>*/}
-                    {/*<Button txt={'确认预约'}/>*/}
-                {/*</div>*/}
+                <ReservationForm
+                    switchInfo={switchInfo}
+                    medicalType={medicalType}
+                />
+                <div className={'reservationForm__btn'}>
+                    <Button txt={'确认预约'}/>
+                </div>
                 {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )
@@ -57,7 +62,9 @@ class ReservationContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchingStatus(state),
-        payTypeData: getPayTypeData(state),
+        payType: getPayTypeData(state),
+        bindCard: getBindCard(state),
+        switchInfo:getSwitchInfo(state),
         medicalType: getMedicalType(state)
     }
 }

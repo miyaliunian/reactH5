@@ -22,7 +22,7 @@ export default class ReservationForm extends Component {
 
     render() {
         // console.log(this.props.medicalType)
-        const {medicalType} = this.props
+        const {switchInfo,medicalType} = this.props
         return (
             <div className={'reservationForm'}>
                 <div className={'reservationForm__cell border-bottom'}>
@@ -71,11 +71,11 @@ export default class ReservationForm extends Component {
                     <span className={'reservationForm__cell__right__name'}>尚未确诊</span>
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
-                    <span className={'reservationForm__cell__title'}>使用医保支付</span>
+                    <span className={'reservationForm__cell__title'}>{switchInfo.switchTxt}</span>
                     <IOSSwitch
-                        checked={this.state.switchChecked}
-                        onChange={() => this.handleIOSSwitch(this.state.switchChecked)}
-                        // value="checkedB"
+                        checked={true}
+                        onChange={() => this.handleIOSSwitch(true)}
+
                     />
                 </div>
             </div>
@@ -107,8 +107,9 @@ export default class ReservationForm extends Component {
 
 
     handleIOSSwitch(target) {
-        this.setState({
-            switchChecked: !this.state.switchChecked
-        })
+        if (!target){
+            return
+        }
+        console.log(target)
     }
 }    

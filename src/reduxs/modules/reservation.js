@@ -12,7 +12,7 @@ import {post} from "@utils/httpUtil";
 const initialState = {
     isFetching: false,
     isShowSwitch: false,
-    payTypeData: [],
+    payType: {},
     bindCardData: [],
     medicalTypeData: []
 
@@ -39,7 +39,14 @@ export const actions = {
             dispatch(fetchPayTypeRequest(true))
             return post(targetURL).then(
                 data => {
-                    dispatch(fetchPayTypeSuccess(data.data))
+                    // 实际用的是列表的第0条数据。
+                    if (data.data[0].id === 1) {
+                        //不显示Switch组件
+                        dispatch(fetchPayTypeSuccess({switchTxt: '去医院支付', showSwitch: false, data: data.data[0]}))
+                    } else {
+                        //显示Switch组件
+                        dispatch(fetchPayTypeSuccess({switchTxt: '使用医保支付', showSwitch: true, data: data.data[0]}))
+                    }
                 },
                 error => {
 
@@ -60,6 +67,7 @@ export const actions = {
                             const targetURL = URL.API_REGISTER_MEDICAL_TYPE(item.siTypeCode)
                             return post(targetURL).then(
                                 data => {
+                                    //使用家庭成员的SiTypeCode获取医疗类别
                                     dispatch(fetchMedicalTypeSuccess(data.data))
                                 },
                                 error => {
@@ -85,7 +93,6 @@ const fetchPayTypeRequest = (data) => ({
     type: actionTypes.FETCH_PAY_TYPE_REQUEST,
     data
 })
-
 
 const fetchPayTypeSuccess = (data) => ({
     type: actionTypes.FETCH_PAY_TYPE_SUCCESS,
@@ -113,7 +120,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PAY_TYPE_SUCCESS:
             return {
                 ...state,
-                payTypeData: action.data
+                payType: action.data
             }
         case actionTypes.FETCH_RESERVATION_BIND_CARD_SUCCESS:
             return {
@@ -130,7 +137,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                payTypeData: []
+                payType: []
             }
         default:
             return state
@@ -145,11 +152,25 @@ export const getFetchingStatus = (state) => {
 }
 
 export const getPayTypeData = (state) => {
-    return state.reservation.payTypeData
+    return state.reservation.payType
 }
 
-export const getSwtichStatus = (state) => {
-    return state.reservation.payTypeData[0]
+export const getBindCard = (state) => {
+    return state.reservation.bindCardData
+}
+
+export const getSwitchInfo = (state) =>{
+    console.log('getSwitchInfo')
+    if (JSON.stringify(state.reservation.payType) !== '{}' && state.reservation.payType.data.id === 2) {
+        if (typeof(state.reservation.bindCardData.sitype) !== "undefined" && state.reservation.bindCardData.sitype) {
+            console.log('显示Switch：选中')
+        } else {
+            console.log('显示Switch：未选中')
+        }
+    }else {
+        console.log('不显示Switch')
+    }
+    return state.reservation.payType
 }
 
 export const getMedicalType = (state) => {
