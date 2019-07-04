@@ -20,19 +20,12 @@ import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardI
 
 class BindCardContainer extends Component {
 
-    static propTypes = {
-        showNavBar: PropTypes.bool.isRequired,
-        rightArrowIcon: PropTypes.bool.isRequired,
-        leftAvatar: PropTypes.bool.isRequired
-    }
-
-
     render() {
-        const {list, showNavBar, leftAvatar, rightArrowIcon} = this.props
+        const {list} = this.props
         return (
             <div className={'bindCard'}>
-                {showNavBar ? <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/> : null}
-                <BindCardItem data={list} isRefresh={this.refresh} avatar={leftAvatar} rightArrowIcon={rightArrowIcon}/>
+                <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
+                <BindCardItem data={list} isRefresh={this.refresh}/>
             </div>
         )
     }
