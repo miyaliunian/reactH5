@@ -28,7 +28,6 @@ import {withRouter} from "react-router-dom";
                     <span className={'reservationForm__cell__title'}>就诊人</span>
                     {bindCards.map(item => {
                         if (item.def) {
-                            console.log(item.name)
                             return (
                                 <span key={item.id} className={'reservationForm__cell__right__name'}>{item.name}</span>
                             )

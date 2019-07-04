@@ -31,9 +31,10 @@ const actionTypes = {
     //使用家庭成员的SiTypeCode获取医疗类别
     FETCH_MEDICAL_TYPE_SUCCESS: 'RESERVATION/FETCH_MEDICAL_TYPE_SUCCESS',
 
-
+    //切换家庭成员
     SET_BINDCARD_ITEM: 'RESERVATION/SET_BINDCARD_ITEM',
 
+    //componentDidMount 才会刷新页面,history.goBack()不会刷新页面
     SET_REFRESH_PAGE: 'RESERVATION/SET_REFRESH_PAGE'
 }
 
@@ -43,10 +44,10 @@ export const actions = {
         return (dispatch, getstate) => {
             const targetURL = URL.API_REGISTER_PAY_TYPE(hosid, scheduleid)
             if (!getstate().reservation.isRefresh) {
-                console.log('loadPayType：从上一个页面回退')
+                // console.log('loadPayType：从上一个页面回退')
                 return
             }
-            console.log('loadPayType：第一次请求')
+            // console.log('loadPayType：第一次请求')
             dispatch(fetchPayTypeRequest(true))
             return post(targetURL).then(
                 data => {
@@ -70,10 +71,10 @@ export const actions = {
     loadBindCardAndMedicalTypeList: () => {
         return (dispatch, getstate) => {
             if (!getstate().reservation.isRefresh) {
-                console.log('loadBindCardAndMedicalTypeList：从上一个页面回退')
+                // console.log('loadBindCardAndMedicalTypeList：从上一个页面回退')
                 return
             }
-            console.log('loadBindCardAndMedicalTypeList：第一次请求')
+            // console.log('loadBindCardAndMedicalTypeList：第一次请求')
             const targetURL = URL.API__BIND_CARD_LIST()
             return post(targetURL).then(
                 data => {
@@ -221,7 +222,7 @@ export const getBindCard = (state) => {
 }
 
 export const getSwitchInfo = (state) => {
-    // console.log('getSwitchInfo')
+    console.log('getSwitchInfo')
     if (JSON.stringify(state.reservation.payType) !== '{}' && state.reservation.payType.data.id === 2) {
         if (typeof(state.reservation.bindCardData.sitype) !== "undefined" && state.reservation.bindCardData.sitype) {
             // console.log('显示Switch：选中')

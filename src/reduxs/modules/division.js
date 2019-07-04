@@ -46,11 +46,11 @@ const actionTypes = {
 export const actions = {
 
 
-
     //加载左侧列表
     loadDivisionList: (hosid) => {
         return (dispatch, getstate) => {
             const targetURL = url.API_HOSPITAL_DIVSION_LIST(hosid)
+            dispatch(fetchDivisionListRequest())
             return post(targetURL).then(
                 data => {
                     data.data.map((item, index) => {
@@ -82,19 +82,6 @@ export const actions = {
 }
 
 
-// const fetchDivisionList = (targetURL) => ({
-//     [FETCH_DATA]: {
-//         types: [
-//             actionTypes.FETCH_DIVISION_REQUEST,
-//             actionTypes.FETCH_DIVISION_SUCCESS,
-//             actionTypes.FETCH_DIVISION_FAILURE,
-//         ],
-//         targetURL,
-//         schema
-//     },
-// })
-
-
 const fetchDepartmentList = (targetURL) => ({
     [FETCH_DATA]: {
         types: [
@@ -106,6 +93,9 @@ const fetchDepartmentList = (targetURL) => ({
     },
 })
 
+const fetchDivisionListRequest = () => ({
+    type: actionTypes.FETCH_DIVISION_REQUEST
+})
 
 const fetchDivisionListSuccess = (data) => ({
     type: actionTypes.FETCH_DIVISION_SUCCESS,
@@ -114,29 +104,22 @@ const fetchDivisionListSuccess = (data) => ({
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SET_HOSID:
-            return {
-                ...state,
-                hosid: action.id
-            }
-        case actionTypes.SET_DIVISIONID:
-            return {
-                ...state,
-                divisionid: action.id
-            }
         case actionTypes.FETCH_DIVISION_REQUEST:
-            return {...state, isFetching: true}
+            return {
+                ...state,
+                isFetching: true
+            }
         case actionTypes.FETCH_DIVISION_SUCCESS:
             return {
                 ...state,
-                isFetching: false,
-                // data: action.response.data
                 data: action.data
             }
         case actionTypes.FETCH_DIVISION_FAILURE:
             return {...state, isFetching: false}
         case actionTypes.FETCH_DEPARTMENT_REQUEST:
-            return {...state, isFetching: true}
+            return {
+                ...state
+            }
         case actionTypes.FETCH_DEPARTMENT_SUCCESS:
             return {
                 ...state,
@@ -144,7 +127,10 @@ const reducer = (state = initialState, action) => {
                 departmentData: action.response.data
             }
         case actionTypes.FETCH_DEPARTMENT_FAILURE:
-            return {...state, isFetching: false}
+            return {
+                ...state,
+                isFetching: false
+            }
         default:
             return state
     }
