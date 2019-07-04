@@ -15,6 +15,7 @@ import avatar_wman from '@images/Home/pic_wman.png'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as bindCardActions} from "@reduxs/modules/bindCard";
+import {actions as reservationActions} from "@reduxs/modules/reservation";
 
 
 class BindCardList extends Component {
@@ -64,7 +65,8 @@ class BindCardList extends Component {
                 item.def = false
             }
         })
-        this.props.bindCardActions.setBindCard(state)
+        // this.props.bindCardActions.setBindCard(state)
+        this.props.reservationActions.loadMedicalTypeByBindCard(state)
         this.props.history.goBack()
     }
 }
@@ -75,7 +77,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        bindCardActions: bindActionCreators(bindCardActions, dispatch)
+        bindCardActions: bindActionCreators(bindCardActions, dispatch),
+        reservationActions: bindActionCreators(reservationActions, dispatch)
     }
 }
 

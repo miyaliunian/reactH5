@@ -28,15 +28,17 @@ class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo} = this.props.location.state
-        const {fetchingStatus, switchInfo,medicalType} = this.props
+        const {fetchingStatus, switchInfo, medicalType, bindCards, isRefresh} = this.props
         return (
             <div className={'reservation'}>
                 <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
                 <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}/>
                 <div className={'reservation__interval'}/>
                 <ReservationForm
+                    bindCards={bindCards}
                     switchInfo={switchInfo}
                     medicalType={medicalType}
+                    refreshPage={() => this.setRefreshPage()}
                 />
                 <div className={'reservationForm__btn'}>
                     <Button txt={'确认预约'}/>
@@ -50,11 +52,16 @@ class ReservationContainer extends Component {
     componentDidMount() {
         const {doctorInfo, reservationInfo} = this.props.location.state
         this.props.reservationActions.loadPayType(doctorInfo.hosId, reservationInfo.id)
-        this.props.reservationActions.loadBindCardList()
+        this.props.reservationActions.loadBindCardAndMedicalTypeList()
     }
 
 
+    setRefreshPage() {
+        this.props.reservationActions.setIsRefresh(false)
+    }
+
     handleBack = () => {
+        this.props.reservationActions.setIsRefresh(true)
         this.props.history.goBack()
     }
 }
@@ -63,9 +70,9 @@ const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchingStatus(state),
         payType: getPayTypeData(state),
-        bindCard: getBindCard(state),
-        switchInfo:getSwitchInfo(state),
-        medicalType: getMedicalType(state)
+        bindCards: getBindCard(state),
+        switchInfo: getSwitchInfo(state),
+        medicalType: getMedicalType(state),
     }
 }
 

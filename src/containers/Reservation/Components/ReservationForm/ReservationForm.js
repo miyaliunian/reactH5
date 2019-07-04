@@ -8,11 +8,11 @@
 import React, {Component} from 'react'
 import {Icon, ActionSheet} from 'antd-mobile'
 import {IOSSwitch} from '@components/IOSSwitch/IOSSwitch'
-import BindCardContainer from '@components/BindCard/BindCardContainer'
 import './style.less'
+import {withRouter} from "react-router-dom";
 
 
-export default class ReservationForm extends Component {
+ class ReservationForm extends Component {
 
 
     state = {
@@ -21,15 +21,19 @@ export default class ReservationForm extends Component {
     }
 
     render() {
-        // console.log(this.props.medicalType)
-        const {switchInfo,medicalType} = this.props
+        const {bindCards, switchInfo, medicalType} = this.props
         return (
             <div className={'reservationForm'}>
-                <div className={'reservationForm__cell border-bottom'}>
+                <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
                     <span className={'reservationForm__cell__title'}>就诊人</span>
-                    <div className={'reservationForm__bindCard'}>
-                        <BindCardContainer showNavBar={false} rightArrowIcon={false} leftAvatar={false}/>
-                    </div>
+                    {bindCards.map(item => {
+                        if (item.def) {
+                            console.log(item.name)
+                            return (
+                                <span key={item.id} className={'reservationForm__cell__right__name'}>{item.name}</span>
+                            )
+                        }
+                    })}
                     <span className={'reservationForm__cell__right__icon'}>
                         <Icon type={'right'}/>
                     </span>
@@ -84,8 +88,15 @@ export default class ReservationForm extends Component {
 
     rowClick(target) {
         switch (target) {
+            case 0:
+                this.props.refreshPage()
+                let path = {
+                    pathname: 'bindCardList',
+                    state: this.props.bindCards
+                }
+                this.props.history.push(path)
+                return
             case 1:
-
                 const BUTTONS = ['初诊', '复诊', '取消'];
                 ActionSheet.showActionSheetWithOptions({
                         options: BUTTONS,
@@ -107,9 +118,12 @@ export default class ReservationForm extends Component {
 
 
     handleIOSSwitch(target) {
-        if (!target){
+        if (!target) {
             return
         }
         console.log(target)
     }
-}    
+}
+
+
+export default withRouter(ReservationForm)
