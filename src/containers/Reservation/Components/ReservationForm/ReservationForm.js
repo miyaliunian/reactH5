@@ -21,7 +21,7 @@ import {withRouter} from "react-router-dom";
     }
 
     render() {
-        const {bindCards, switchInfo, medicalType} = this.props
+        const {payType,bindCards, switchInfo, medicalType} = this.props
         return (
             <div className={'reservationForm'}>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
@@ -74,7 +74,7 @@ import {withRouter} from "react-router-dom";
                     <span className={'reservationForm__cell__right__name'}>尚未确诊</span>
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
-                    <span className={'reservationForm__cell__title'}>{switchInfo.switchTxt}</span>
+                    <span className={'reservationForm__cell__title'}>{payType.switchTxt}</span>
                     <IOSSwitch
                         checked={true}
                         onChange={() => this.handleIOSSwitch(true)}

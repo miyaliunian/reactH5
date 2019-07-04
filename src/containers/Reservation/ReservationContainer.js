@@ -28,7 +28,7 @@ class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo} = this.props.location.state
-        const {fetchingStatus, switchInfo, medicalType, bindCards, isRefresh} = this.props
+        const {fetchingStatus,payType, switchInfo, medicalType, bindCards, isRefresh} = this.props
         return (
             <div className={'reservation'}>
                 <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
@@ -36,8 +36,9 @@ class ReservationContainer extends Component {
                 <div className={'reservation__interval'}/>
                 <ReservationForm
                     bindCards={bindCards}
-                    switchInfo={switchInfo}
                     medicalType={medicalType}
+                    payType={payType}
+                    switchInfo={switchInfo}
                     refreshPage={() => this.setRefreshPage()}
                 />
                 <div className={'reservationForm__btn'}>
