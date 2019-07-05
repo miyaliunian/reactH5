@@ -209,7 +209,7 @@ class DoctorVisiting extends Component {
 
 
     render() {
-        const {isLastPage, clinicData, reservationData} = this.props
+        const {isLastPage, clinicData, reservationData, timeInterval} = this.props
         if (this.defSelClinic === '') {
             if (Array.isArray(clinicData) && clinicData.length > 0) {
                 this.defSelClinic = clinicData[0].name
@@ -334,11 +334,7 @@ class DoctorVisiting extends Component {
      * @param data
      */
     navPage(data) {
-        let path = {
-            pathname: '/reservation',
-            state: {doctorInfo: this.props.doctorInfo, reservationInfo: data}
-        }
-        this.props.history.push(path)
+        this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this.props)
     }
 }
 

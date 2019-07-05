@@ -15,17 +15,24 @@ const initialState = {
     page: 1,//翻页
     isLastPage: false,//是否存在翻页
     clinics: [],//门诊
-    reservations: []//可以预约的时间
+    reservations: [],//可以预约的数据
+    timeInterval: [],//可以预约的数据对应的时间段
 
 }
 
 
 const actionTypes = {
+
     FETCH_DOCTOR_REQUEST: 'DOCTOR/FETCH_DOCTOR_REQUEST',
     FETCH_DOCTOR_CLINICS_SUCCESS: 'DOCTOR/FETCH_DOCTOR_CLINICS_SUCCESS',
     FETCH_DOCTOR_RESERVATIONS_SUCCESS: 'DOCTOR/FETCH_DOCTOR_RESERVATIONS_SUCCESS',
     LOAD_DOCTOR_RESERVATIONS_SUCCESS: 'DOCTOR/LOAD_DOCTOR_RESERVATIONS_SUCCESS',
     FETCH_DOCTOR_FAILURE: 'DOCTOR/FETCH_DOCTOR_FAILURE',
+
+    //预约时间段Picker
+    FETCH_DOCTOR_SCHEDULE_TIME_REQUEST: 'DOCTOR/DOCTOR_SCHEDULE_TIME_REQUEST',
+    FETCH_DOCTOR_SCHEDULE_TIME_SUCCESS: 'DOCTOR/FETCH_DOCTOR_SCHEDULE_TIME_SUCCESS',
+    FETCH_DOCTOR_SCHEDULE_TIME_FAILURE: 'DOCTOR/FETCH_DOCTOR_SCHEDULE_TIME_FAILURE',
 
 
     RESET: 'DOCTOR/RESET',
@@ -80,6 +87,39 @@ export const actions = {
     },
 
 
+    //点击预约数据，获取预约时间段(返回数据只有一条数据，则直接跳转页面、返回多条数据则弹出PickerModal)
+    loadTimeInterval: (doctorInfo, reservationInfo, props) => {
+        return (dispatch, getstate) => {
+            const targetURL = URL.API_DOCTOR_SCHEDULE_TIME(reservationInfo.id)
+            dispatch(fetchTimeIntervalRequest(true))
+            return post(targetURL).then(
+                data => {
+                    //返回数据只有一条数据，则直接跳转页面
+                    if (data.data.length === 1) {
+                        //跳转页面
+                        let path = {
+                            pathname: '/reservation',
+                            state: {
+                                doctorInfo: doctorInfo,
+                                reservationInfo: reservationInfo,
+                                timeInterval: data.data[0]
+                            }
+                        }
+                        props.history.push(path)
+                    } else {
+                        // 返回多条数据则弹出PickerModal
+                        dispatch(fetchTimeIntervalSuccess(data.data))
+                    }
+
+                },
+                error => {
+                    dispatch(fetchTimeIntervalFail(false))
+                }
+            )
+        }
+    },
+
+
     //清空
     reset: () => ({
         type: actionTypes.RESET,
@@ -116,6 +156,26 @@ const fetchReservationList = (targetURL) => ({
     },
 })
 
+
+const fetchTimeIntervalRequest = (data) => ({
+        type: actionTypes.FETCH_DOCTOR_SCHEDULE_TIME_REQUEST,
+        data
+    }
+)
+
+const fetchTimeIntervalSuccess = (data) => ({
+        type: actionTypes.FETCH_DOCTOR_SCHEDULE_TIME_SUCCESS,
+        data
+    }
+)
+
+const fetchTimeIntervalFail = (data) => ({
+        type: actionTypes.FETCH_DOCTOR_SCHEDULE_TIME_FAILURE,
+        data
+    }
+)
+
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_DOCTOR_REQUEST:
@@ -146,6 +206,22 @@ const reducer = (state = initialState, action) => {
                 reservations: action.response.data.list
             }
         case actionTypes.FETCH_DOCTOR_FAILURE:
+            return {
+                ...state,
+                isFetching: false
+            }
+        case actionTypes.FETCH_DOCTOR_SCHEDULE_TIME_REQUEST:
+            return {
+                ...state,
+                isFetching: action.data
+            }
+        case actionTypes.FETCH_DOCTOR_SCHEDULE_TIME_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                timeInterval: action.data
+            }
+        case actionTypes.FETCH_DOCTOR_SCHEDULE_TIME_FAILURE:
             return {
                 ...state,
                 isFetching: false
@@ -182,5 +258,8 @@ export const getReservationsData = (state) => {
     return state.doctor.reservations
 }
 
+export const getTimeInterval = (state) => {
+    return state.doctor.timeInterval
+}
 
 

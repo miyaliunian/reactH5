@@ -27,12 +27,12 @@ import LoadingMask from "@components/Loading/LoadingMask";
 class ReservationContainer extends Component {
 
     render() {
-        const {doctorInfo, reservationInfo} = this.props.location.state
+        const {doctorInfo, reservationInfo,timeInterval} = this.props.location.state
         const {fetchingStatus,payType, switchInfo, medicalType, bindCards, isRefresh} = this.props
         return (
             <div className={'reservation'}>
                 <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
-                <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}/>
+                <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo} timeInterval={timeInterval}/>
                 <div className={'reservation__interval'}/>
                 <ReservationForm
                     bindCards={bindCards}

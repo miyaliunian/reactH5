@@ -18,14 +18,15 @@ import {
     getFetchingStatus,
     getIsLastPage,
     getClinicsData,
-    getReservationsData
+    getReservationsData,
+    getTimeInterval
 } from "@reduxs/modules/doctor";
 import './style.less'
 
 class DoctorContainer extends Component {
     render() {
 
-        const {fetchingStatus, isLastPage, clinicData, reservationData} = this.props
+        const {fetchingStatus, isLastPage, clinicData, reservationData, timeInterval} = this.props
         return (
             <div className={'doctor'}>
                 <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
@@ -33,13 +34,15 @@ class DoctorContainer extends Component {
                 <DoctorDesc/>
                 <div className={'doctor__interval'}/>
                 <DoctorVisiting
-                    doctorInfo={this.props.location.state}
-                    clinicData={clinicData}
-                    reservationData={reservationData}
-                    fetchReservationList={(item) => this.fetchReservationList(item)}
-                    isLastPage={isLastPage}
-                    pullingUpHandler={() => this.pullingUpHandler()}
-                />
+                {...this.props}
+                doctorInfo={this.props.location.state}
+                clinicData={clinicData}
+                reservationData={reservationData}
+                fetchReservationList={(item) => this.fetchReservationList(item)}
+                timeInterval={timeInterval}
+                isLastPage={isLastPage}
+                pullingUpHandler={() => this.pullingUpHandler()}
+            />
                 {fetchingStatus ? <LoadingMask/> : null}
             </div>
         )
@@ -70,6 +73,7 @@ class DoctorContainer extends Component {
         const {id: deptId} = data
         this.props.doctorActions.fetchReservationList(hosId, deptId, doctId, null)
     }
+
 }
 
 
@@ -78,7 +82,8 @@ const mapStateToProps = (state) => {
         fetchingStatus: getFetchingStatus(state),
         isLastPage: getIsLastPage(state),
         clinicData: getClinicsData(state),
-        reservationData: getReservationsData(state)
+        reservationData: getReservationsData(state),
+        timeInterval: getTimeInterval(state)
     }
 }
 

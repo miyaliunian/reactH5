@@ -13,6 +13,7 @@ export default class ReservationHeader extends Component {
     render() {
         const {deptName, name, title, hosName} = this.props.doctorInfo
         const {noon, regFee, reglevlName, seeDate} = this.props.reservationInfo
+        const {beginTime, endTime} = this.props.timeInterval
         return (
             <div className={'reservationHeader'}>
                 <div className={'reservationHeader__desc border-bottom'}>
@@ -38,7 +39,7 @@ export default class ReservationHeader extends Component {
                         <div className={'reservationHeader__right_colu'}>
                             <span
                                 className={'reservationHeader__right_colu__txt'}>{fromateTimeStepStr(seeDate)}{noon} </span>
-                            {/*<span className={'reservationHeader__right_colu__txt'}> 13：30-17：30</span>*/}
+                            <span className={'reservationHeader__right_colu__txt'}> {beginTime}-{endTime}</span>
                         </div>
                     </div>
                     <div className={'reservationHeader__cell'}>
