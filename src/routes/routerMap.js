@@ -17,7 +17,6 @@ import DoctorList from "@containers/DoctorList/DoctorListContainer";
 import Doctor from "@containers/Doctor/DoctorContainer"
 import ReservationContainer from "@containers/Reservation/ReservationContainer";
 import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
-import PopUpDemo from "@components/PopUpDemo/PopUpDemo";
 
 
 const routerMap = [
@@ -59,6 +58,7 @@ const routerMap = [
     {
         path: '/reservation',
         name: 'Reservation',
+        auth: true,
         component: ReservationContainer
     },
     {
@@ -75,14 +75,8 @@ const routerMap = [
     {
         path: '/intelligentWaiting',
         name: 'IntelligentWaiting',
-        uth: true,
+        auth: true,
         component: IntelligentWaitingContainer
-    },
-    {
-        path: '/popUp',
-        name: 'PopUpDemo',
-        // uth: true,
-        component: PopUpDemo
     },
 ]
 

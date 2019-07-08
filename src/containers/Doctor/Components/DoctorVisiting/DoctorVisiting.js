@@ -33,8 +33,8 @@ class DoctorVisiting extends Component {
             timeIntervalValue: 0,
         }
         this.defSelClinic = ''
-        //上午、中午、下午
-        this.noon = ''
+        //选中的预约信息
+        this.reservationInfoSel = {}
     }
 
 
@@ -109,7 +109,7 @@ class DoctorVisiting extends Component {
                                 <Radio.RadioItem
                                     key={i.id} checked={timeIntervalValue === i.id}
                                     onChange={() => this.onChange(i.id)}>
-                                    {this.noon} {i.beginTime} - {i.endTime}
+                                    {this.reservationInfoSel.noon} {i.beginTime} - {i.endTime}
                                 </Radio.RadioItem>
                             )
                         })}
@@ -191,8 +191,9 @@ class DoctorVisiting extends Component {
      * @param data
      */
     navPage(data) {
-        this.noon = data.noon
+        this.reservationInfoSel = data
         this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this)
+
     }
 
 
@@ -209,14 +210,24 @@ class DoctorVisiting extends Component {
 
     //关闭时间段Modal
     onTimeIntervalClose(target) {
-        console.log(target, this.state.timeIntervalValue)
+        const {doctorInfo, timeInterval} = this.props
         //只有点击确定按钮，才调整页面
         switch (target) {
             case 2:
-                console.log('跳转')
+                let timeFilter = timeInterval.filter(item =>
+                    item.id === this.state.timeIntervalValue
+                )
+                let path = {
+                    pathname: '/reservation',
+                    state: {
+                        doctorInfo: doctorInfo,
+                        reservationInfo: this.reservationInfoSel,
+                        timeInterval: timeFilter
+                    }
+                }
+                this.props.history.push(path)
                 break
             default:
-                console.log('def')
                 break
         }
         this.setState({
