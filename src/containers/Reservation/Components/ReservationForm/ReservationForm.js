@@ -12,7 +12,7 @@ import './style.less'
 import {withRouter} from "react-router-dom";
 
 
- class ReservationForm extends Component {
+class ReservationForm extends Component {
 
 
     state = {
@@ -21,7 +21,7 @@ import {withRouter} from "react-router-dom";
     }
 
     render() {
-        const {payType,bindCards, switchInfo, medicalType} = this.props
+        const {payType, bindCards, switchInfo, medicalType} = this.props
         return (
             <div className={'reservationForm'}>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
@@ -75,11 +75,13 @@ import {withRouter} from "react-router-dom";
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
                     <span className={'reservationForm__cell__title'}>{payType.switchTxt}</span>
-                    <IOSSwitch
-                        checked={true}
-                        onChange={() => this.handleIOSSwitch(true)}
+                    <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
+                        <IOSSwitch
+                            checked={true}
+                            onChange={() => this.handleIOSSwitch(true)}
 
-                    />
+                        />
+                    </div>
                 </div>
             </div>
         )
@@ -103,9 +105,9 @@ import {withRouter} from "react-router-dom";
                         // 'data-seed': 'logId',
                     },
                     (buttonIndex) => {
-                        if(buttonIndex === -1){
+                        if (buttonIndex === -1) {
                             this.setState({clicked: this.state.clicked});
-                        }else if (buttonIndex !== 2) {
+                        } else if (buttonIndex !== 2) {
                             this.setState({clicked: BUTTONS[buttonIndex]});
                         }
                     });
