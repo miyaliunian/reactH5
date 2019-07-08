@@ -49,7 +49,7 @@ export const actions = {
                         let token = {}
                         token.access_token = data.data.loginData.access_token
                         token.refresh_token = data.data.loginData.refresh_token
-                        localStorage.setItem('token', JSON.stringify(token))
+                        sessionStorage.setItem('token', JSON.stringify(token))
                         props.history.goBack()
                     }
                 },
