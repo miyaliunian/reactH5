@@ -67,17 +67,19 @@ class DoctorVisiting extends Component {
                         </ul>
                     </div>
                 </Box>
-                <div className={'doctorVisiting__list'} ref={'doctorVisitingList'}>
+                <div className={'doctorVisiting__list'}
+                     ref={'doctorVisitingList'}
+                >
                     <div>
                         {reservationData.map((item, index) => {
+                            // let regFee = item.regFee.toFixed(2)
                             return (
-
                                 <div className={'doctorVisiting__item border-bottom'} key={index}
                                      onClick={() => this.navPage(item)}
                                 >
                                     {this.renderDesc(item)}
                                     <div className={'item__right'}>
-                                        <div className={'item__right__price'}>￥{item.regFee}.00</div>
+                                        <div className={'item__right__price'}>￥{item.regFee.toFixed(2)}</div>
                                         <div
                                             className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
                                         </div>
@@ -107,8 +109,10 @@ class DoctorVisiting extends Component {
                         {timeInterval.map(i => {
                             return (
                                 <Radio.RadioItem
-                                    key={i.id} checked={timeIntervalValue === i.id}
-                                    onChange={() => this.onChange(i.id)}>
+                                    key={i.id}
+                                    checked={timeIntervalValue === i.id}
+                                    onChange={() => this.onChange(i.id)}
+                                >
                                     {this.reservationInfoSel.noon} {i.beginTime} - {i.endTime}
                                 </Radio.RadioItem>
                             )
@@ -211,7 +215,7 @@ class DoctorVisiting extends Component {
     //关闭时间段Modal
     onTimeIntervalClose(target) {
         const {doctorInfo, timeInterval} = this.props
-        //只有点击确定按钮，才调整页面
+        //只有点击确定按钮，才跳转页面
         switch (target) {
             case 2:
                 let timeFilter = timeInterval.filter(item =>
