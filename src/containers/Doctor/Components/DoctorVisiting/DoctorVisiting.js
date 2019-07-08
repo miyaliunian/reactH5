@@ -226,7 +226,7 @@ class DoctorVisiting extends Component {
                     state: {
                         doctorInfo: doctorInfo,
                         reservationInfo: this.reservationInfoSel,
-                        timeInterval: timeFilter
+                        timeInterval: timeFilter[0]
                     }
                 }
                 this.props.history.push(path)
