@@ -8,206 +8,16 @@
 import React, {Component} from 'react'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
-import {Icon, Modal, List, Button, Checkbox} from 'antd-mobile'
+import {Icon, Modal, List, Radio} from 'antd-mobile'
 import posed from 'react-pose'
 import {getDate} from '@utils/dayutils'
 import {Link, withRouter} from 'react-router-dom'
 import './style.less'
 
-const dataSources = [
-    {
-        'seeDate': 1561564800000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 1
-    },
-    {
-        'seeDate': 1561564800000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 1
-    },
-    {
-        'seeDate': 1561564800000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 1
-    },
-    {
-        'seeDate': 1561564800000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 1
-    },
-    {
-        'seeDate': 1561564800000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561651200000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '上午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 2
-    },
-    {
-        'seeDate': 1561737600000,
-        'noon': '下午',
-        'reglevlName': "普通门诊",
-        'regFee': '12',
-        'status': 1
-    },
-]
-
-const timeInterval = [
-    {
-        "id": "2c9f82076b9b9590016ba15a031d4031",
-        "scheduleId": 27841,
-        "beginTime": "07:45",
-        "endTime": "11:30",
-        "regLmt": 9999,
-        "reged": 0,
-        "createDate": 1561780117000,
-        "modifyDate": 1561780117000,
-        "hisId": "10002173621"
-    }
-
-]
-
-
+/**
+ * 样式文件
+ * @type {<PoseElementProps & <any>>}
+ */
 const Box = posed.div({
     hidden: {opacity: 0},
     visible: {opacity: 1}
@@ -218,20 +28,24 @@ class DoctorVisiting extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isVisible: false
+            isVisible: false,
+            timeIntervalShow: false,
+            timeIntervalValue: 0,
         }
         this.defSelClinic = ''
+        //上午、中午、下午
+        this.noon = ''
     }
 
 
     render() {
-        const {isLastPage, clinicData, reservationData} = this.props
+        const {isLastPage, clinicData, reservationData, timeInterval} = this.props
         if (this.defSelClinic === '') {
             if (Array.isArray(clinicData) && clinicData.length > 0) {
                 this.defSelClinic = clinicData[0].name
             }
         }
-        const {isVisible} = this.state
+        const {isVisible, timeIntervalValue} = this.state
         return (
             <div className={'doctorVisiting'}>
                 <div className={'doctorVisiting__title border-bottom'}>
@@ -276,34 +90,30 @@ class DoctorVisiting extends Component {
                 </div>
                 <Modal
                     popup
-                    visible={false}
+                    visible={this.state.timeIntervalShow}
                     title={'预约信息'}
+                    onClose={() => this.onTimeIntervalClose(0)}
                     animationType="slide-up"
-                    maskClosable={false}
                     afterClose={() => {
-                        alert('afterClose');
                     }}
                     footer={[{
-                        text: '取消', onPress: () => {
-                            console.log('ok')
-                        }
+                        text: '取消', onPress: () => this.onTimeIntervalClose(1)
                     }, {
-                        text: '确定', onPress: () => {
-                            console.log('ok')
-                        }
+                        text: '确定', onPress: () => this.onTimeIntervalClose(2)
                     }]}
                 >
 
-                        <List >
-                            {timeInterval.map(item => {
-                                return <List.Item className={'border-bottom'}>
-                                    <div>
-                                        {item.beginTime} - {item.endTime}
-                                    </div>
-                                </List.Item>
-                            })}
-                        </List>
-
+                    <List className="doctorVisiting__timeInterval">
+                        {timeInterval.map(i => {
+                            return (
+                                <Radio.RadioItem
+                                    key={i.id} checked={timeIntervalValue === i.id}
+                                    onChange={() => this.onChange(i.id)}>
+                                    {this.noon} {i.beginTime} - {i.endTime}
+                                </Radio.RadioItem>
+                            )
+                        })}
+                    </List>
                 </Modal>
             </div>
         )
@@ -376,18 +186,42 @@ class DoctorVisiting extends Component {
     }
 
 
-    onClose = key => () => {
-        this.setState({
-            [key]: false,
-        });
-    }
-
     /**
      * 跳转页面
      * @param data
      */
     navPage(data) {
-        this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this.props)
+        this.noon = data.noon
+        this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this)
+    }
+
+
+    /**
+     * 时间段选项
+     * @param value
+     */
+    onChange = (value) => {
+        this.setState({
+            timeIntervalValue: value,
+        });
+    };
+
+
+    //关闭时间段Modal
+    onTimeIntervalClose(target) {
+        console.log(target, this.state.timeIntervalValue)
+        //只有点击确定按钮，才调整页面
+        switch (target) {
+            case 2:
+                console.log('跳转')
+                break
+            default:
+                console.log('def')
+                break
+        }
+        this.setState({
+            timeIntervalShow: false
+        })
     }
 }
 

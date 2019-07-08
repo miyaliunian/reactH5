@@ -88,15 +88,20 @@ export const actions = {
 
 
     //点击预约数据，获取预约时间段(返回数据只有一条数据，则直接跳转页面、返回多条数据则弹出PickerModal)
-    loadTimeInterval: (doctorInfo, reservationInfo, props) => {
+    loadTimeInterval: (doctorInfo, reservationInfo, target) => {
         return (dispatch, getstate) => {
             const targetURL = URL.API_DOCTOR_SCHEDULE_TIME(reservationInfo.id)
             dispatch(fetchTimeIntervalRequest(true))
             return post(targetURL).then(
                 data => {
-                    //返回数据只有一条数据，则直接跳转页面
-                    if (data.data.length === 1) {
-                        //跳转页面
+                    // 返回多条数据则弹出PickerModal
+                    if (data.data.length >= 2) {
+                        dispatch(fetchTimeIntervalSuccess(data.data))
+                        target.setState({
+                            timeIntervalShow: true
+                        })
+                        //返回数据只有一条数据，则直接跳转页面
+                    } else {
                         let path = {
                             pathname: '/reservation',
                             state: {
@@ -105,10 +110,7 @@ export const actions = {
                                 timeInterval: data.data[0]
                             }
                         }
-                        props.history.push(path)
-                    } else {
-                        // 返回多条数据则弹出PickerModal
-                        dispatch(fetchTimeIntervalSuccess(data.data))
+                        target.props.history.push(path)
                     }
 
                 },
