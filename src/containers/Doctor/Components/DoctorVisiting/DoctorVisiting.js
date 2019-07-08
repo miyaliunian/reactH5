@@ -8,7 +8,7 @@
 import React, {Component} from 'react'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
-import {Icon} from 'antd-mobile'
+import {Icon, Modal, List, Button, Checkbox} from 'antd-mobile'
 import posed from 'react-pose'
 import {getDate} from '@utils/dayutils'
 import {Link, withRouter} from 'react-router-dom'
@@ -192,6 +192,22 @@ const dataSources = [
     },
 ]
 
+const timeInterval = [
+    {
+        "id": "2c9f82076b9b9590016ba15a031d4031",
+        "scheduleId": 27841,
+        "beginTime": "07:45",
+        "endTime": "11:30",
+        "regLmt": 9999,
+        "reged": 0,
+        "createDate": 1561780117000,
+        "modifyDate": 1561780117000,
+        "hisId": "10002173621"
+    }
+
+]
+
+
 const Box = posed.div({
     hidden: {opacity: 0},
     visible: {opacity: 1}
@@ -209,7 +225,7 @@ class DoctorVisiting extends Component {
 
 
     render() {
-        const {isLastPage, clinicData, reservationData, timeInterval} = this.props
+        const {isLastPage, clinicData, reservationData} = this.props
         if (this.defSelClinic === '') {
             if (Array.isArray(clinicData) && clinicData.length > 0) {
                 this.defSelClinic = clinicData[0].name
@@ -258,6 +274,37 @@ class DoctorVisiting extends Component {
                         <RefreshFooter refreshStatus={isLastPage}/>
                     </div>
                 </div>
+                <Modal
+                    popup
+                    visible={false}
+                    title={'预约信息'}
+                    animationType="slide-up"
+                    maskClosable={false}
+                    afterClose={() => {
+                        alert('afterClose');
+                    }}
+                    footer={[{
+                        text: '取消', onPress: () => {
+                            console.log('ok')
+                        }
+                    }, {
+                        text: '确定', onPress: () => {
+                            console.log('ok')
+                        }
+                    }]}
+                >
+
+                        <List >
+                            {timeInterval.map(item => {
+                                return <List.Item className={'border-bottom'}>
+                                    <div>
+                                        {item.beginTime} - {item.endTime}
+                                    </div>
+                                </List.Item>
+                            })}
+                        </List>
+
+                </Modal>
             </div>
         )
     }
@@ -328,6 +375,12 @@ class DoctorVisiting extends Component {
         )
     }
 
+
+    onClose = key => () => {
+        this.setState({
+            [key]: false,
+        });
+    }
 
     /**
      * 跳转页面

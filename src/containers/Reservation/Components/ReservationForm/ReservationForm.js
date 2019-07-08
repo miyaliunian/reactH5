@@ -103,7 +103,6 @@ import {withRouter} from "react-router-dom";
                         // 'data-seed': 'logId',
                     },
                     (buttonIndex) => {
-                    // console.log(buttonIndex)
                         if(buttonIndex === -1){
                             this.setState({clicked: this.state.clicked});
                         }else if (buttonIndex !== 2) {

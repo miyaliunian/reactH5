@@ -7,7 +7,6 @@
  */
 import React, {Component, Fragment} from 'react';
 import Header from "@components/Header/NavBar";
-import {Icon} from 'antd-mobile';
 import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
 import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
 import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";

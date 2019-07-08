@@ -47,6 +47,9 @@ class Home extends Component {
             case 5 :
                 this.props.history.push('/intelligentWaiting')
                 break
+            case 7 :
+                this.props.history.push('/popUp')
+                break
         }
     }
 
