@@ -16,8 +16,10 @@ const initialState = {
     isFetching: false,
     isRefresh: true, // 只有第一次进入页面为true  其它条件都为false
     payType: {},
+    diagnosis: '初诊',//初诊、复诊、取消
     bindCardData: [],
     medicalTypeData: [],
+    diagName: '', //疾病信息
     switchInfo: {}
 }
 
@@ -35,6 +37,12 @@ const actionTypes = {
 
     //切换家庭成员
     SET_BINDCARD_ITEM: 'RESERVATION/SET_BINDCARD_ITEM',
+
+    //切换(初诊、复诊、取消)
+    SET_DIAGNOSIS_NAME: 'RESERVATION/SET_DIAGNOSIS_NAME',
+
+    //填写疾病信息
+    SET_DIAGNAME_VALUE: 'RESERVATION/SET_DIAGNAME_VALUE',
 
     //componentDidMount 才会刷新页面,history.goBack()不会刷新页面
     SET_REFRESH_PAGE: 'RESERVATION/SET_REFRESH_PAGE',
@@ -201,6 +209,27 @@ export const actions = {
 
 
     /**
+     * 切换:初诊、复诊、取消
+     * @param data
+     * @returns {{}}
+     */
+    setDiagnosisName: (data) => ({
+        type: actionTypes.SET_DIAGNOSIS_NAME,
+        data
+    }),
+
+
+    /**
+     * 设置疾病信息
+     * @param data
+     * @returns {{type: string, data: *}}
+     */
+    setDiagName: (data) => ({
+        type: actionTypes.SET_DIAGNAME_VALUE,
+        data
+    }),
+
+    /**
      * 确认预约:按钮点击
      * @returns {function(*, *)}
      */
@@ -227,7 +256,7 @@ export const actions = {
                 i.def === true
             )
 
-            if (bindCardObj){
+            if (bindCardObj) {
                 //家庭成员id
                 PARAM.personId = bindCardObj[0].id
                 //家庭成员mgwid
@@ -247,12 +276,19 @@ export const actions = {
             let payObj = getstate().reservation.payType.data
 
             // 是否为初诊
-            let isFirst = true
-            PARAM.isFirst = true
+            if (getstate().reservation.diagnosis === '初诊') {
+                PARAM.isFirst = true
+            } else {
+                PARAM.isFirst = false
+            }
+
 
             //诊断名称
-            let diagName = '尚未确诊'
-            PARAM.diagName = diagName
+            if (getstate().reservation.diagName.length > 0) {
+                PARAM.diagName = getstate().reservation.diagName
+            } else {
+                PARAM.diagName = '尚未确诊'
+            }
 
             /**
              * 医疗列表
@@ -376,6 +412,16 @@ const
                     ...state,
                     bindCardData: action.data
                 }
+            case actionTypes.SET_DIAGNOSIS_NAME:
+                return {
+                    ...state,
+                    diagnosis: action.data,
+                }
+            case actionTypes.SET_DIAGNAME_VALUE:
+                return {
+                    ...state,
+                    diagName: action.data,
+                }
             case actionTypes.SET_SWITCH_INFO:
                 return {
                     ...state,
@@ -429,11 +475,15 @@ export const getBindCard = (state) => {
     return state.reservation.bindCardData
 }
 
-export const getSwitchInfo = (state) => {
-    // console.log(state.reservation.switchInfo)
-    return state.reservation.switchInfo
+
+export const getDiagnosis = (state) => {
+    return state.reservation.diagnosis
 }
 
 export const getMedicalType = (state) => {
     return state.reservation.medicalTypeData
+}
+
+export const getSwitchInfo = (state) => {
+    return state.reservation.switchInfo
 }

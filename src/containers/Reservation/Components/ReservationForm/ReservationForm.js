@@ -14,14 +14,8 @@ import {withRouter} from "react-router-dom";
 
 class ReservationForm extends Component {
 
-
-    state = {
-        switchChecked: false,
-        clicked: '初诊',
-    }
-
     render() {
-        const {payType, bindCards, switchInfo, medicalType} = this.props
+        const {payType, bindCards, diagnosis, switchInfo, diagName, medicalType} = this.props
         return (
             <div className={'reservationForm'}>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
@@ -39,7 +33,7 @@ class ReservationForm extends Component {
                 </div>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(1)}>
                     <span className={'reservationForm__cell__title'}>初/复诊</span>
-                    <span className={'reservationForm__cell__right__name'}>{this.state.clicked}</span>
+                    <span className={'reservationForm__cell__right__name'}>{diagnosis}</span>
                     <span className={'reservationForm__cell__right__icon'}>
                         <Icon type={'right'}/>
                     </span>
@@ -70,8 +64,10 @@ class ReservationForm extends Component {
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
                     <span className={'reservationForm__cell__title'}>疾病信息</span>
-
-                    <span className={'reservationForm__cell__right__name'}>尚未确诊</span>
+                    <input className={'reservationForm__cell__right__name'}
+                           placeholder={'尚未确诊'}
+                           value={diagName}
+                           onChange={(e) => this.diagNameOnChange(e)}/>
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
                     <span className={'reservationForm__cell__title'}>{payType.switchTxt}</span>
@@ -110,9 +106,9 @@ class ReservationForm extends Component {
                     },
                     (buttonIndex) => {
                         if (buttonIndex === -1) {
-                            this.setState({clicked: this.state.clicked});
+                            return
                         } else if (buttonIndex !== 2) {
-                            this.setState({clicked: BUTTONS[buttonIndex]});
+                            this.props.reservationActions.setDiagnosisName(BUTTONS[buttonIndex])
                         }
                     });
 
@@ -123,6 +119,10 @@ class ReservationForm extends Component {
         }
     }
 
+
+    diagNameOnChange(e) {
+        this.props.reservationActions.setDiagName(e.target.value)
+    }
 
     handleIOSSwitch(switchInfo) {
         if (!switchInfo.defChecked) {
