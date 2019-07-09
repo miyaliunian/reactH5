@@ -36,6 +36,9 @@ const actionTypes = {
     //componentDidMount 才会刷新页面,history.goBack()不会刷新页面
     SET_REFRESH_PAGE: 'RESERVATION/SET_REFRESH_PAGE',
 
+    //Switch 选中
+    SET_SWITCH_CHECKED: 'RESERVATION/SWITCH_CHECKED',
+
     //滑块组件是否显示，如果显示 是否为选中状态
     SET_SWITCH_INFO: 'RESERVATION/SET_SWITCH_INFO'
 }
@@ -170,6 +173,22 @@ export const actions = {
     },
 
 
+    /**
+     * Switch 切换
+     * @param checked
+     * @returns {{}}
+     */
+    setSwitchChecked: (data) => ({
+        type: actionTypes.SET_SWITCH_CHECKED,
+        data
+    }),
+
+
+    /**
+     * 刷新页面标识
+     * @param status
+     * @returns {{type: string, status: *}}
+     */
     setIsRefresh: (status) => ({
         type: actionTypes.SET_REFRESH_PAGE,
         status

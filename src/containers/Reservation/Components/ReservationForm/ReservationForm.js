@@ -75,13 +75,18 @@ class ReservationForm extends Component {
                 </div>
                 <div className={'reservationForm__cell border-bottom'}>
                     <span className={'reservationForm__cell__title'}>{payType.switchTxt}</span>
-                    <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
-                        <IOSSwitch
-                            checked={true}
-                            onChange={() => this.handleIOSSwitch(true)}
+                    {switchInfo.showSwitch
+                        ?
+                        <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
+                            <IOSSwitch
+                                checked={switchInfo.checked}
+                                onChange={() => this.handleIOSSwitch(switchInfo.checked)}
 
-                        />
-                    </div>
+                            />
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             </div>
         )
@@ -102,7 +107,6 @@ class ReservationForm extends Component {
                 ActionSheet.showActionSheetWithOptions({
                         options: BUTTONS,
                         maskClosable: true,
-                        // 'data-seed': 'logId',
                     },
                     (buttonIndex) => {
                         if (buttonIndex === -1) {

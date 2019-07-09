@@ -36,7 +36,7 @@ function post(url, data = '') {
         'Content-Type': 'application/json;charset=UTF-8',
     })
     if ( url.endsWith('.do')) {
-        let tid = JSON.parse(localStorage.getItem('token')).access_token
+        let tid = JSON.parse(sessionStorage.getItem('token')).access_token
         headers.append("tid", tid)
     }
     return fetch(url, {
