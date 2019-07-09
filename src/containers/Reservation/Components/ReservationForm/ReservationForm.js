@@ -80,7 +80,7 @@ class ReservationForm extends Component {
                         <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
                             <IOSSwitch
                                 checked={switchInfo.checked}
-                                onChange={() => this.handleIOSSwitch(switchInfo.checked)}
+                                onChange={() => this.handleIOSSwitch(switchInfo)}
 
                             />
                         </div>
@@ -124,11 +124,12 @@ class ReservationForm extends Component {
     }
 
 
-    handleIOSSwitch(target) {
-        if (!target) {
+    handleIOSSwitch(switchInfo) {
+        if (!switchInfo.defChecked) {
             return
         }
-        console.log(target)
+        let data = {showSwitch: switchInfo.showSwitch, defChecked: switchInfo.defChecked, checked: !switchInfo.checked}
+        this.props.reservationActions.setSwitchChecked(data)
     }
 }
 

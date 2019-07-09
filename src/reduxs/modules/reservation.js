@@ -7,6 +7,9 @@
  */
 import URL from '@utils/httpUrl'
 import {post} from "@utils/httpUtil";
+import {FETCH_DATA} from "@reduxs/middleware/api";
+
+import {Toast} from 'antd-mobile';
 
 
 const initialState = {
@@ -40,11 +43,18 @@ const actionTypes = {
     SET_SWITCH_CHECKED: 'RESERVATION/SWITCH_CHECKED',
 
     //滑块组件是否显示，如果显示 是否为选中状态
-    SET_SWITCH_INFO: 'RESERVATION/SET_SWITCH_INFO'
+    SET_SWITCH_INFO: 'RESERVATION/SET_SWITCH_INFO',
+
+    //登录按钮
+    BTN_SUBMIT_REQUEST: 'RESERVATION/BTN_SUBMIT_REQUEST',
+    BTN_SUBMIT_SUCCESS: 'RESERVATION/BTN_SUBMIT_SUCCESS',
+    BTN_SUBMIT_FAILURE: 'RESERVATION/BTN_SUBMIT_FAILURE',
 }
 
 
 export const actions = {
+
+
     loadPayType: (hosid, scheduleid) => {
         return (dispatch, getstate) => {
             const targetURL = URL.API_REGISTER_PAY_TYPE(hosid, scheduleid)
@@ -96,17 +106,20 @@ export const actions = {
                                 if (item.sitype) {
                                     dispatch(setSwitchInfo({
                                         showSwitch: true,
+                                        defChecked: true,
                                         checked: true
                                     }))
                                 } else {
                                     dispatch(setSwitchInfo({
                                         showSwitch: true,
+                                        defChecked: false,
                                         checked: false
                                     }))
                                 }
                             } else {
                                 dispatch(setSwitchInfo({
                                     showSwitch: false,
+                                    defChecked: false,
                                     checked: false
                                 }))
                             }
@@ -143,17 +156,20 @@ export const actions = {
                         if (item.sitype) {
                             dispatch(setSwitchInfo({
                                 showSwitch: true,
+                                defChecked: true,
                                 checked: true
                             }))
                         } else {
                             dispatch(setSwitchInfo({
                                 showSwitch: true,
+                                defChecked: false,
                                 checked: false
                             }))
                         }
                     } else {
                         dispatch(setSwitchInfo({
                             showSwitch: false,
+                            defChecked: false,
                             checked: false
                         }))
                     }
@@ -183,6 +199,70 @@ export const actions = {
         data
     }),
 
+
+    /**
+     * 确认预约:按钮点击
+     * @returns {function(*, *)}
+     */
+    onSubmit: (data) => {
+        return (dispatch, getstate) => {
+
+            /**
+             * 请求的Body
+             * @type {{}}
+             */
+            let PARAM = {}
+            PARAM.hosId = data.doctorInfo.hosId//医院id
+            PARAM.deptId = data.doctorInfo.deptId//科室id
+            PARAM.doctorId = data.doctorInfo.id//医生id
+            PARAM.scheduleId = data.reservationInfo.id//会诊id
+            PARAM.timeintervalId = data.timeInterval.id//会诊时间点id
+
+
+            /**
+             * 家庭成员对象
+             * @type {T[]}
+             */
+            let bindCardObj = getstate().reservation.bindCardData.filter(i =>
+                i.def === true
+            )
+
+
+            /**
+             * Switch对象
+             * @type {{}|initialState.switchInfo|*}
+             */
+            let switchObj = getstate().reservation.switchInfo
+
+
+            /**
+             * 支付方式
+             */
+            let payObj = getstate().reservation.payType.data
+
+
+            if (payObj.id === 1) {
+                PARAM.paymentMethod = 0
+                PARAM.paymentMethodName = '去医院支付'
+            } else if (payObj.id === 2) {
+                if (bindCardObj[0].auth) {
+                    if (getstate().reservation.switchInfo.checked) {
+                        PARAM.paymentMethod = 1
+                        PARAM.paymentMethodName = '在线支付'
+                    } else {
+                        PARAM.paymentMethod = 2
+                        PARAM.paymentMethodName = '在线支付'
+                    }
+                } else {
+                    PARAM.paymentMethod = 2
+                    PARAM.paymentMethodName = '在线支付'
+                }
+            }
+
+            const targetUrl = URL.API_REGISTER_UNION()
+            return dispatch(submitBtnClick(targetUrl, PARAM))
+        }
+    },
 
     /**
      * 刷新页面标识
@@ -230,6 +310,18 @@ const setSwitchInfo = (data) => ({
 })
 
 
+const submitBtnClick = (targetURL, param) => ({
+    [FETCH_DATA]: {
+        types: [
+            actionTypes.BTN_SUBMIT_REQUEST,
+            actionTypes.BTN_SUBMIT_SUCCESS,
+            actionTypes.BTN_SUBMIT_FAILURE,
+        ],
+        targetURL,
+    },
+    param
+})
+
 const
     reducer = (state = initialState, action) => {
         switch (action.type) {
@@ -270,10 +362,33 @@ const
                     ...state,
                     switchInfo: action.data
                 }
+            case actionTypes.SET_SWITCH_CHECKED:
+                return {
+                    ...state,
+                    switchInfo: action.data
+                }
             case actionTypes.SET_REFRESH_PAGE://componentDidMount 才会刷新页面,history.goBack()不会刷新页面
                 return {
                     ...state,
                     isRefresh: action.status
+                }
+            case actionTypes.BTN_SUBMIT_REQUEST:
+                return {
+                    ...state,
+                    isFetching: true
+                }
+            case actionTypes.BTN_SUBMIT_SUCCESS:
+                if (action.response.infocode !== 1){
+                    Toast.fail(action.response.infomessage, 1);
+                }
+                return {
+                    ...state,
+                    isFetching: false
+                }
+            case actionTypes.BTN_SUBMIT_FAILURE:
+                return {
+                    ...state,
+                    isFetching: false
                 }
             default:
                 return state
@@ -296,7 +411,7 @@ export const getBindCard = (state) => {
 }
 
 export const getSwitchInfo = (state) => {
-    console.log(state.reservation.switchInfo)
+    // console.log(state.reservation.switchInfo)
     return state.reservation.switchInfo
 }
 

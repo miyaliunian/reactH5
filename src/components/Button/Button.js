@@ -16,10 +16,10 @@ export default class Button extends Component {
     }
 
     render() {
-        const {txt} = this.props
+        const {txt,onSubmit} = this.props
         return (
             <div className={'form__btnContainer'}>
-                <button className={'form__btn'}>{txt}</button>
+                <button className={'form__btn'} onClick={onSubmit}>{txt}</button>
             </div>
         )
     }
