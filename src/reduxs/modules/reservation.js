@@ -227,6 +227,12 @@ export const actions = {
                 i.def === true
             )
 
+            if (bindCardObj){
+                //家庭成员id
+                PARAM.personId = bindCardObj[0].id
+                //家庭成员mgwid
+                PARAM.cardId = bindCardObj[0].mgwId
+            }
 
             /**
              * Switch对象
@@ -240,6 +246,19 @@ export const actions = {
              */
             let payObj = getstate().reservation.payType.data
 
+            // 是否为初诊
+            let isFirst = true
+            PARAM.isFirst = true
+
+            //诊断名称
+            let diagName = '尚未确诊'
+            PARAM.diagName = diagName
+
+            /**
+             * 医疗列表
+             */
+            let medicalType = getstate().reservation.medicalTypeData[0]
+            PARAM.mdicalType = medicalType.mdicaltype_code //医疗类别
 
             if (payObj.id === 1) {
                 PARAM.paymentMethod = 0
@@ -378,8 +397,8 @@ const
                     isFetching: true
                 }
             case actionTypes.BTN_SUBMIT_SUCCESS:
-                if (action.response.infocode !== 1){
-                    Toast.fail(action.response.infomessage, 1);
+                if (action.response.infocode !== 1) {
+                    Toast.fail(action.response.infomessage, 2);
                 }
                 return {
                     ...state,
