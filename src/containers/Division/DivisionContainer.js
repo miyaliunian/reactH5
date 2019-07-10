@@ -7,7 +7,6 @@
  */
 import React, {Component} from 'react'
 import Header from '@components/Header/NavBar'
-
 import {Link} from 'react-router-dom'
 import LoadingMask from "@components/Loading/LoadingMask";
 import {Icon} from 'antd-mobile';
