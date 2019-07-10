@@ -41,7 +41,7 @@ export default class Reservaes extends Component {
             <div className={'reservaes border-bottom'}>
                 {this.state.days.map((day, index) => {
                     return (
-                        <div key={index} className={day.isSel ? 'reservaes__box boxSel' : 'reservaes__box'}
+                        <div key={index} className={day.isSel ? 'reservaes__box boxSel' : 'reservaes__box border'}
                              onClick={() => this.boxClick(day, index)}>
                             <div className={'reservaes__top'}>{day.oweekDay}</div>
                             <div className={'reservaes__bottom'}>{day.oDay}</div>
