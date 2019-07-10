@@ -75,4 +75,11 @@ export default {
     //智能候诊:获取候诊列表
     API__INTELLIGENT_WAITING_LIST: (personid) => `/baseURL/register/v1.0/getSeenNoByPerson/${personid}.do`,
 
+
+    /* 9:--------------------------------------------------------*/
+    //注册:验证码发送请求，按照手机号码
+    API__USER_REGISTER_CHECKCODE_SEND: () => `/login/v1.1/sendSmsByMobile.action`,
+    //注册:注册请求，附带手机校验码
+    API__USER_REGISTER_REGISTER: (verfCode) => `/login/v1.1/registUser/${verfCode}.action`,
+
 }
