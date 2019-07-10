@@ -14,10 +14,12 @@ export default class DoctorDesc extends Component {
             <div className={'doctorDesc border-top'}>
                 <div className={'doctorDesc__title'}>医生详情</div>
                 <div className={'doctorDesc__info'}>
-                    <div className={'doctorDesc__experience__goodAt'}>经历: 暂无</div>
-                    <div className={'doctorDesc__experience__goodAt'}>擅长: 暂无</div>
+                    <div
+                        className={'doctorDesc__experience__goodAt'}>经历: {this.props.introduction ? this.props.introduction : '暂无'}</div>
+                    <div
+                        className={'doctorDesc__experience__goodAt'}>擅长: {this.props.skills ? this.props.skills : '暂无'}</div>
                 </div>
             </div>
         )
     }
-}    
+}

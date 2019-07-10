@@ -25,13 +25,13 @@ import './style.less'
 
 class DoctorContainer extends Component {
     render() {
-
         const {fetchingStatus, isLastPage, clinicData, reservationData, timeInterval} = this.props
+        const {introduction,skills} = this.props.location.state
         return (
             <div className={'doctor'}>
                 <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
                 <DoctorTitle data={this.props.location.state}/>
-                <DoctorDesc/>
+                <DoctorDesc introduction={introduction} skills={skills}/>
                 <div className={'doctor__interval'}/>
                 <DoctorVisiting
                 {...this.props}
