@@ -1,10 +1,10 @@
 #React 开发 WebApp 框架：
 ##使用
 * 下载依赖文件 
-* 在命令行中执行：yarn
+    * 在命令行中执行：yarn
 * 启动项目：
-  1:yarn start(http请求)
-  2:HTTPS=true yarn start(https 请求)
+  * 非 HTTPS 请求 : yarn start
+  * HTTPS 请求 : HTTPS=true yarn start
 ## IDE调试：WebStorm
 * 1：添加debug配置 debug 的方式为:JavaScript Debug  
 * 2：在url出填写 'http://localhost:3000/'
