@@ -9,8 +9,8 @@
  * 登录前缀
  * @type {string}
  */
-// export const BASE_URL = 'http://58.208.84.112:10086/t-core'
-export const BASE_URL = 'https://www.ntyibao.com/t-core'
+//  const BASE_URL = 'http://58.208.84.112:10086/t-core'
+ const BASE_URL = 'https://www.ntyibao.com/t-core'
 
 /**
  * 业务请求URL
