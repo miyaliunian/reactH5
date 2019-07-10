@@ -118,7 +118,8 @@ const reducer = (state = initialState, action) => {
             return {...state, isFetching: false}
         case actionTypes.FETCH_DEPARTMENT_REQUEST:
             return {
-                ...state
+                ...state,
+                isFetching: true
             }
         case actionTypes.FETCH_DEPARTMENT_SUCCESS:
             return {
