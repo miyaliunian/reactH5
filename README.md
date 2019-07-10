@@ -50,11 +50,13 @@
                                  |---------------- formateDate.js                       * 格式化时间戳  
                                  |---------------- httpUtil.js                          * 网络请求封装
 ````
-##### 开发流程
-* /containers 创建业务容器组件
+## 开发流程
+#####  创建业务容器组件
+* /containers 
     * 容器组件 xx.js 
     * 容器样式 style.less
-* /routes  新增需要跳转的页面
+#####  新增需要跳转的页面
+* /routes 
     * routerMap.js 
     ```angular2
     有三个参数:
@@ -63,15 +65,18 @@
               auth: true/false   (如果需要登录验证则传递true,否则可以不传)  
               component: 路由组件  (比传)
     ```    
-* /reduxs 创建业务对应的redux
+#####  创建业务对应的redux    
+* /reduxs 
     * 新增的redux 需要在 /redux/index.js 也增加一份
-* /utils/httpUrl 新增网络请求url
-    * 如果请求存在跨域的问题，在往下看   
-* /images 图片资源
+#####   新增网络请求url
+* /utils/httpUrl
+    * 如果请求存在跨域的问题，在往下看
+#####   新增图片资源   
+* /images 
     * 新增的图片资源引入方式
                     import xxx from '@image/xxx/xxxx'
 
-##### 关键点
+## 关键点
 * 登录权限控制,框架会自动处理登录逻辑跳转
 ```angularjs
           只需要在 /routers/routerMap.js 按照如下定义路由规则
