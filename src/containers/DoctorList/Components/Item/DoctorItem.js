@@ -13,14 +13,14 @@ import './style.less'
 
 class DoctorItem extends Component {
     render() {
-        const {data, tabSel} = this.props
+        const {data} = this.props
         return (
             <div className={'doctorItem'}>
                 {data.map(item => {
                     return (
                         <div
                             key={item.id}
-                            className={'doctorItem__item'}
+                            className={'doctorItem__item border-bottom'}
                             onClick={() => this.handelPageNav(item)}
                         >
                             <div className={'doctorItem__avator'}>

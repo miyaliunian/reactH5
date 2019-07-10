@@ -14,7 +14,7 @@ export default class DoctorTitle extends Component {
         return (
             <div className={'title__con'}>
                 <div className={'title__avatar'}>
-                    <div className={'title__avatar_txt'}>
+                    <div>
                         {this.drawAvator(data.name)}
                     </div>
                 </div>
