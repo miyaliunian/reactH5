@@ -9,8 +9,8 @@
  * 登录前缀
  * @type {string}
  */
-//  const BASE_URL = 'http://58.208.84.112:10086/t-core'
- const BASE_URL = 'https://www.ntyibao.com/t-core'
+ const BASE_URL = 'http://58.208.84.112:10086/t-core'
+// const BASE_URL = 'https://www.ntyibao.com/t-core'
 
 /**
  * 业务请求URL
@@ -78,8 +78,10 @@ export default {
 
     /* 9:--------------------------------------------------------*/
     //注册:验证码发送请求，按照手机号码
-    API__USER_REGISTER_CHECKCODE_SEND: () => `/login/v1.1/sendSmsByMobile.action`,
+    API__USER_REGISTER_SMSMESSAGE_SEND: () => `${BASE_URL}/login/v1.1/sendSmsByMobile.action`,
     //注册:注册请求，附带手机校验码
-    API__USER_REGISTER_REGISTER: (verfCode) => `/login/v1.1/registUser/${verfCode}.action`,
+    API__USER_REGISTER_REGISTER: (verfCode) => `${BASE_URL}/login/v1.1/registUser/${verfCode}.action`,
+    //注册：获取医保类型请求
+    API__USER_REGISTER_SITYPE: (cityid, own) => `${BASE_URL}/sitype//v2.0/list/${cityid}/${own}.action`,
 
 }

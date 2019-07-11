@@ -1,0 +1,91 @@
+@import "../../../assets/less/varibles";
+
+.registerForm {
+  background-color: white;
+  font-size: 16px;
+
+  .registerForm__cell {
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    position: relative;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+
+    .registerForm__cell__title {
+      width: 100px;
+    }
+
+    .registerForm__bindCard {
+      flex: 1;
+    }
+
+    .registerForm__cell__right__name {
+      width: calc(100% - 100px);
+      display: inline-block;
+    }
+
+    .registerForm__security_code {
+      flex: 1;
+      font-size: 10px;
+
+      .registerForm__security_code_btn {
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        //background-color: #00a0dc;
+        display: inline-block;
+      }
+    }
+
+    .registerForm__cell__right__icon {
+      position: absolute;
+      top: 5px;
+      right: 20px;
+    }
+  }
+}
+
+.am-action-sheet-button-list {
+  background-color: white;
+  padding: 10px;
+}
+
+.am-action-sheet-button-list-item {
+  background-color: @theme-blue;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.registerForm__middle__icon {
+  width: 22px;
+  height: 22px;
+  margin: 13px;
+  overflow: hidden;
+}
+
+.registerForm__btnContainer {
+  text-align: center;
+  padding: 0 15px;
+  .registerForm__btn {
+    width: 90%;
+    line-height: 40px;
+    color: #fff;
+    text-decoration: none;
+    background: @theme-blue;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 6px;
+  }
+}
+.info{
+  font-size: 12px;
+  margin: 10px 0px 10px 35px;
+  text-align: left;
+  span{
+    color: @theme-blue;
+  }
+}

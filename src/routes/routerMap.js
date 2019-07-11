@@ -17,6 +17,7 @@ import DoctorList from "@containers/DoctorList/DoctorListContainer";
 import Doctor from "@containers/Doctor/DoctorContainer"
 import ReservationContainer from "@containers/Reservation/ReservationContainer";
 import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
+import RegisterContainer from "@containers/Register/RegisterContainer";
 
 
 const routerMap = [
@@ -39,6 +40,11 @@ const routerMap = [
         path: '/login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: RegisterContainer
     },
     {
         path: '/division/:id/:name',
