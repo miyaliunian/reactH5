@@ -56,3 +56,22 @@ export function fromateTimeStepStr(str) {
         W = weekDays[date.getDay()]+' '
     return Y + M + D + W
 }
+
+/**
+ * 获取午别，入参为0、1、2，出参为上午、下午、晚上
+ * @param str
+ * @returns {string}
+ */
+export function getNoon(str) {
+    let noon = '上午'
+    if (str  === '0'){
+        noon = '上午'
+    }
+    if (str === '1'){
+        noon = '下午'
+    }
+    if (str === '2'){
+        noon = '晚上'
+    }
+    return noon
+}
