@@ -65,7 +65,8 @@ class BindCardList extends Component {
                 item.def = false
             }
         })
-        // this.props.bindCardActions.setBindCard(state)
+        //将选中的数据 返回给 住院管理页面
+        this.props.location.callBack(cliItem)
         this.props.reservationActions.loadMedicalTypeByBindCard(state)
         this.props.history.goBack()
     }

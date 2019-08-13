@@ -24,13 +24,16 @@ class HospitalizationManagementContainer extends Component {
         openModalHospitalization: false,
     }
 
+    componentWillReceiveProps(nextProps){
+    }
+
     render() {
         const {bindCardList} = this.props
         return (
             <div className={'hospitalizationManagement'}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
                 {/*-------------------------选择成员信息*/}
-                <BindCardItem data={bindCardList} isRefresh={this.refresh}/>
+                <BindCardItem data={bindCardList} isRefresh={this.refresh} callBack={(data)=>this.refreshCallBack(data)}/>
                 {/*-------------------------选择医院*/}
                 <div className={'hospitalizationManagement_hospitalization'} onClick={() => {
                     this.setState({openModalHospitalization: true})
@@ -72,6 +75,11 @@ class HospitalizationManagementContainer extends Component {
         if (!bindCardList.length > 0) {
             this.props.bindCardActions.loadList()
         }
+    }
+
+    refreshCallBack(data){
+        console.log('refreshCallBack')
+        console.log(data)
     }
 }
 

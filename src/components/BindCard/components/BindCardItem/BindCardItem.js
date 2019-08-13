@@ -16,6 +16,7 @@ class BindCardItem extends Component {
 
     static propTypes = {
         data: PropTypes.array.isRequired,
+        callBack: PropTypes.func,
     };
 
     render() {
@@ -54,11 +55,18 @@ class BindCardItem extends Component {
     navPage(data) {
         let path = {
             pathname: 'bindCardList',
-            state: data
+            state: data,
+            callBack: (data) => this.callBack(data) //外部包裹容器
         }
         this.props.history.push(path)
     }
 
+
+    callBack(data) {
+        if (this.props.callBack && typeof this.props.callBack === 'function') {
+            this.props.callBack(data)
+        }
+    }
 }
 
 
