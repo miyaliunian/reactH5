@@ -33,7 +33,7 @@ const dataSource = [
             src: "https://www.dpfile.com/sc/eleconfig/20160204172927huoguo.png"
         },
         {
-            name: "住院管理",
+            name: "智能候诊",
             src: "https://www.dpfile.com/sc/eleconfig/20160126194705meishi.png"
         },
         {

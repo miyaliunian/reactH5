@@ -21,16 +21,25 @@ class BindCardItem extends Component {
     render() {
         const {data} = this.props
         return (
-
             <div className={'bindCard__list border-bottom'} onClick={() => this.navPage(data)}>
                 <div className={'bindCard__left'}>
-                    <img src={ico_user} className={'bindCard__icon'}/>
+                    {data.length > 0
+                        ?
+                        <div style={{flexDirection: 'row', display: 'flex', flex: 1, alignItems: 'center'}}>
+                            <img src={ico_user} className={'bindCard__icon'}/>
+                            {data.map(item => {
+                                if (item.def) {
+                                    return (<div key={item.id}>{item.name}</div>)
+                                }
+                            })}
+                        </div>
+                        :
+                        <div style={{flexDirection: 'row', display: 'flex', flex: 1, alignItems: 'center'}}>
+                            <img src={ico_user} className={'bindCard__icon'}/>
+                            <span>请选择家庭成员</span>
+                        </div>
+                    }
 
-                    {data.map(item => {
-                        if (item.def) {
-                            return (<div key={item.id}>{item.name}</div>)
-                        }
-                    })}
                 </div>
 
                 <div>
