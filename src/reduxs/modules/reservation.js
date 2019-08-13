@@ -146,8 +146,8 @@ export const actions = {
                     })
                 },
                 error => {
-                     console.log('出现错误')
-                     console.log(error)
+                    console.log('出现错误')
+                    console.log(error)
                 }
             )
 
@@ -378,88 +378,87 @@ const submitBtnClick = (targetURL, param) => ({
     param
 })
 
-const
-    reducer = (state = initialState, action) => {
-        switch (action.type) {
-            case actionTypes.FETCH_PAY_TYPE_REQUEST:
-                return {
-                    ...state,
-                    isFetching: true
-                }
-            case actionTypes.FETCH_PAY_TYPE_SUCCESS:
-                return {
-                    ...state,
-                    payType: action.data
-                }
-            case actionTypes.FETCH_RESERVATION_BIND_CARD_SUCCESS:
-                return {
-                    ...state,
-                    bindCardData: action.data
-                }
-            case actionTypes.FETCH_MEDICAL_TYPE_SUCCESS:
-                return {
-                    ...state,
-                    isFetching: false,
-                    medicalTypeData: action.data
-                }
-            case actionTypes.FETCH_PAY_TYPE_FAILURE:
-                return {
-                    ...state,
-                    isFetching: false,
-                }
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case actionTypes.FETCH_PAY_TYPE_REQUEST:
+            return {
+                ...state,
+                isFetching: true
+            }
+        case actionTypes.FETCH_PAY_TYPE_SUCCESS:
+            return {
+                ...state,
+                payType: action.data
+            }
+        case actionTypes.FETCH_RESERVATION_BIND_CARD_SUCCESS:
+            return {
+                ...state,
+                bindCardData: action.data
+            }
+        case actionTypes.FETCH_MEDICAL_TYPE_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                medicalTypeData: action.data
+            }
+        case actionTypes.FETCH_PAY_TYPE_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+            }
 
-            case actionTypes.SET_BINDCARD_ITEM:
-                return {
-                    ...state,
-                    bindCardData: action.data
-                }
-            case actionTypes.SET_DIAGNOSIS_NAME:
-                return {
-                    ...state,
-                    diagnosis: action.data,
-                }
-            case actionTypes.SET_DIAGNAME_VALUE:
-                return {
-                    ...state,
-                    diagName: action.data,
-                }
-            case actionTypes.SET_SWITCH_INFO:
-                return {
-                    ...state,
-                    switchInfo: action.data
-                }
-            case actionTypes.SET_SWITCH_CHECKED:
-                return {
-                    ...state,
-                    switchInfo: action.data
-                }
-            case actionTypes.SET_REFRESH_PAGE://componentDidMount 才会刷新页面,history.goBack()不会刷新页面
-                return {
-                    ...state,
-                    isRefresh: action.status
-                }
-            case actionTypes.BTN_SUBMIT_REQUEST:
-                return {
-                    ...state,
-                    isFetching: true
-                }
-            case actionTypes.BTN_SUBMIT_SUCCESS:
-                if (action.response.infocode !== 1) {
-                    Toast.fail(action.response.infomessage, 2);
-                }
-                return {
-                    ...state,
-                    isFetching: false
-                }
-            case actionTypes.BTN_SUBMIT_FAILURE:
-                return {
-                    ...state,
-                    isFetching: false
-                }
-            default:
-                return state
-        }
+        case actionTypes.SET_BINDCARD_ITEM:
+            return {
+                ...state,
+                bindCardData: action.data
+            }
+        case actionTypes.SET_DIAGNOSIS_NAME:
+            return {
+                ...state,
+                diagnosis: action.data,
+            }
+        case actionTypes.SET_DIAGNAME_VALUE:
+            return {
+                ...state,
+                diagName: action.data,
+            }
+        case actionTypes.SET_SWITCH_INFO:
+            return {
+                ...state,
+                switchInfo: action.data
+            }
+        case actionTypes.SET_SWITCH_CHECKED:
+            return {
+                ...state,
+                switchInfo: action.data
+            }
+        case actionTypes.SET_REFRESH_PAGE://componentDidMount 才会刷新页面,history.goBack()不会刷新页面
+            return {
+                ...state,
+                isRefresh: action.status
+            }
+        case actionTypes.BTN_SUBMIT_REQUEST:
+            return {
+                ...state,
+                isFetching: true
+            }
+        case actionTypes.BTN_SUBMIT_SUCCESS:
+            if (action.response.infocode !== 1) {
+                Toast.fail(action.response.infomessage, 2);
+            }
+            return {
+                ...state,
+                isFetching: false
+            }
+        case actionTypes.BTN_SUBMIT_FAILURE:
+            return {
+                ...state,
+                isFetching: false
+            }
+        default:
+            return state
     }
+}
 export default reducer
 
 

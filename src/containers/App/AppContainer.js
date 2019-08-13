@@ -8,6 +8,8 @@ import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import routerMap from '@routes/routerMap'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 const RouteModule = function (props) {
     return (
@@ -47,6 +49,7 @@ class AppContainer extends Component {
         const Routes = withRouter(RouteModule);
         return (
             <Fragment>
+                {/*<CssBaseline />*/}
                 <Router forceRefresh={false}>
                     <Routes/>
                 </Router>

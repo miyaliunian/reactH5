@@ -20,12 +20,12 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <Banner/>
+                {/*<Banner/>*/}
                 <Category category={(index) => {
                     this.categoryClick(index)
                 }}/>
-                <HeadLine/>
-                <Activity/>
+                {/*<HeadLine/>*/}
+                {/*<Activity/>*/}
             </div>
         )
     }
@@ -51,7 +51,7 @@ class Home extends Component {
                 this.props.history.push('/intelligentWaiting')
                 break
             case 7 :
-                this.props.history.push('/popUp')
+                this.props.history.push('/hospitalizationManagement')
                 break
         }
     }

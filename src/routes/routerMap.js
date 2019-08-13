@@ -18,6 +18,7 @@ import Doctor from "@containers/Doctor/DoctorContainer"
 import ReservationContainer from "@containers/Reservation/ReservationContainer";
 import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
 import RegisterContainer from "@containers/Register/RegisterContainer";
+import HospitalizationManagementContainer from "@containers/HospitalizationManagement/HospitalizationManagementContainer";
 
 
 const routerMap = [
@@ -83,6 +84,12 @@ const routerMap = [
         name: 'IntelligentWaiting',
         auth: true,
         component: IntelligentWaitingContainer
+    },
+    {
+        path: '/hospitalizationManagement',
+        name: 'hospitalizationManagement',
+        // auth: true,
+        component: HospitalizationManagementContainer
     },
 ]
 

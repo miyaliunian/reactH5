@@ -41,6 +41,10 @@ const dataSource = [
             src: "https://www.dpfile.com/sc/eleconfig/20160126202946liren.png"
         },
         {
+            name: "住院管理",
+            src: "https://www.dpfile.com/sc/eleconfig/20160126202946liren.png"
+        },
+        {
             name: "更多",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
