@@ -86,6 +86,7 @@ export default {
 
 
     /* 10:--------------------------------------------住院管理-----*/
-    API_GET_REGED_LIST_BY_OPEN_TYPE: (type, perId) => `/baseURL/hospital/v1.1/getRegedListByOpenType/${type}/${perId}.do`
+    API_GET_REGED_LIST_BY_OPEN_TYPE: (type, perId) => `/baseURL/hospital/v1.1/getRegedListByOpenType/${type}/${perId}.do`,
+    API_QUERY_INHOSPASTIENT: (type, hosId, perId) => `/baseURL/${type}/v1.1/queryInHosPatient/${hosId}/${perId}.do`,
 
 }

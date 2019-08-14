@@ -88,7 +88,7 @@ const routerMap = [
     {
         path: '/hospitalizationManagement',
         name: 'hospitalizationManagement',
-        // auth: true,
+        auth: true,
         component: HospitalizationManagementContainer
     },
 ]
