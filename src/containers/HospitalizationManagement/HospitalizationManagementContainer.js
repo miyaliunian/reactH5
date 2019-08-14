@@ -26,20 +26,26 @@ import './style.less'
 
 class HospitalizationManagementContainer extends Component {
 
-    state = {
-        openModalBindCardItem: false,
-        openModalHospitalization: false,
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            openModalBindCardItem: false,
+            openModalHospitalization: false,
+        }
     }
+
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.bindCardList != this.props.bindCardList) {
+            console.log('componentWillReceiveProps')
             let perObj = nextProps.bindCardList.filter(item => item.def)
             this.props.hospitalizationManagementActions.getRegedListByOpenType('inPrePay', perObj[0])
         }
     }
 
     render() {
-        const {bindCardList, isSelHospitalization, hospitalDetails} = this.props
+        const {bindCardList, hospitalizationList, hospitalizationSel, hospitalDetails} = this.props
         return (
             <div className={'hospitalizationManagement'}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
@@ -53,7 +59,7 @@ class HospitalizationManagementContainer extends Component {
                     <span className={'hospitalizationManagement_hospitalization_text_Style'}>就诊医院</span>
                     <div className={'hospitalization_right'}>
                         <span
-                            className={'hospitalization_right_text_Style'}>{isSelHospitalization ? isSelHospitalization.aliasName : '请选择医院'}</span>
+                            className={'hospitalization_right_text_Style'}>{hospitalizationSel ? hospitalizationSel.aliasName : '请选择医院'}</span>
                         <Icon className={'clinic__bar__icon'} type={'right'}/>
                     </div>
                 </div>
@@ -61,8 +67,12 @@ class HospitalizationManagementContainer extends Component {
                     BackdropProps={{'background-color': 'red'}}
                     open={this.state.openModalHospitalization}
                 >
-                    <HospitalizationList onNavBack={() => this.handelModalHospitalization()}/>
+                    <HospitalizationList reservationData={hospitalizationList}
+                                         onNavBack={() => this.handelModalHospitalization()}
+                                         callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
+
+                {/*是否显示住院信息*/}
                 {hospitalDetails
                     ?
                     <div className={'hospitalizationManagement_hospitalization_info'}>
@@ -116,15 +126,23 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentDidMount() {
-        const {bindCardList, history} = this.props
-        if (history.action === 'PUSH') {
+        const {history} = this.props
+        if (!history || history.action === 'PUSH') {
             this.props.bindCardActions.loadList()
         }
     }
 
     refreshCallBack(data) {
+        const {hospitalizationSel} = this.props
+        this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', hospitalizationSel.id, data)
+    }
+
+
+    refreshHospitalDetail(data) {
         console.log(data)
     }
+
+
 }
 
 
@@ -133,7 +151,7 @@ const mapStateToProps = (state) => {
         bindCardList: getBindCardList(state),
         fetchingStatus: getFetchingStatus(state),
         hospitalizationList: getHospitalizationList(state),
-        isSelHospitalization: getIsSelHospitalization(state),
+        hospitalizationSel: getIsSelHospitalization(state),
         hospitalDetails: getHospitalDetails(state)
     }
 }

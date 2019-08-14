@@ -47,8 +47,7 @@ export const actions = {
                     if (data.infocode && data.infocode === 1) {
                         dispatch(fetchHospitalizationSuccess(data.data))
                         //请求住院信息(默认的)
-
-                        let hosDef = data.data[1]
+                        let hosDef = data.data[0]
                         let queryUrl = url.API_QUERY_INHOSPASTIENT(type, hosDef.id, perObj.id)
                         return post(queryUrl).then(
                             (data) => {
@@ -59,6 +58,22 @@ export const actions = {
                                 }
                             }
                         ).catch()
+                    }
+                }
+            ).catch()
+        }
+    },
+
+
+    refreshRegedListByOpenType: (type, hosId, perObj) => {
+        return (dispatch, getstate) => {
+            let queryUrl = url.API_QUERY_INHOSPASTIENT(type, hosId, perObj.id)
+            return post(queryUrl).then(
+                (data) => {
+                    if (data.infocode && data.infocode === 1) {
+                        dispatch(hospitalDetail(data.data))
+                    } else {
+                        Toast.fail(data.infomessage, 2);
                     }
                 }
             ).catch()
