@@ -9,7 +9,7 @@
  * 登录前缀
  * @type {string}
  */
- const BASE_URL = 'http://58.208.84.112:10086/t-core'
+const BASE_URL = 'http://58.208.84.112:10086/t-core'
 // const BASE_URL = 'https://www.ntyibao.com/t-core'
 
 /**
@@ -83,5 +83,9 @@ export default {
     API__USER_REGISTER_REGISTER: (verfCode) => `${BASE_URL}/login/v1.1/registUser/${verfCode}.action`,
     //注册：获取医保类型请求
     API__USER_REGISTER_SITYPE: (cityid, own) => `${BASE_URL}/sitype//v2.0/list/${cityid}/${own}.action`,
+
+
+    /* 10:--------------------------------------------住院管理-----*/
+    API_GET_REGED_LIST_BY_OPEN_TYPE: (type, perId) => `/baseURL/hospital/v1.1/getRegedListByOpenType/${type}/${perId}.do`
 
 }

@@ -14,6 +14,7 @@ import Modal from '@material-ui/core/Modal';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as bindCardActions, getBindCardList} from "@reduxs/modules/bindCard";
+import {getFetchingStatus,actions as hospitalizationManagementActions} from "@reduxs/modules/hospitalizationManagement";
 
 import './style.less'
 
@@ -24,7 +25,11 @@ class HospitalizationManagementContainer extends Component {
         openModalHospitalization: false,
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.bindCardList != this.props.bindCardList) {
+            let perObj = nextProps.bindCardList.filter(item => item.def)
+            this.props.hospitalizationManagementActions.getRegedListByOpenType('inPrePay', perObj[0])
+        }
     }
 
     render() {
@@ -33,7 +38,8 @@ class HospitalizationManagementContainer extends Component {
             <div className={'hospitalizationManagement'}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
                 {/*-------------------------选择成员信息*/}
-                <BindCardItem data={bindCardList} isRefresh={this.refresh} callBack={(data)=>this.refreshCallBack(data)}/>
+                <BindCardItem data={bindCardList} isRefresh={this.refresh}
+                              callBack={(data) => this.refreshCallBack(data)}/>
                 {/*-------------------------选择医院*/}
                 <div className={'hospitalizationManagement_hospitalization'} onClick={() => {
                     this.setState({openModalHospitalization: true})
@@ -45,8 +51,7 @@ class HospitalizationManagementContainer extends Component {
                     </div>
                 </div>
                 <Modal
-                    // BackdropComponent={()=>{return <div className={'backDrop'}/>}}
-                    BackdropProps={{'background-Color': 'red'}}
+                    BackdropProps={{'background-color': 'red'}}
                     open={this.state.openModalHospitalization}
                 >
                     <HospitalizationList onNavBack={() => this.handelModalHospitalization()}/>
@@ -71,14 +76,13 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentDidMount() {
-        const {bindCardList} = this.props
-        if (!bindCardList.length > 0) {
+        const {bindCardList, history} = this.props
+        if (history.action === 'PUSH') {
             this.props.bindCardActions.loadList()
         }
     }
 
-    refreshCallBack(data){
-        console.log('refreshCallBack')
+    refreshCallBack(data) {
         console.log(data)
     }
 }
@@ -86,13 +90,15 @@ class HospitalizationManagementContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        bindCardList: getBindCardList(state)
+        bindCardList: getBindCardList(state),
+        fetchingStatus: getFetchingStatus(state),
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        bindCardActions: bindActionCreators(bindCardActions, dispatch)
+        bindCardActions: bindActionCreators(bindCardActions, dispatch),
+        hospitalizationManagementActions: bindActionCreators(hospitalizationManagementActions, dispatch)
     }
 }
 

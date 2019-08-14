@@ -28,7 +28,7 @@ const RouteModule = function (props) {
                 <div>
                     <Switch location={props.location}>
                         {routerMap.map((v, index) => {
-                            return <Route key={index} path={v.path} exact render={props =>
+                            return <Route key={index} path={v.path}  exact render={props =>
                                 (!v.auth ? (<v.component {...props} />) : (isLogin() ? <v.component {...props} /> :
                                         <Redirect to={{
                                             pathname: '/login',
