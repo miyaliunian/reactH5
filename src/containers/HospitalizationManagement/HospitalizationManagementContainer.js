@@ -140,6 +140,9 @@ class HospitalizationManagementContainer extends Component {
 
     refreshHospitalDetail(data) {
         console.log(data)
+        this.setState({
+            openModalHospitalization:false
+        })
     }
 
 
