@@ -12,7 +12,7 @@ import './style.less'
 
 export default class HospitalizationList extends Component<Props> {
     render() {
-        const {reservationList, onNavBack} = this.props
+        const {reservationList,allList, onNavBack} = this.props
         return (
             <div>
                 <Header title={'选择医院'} isRight={false} onBack={() => onNavBack()}/>
@@ -30,7 +30,19 @@ export default class HospitalizationList extends Component<Props> {
                                     </div>
                                 )
                             })}
-
+                        </div>
+                        <div className={'hospitalizationList_header border-bottom'}>
+                            <span style={{fontSize: 13, fontWeight: 'bold'}}>医院列表</span>
+                        </div>
+                        <div className={'hospitalizationList_body'}>
+                            {allList.map((item, index) => {
+                                return (
+                                    <div className={'hospitalizationItem_row border-bottom'} key={item.id}
+                                         onClick={() => this.navGoBack(item)}>
+                                        <span style={{fontSize: 13}}>{item.name}</span>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
@@ -69,4 +81,4 @@ export default class HospitalizationList extends Component<Props> {
         const {callBack} = this.props
         callBack(data)
     }
-}    
+}

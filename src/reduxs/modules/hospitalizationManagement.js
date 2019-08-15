@@ -77,7 +77,7 @@ export const actions = {
     //点击医院列表 加载所有医院数据
     fetchAllCategaryHospitalList: (type, perObj, pageNu) => {
         return (dispatch, getstate) => {
-            Axios.all([getAllHospotalList(url.API_QUERY_ALL_HOSPASTIENT(cityID, type, pageNu), dispatch), getReserHospotalList(url.API_GET_REGED_LIST_BY_OPEN_TYPE(type, perObj.id), dispatch)])
+            Axios.all([getAllHospitalList(url.API_QUERY_ALL_HOSPASTIENT(cityID, type, pageNu), dispatch), getReserHospitalList(url.API_GET_REGED_LIST_BY_OPEN_TYPE(type, perObj.id), dispatch)])
                 .then(Axios.spread((reserHosResp, allHosResp) => {
 
                 }));
@@ -106,7 +106,7 @@ export const actions = {
 }
 
 //最近预约信息
-function getReserHospotalList(targetURL, dispatch) {
+function getReserHospitalList(targetURL, dispatch) {
     return post(targetURL)
         .then((data) => {
                 if (data.infocode && data.infocode === 1) {
@@ -117,7 +117,7 @@ function getReserHospotalList(targetURL, dispatch) {
 }
 
 //全部医院
-function getAllHospotalList(targetURL, dispatch) {
+function getAllHospitalList(targetURL, dispatch) {
     let params = {
         "areaId": null,
         "hosCategory": null,
@@ -126,7 +126,7 @@ function getAllHospotalList(targetURL, dispatch) {
     return post(targetURL, params)
         .then((data) => {
                 if (data.infocode && data.infocode === 1) {
-                    dispatch(loadAllHospitals(data.data))
+                    dispatch(loadAllHospitals(data.data.list))
                 }
             }
         ).catch()
