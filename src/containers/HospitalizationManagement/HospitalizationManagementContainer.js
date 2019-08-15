@@ -30,7 +30,6 @@ class HospitalizationManagementContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            openModalBindCardItem: false,
             openModalHospitalization: false,
         }
     }
@@ -38,7 +37,6 @@ class HospitalizationManagementContainer extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.bindCardList != this.props.bindCardList) {
-            console.log('componentWillReceiveProps')
             let perObj = nextProps.bindCardList.filter(item => item.def)
             this.props.hospitalizationManagementActions.getRegedListByOpenType('inPrePay', perObj[0])
         }
@@ -115,11 +113,6 @@ class HospitalizationManagementContainer extends Component {
     }
 
 
-    handelModalBindCardItem = () => {
-        this.setState({openModalBindCardItem: false})
-    };
-
-
     handelModalHospitalization = () => {
         this.setState({openModalHospitalization: false})
     };
@@ -132,14 +125,17 @@ class HospitalizationManagementContainer extends Component {
         }
     }
 
+    //重新选择家庭成员后重新刷新数据
     refreshCallBack(data) {
         const {hospitalizationSel} = this.props
-        this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', hospitalizationSel.id, data)
+        this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', hospitalizationSel, data)
     }
 
-
+    //重新选择医院后重新刷新数据
     refreshHospitalDetail(data) {
-        console.log(data)
+        const {bindCardList} = this.props
+        let bindCardObj = bindCardList.filter(item=>item.def)
+        this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', data,bindCardObj[0])
         this.setState({
             openModalHospitalization:false
         })

@@ -17,7 +17,7 @@ import {post} from "@utils/httpUtil";
 const initialState = {
     isFetching: false,
     hospitalizationList: [],
-    isSelHospitalizationItem: '',
+    hospitalizationSel: '',
     HospitalDetails: ''
 }
 
@@ -31,8 +31,13 @@ const actionTypes = {
     //请求医院列表
     FETCH_HOSPITALIZATION_REQUEST: 'HOSPITALIZATION_MANAGEMENT/FETCH_HOSPITALIZATION_REQUEST',
     FETCH_HOSPITALIZATION_SUCCESS: 'HOSPITALIZATION_MANAGEMENT/FETCH_HOSPITAL_SUCCESS',
-    HOSPITAL_INFO_SUCCESS: 'HOSPITALIZATION_MANAGEMENT/HOSPITAL_INFO_SUCCESS',
     FETCH_HOSPITALIZATION_FAILURE: 'HOSPITALIZATION_MANAGEMENT/FETCH_HOSPITALIZATION_FAILURE',
+    REFSET_HOSPITALIZATION: 'HOSPITALIZATION_MANAGEMENT/REFSET_HOSPITALIZATION',
+
+    HOSPITAL_INFO_SUCCESS: 'HOSPITALIZATION_MANAGEMENT/HOSPITAL_INFO_SUCCESS',
+    HOSPITAL_INFO_NULL: 'HOSPITALIZATION_MANAGEMENT/HOSPITAL_INFO_NULL',
+
+
 }
 
 
@@ -65,14 +70,18 @@ export const actions = {
     },
 
 
-    refreshRegedListByOpenType: (type, hosId, perObj) => {
+    //切换家庭成员、医院 重新刷新住院信息
+    refreshRegedListByOpenType: (type, hosObj, perObj) => {
         return (dispatch, getstate) => {
-            let queryUrl = url.API_QUERY_INHOSPASTIENT(type, hosId, perObj.id)
+            //将选中的医院信息 刷新到页面
+            dispatch(setSelHospitalization(hosObj))
+            let queryUrl = url.API_QUERY_INHOSPASTIENT(type, hosObj.id, perObj.id)
             return post(queryUrl).then(
                 (data) => {
                     if (data.infocode && data.infocode === 1) {
                         dispatch(hospitalDetail(data.data))
                     } else {
+                        dispatch(hospitalDetailNUll())
                         Toast.fail(data.infomessage, 2);
                     }
                 }
@@ -93,10 +102,20 @@ const fetchHospitalizationSuccess = (data) => ({
     response: data
 })
 
+const setSelHospitalization = (data) => ({
+    type: actionTypes.REFSET_HOSPITALIZATION,
+    response: data
+})
+
 
 const hospitalDetail = (data) => ({
     type: actionTypes.HOSPITAL_INFO_SUCCESS,
     response: data
+})
+
+
+const hospitalDetailNUll = () => ({
+    type: actionTypes.HOSPITAL_INFO_NULL,
 })
 
 
@@ -108,12 +127,22 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 hospitalizationList: action.response,
-                isSelHospitalizationItem: action.response[0]
+                hospitalizationSel: action.response[0]
+            }
+        case actionTypes.REFSET_HOSPITALIZATION:
+            return {
+                ...state,
+                hospitalizationSel: action.response,
             }
         case actionTypes.HOSPITAL_INFO_SUCCESS:
             return {
                 ...state,
                 HospitalDetails: action.response,
+            }
+        case actionTypes.HOSPITAL_INFO_NULL:
+            return {
+                ...state,
+                HospitalDetails: '',
             }
         default:
             return state
@@ -134,7 +163,7 @@ export const getHospitalizationList = (state) => {
 
 
 export const getIsSelHospitalization = (state) => {
-    return state.hospitalizationManagement.isSelHospitalizationItem
+    return state.hospitalizationManagement.hospitalizationSel
 }
 
 
