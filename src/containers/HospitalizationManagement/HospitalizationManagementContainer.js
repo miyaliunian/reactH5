@@ -16,8 +16,9 @@ import {bindActionCreators} from 'redux'
 import {actions as bindCardActions, getBindCardList} from "@reduxs/modules/bindCard";
 import {
     getFetchingStatus,
-    getHospitalizationList,
-    getIsSelHospitalization,
+    getReservationHospitalizationList,
+    getAllHospitalizationList,
+    getSelHospitalization,
     getHospitalDetails,
     actions as hospitalizationManagementActions
 } from "@reduxs/modules/hospitalizationManagement";
@@ -43,7 +44,7 @@ class HospitalizationManagementContainer extends Component {
     }
 
     render() {
-        const {bindCardList, hospitalizationList, hospitalizationSel, hospitalDetails} = this.props
+        const {bindCardList, hospitalizationReservationList,hospitalizationAllList, hospitalizationSel, hospitalDetails} = this.props
         return (
             <div className={'hospitalizationManagement'}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
@@ -65,8 +66,10 @@ class HospitalizationManagementContainer extends Component {
                     BackdropProps={{'background-color': 'red'}}
                     open={this.state.openModalHospitalization}
                 >
-                    <HospitalizationList reservationData={hospitalizationList}
+                    <HospitalizationList reservationList={hospitalizationReservationList}
+                                         allList={hospitalizationAllList}
                                          onNavBack={() => this.handelModalHospitalization()}
+                                         loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
                                          callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
 
@@ -131,13 +134,22 @@ class HospitalizationManagementContainer extends Component {
         this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', hospitalizationSel, data)
     }
 
+
+    //点击选择医院重新加载分类医院列表
+    loadAllCategaryHospitalList() {
+        const {bindCardList} = this.props
+        let bindCardObj = bindCardList.filter(item => item.def)
+        this.props.hospitalizationManagementActions.fetchAllCategaryHospitalList('inPrePay', bindCardObj[0],1)
+    }
+
+
     //重新选择医院后重新刷新数据
     refreshHospitalDetail(data) {
         const {bindCardList} = this.props
-        let bindCardObj = bindCardList.filter(item=>item.def)
-        this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', data,bindCardObj[0])
+        let bindCardObj = bindCardList.filter(item => item.def)
+        this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', data, bindCardObj[0])
         this.setState({
-            openModalHospitalization:false
+            openModalHospitalization: false
         })
     }
 
@@ -149,8 +161,9 @@ const mapStateToProps = (state) => {
     return {
         bindCardList: getBindCardList(state),
         fetchingStatus: getFetchingStatus(state),
-        hospitalizationList: getHospitalizationList(state),
-        hospitalizationSel: getIsSelHospitalization(state),
+        hospitalizationReservationList: getReservationHospitalizationList(state),
+        hospitalizationAllList: getAllHospitalizationList(state),
+        hospitalizationSel: getSelHospitalization(state),
         hospitalDetails: getHospitalDetails(state)
     }
 }

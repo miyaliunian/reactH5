@@ -12,7 +12,7 @@ import './style.less'
 
 export default class HospitalizationList extends Component<Props> {
     render() {
-        const {reservationData, onNavBack} = this.props
+        const {reservationList, onNavBack} = this.props
         return (
             <div>
                 <Header title={'选择医院'} isRight={false} onBack={() => onNavBack()}/>
@@ -22,9 +22,10 @@ export default class HospitalizationList extends Component<Props> {
                             <span style={{fontSize: 13, fontWeight: 'bold'}}>最近预约的医院</span>
                         </div>
                         <div className={'hospitalizationList_body'}>
-                            {reservationData.map((item, index) => {
+                            {reservationList.map((item, index) => {
                                 return (
-                                    <div className={'hospitalizationItem_row border-bottom'} key={item.id} onClick={()=>this.navGoBack(item)}>
+                                    <div className={'hospitalizationItem_row border-bottom'} key={item.id}
+                                         onClick={() => this.navGoBack(item)}>
                                         <span style={{fontSize: 13}}>{item.name}</span>
                                     </div>
                                 )
@@ -54,6 +55,7 @@ export default class HospitalizationList extends Component<Props> {
             useTransition: false
         })
         this.bscroll.on('pullingDown', this.pullingDownHandler)
+        this.props.loadAllCategaryHospitalList()
     }
 
 
@@ -63,7 +65,7 @@ export default class HospitalizationList extends Component<Props> {
         }, 1500)
     }
 
-    navGoBack(data){
+    navGoBack(data) {
         const {callBack} = this.props
         callBack(data)
     }
