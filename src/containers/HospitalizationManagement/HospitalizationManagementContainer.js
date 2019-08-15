@@ -6,8 +6,9 @@
  *  住院服务
  */
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Header from "@components/Header/NavBar";
-import HospitalizationList from "@containers/HospitalizationManagement/Components/Hospitalization/HospitalizationList";
+import HospiCategoryList from "@containers/HospitalizationManagement/Components/HospiCategoryList/HospiCategoryList";
 import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
 import {Icon} from 'antd-mobile';
 import Modal from '@material-ui/core/Modal';
@@ -67,11 +68,11 @@ class HospitalizationManagementContainer extends Component {
                     BackdropProps={{'background-color': 'red'}}
                     open={this.state.openModalHospitalization}
                 >
-                    <HospitalizationList reservationList={hospitalizationReservationList}
-                                         allList={hospitalizationAllList}
-                                         onNavBack={() => this.handelModalHospitalization()}
-                                         loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
-                                         callBack={(data) => this.refreshHospitalDetail(data)}/>
+                    <HospiCategoryList reservationList={hospitalizationReservationList}
+                                       allList={hospitalizationAllList}
+                                       onNavBack={() => this.handelModalHospitalization()}
+                                       loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
+                                       callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
                 {/*是否显示住院信息*/}
                 {hospitalDetails
@@ -111,19 +112,18 @@ class HospitalizationManagementContainer extends Component {
                 {hospitalDetails
                     ?
                     <div style={{marginTop: '10px'}}>
-                        <div className={'hospitalizationManagement_bottomListRow border-bottom'} onClick={() => {
-                        }}>
+                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'} to={`/makeUpAdvancePayment/${hospitalDetails.name}/${hospitalDetails.inHosNo}`}>
                             <span>补缴预交金</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
-                        </div>
-                        <div className={'hospitalizationManagement_bottomListRow border-bottom'}>
+                        </Link>
+                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'} to={`/historyAdvancePayment`}>
                             <span>缴纳预交金查询</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
-                        </div>
-                        <div className={'hospitalizationManagement_bottomListRow border-bottom'}>
+                        </Link>
+                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'} to={`/dailyListQueryPayment`}>
                             <span>一日清单查询</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
-                        </div>
+                        </Link>
                     </div>
                     :
                     null

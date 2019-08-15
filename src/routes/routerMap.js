@@ -18,7 +18,14 @@ import Doctor from "@containers/Doctor/DoctorContainer"
 import ReservationContainer from "@containers/Reservation/ReservationContainer";
 import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
 import RegisterContainer from "@containers/Register/RegisterContainer";
-import HospitalizationManagementContainer from "@containers/HospitalizationManagement/HospitalizationManagementContainer";
+import HospitalizationManagementContainer
+    from "@containers/HospitalizationManagement/HospitalizationManagementContainer";
+import MakeUpAdvancePayment
+    from "@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePayment";
+import HistoryAdvancePayment
+    from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePayment";
+import DailyListQueryPayment
+    from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPayment";
 
 
 const routerMap = [
@@ -90,6 +97,21 @@ const routerMap = [
         name: 'hospitalizationManagement',
         auth: true,
         component: HospitalizationManagementContainer
+    },
+    {
+        path: '/makeUpAdvancePayment/:inName/:inHosNo',
+        name: 'makeUpAdvancePayment',
+        component: MakeUpAdvancePayment
+    },
+    {
+        path: '/historyAdvancePayment',
+        name: 'historyAdvancePayment',
+        component: HistoryAdvancePayment
+    },
+    {
+        path: '/dailyListQueryPayment',
+        name: 'dailyListQueryPayment',
+        component: DailyListQueryPayment
     },
 ]
 

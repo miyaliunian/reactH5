@@ -1,5 +1,5 @@
 /**
- * Class: HospitalizationList
+ * Class: HospiCategoryList
  * Author: wufei
  * Date: 2019/8/13
  * Description:
@@ -10,7 +10,7 @@ import Header from "@components/Header/NavBar";
 import Bscroll from 'better-scroll'
 import './style.less'
 
-export default class HospitalizationList extends Component<Props> {
+export default class HospiCategoryList extends Component<Props> {
     render() {
         const {reservationList,allList, onNavBack} = this.props
         return (
