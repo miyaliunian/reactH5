@@ -50,6 +50,7 @@ export const actions = {
     //加载医院
     getRegedListByOpenType: (type, perObj) => {
         return (dispatch, getstate) => {
+            dispatch(fetchRequest())
             const targetURL = url.API_GET_REGED_LIST_BY_OPEN_TYPE(type, perObj.id)
             return post(targetURL).then(
                 (data) => {
@@ -63,6 +64,7 @@ export const actions = {
                                 if (data.infocode && data.infocode === 1) {
                                     dispatch(hospitalDetail(data.data))
                                 } else {
+                                    dispatch(fetchEnd())
                                     Toast.fail(data.infomessage, 2);
                                 }
                             }
@@ -136,6 +138,10 @@ function getAllHospitalList(targetURL, dispatch) {
 const fetchRequest = () => ({
     type: actionTypes.FETCH_HOSPITALIZATION_REQUEST
 })
+
+const fetchEnd = () => ({
+    type: actionTypes.FETCH_HOSPITALIZATION_FAILURE
+})
 const fetchHospitalizationSuccess = (data) => ({
     type: actionTypes.FETCH_HOSPITALIZATION_SUCCESS,
     response: data
@@ -169,11 +175,19 @@ const hospitalDetailNUll = () => ({
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_HOSPITALIZATION_REQUEST:
-            return {...state, isFetching: true}
+            return {
+                ...state,
+                isFetching: true
+            }
         case actionTypes.FETCH_HOSPITALIZATION_SUCCESS:
             return {
                 ...state,
-                hospitalizationSel: action.response[0]
+                hospitalizationSel: action.response[0],
+            }
+        case actionTypes.FETCH_HOSPITALIZATION_FAILURE:
+            return {
+                ...state,
+                isFetching: false
             }
 
         //    住院信息
@@ -186,6 +200,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 HospitalDetails: action.response,
+                isFetching: false
             }
         case actionTypes.HOSPITAL_INFO_NULL:
             return {
@@ -216,7 +231,6 @@ export default reducer
 export const getFetchingStatus = (state) => {
     return state.hospitalizationManagement.isFetching
 }
-
 
 export const getReservationHospitalizationList = (state) => {
     return state.hospitalizationManagement.hospitalizationReservation

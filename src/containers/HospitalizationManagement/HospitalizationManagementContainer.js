@@ -24,6 +24,7 @@ import {
 } from "@reduxs/modules/hospitalizationManagement";
 
 import './style.less'
+import LoadingMask from "@components/Loading/LoadingMask";
 
 class HospitalizationManagementContainer extends Component {
 
@@ -44,7 +45,7 @@ class HospitalizationManagementContainer extends Component {
     }
 
     render() {
-        const {bindCardList, hospitalizationReservationList,hospitalizationAllList, hospitalizationSel, hospitalDetails} = this.props
+        const {fetchingStatus, bindCardList, hospitalizationReservationList, hospitalizationAllList, hospitalizationSel, hospitalDetails} = this.props
         return (
             <div className={'hospitalizationManagement'}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
@@ -72,20 +73,6 @@ class HospitalizationManagementContainer extends Component {
                                          loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
                                          callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
-                <div>
-                    <div className={'hospitalizationManagement_bottomlistRow border-bottom'}>
-                        <span>补缴预交金</span>
-                        <Icon className={'clinic__bar__icon'} type={'right'}/>
-                    </div>
-                    <div className={'hospitalizationManagement_bottomlistRow border-bottom'}>
-                        <span>缴纳预交金查询</span>
-                        <Icon className={'clinic__bar__icon'} type={'right'}/>
-                    </div>
-                    <div className={'hospitalizationManagement_bottomlistRow border-bottom'}>
-                        <span>一日清单查询</span>
-                        <Icon className={'clinic__bar__icon'} type={'right'}/>
-                    </div>
-                </div>
                 {/*是否显示住院信息*/}
                 {hospitalDetails
                     ?
@@ -120,6 +107,36 @@ class HospitalizationManagementContainer extends Component {
                     null
                 }
 
+                {/*是否显示：底部列表*/}
+                {hospitalDetails
+                    ?
+                    <div style={{marginTop: '10px'}}>
+                        <div className={'hospitalizationManagement_bottomListRow border-bottom'} onClick={() => {
+                        }}>
+                            <span>补缴预交金</span>
+                            <Icon className={'clinic__bar__icon'} type={'right'}/>
+                        </div>
+                        <div className={'hospitalizationManagement_bottomListRow border-bottom'}>
+                            <span>缴纳预交金查询</span>
+                            <Icon className={'clinic__bar__icon'} type={'right'}/>
+                        </div>
+                        <div className={'hospitalizationManagement_bottomListRow border-bottom'}>
+                            <span>一日清单查询</span>
+                            <Icon className={'clinic__bar__icon'} type={'right'}/>
+                        </div>
+                    </div>
+                    :
+                    null
+
+                }
+
+                {/*是否显示LoadingMask*/}
+                {fetchingStatus
+                    ?
+                    <LoadingMask/>
+                    :
+                    null
+                }
             </div>
         )
     }
@@ -152,7 +169,7 @@ class HospitalizationManagementContainer extends Component {
     loadAllCategaryHospitalList() {
         const {bindCardList} = this.props
         let bindCardObj = bindCardList.filter(item => item.def)
-        this.props.hospitalizationManagementActions.fetchAllCategaryHospitalList('inPrePay', bindCardObj[0],1)
+        this.props.hospitalizationManagementActions.fetchAllCategaryHospitalList('inPrePay', bindCardObj[0], 1)
     }
 
 
