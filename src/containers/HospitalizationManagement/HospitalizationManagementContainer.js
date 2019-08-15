@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/8/13
  * Description:
- *
+ *  住院服务
  */
 import React, {Component} from 'react'
 import Header from "@components/Header/NavBar";
@@ -72,7 +72,20 @@ class HospitalizationManagementContainer extends Component {
                                          loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
                                          callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
-
+                <div>
+                    <div className={'hospitalizationManagement_bottomlistRow border-bottom'}>
+                        <span>补缴预交金</span>
+                        <Icon className={'clinic__bar__icon'} type={'right'}/>
+                    </div>
+                    <div className={'hospitalizationManagement_bottomlistRow border-bottom'}>
+                        <span>缴纳预交金查询</span>
+                        <Icon className={'clinic__bar__icon'} type={'right'}/>
+                    </div>
+                    <div className={'hospitalizationManagement_bottomlistRow border-bottom'}>
+                        <span>一日清单查询</span>
+                        <Icon className={'clinic__bar__icon'} type={'right'}/>
+                    </div>
+                </div>
                 {/*是否显示住院信息*/}
                 {hospitalDetails
                     ?
