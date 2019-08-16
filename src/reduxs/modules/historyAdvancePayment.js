@@ -4,7 +4,7 @@ import {FETCH_DATA} from "../middleware/api";
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";
 import Axios from 'axios'
-import HistoryAdvancePayment from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePayment";
+import HistoryAdvancePayment from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer";
 
 /**
  * Class:

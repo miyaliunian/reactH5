@@ -23,7 +23,7 @@ import HospitalizationManagementContainer
 import MakeUpAdvancePayment
     from "@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePayment";
 import HistoryAdvancePayment
-    from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePayment";
+    from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer";
 import DailyListQueryPayment
     from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPayment";
 
