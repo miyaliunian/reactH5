@@ -12,7 +12,8 @@ import './style.less'
 export default class Button extends Component {
 
     static propTypes = {
-        txt: PropTypes.string.isRequired
+        txt: PropTypes.string.isRequired,
+        onSubmit:PropTypes.func.isRequired
     }
 
     render() {
