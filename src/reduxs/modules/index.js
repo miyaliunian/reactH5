@@ -23,6 +23,7 @@ import reservation from './reservation'
 import register from './register'
 import intelligentWaiting from './intelligentWaiting'
 import hospitalizationManagement from './hospitalizationManagement'
+import historyAdvancePayment from './historyAdvancePayment'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -41,7 +42,8 @@ const rootReducer = combineReducers({
     reservation,
     register,
     intelligentWaiting,
-    hospitalizationManagement
+    hospitalizationManagement,
+    historyAdvancePayment
 })
 
 export default rootReducer

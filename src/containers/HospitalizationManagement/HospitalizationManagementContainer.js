@@ -112,15 +112,18 @@ class HospitalizationManagementContainer extends Component {
                 {hospitalDetails
                     ?
                     <div style={{marginTop: '10px'}}>
-                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'} to={`/makeUpAdvancePayment/${hospitalDetails.name}/${hospitalDetails.inHosNo}`}>
+                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'}
+                              to={`/makeUpAdvancePayment/${hospitalDetails.name}/${hospitalDetails.inHosNo}`}>
                             <span>补缴预交金</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
                         </Link>
-                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'} to={`/historyAdvancePayment`}>
+                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'}
+                              to={`/historyAdvancePayment/${hospitalizationSel.id}/${hospitalDetails.inHosNo}`}>
                             <span>缴纳预交金查询</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
                         </Link>
-                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'} to={`/dailyListQueryPayment`}>
+                        <Link className={'hospitalizationManagement_bottomListRow border-bottom'}
+                              to={`/dailyListQueryPayment`}>
                             <span>一日清单查询</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
                         </Link>

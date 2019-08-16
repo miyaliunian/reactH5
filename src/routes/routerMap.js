@@ -104,7 +104,7 @@ const routerMap = [
         component: MakeUpAdvancePayment
     },
     {
-        path: '/historyAdvancePayment',
+        path: '/historyAdvancePayment/:hosId/:inHosNo',
         name: 'historyAdvancePayment',
         component: HistoryAdvancePayment
     },

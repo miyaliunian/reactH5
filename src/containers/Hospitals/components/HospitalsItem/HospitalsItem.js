@@ -40,7 +40,10 @@ class HospitalsItem extends Component {
             pullUpLoad: {
                 threshold: 80
             },
-            useTransition: false
+            bounce: {
+                top: true,
+                bottom: true,
+            }
         })
         this.bscroll.on('pullingDown', this.pullingDownHandler)
         this.bscroll.on('pullingUp', this.props.pullingUpHandler);
