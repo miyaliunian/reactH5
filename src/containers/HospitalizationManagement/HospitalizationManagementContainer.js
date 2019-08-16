@@ -146,7 +146,7 @@ class HospitalizationManagementContainer extends Component {
 
     handleBack = () => {
         this.props.hospitalizationManagementActions.setHospNUll()
-        this.props.history.goBack()
+        setTimeout(()=>this.props.history.goBack(),200)
     }
 
 
@@ -164,7 +164,7 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentWillUnmount() {
-        this.props.hospitalizationManagementActions.setHospNUll()
+        setTimeout(()=>this.props.hospitalizationManagementActions.setHospNUll(),200)
     }
 
     //重新选择家庭成员后重新刷新数据
