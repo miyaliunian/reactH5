@@ -46,18 +46,18 @@ export default class MakeUpAdvancePayment extends Component {
                 <div style={{height: '15px', backgroundColor: 'rgb(230,230,230)'}}/>
                 <div style={{padding: '10px', backgroundColor: 'white'}}>
                     <p>选择缴费金额</p>
-                    <div style={{display: 'flex', flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+                    <div className={'makeUpAdvancePayment_price_container'} style={{display: 'flex', flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
                         {amounts.map((item, index) => {
                             return (
-                                <div key={index} className={'makeUpAdvancePayment_price_item border'}>
-                                    <span>{item}</span>
+                                <div key={index} className={'makeUpAdvancePayment_price_item border-theme'}>
+                                    <span className={'makeUpAdvancePayment_price_item_txt'}>{item}</span>
                                 </div>
                             )
                         })}
                     </div>
                 </div>
                 <div style={{height: '15px', backgroundColor: 'rgb(230,230,230)'}}/>
-                <div style={{padding: '10px', backgroundColor: 'white'}}>
+                <div style={{padding: '10px',paddingBottom:'20px', backgroundColor: 'white'}}>
                     <p>请输入缴费金额</p>
                     <input placeholder={'￥'} className={'makeUpAdvancePayment_price_input'}/>
                     <Button txt={'立即缴费'} onSubmit={()=>{alert('立即缴费')}}/>

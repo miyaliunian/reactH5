@@ -1,5 +1,6 @@
 @charset "utf-8";
 .border,
+.border-theme,
 .border-top,
 .border-right,
 .border-bottom,
@@ -13,6 +14,7 @@
     position: relative;
 }
 .border::before,
+.border-theme::before,
 .border-top::before,
 .border-right::before,
 .border-bottom::before,
@@ -45,6 +47,15 @@
     height: 100%;
     width: 100%;
     border: 1px solid #eaeaea;
+    transform-origin: 0 0;
+}
+.border-theme::before {
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #0084ff;
     transform-origin: 0 0;
 }
 .border-top::before,

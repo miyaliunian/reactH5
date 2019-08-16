@@ -10,25 +10,41 @@
       line-height: 30px;
     }
   }
-  .makeUpAdvancePayment_price_item {
-    width: calc((100% - 20px - 20px) / 3);
-    //background-color: #00a0dc;
-    margin-top: 10px;
-    height: 40px;
-    border-color: @theme-blue;
-    line-height: 40px;
-    text-align: center;
+  .makeUpAdvancePayment_price_container {
+    .makeUpAdvancePayment_price_item {
+      width: calc((100% - 20px) * 0.33);
+      margin-top: 10px;
+      height: 40px;
+      border-color: @theme-blue;
+      line-height: 40px;
+      text-align: center;
+      .makeUpAdvancePayment_price_item_txt {
+        color: @theme-blue;
+      }
+    }
+  }
+
+  .makeUpAdvancePayment_price_container :nth-child(1) {
+    margin-right: 10px;
+  }
+  .makeUpAdvancePayment_price_container :nth-child(3) {
+    margin-left: 10px;
+  }
+  .makeUpAdvancePayment_price_container :nth-child(4) {
+    margin-right: 10px;
+  }
+  .makeUpAdvancePayment_price_container :nth-child(6) {
+    margin-left: 10px;
   }
   .makeUpAdvancePayment_price_input {
-    margin: 10px 0 ;
+    margin: 10px 0;
     border: 0.5px solid lightgray;
     border-radius: 5px;
-    height: 40px;
-    line-height: 40px;
+    height: 35px;
+    line-height: 35px;
     padding-left: 5px;
     width: calc(100% - 10px);
     flex: 1;
-
   }
 }
 
