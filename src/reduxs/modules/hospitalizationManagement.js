@@ -104,6 +104,14 @@ export const actions = {
             ).catch()
         }
     },
+
+
+    //回退页面时 清空选中的 医院
+    setHospNUll: () => {
+        return (dispatch, getstate) => {
+            dispatch(hospitalDetailNUll())
+        }
+    },
 }
 
 //最近预约信息

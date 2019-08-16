@@ -145,6 +145,7 @@ class HospitalizationManagementContainer extends Component {
     }
 
     handleBack = () => {
+        this.props.hospitalizationManagementActions.setHospNUll()
         this.props.history.goBack()
     }
 
@@ -159,6 +160,11 @@ class HospitalizationManagementContainer extends Component {
         if (!history || history.action === 'PUSH') {
             this.props.bindCardActions.loadList()
         }
+    }
+
+
+    componentWillUnmount() {
+        this.props.hospitalizationManagementActions.setHospNUll()
     }
 
     //重新选择家庭成员后重新刷新数据
