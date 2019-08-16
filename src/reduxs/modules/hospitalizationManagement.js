@@ -11,7 +11,6 @@ import Axios from 'axios'
  * Date: 2019/8/14
  * Description:
  *    住院管理 reduce
- *
  */
 
 
@@ -195,6 +194,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 hospitalizationSel: action.response,
+                isFetching: true
             }
         case actionTypes.HOSPITAL_INFO_SUCCESS:
             return {
@@ -206,6 +206,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 HospitalDetails: '',
+                isFetching: false
             }
 
         //    选择医院

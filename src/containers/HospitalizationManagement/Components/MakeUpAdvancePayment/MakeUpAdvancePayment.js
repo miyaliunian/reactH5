@@ -7,12 +7,14 @@
  */
 import React, {Component} from 'react';
 import Header from "@components/Header/NavBar";
-import './style.less'
 import Button from "@components/Button/Button";
+import {withRouter} from 'react-router-dom'
 import {Toast} from 'antd-mobile'
+import './style.less'
 
 const amounts = ['1000', '2000', '3000', '5000', '10000', '20000',]
-export default class MakeUpAdvancePayment extends Component {
+
+class MakeUpAdvancePayment extends Component {
 
     state = {
         amountSel: ''
@@ -63,6 +65,7 @@ export default class MakeUpAdvancePayment extends Component {
                     <p>请输入缴费金额</p>
                     <input placeholder={'￥'} className={'makeUpAdvancePayment_price_input'} value={this.state.amountSel}
                            onChange={(e) => this.setState({amountSel: e.target.value})}/>
+
                     <Button txt={'立即缴费'} onSubmit={() => this.submitBtn()}/>
                 </div>
 
@@ -76,12 +79,16 @@ export default class MakeUpAdvancePayment extends Component {
 
 
     submitBtn() {
-        if (this.state.amountSel === '') {
-            Toast.info('缴费金额不能为空', 1)
-            return
+        // if (this.state.amountSel === '') {
+        //     Toast.info('缴费金额不能为空', 1)
+        //     return
+        // }
+        let path = {
+            pathname: '/payContainer',
         }
+        this.props.history.push(path)
     }
 }
 
 
-
+export default withRouter(MakeUpAdvancePayment)

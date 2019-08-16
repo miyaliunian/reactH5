@@ -26,6 +26,7 @@ import HistoryAdvancePayment
     from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer";
 import DailyListQueryPayment
     from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPayment";
+import PayContainer from "@containers/Pay/PayContainer";
 
 
 const routerMap = [
@@ -102,6 +103,11 @@ const routerMap = [
         path: '/makeUpAdvancePayment/:inName/:inHosNo',
         name: 'makeUpAdvancePayment',
         component: MakeUpAdvancePayment
+    },
+    {
+        path: '/payContainer',
+        name: 'payContainer',
+        component: PayContainer
     },
     {
         path: '/historyAdvancePayment/:hosId/:inHosNo',
