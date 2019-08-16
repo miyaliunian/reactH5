@@ -71,6 +71,7 @@ class HospitalizationManagementContainer extends Component {
                     <HospiCategoryList reservationList={hospitalizationReservationList}
                                        allList={hospitalizationAllList}
                                        onNavBack={() => this.handelModalHospitalization()}
+
                                        loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
                                        callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
