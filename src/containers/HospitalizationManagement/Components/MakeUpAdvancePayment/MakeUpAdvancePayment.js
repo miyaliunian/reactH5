@@ -9,14 +9,14 @@ import React, {Component} from 'react';
 import Header from "@components/Header/NavBar";
 import './style.less'
 import Button from "@components/Button/Button";
+import {Toast} from 'antd-mobile'
 
-const amounts = ['1000元', '2000元', '3000元', '5000元', '10000元', '20000元',]
+const amounts = ['1000', '2000', '3000', '5000', '10000', '20000',]
 export default class MakeUpAdvancePayment extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+    state = {
+        amountSel: ''
+    };
 
     render() {
         const {inName, inHosNo} = this.props.match.params
@@ -46,23 +46,26 @@ export default class MakeUpAdvancePayment extends Component {
                 <div style={{height: '15px', backgroundColor: 'rgb(230,230,230)'}}/>
                 <div style={{padding: '10px', backgroundColor: 'white'}}>
                     <p>选择缴费金额</p>
-                    <div className={'makeUpAdvancePayment_price_container'} style={{display: 'flex', flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+                    <div className={'makeUpAdvancePayment_price_container'}
+                         style={{display: 'flex', flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
                         {amounts.map((item, index) => {
                             return (
-                                <div key={index} className={'makeUpAdvancePayment_price_item border-theme'}>
-                                    <span className={'makeUpAdvancePayment_price_item_txt'}>{item}</span>
+                                <div key={index} className={'makeUpAdvancePayment_price_item border-theme'}
+                                     onClick={() => this.setState({amountSel: item})}>
+                                    <span className={'makeUpAdvancePayment_price_item_txt'}>{item}元</span>
                                 </div>
                             )
                         })}
                     </div>
                 </div>
                 <div style={{height: '15px', backgroundColor: 'rgb(230,230,230)'}}/>
-                <div style={{padding: '10px',paddingBottom:'20px', backgroundColor: 'white'}}>
+                <div style={{padding: '10px', paddingBottom: '20px', backgroundColor: 'white'}}>
                     <p>请输入缴费金额</p>
-                    <input placeholder={'￥'} className={'makeUpAdvancePayment_price_input'}/>
-                    <Button txt={'立即缴费'} onSubmit={()=>{alert('立即缴费')}}/>
+                    <input placeholder={'￥'} className={'makeUpAdvancePayment_price_input'} value={this.state.amountSel}
+                           onChange={(e) => this.setState({amountSel: e.target.value})}/>
+                    <Button txt={'立即缴费'} onSubmit={() => this.submitBtn()}/>
                 </div>
-                
+
             </div>
         );
     }
@@ -71,7 +74,12 @@ export default class MakeUpAdvancePayment extends Component {
         this.props.history.goBack()
     }
 
-    componentDidMount() {
+
+    submitBtn() {
+        if (this.state.amountSel === '') {
+            Toast.info('缴费金额不能为空', 1)
+            return
+        }
     }
 }
 
