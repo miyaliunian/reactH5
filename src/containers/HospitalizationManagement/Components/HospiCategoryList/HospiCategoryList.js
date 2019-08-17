@@ -7,13 +7,32 @@
  */
 import React, {Component} from 'react'
 import Header from "@components/Header/NavBar";
+import PropTypes from 'prop-types'
 import Scroll from 'react-bscroll'
 import 'react-bscroll/lib/react-scroll.css'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {
+    getFetchingStatus,
+    getReservationHospitalizationList,
+    getAllHospitalizationList,
+    actions as chooseCategoryHospListActions
+} from "@reduxs/modules/chooseCategoryHospList";
+
 import './style.less'
 
-export default class HospiCategoryList extends Component<Props> {
+
+class HospiCategoryList extends Component {
+
+
+    static propTypes = {
+        bindCardList: PropTypes.array,
+        callBack: PropTypes.func.isRequired,
+        onNavBack: PropTypes.func.isRequired,
+    }
+
     render() {
-        const {reservationList, allList, onNavBack} = this.props
+        const {appointmentHos, allHos, onNavBack} = this.props
         return (
             <div>
                 <Header title={'选择医院'} isRight={false} onBack={() => onNavBack()}/>
@@ -24,7 +43,7 @@ export default class HospiCategoryList extends Component<Props> {
                         pullUpLoad
                         pullUpLoadMoreData={this.loadMoreData}
                         click={true}
-                        isPullUpTipHide={ false }
+                        isPullUpTipHide={false}
                     >
                         <ul className={'hospitalizationList_content'}>
                             <li>
@@ -32,7 +51,7 @@ export default class HospiCategoryList extends Component<Props> {
                                     <span style={{fontSize: 13, fontWeight: 'bold'}}>最近预约的医院</span>
                                 </div>
                                 <div className={'hospitalizationList_body'}>
-                                    {reservationList.map((item, index) => {
+                                    {appointmentHos.map((item, index) => {
                                         return (
                                             <div className={'hospitalizationItem_row border-bottom'} key={item.id}
                                                  onClick={() => this.navGoBack(item)}>
@@ -45,7 +64,7 @@ export default class HospiCategoryList extends Component<Props> {
                                     <span style={{fontSize: 13, fontWeight: 'bold'}}>医院列表</span>
                                 </div>
                                 <div className={'hospitalizationList_body'}>
-                                    {allList.map((item, index) => {
+                                    {allHos.map((item, index) => {
                                         return (
                                             <div className={'hospitalizationItem_row border-bottom'} key={item.id}
                                                  onClick={() => this.navGoBack(item)}>
@@ -64,12 +83,14 @@ export default class HospiCategoryList extends Component<Props> {
 
 
     componentDidMount() {
-        this.props.loadAllCategaryHospitalList()
+        const {bindCardList} = this.props
+        let bindCardObj = bindCardList.filter(item => item.def)
+        this.props.chooseCategoryHospListActions.initCategaryHospitalList('inPrePay', bindCardObj[0], 1)
     }
 
 
     pullDownFreshAction = () => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this.timer = setTimeout(() => {
                 resolve()
             }, 400)
@@ -78,7 +99,7 @@ export default class HospiCategoryList extends Component<Props> {
 
     loadMoreData = () => {
         // 更新数据
-        return new Promise( resolve => {
+        return new Promise(resolve => {
             console.log('pulling up and load data')
             this.timer = setTimeout(() => {
                 resolve()
@@ -92,5 +113,18 @@ export default class HospiCategoryList extends Component<Props> {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        fetchingStatus: getFetchingStatus(state),
+        appointmentHos: getReservationHospitalizationList(state),
+        allHos: getAllHospitalizationList(state)
+    }
+}
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        chooseCategoryHospListActions: bindActionCreators(chooseCategoryHospListActions, dispatch)
+    }
+}
 
+export default connect(mapStateToProps, mapDispatchToProps)(HospiCategoryList)

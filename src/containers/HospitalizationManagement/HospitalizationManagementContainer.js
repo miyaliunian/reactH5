@@ -17,8 +17,6 @@ import {bindActionCreators} from 'redux'
 import {actions as bindCardActions, getBindCardList} from "@reduxs/modules/bindCard";
 import {
     getFetchingStatus,
-    getReservationHospitalizationList,
-    getAllHospitalizationList,
     getSelHospitalization,
     getHospitalDetails,
     actions as hospitalizationManagementActions
@@ -68,12 +66,10 @@ class HospitalizationManagementContainer extends Component {
                     BackdropProps={{'background-color': 'red'}}
                     open={this.state.openModalHospitalization}
                 >
-                    <HospiCategoryList reservationList={hospitalizationReservationList}
-                                       allList={hospitalizationAllList}
-                                       onNavBack={() => this.handelModalHospitalization()}
-
-                                       loadAllCategaryHospitalList={() => this.loadAllCategaryHospitalList()}
-                                       callBack={(data) => this.refreshHospitalDetail(data)}/>
+                    <HospiCategoryList
+                        bindCardList={bindCardList}
+                        onNavBack={() => this.handelModalHospitalization()}
+                        callBack={(data) => this.refreshHospitalDetail(data)}/>
                 </Modal>
                 {/*是否显示住院信息*/}
                 {hospitalDetails
@@ -147,7 +143,7 @@ class HospitalizationManagementContainer extends Component {
 
     handleBack = () => {
         this.props.hospitalizationManagementActions.setHospNUll()
-        setTimeout(()=>this.props.history.goBack(),200)
+        setTimeout(() => this.props.history.goBack(), 200)
     }
 
 
@@ -165,7 +161,7 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentWillUnmount() {
-        setTimeout(()=>this.props.hospitalizationManagementActions.setHospNUll(),200)
+        setTimeout(() => this.props.hospitalizationManagementActions.setHospNUll(), 200)
     }
 
     //重新选择家庭成员后重新刷新数据
@@ -173,15 +169,6 @@ class HospitalizationManagementContainer extends Component {
         const {hospitalizationSel} = this.props
         this.props.hospitalizationManagementActions.refreshRegedListByOpenType('inPrePay', hospitalizationSel, data)
     }
-
-
-    //点击选择医院重新加载分类医院列表
-    loadAllCategaryHospitalList() {
-        const {bindCardList} = this.props
-        let bindCardObj = bindCardList.filter(item => item.def)
-        this.props.hospitalizationManagementActions.fetchAllCategaryHospitalList('inPrePay', bindCardObj[0], 1)
-    }
-
 
     //重新选择医院后重新刷新数据
     refreshHospitalDetail(data) {
@@ -201,8 +188,6 @@ const mapStateToProps = (state) => {
     return {
         bindCardList: getBindCardList(state),
         fetchingStatus: getFetchingStatus(state),
-        hospitalizationReservationList: getReservationHospitalizationList(state),
-        hospitalizationAllList: getAllHospitalizationList(state),
         hospitalizationSel: getSelHospitalization(state),
         hospitalDetails: getHospitalDetails(state)
     }

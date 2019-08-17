@@ -1,9 +1,6 @@
-import {cityID} from "@assets/static/DictionaryConstant";
 import url from "../../utils/httpUrl";
-import {FETCH_DATA} from "../middleware/api";
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";
-import Axios from 'axios'
 
 /**
  * Class:
@@ -16,8 +13,6 @@ import Axios from 'axios'
 
 const initialState = {
     isFetching: false,
-    hospitalizationReservation: [],
-    hospitalizationAll: [],
     hospitalizationSel: '',
     HospitalDetails: ''
 }
@@ -32,11 +27,6 @@ const actionTypes = {
     FETCH_HOSPITALIZATION_FAILURE: 'HOSPITALIZATION_MANAGEMENT/FETCH_HOSPITALIZATION_FAILURE',
     REFSET_HOSPITALIZATION: 'HOSPITALIZATION_MANAGEMENT/REFSET_HOSPITALIZATION',
 
-    //选择医院
-    LOAD_RESERVATION_HOSPITALS_SUCCESS: 'HOSPITALIZATION_MANAGEMENT/LOAD_RESERVATION_HOSPITALS_SUCCESS',
-    LOAD_ALL_HOSPITALS_SUCCESS: 'HOSPITALIZATION_MANAGEMENT/LOAD_ALL_HOSPITALS_SUCCESS',
-
-    //
     HOSPITAL_INFO_SUCCESS: 'HOSPITALIZATION_MANAGEMENT/HOSPITAL_INFO_SUCCESS',
     HOSPITAL_INFO_NULL: 'HOSPITALIZATION_MANAGEMENT/HOSPITAL_INFO_NULL',
 
@@ -74,18 +64,6 @@ export const actions = {
         }
     },
 
-
-    //点击医院列表 加载所有医院数据
-    fetchAllCategaryHospitalList: (type, perObj, pageNu) => {
-        return (dispatch, getstate) => {
-            Axios.all([getAllHospitalList(url.API_QUERY_ALL_HOSPASTIENT(cityID, type, pageNu), dispatch), getReserHospitalList(url.API_GET_REGED_LIST_BY_OPEN_TYPE(type, perObj.id), dispatch)])
-                .then(Axios.spread((reserHosResp, allHosResp) => {
-
-                }));
-        }
-    },
-
-
     //切换家庭成员、医院 重新刷新住院信息
     refreshRegedListByOpenType: (type, hosObj, perObj) => {
         return (dispatch, getstate) => {
@@ -114,33 +92,6 @@ export const actions = {
     },
 }
 
-//最近预约信息
-function getReserHospitalList(targetURL, dispatch) {
-    return post(targetURL)
-        .then((data) => {
-                if (data.infocode && data.infocode === 1) {
-                    dispatch(loadReservationHospitals(data.data))
-                }
-            }
-        ).catch()
-}
-
-//全部医院
-function getAllHospitalList(targetURL, dispatch) {
-    let params = {
-        "areaId": null,
-        "hosCategory": null,
-        "hosGrade": null
-    }
-    return post(targetURL, params)
-        .then((data) => {
-                if (data.infocode && data.infocode === 1) {
-                    dispatch(loadAllHospitals(data.data.list))
-                }
-            }
-        ).catch()
-}
-
 
 const fetchRequest = () => ({
     type: actionTypes.FETCH_HOSPITALIZATION_REQUEST
@@ -157,18 +108,6 @@ const setSelHospitalization = (data) => ({
     type: actionTypes.REFSET_HOSPITALIZATION,
     response: data
 })
-
-
-const loadReservationHospitals = (data) => ({
-    type: actionTypes.LOAD_RESERVATION_HOSPITALS_SUCCESS,
-    response: data
-})
-
-const loadAllHospitals = (data) => ({
-    type: actionTypes.LOAD_ALL_HOSPITALS_SUCCESS,
-    response: data
-})
-
 
 const hospitalDetail = (data) => ({
     type: actionTypes.HOSPITAL_INFO_SUCCESS,
@@ -217,18 +156,6 @@ const reducer = (state = initialState, action) => {
                 isFetching: false
             }
 
-        //    选择医院
-        case actionTypes.LOAD_RESERVATION_HOSPITALS_SUCCESS:
-            return {
-                ...state,
-                hospitalizationReservation: action.response,
-            }
-        case actionTypes.LOAD_ALL_HOSPITALS_SUCCESS:
-            return {
-                ...state,
-                hospitalizationAll: action.response,
-            }
-
         default:
             return state
     }
@@ -239,15 +166,6 @@ export default reducer
 //selectors
 export const getFetchingStatus = (state) => {
     return state.hospitalizationManagement.isFetching
-}
-
-export const getReservationHospitalizationList = (state) => {
-    return state.hospitalizationManagement.hospitalizationReservation
-}
-
-
-export const getAllHospitalizationList = (state) => {
-    return state.hospitalizationManagement.hospitalizationAll
 }
 
 export const getSelHospitalization = (state) => {
