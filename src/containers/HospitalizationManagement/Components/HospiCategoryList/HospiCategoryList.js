@@ -90,20 +90,29 @@ class HospiCategoryList extends Component {
 
 
     pullDownFreshAction = () => {
+        const {bindCardList, pullDowning} = this.props
+        let bindCardObj = bindCardList.filter(item => item.def)
+
         return new Promise((resolve, reject) => {
-            this.timer = setTimeout(() => {
-                resolve()
-            }, 400)
+            this.props.chooseCategoryHospListActions.pullDownRefresh('inPrePay', bindCardObj[0])
+                .then(status => {
+                    if (status && status === 'success') {
+                        console.log('刷新状态')
+                        resolve()
+                    }
+                })
         })
     }
 
     loadMoreData = () => {
-        // 更新数据
         return new Promise(resolve => {
-            console.log('pulling up and load data')
-            this.timer = setTimeout(() => {
-                resolve()
-            }, 1000)
+            this.props.chooseCategoryHospListActions.loadMoreAction('inPrePay')
+                .then(status => {
+                    if (status && status === 'success') {
+                        console.log('刷新状态')
+                        resolve()
+                    }
+                })
         })
     }
 

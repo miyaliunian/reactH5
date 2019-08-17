@@ -16,6 +16,8 @@ import Axios from 'axios'
 
 const initialState = {
     isFetching: false,
+    pageNo: 0,
+    pageCount: 0,
     hospitalizationReservation: [],
     hospitalizationAll: [],
 }
@@ -24,7 +26,7 @@ const initialState = {
 // action types
 const actionTypes = {
 
-    //医院列表
+
     FETCH_REQUEST: 'CHOOSE_CATEGORY_HOS/FETCH_REQUEST',
     CHOOSE_CATEGORY_HOS_SUCCESS: 'CHOOSE_CATEGORY_HOS/CHOOSE_CATEGORY_HOS_SUCCESS',
     RESERVATION_HOSPITALS_SUCCESS: 'CHOOSE_CATEGORY_HOS/RESERVATION_HOSPITALS_SUCCESS',
@@ -59,26 +61,55 @@ export const actions = {
     //下拉刷新
     pullDownRefresh: (type, perObj) => {
         return (dispatch, getstate) => {
+            const targetUrl = url.API_GET_REGED_LIST_BY_OPEN_TYPE(type, perObj.id)
+            return new Promise((resolve, reject) => {
+                return post(targetUrl)
+                    .then((data) => {
+                            if (data.infocode && data.infocode === 1) {
+                                console.log('数据请求成功')
+                                dispatch(pullDownRefreshHospitals(data.data))
+                                console.log('返回刷新状态')
+                                resolve('success')
+                            }
+                        }
+                    ).catch()
+
+            })
+
         }
     },
 
 
     //上拉加载更多
-    loadMoreAction: (type, hosObj, perObj) => {
+    loadMoreAction: (type) => {
         return (dispatch, getstate) => {
-            //将选中的医院信息 刷新到页面
-            // dispatch(setSelHospitalization(hosObj))
-            let queryUrl = url.API_QUERY_INHOSPASTIENT(type, hosObj.id, perObj.id)
-            return post(queryUrl).then(
-                (data) => {
-                    if (data.infocode && data.infocode === 1) {
-                        // dispatch(hospitalDetail(data.data))
-                    } else {
-                        // dispatch(hospitalDetailNUll())
-                        Toast.fail(data.infomessage, 2);
-                    }
+            debugger
+            if (getstate().chooseCategoryHospList.pageNo < getstate().chooseCategoryHospList.pageCount) {
+                let pageNo = getstate().chooseCategoryHospList.pageNo += 1
+                const targetURL = url.API_QUERY_ALL_HOSPASTIENT(cityID, type, pageNo)
+                let params = {
+                    "areaId": null,
+                    "hosCategory": null,
+                    "hosGrade": null
                 }
-            ).catch()
+                return new Promise((resolve, reject) => {
+                    return post(targetURL, params)
+                        .then((data) => {
+                                debugger
+                                if (data.infocode && data.infocode === 1) {
+                                    console.log('数据请求成功')
+                                    dispatch(pullUpMoreHospitals(data.data))
+                                    console.log('返回上拉刷新状态')
+                                    resolve('success')
+                                }
+                            }
+                        ).catch()
+                })
+            } else {
+                return new Promise((resolve, reject) => {
+                    resolve('success')
+                })
+            }
         }
     },
 
@@ -105,7 +136,7 @@ function getAllHospitalList(targetURL, dispatch) {
     return post(targetURL, params)
         .then((data) => {
                 if (data.infocode && data.infocode === 1) {
-                    dispatch(loadAllHospitals(data.data.list))
+                    dispatch(loadAllHospitals(data.data))
                 }
             }
         ).catch()
@@ -172,15 +203,21 @@ const reducer = (state = initialState, action) => {
                 hospitalizationReservation: action.response,
             }
         case actionTypes.ALL_HOSPITALS_SUCCESS:
+            debugger
             return {
                 ...state,
-                hospitalizationAll: action.response,
+                hospitalizationAll: action.response.list,
+                pageNo: action.response.pageNo,
+                pageCount: action.response.pageCount
             }
 
         case actionTypes.PULLUP_MORE_HOS:
+            debugger
             return {
                 ...state,
-                hospitalizationAll: state.hospitalizationAll.concat(action.response),
+                hospitalizationAll: state.hospitalizationAll.concat(action.response.list),
+                pageNo: action.response.pageNo,
+                pageCount: action.response.pageCount
             }
         case actionTypes.FETCH_FAILURE:
             return {
@@ -204,8 +241,8 @@ export const getReservationHospitalizationList = (state) => {
     return state.chooseCategoryHospList.hospitalizationReservation
 }
 
-
 export const getAllHospitalizationList = (state) => {
     return state.chooseCategoryHospList.hospitalizationAll
 }
+
 
