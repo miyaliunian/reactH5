@@ -8,7 +8,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Header from "@components/Header/NavBar";
-import HospiCategoryList from "@containers/HospitalizationManagement/Components/HospiCategoryList/HospiCategoryList";
+import CategoryHosList from "@components/CategoryHosList/CategoryHosList";
 import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
 import {Icon} from 'antd-mobile';
 import Modal from '@material-ui/core/Modal';
@@ -66,7 +66,7 @@ class HospitalizationManagementContainer extends Component {
                     BackdropProps={{'background-color': 'red'}}
                     open={this.state.openModalHospitalization}
                 >
-                    <HospiCategoryList
+                    <CategoryHosList
                         bindCardList={bindCardList}
                         onNavBack={() => this.handelModalHospitalization()}
                         callBack={(data) => this.refreshHospitalDetail(data)}/>

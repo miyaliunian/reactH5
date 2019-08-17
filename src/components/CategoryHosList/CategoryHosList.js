@@ -1,9 +1,9 @@
 /**
- * Class: HospiCategoryList
+ * Class: CategoryHosList
  * Author: wufei
  * Date: 2019/8/13
  * Description:
- *
+ * 选择医院
  */
 import React, {Component} from 'react'
 import Header from "@components/Header/NavBar";
@@ -17,12 +17,12 @@ import {
     getReservationHospitalizationList,
     getAllHospitalizationList,
     actions as chooseCategoryHospListActions
-} from "@reduxs/modules/chooseCategoryHospList";
+} from "@reduxs/modules/categoryHospList";
 
 import './style.less'
 
 
-class HospiCategoryList extends Component {
+class CategoryHosList extends Component {
 
 
     static propTypes = {
@@ -97,7 +97,7 @@ class HospiCategoryList extends Component {
             this.props.chooseCategoryHospListActions.pullDownRefresh('inPrePay', bindCardObj[0])
                 .then(status => {
                     if (status && status === 'success') {
-                        console.log('刷新状态')
+                        console.log('下拉刷新状态')
                         resolve()
                     }
                 })
@@ -109,7 +109,7 @@ class HospiCategoryList extends Component {
             this.props.chooseCategoryHospListActions.loadMoreAction('inPrePay')
                 .then(status => {
                     if (status && status === 'success') {
-                        console.log('刷新状态')
+                        console.log('上拉刷新状态')
                         resolve()
                     }
                 })
@@ -136,4 +136,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HospiCategoryList)
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryHosList)
