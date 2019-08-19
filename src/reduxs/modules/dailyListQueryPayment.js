@@ -31,15 +31,15 @@ const actionTypes = {
 export const actions = {
 
 
-    initDailyQueryList: (type, hosId, inHosNo) => {
+    initDailyQueryList: (type, hosId, inHosNo, startDate, endDate) => {
         return (dispatch, getstate) => {
             const targetUrl = url.API_QUERY_INHOSDETAIL(type)
             let param = {
                 pageSize: '999',
                 hosId: hosId,
                 inHosNo: inHosNo,
-                startDate: "20190819000000",
-                endDate: "20190819235959",
+                startDate: startDate,
+                endDate: endDate,
                 pageNo: '1'
             }
             dispatch(fetchData(targetUrl, param))

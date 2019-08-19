@@ -14,7 +14,7 @@ import ListOfContent
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-
+import {getStartDate, getCurrentMMddWed} from '@utils/dayutils'
 import {
     getFetchingStatus,
     getInHosDetail,
@@ -25,7 +25,12 @@ import {
 class DailyListQueryPaymentContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            queryStatus: '',
+            startDate: '',
+            endDate: ''
+
+        };
     }
 
     render() {
@@ -34,7 +39,7 @@ class DailyListQueryPaymentContainer extends Component {
         return (
             <div className={'dailyListQueryPayment'}>
                 <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
-                <DynamicTabs/>
+                <DynamicTabs queryTitle={this.state.queryStatus}/>
                 <ListOfContent list={details}/>
             </div>
         );
@@ -46,7 +51,14 @@ class DailyListQueryPaymentContainer extends Component {
 
     componentDidMount() {
         const {hosId, inHosNo} = this.props.match.params
-        this.props.dailyListQueryPaymentActions.initDailyQueryList('inPrePay',hosId,inHosNo)
+        let startDate = `${getStartDate() + '000000'}`
+        let endDate = `${getStartDate() + '235959'}`
+        this.setState({
+            startDate: `${getStartDate() + '000000'}`,
+            queryStatus: getCurrentMMddWed(),
+            endDate: `${getStartDate() + '235959'}`
+        })
+        this.props.dailyListQueryPaymentActions.initDailyQueryList('inPrePay', hosId, inHosNo, startDate, endDate)
     }
 }
 

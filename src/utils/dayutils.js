@@ -53,7 +53,7 @@ export function fromateTimeStepStr(str) {
         Y = date.getFullYear() + '年',
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
         D = date.getDate() < 10 ? '0' + date.getDate() + '日 ' : date.getDate() + '日 ',
-        W = weekDays[date.getDay()]+' '
+        W = weekDays[date.getDay()] + ' '
     return Y + M + D + W
 }
 
@@ -64,14 +64,33 @@ export function fromateTimeStepStr(str) {
  */
 export function getNoon(str) {
     let noon = '上午'
-    if (str  === '0'){
+    if (str === '0') {
         noon = '上午'
     }
-    if (str === '1'){
+    if (str === '1') {
         noon = '下午'
     }
-    if (str === '2'){
+    if (str === '2') {
         noon = '晚上'
     }
     return noon
+}
+
+
+export function getStartDate() {
+    let date = new Date(),
+        Y = date.getFullYear(),
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
+        D = date.getDate();
+    return Y + M + D
+}
+
+
+export function getCurrentMMddWed() {
+    let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    let date = new Date(),
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
+        D = date.getDate() < 10 ? '0' + date.getDate() + '日' : date.getDate() + '日',
+        W = weekDays[date.getDay()] + ' '
+    return M + D + W
 }
