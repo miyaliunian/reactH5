@@ -44,7 +44,7 @@ class HospitalizationManagementContainer extends Component {
     }
 
     render() {
-        const {fetchingStatus, bindCardList, hospitalizationReservationList, hospitalizationAllList, hospitalizationSel, hospitalDetails} = this.props
+        const {fetchingStatus, bindCardList, hospitalizationSel, hospitalDetails} = this.props
         return (
             <div className={'hospitalizationManagement'}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
@@ -142,8 +142,7 @@ class HospitalizationManagementContainer extends Component {
     }
 
     handleBack = () => {
-        this.props.hospitalizationManagementActions.setHospNUll()
-        setTimeout(() => this.props.history.goBack(), 200)
+        this.props.history.goBack()
     }
 
 
@@ -153,16 +152,19 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentDidMount() {
-
         const {history} = this.props
-        if (!history || history.action === 'PUSH') {
+        if (history.action === 'PUSH') {
             this.props.bindCardActions.loadList()
         }
     }
 
 
     componentWillUnmount() {
-        setTimeout(() => this.props.hospitalizationManagementActions.setHospNUll(), 200)
+        const {history} = this.props
+        if (history.action != 'PUSH') {
+            setTimeout(() => this.props.hospitalizationManagementActions.setHospNUll(), 200)
+        }
+
     }
 
     //重新选择家庭成员后重新刷新数据

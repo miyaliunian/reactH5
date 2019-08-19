@@ -79,10 +79,10 @@ class MakeUpAdvancePaymentContainer extends Component {
 
 
     submitBtn() {
-        // if (this.state.amountSel === '') {
-        //     Toast.info('缴费金额不能为空', 1)
-        //     return
-        // }
+        if (this.state.amountSel === '') {
+            Toast.info('缴费金额不能为空', 1)
+            return
+        }
         let path = {
             pathname: '/payContainer',
         }

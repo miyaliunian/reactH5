@@ -13,8 +13,8 @@ import {post} from "@utils/httpUtil";
 
 const initialState = {
     isFetching: false,
-    hospitalizationSel: '',
-    HospitalDetails: ''
+    hospitalizationSel: '', //选中的医院
+    HospitalDetails: '' //住院详情
 }
 
 
