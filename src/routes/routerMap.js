@@ -21,11 +21,11 @@ import RegisterContainer from "@containers/Register/RegisterContainer";
 import HospitalizationManagementContainer
     from "@containers/HospitalizationManagement/HospitalizationManagementContainer";
 import MakeUpAdvancePayment
-    from "@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePayment";
+    from "@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePaymentContainer";
 import HistoryAdvancePayment
     from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer";
 import DailyListQueryPayment
-    from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPayment";
+    from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPaymentContainer";
 import PayContainer from "@containers/Pay/PayContainer";
 
 

@@ -12,13 +12,25 @@ import DynamicTabs
 import ListOfContent
     from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/Components/ListOfContent/ListOfContent";
 
-export default class DailyListQueryPayment extends Component {
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+
+import {
+    getFetchingStatus,
+    getInHosDetail,
+    actions as dailyListQueryPaymentActions,
+} from '@reduxs/modules/dailyListQueryPayment'
+
+
+class DailyListQueryPaymentContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     render() {
+        const {details} = this.props
+        console.log(details)
         return (
             <div className={'dailyListQueryPayment'}>
                 <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
@@ -34,7 +46,22 @@ export default class DailyListQueryPayment extends Component {
 
     componentDidMount() {
         const {hosId, inHosNo} = this.props.match.params
-        console.log(hosId, inHosNo)
+        this.props.dailyListQueryPaymentActions.initDailyQueryList(hosId,inHosNo)
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        fetchingStatus: getFetchingStatus(state),
+        details: getInHosDetail(state)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dailyListQueryPaymentActions: bindActionCreators(dailyListQueryPaymentActions, dispatch)
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(DailyListQueryPaymentContainer)

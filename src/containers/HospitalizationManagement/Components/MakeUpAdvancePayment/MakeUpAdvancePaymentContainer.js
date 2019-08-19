@@ -1,5 +1,5 @@
 /**
- * Class: MakeUpAdvancePayment
+ * Class: MakeUpAdvancePaymentContainer
  * Author: wufei
  * Date: 2019-08-15
  * Description:
@@ -14,7 +14,7 @@ import './style.less'
 
 const amounts = ['1000', '2000', '3000', '5000', '10000', '20000',]
 
-class MakeUpAdvancePayment extends Component {
+class MakeUpAdvancePaymentContainer extends Component {
 
     state = {
         amountSel: ''
@@ -91,4 +91,4 @@ class MakeUpAdvancePayment extends Component {
 }
 
 
-export default withRouter(MakeUpAdvancePayment)
+export default withRouter(MakeUpAdvancePaymentContainer)

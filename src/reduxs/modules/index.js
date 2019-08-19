@@ -25,6 +25,7 @@ import intelligentWaiting from './intelligentWaiting'
 import hospitalizationManagement from './hospitalizationManagement'
 import historyAdvancePayment from './historyAdvancePayment'
 import categoryHospList from './categoryHospList'
+import dailyListQueryPayment from './dailyListQueryPayment'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
     hospitalizationManagement,
     historyAdvancePayment,
     categoryHospList,
+    dailyListQueryPayment
 })
 
 export default rootReducer

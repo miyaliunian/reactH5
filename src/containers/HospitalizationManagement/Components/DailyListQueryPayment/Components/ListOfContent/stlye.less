@@ -1,31 +1,33 @@
 .listOfContent {
-  display: flex;
-  flex-direction: row;
-  background-color: white;
-  height: 40px;
-  align-items: center;
-  padding: 0 10px;
-  box-sizing: border-box;
-
-  .listOfContent_name {
-    width: 45%;
+  .listOfContent_header {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
     height: 40px;
-    line-height: 40px;
-  }
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
 
-  .listOfContent_info {
-    flex: 1;
-    height: 40px;
-    line-height: 40px;
-
-    .item {
-      width: 23%;
-      display: inline-block;
-      text-align: center;
+    .listOfContent_name {
+      width: 45%;
+      height: 40px;
+      line-height: 40px;
     }
-  }
 
-  .listOfContent_info :last-child {
-    width: calc(100% - 23% * 3);
+    .listOfContent_info {
+      flex: 1;
+      height: 40px;
+      line-height: 40px;
+
+      .item {
+        width: 23%;
+        display: inline-block;
+        text-align: center;
+      }
+    }
+
+    .listOfContent_info :last-child {
+      width: calc(100% - 23% * 3);
+    }
   }
 }
