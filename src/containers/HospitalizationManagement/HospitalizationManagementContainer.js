@@ -120,7 +120,7 @@ class HospitalizationManagementContainer extends Component {
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
                         </Link>
                         <Link className={'hospitalizationManagement_bottomListRow border-bottom'}
-                              to={`/dailyListQueryPayment`}>
+                              to={`/dailyListQueryPayment/${hospitalizationSel.id}/${hospitalDetails.inHosNo}`}>
                             <span>一日清单查询</span>
                             <Icon className={'clinic__bar__icon'} type={'right'}/>
                         </Link>
@@ -153,6 +153,7 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentDidMount() {
+
         const {history} = this.props
         if (!history || history.action === 'PUSH') {
             this.props.bindCardActions.loadList()

@@ -115,7 +115,7 @@ const routerMap = [
         component: HistoryAdvancePayment
     },
     {
-        path: '/dailyListQueryPayment',
+        path: '/dailyListQueryPayment/:hosId/:inHosNo',
         name: 'dailyListQueryPayment',
         component: DailyListQueryPayment
     },
