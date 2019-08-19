@@ -54,29 +54,29 @@ class CategoryHosList extends Component {
                                 <div className={'hospitalizationList_header border-bottom'}>
                                     <span style={{fontSize: 13, fontWeight: 'bold'}}>最近预约的医院</span>
                                 </div>
-                                <div className={'hospitalizationList_body'}>
+                                <ul className={'hospitalizationList_body'}>
                                     {appointmentHos.map((item, index) => {
                                         return (
-                                            <div className={'hospitalizationItem_row border-bottom'} key={item.id}
+                                            <li className={'hospitalizationItem_row border-bottom'} key={item.id}
                                                  onClick={() => this.navGoBack(item)}>
                                                 <span style={{fontSize: 13}}>{item.name}</span>
-                                            </div>
+                                            </li>
                                         )
                                     })}
-                                </div>
+                                </ul>
                                 <div className={'hospitalizationList_header border-bottom'}>
                                     <span style={{fontSize: 13, fontWeight: 'bold'}}>医院列表</span>
                                 </div>
-                                <div className={'hospitalizationList_body'}>
+                                <ul className={'hospitalizationList_body'}>
                                     {allHos.map((item, index) => {
                                         return (
-                                            <div className={'hospitalizationItem_row border-bottom'} key={item.id}
+                                            <li className={'hospitalizationItem_row border-bottom'} key={item.id}
                                                  onClick={() => this.navGoBack(item)}>
                                                 <span style={{fontSize: 13}}>{item.name}</span>
-                                            </div>
+                                            </li>
                                         )
                                     })}
-                                </div>
+                                </ul>
                             </li>
                         </ul>
                     </Scroll>
