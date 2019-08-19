@@ -45,6 +45,22 @@ export const actions = {
             dispatch(fetchData(targetUrl, param))
         }
     },
+
+
+    queryDailyList: (type, hosId, inHosNo, startDate, endDate) => {
+        return (dispatch, getstate) => {
+            const targetUrl = url.API_QUERY_INHOSDETAIL(type)
+            let param = {
+                pageSize: '999',
+                hosId: hosId,
+                inHosNo: inHosNo,
+                startDate: startDate,
+                endDate: endDate,
+                pageNo: '1'
+            }
+            dispatch(fetchData(targetUrl, param))
+        }
+    },
 }
 
 const fetchRequest = () => ({
@@ -76,10 +92,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_DAILYLIST_QUERY_SUCCESS:
             return {
                 ...state,
-                isFetching: true,
-                listInFeeDetail: action.response.data.listInFeeDetail,
+                isFetching: false,
+                listInFeeDetail: action.response.data.listInFeeDetail === null ? [] : action.response.data.listInFeeDetail,
                 pageNo: action.response.data.pageNo,
                 pageCount: action.response.data.totPage
+            }
+        case actionTypes.FETCH_FAILURE:
+            return {
+                ...state,
+                isFetching: false
             }
         default:
             return state

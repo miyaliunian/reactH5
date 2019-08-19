@@ -77,20 +77,56 @@ export function getNoon(str) {
 }
 
 
-export function getStartDate() {
-    let date = new Date(),
-        Y = date.getFullYear(),
-        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
-        D = date.getDate();
-    return Y + M + D
+export function getStartDate(str = '') {
+    if (str != '') {
+        let date = new Date(str),
+            Y = date.getFullYear(),
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
+            D = date.getDate();
+        return Y + M + D
+    } else {
+        let date = new Date(),
+            Y = date.getFullYear(),
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
+            D = date.getDate();
+        return Y + M + D
+    }
+
 }
 
 
-export function getCurrentMMddWed() {
+export function getCurrentMMddWed(str = '') {
     let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-    let date = new Date(),
+    if (str != '') {
+        let date = new Date(str),
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
+            D = date.getDate() < 10 ? '0' + date.getDate() + '日' : date.getDate() + '日',
+            W = weekDays[date.getDay()] + ''
+        return M + D + W
+    } else {
+        let date = new Date(),
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
+            D = date.getDate() < 10 ? '0' + date.getDate() + '日' : date.getDate() + '日',
+            W = weekDays[date.getDay()] + ''
+        return M + D + W
+    }
+}
+
+
+export function getPrevDate(str) {
+    let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    let date = new Date(str - 24 * 60 * 60 * 1000),
         M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
         D = date.getDate() < 10 ? '0' + date.getDate() + '日' : date.getDate() + '日',
-        W = weekDays[date.getDay()] + ' '
+        W = weekDays[date.getDay()] + ''
+    return M + D + W
+}
+
+export function getNexDate(str) {
+    let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    let date = new Date(str + 24 * 60 * 60 * 1000),
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
+        D = date.getDate() < 10 ? '0' + date.getDate() + '日' : date.getDate() + '日',
+        W = weekDays[date.getDay()] + ''
     return M + D + W
 }

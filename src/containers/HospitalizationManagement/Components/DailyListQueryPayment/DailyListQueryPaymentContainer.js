@@ -14,12 +14,13 @@ import ListOfContent
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {getStartDate, getCurrentMMddWed} from '@utils/dayutils'
+import {getStartDate, getCurrentMMddWed, getPrevDate, getNexDate, getcurrentDate} from '@utils/dayutils'
 import {
     getFetchingStatus,
     getInHosDetail,
     actions as dailyListQueryPaymentActions,
 } from '@reduxs/modules/dailyListQueryPayment'
+import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class DailyListQueryPaymentContainer extends Component {
@@ -27,6 +28,7 @@ class DailyListQueryPaymentContainer extends Component {
         super(props);
         this.state = {
             queryStatus: '',
+            timeStep: '',
             startDate: '',
             endDate: ''
 
@@ -34,13 +36,13 @@ class DailyListQueryPaymentContainer extends Component {
     }
 
     render() {
-        const {details} = this.props
-        console.log(details)
+        const {fetchingStatus, details} = this.props
         return (
             <div className={'dailyListQueryPayment'}>
                 <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
-                <DynamicTabs queryTitle={this.state.queryStatus}/>
+                <DynamicTabs queryTitle={this.state.queryStatus} pre={() => this.pre()} nex={() => this.nex()}/>
                 <ListOfContent list={details}/>
+                {fetchingStatus ? <LoadingMask/> : null}
             </div>
         );
     }
@@ -51,15 +53,43 @@ class DailyListQueryPaymentContainer extends Component {
 
     componentDidMount() {
         const {hosId, inHosNo} = this.props.match.params
-        let startDate = `${getStartDate() + '000000'}`
-        let endDate = `${getStartDate() + '235959'}`
+        let startDate = `${getStartDate(new Date().getTime()) + '000000'}`
+        let endDate = `${getStartDate(new Date().getTime()) + '235959'}`
         this.setState({
             startDate: `${getStartDate() + '000000'}`,
+            timeStep: new Date().getTime(),
             queryStatus: getCurrentMMddWed(),
             endDate: `${getStartDate() + '235959'}`
         })
         this.props.dailyListQueryPaymentActions.initDailyQueryList('inPrePay', hosId, inHosNo, startDate, endDate)
     }
+
+    pre() {
+        // console.log(getStartDate(this.state.timeStep - 24 * 60 * 60 * 1000))
+        const {hosId, inHosNo} = this.props.match.params
+        this.setState({
+            timeStep: this.state.timeStep - 24 * 60 * 60 * 1000,
+            queryStatus: getCurrentMMddWed(this.state.timeStep - 24 * 60 * 60 * 1000)
+        })
+        let startDate = `${getStartDate(this.state.timeStep - 24 * 60 * 60 * 1000) + '000000'}`
+        let endDate = `${getStartDate(this.state.timeStep - 24 * 60 * 60 * 1000) + '235959'}`
+        // console.log(startDate, endDate)
+        this.props.dailyListQueryPaymentActions.initDailyQueryList('inPrePay', hosId, inHosNo, startDate, endDate)
+    }
+
+    nex() {
+        // console.log(getStartDate(this.state.timeStep + 24 * 60 * 60 * 1000))
+        const {hosId, inHosNo} = this.props.match.params
+        this.setState({
+            timeStep: this.state.timeStep + 24 * 60 * 60 * 1000,
+            queryStatus: getCurrentMMddWed(this.state.timeStep + 24 * 60 * 60 * 1000)
+        })
+        let startDate = `${getStartDate(this.state.timeStep + 24 * 60 * 60 * 1000) + '000000'}`
+        let endDate = `${getStartDate(this.state.timeStep + 24 * 60 * 60 * 1000) + '235959'}`
+        // console.log(startDate, endDate)
+        this.props.dailyListQueryPaymentActions.initDailyQueryList('inPrePay', hosId, inHosNo, startDate, endDate)
+    }
+
 }
 
 const mapStateToProps = (state) => {
