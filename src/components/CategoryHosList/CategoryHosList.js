@@ -8,8 +8,12 @@
 import React, {Component} from 'react'
 import Header from "@components/Header/NavBar";
 import PropTypes from 'prop-types'
-import Scroll from 'react-bscroll'
-import 'react-bscroll/lib/react-scroll.css'
+// import Scroll from 'react-bscroll'
+// import 'react-bscroll/lib/react-scroll.css'
+
+import Scroll from '@components/Scroll/scroll'
+
+
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
