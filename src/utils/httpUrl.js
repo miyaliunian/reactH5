@@ -90,5 +90,5 @@ export default {
     API_QUERY_ALL_HOSPASTIENT: (cityId, type, pageNo) => `${BASE_URL}/hospital/v1.0/list/${cityId}/${type}/${pageNo}.action`,
     API_QUERY_INHOSPASTIENT: (type, hosId, perId) => `/baseURL/${type}/v1.1/queryInHosPatient/${hosId}/${perId}.do`,
     API_QUERY_IN_PAY_LIST: (type, hosId, inHosNo) => `/baseURL/${type}/v1.0/${hosId}/${inHosNo}/queryInPrePayList.do`,
-    API_QUERY_INHOSDETAIL:()=>`/inPrePay/v1.0/queryInHosDetail.do`,
+    API_QUERY_INHOSDETAIL: (type) => `/baseURL/${type}/v1.0/queryInHosDetail.do`,
 }

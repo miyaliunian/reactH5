@@ -35,7 +35,7 @@ class DailyListQueryPaymentContainer extends Component {
             <div className={'dailyListQueryPayment'}>
                 <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
                 <DynamicTabs/>
-                <ListOfContent/>
+                <ListOfContent list={details}/>
             </div>
         );
     }
@@ -46,7 +46,7 @@ class DailyListQueryPaymentContainer extends Component {
 
     componentDidMount() {
         const {hosId, inHosNo} = this.props.match.params
-        this.props.dailyListQueryPaymentActions.initDailyQueryList(hosId,inHosNo)
+        this.props.dailyListQueryPaymentActions.initDailyQueryList('inPrePay',hosId,inHosNo)
     }
 }
 

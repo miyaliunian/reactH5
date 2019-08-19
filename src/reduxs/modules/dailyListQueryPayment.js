@@ -31,10 +31,9 @@ const actionTypes = {
 export const actions = {
 
 
-    initDailyQueryList: (hosId, inHosNo) => {
+    initDailyQueryList: (type, hosId, inHosNo) => {
         return (dispatch, getstate) => {
-            dispatch(fetchRequest())
-            const targetUrl = url.API_QUERY_INHOSDETAIL()
+            const targetUrl = url.API_QUERY_INHOSDETAIL(type)
             let param = {
                 pageSize: '999',
                 hosId: hosId,
@@ -43,7 +42,7 @@ export const actions = {
                 endDate: "20190819235959",
                 pageNo: '1'
             }
-            dispatch(fetchDatas(targetUrl, param))
+            dispatch(fetchData(targetUrl, param))
         }
     },
 }
@@ -53,12 +52,12 @@ const fetchRequest = () => ({
 })
 
 
-const fetchDatas = (targetURL, param) => ({
+const fetchData = (targetURL, param) => ({
     [FETCH_DATA]: {
         types: [
             actionTypes.FETCH_REQUEST,
             actionTypes.FETCH_DAILYLIST_QUERY_SUCCESS,
-            actionTypes.FETCH_DAILYLIST_QUERY_SUCCESS,
+            actionTypes.FETCH_FAILURE,
         ],
         targetURL,
     },
@@ -74,12 +73,13 @@ const reducer = (state = initialState, action) => {
                 isFetching: true
             }
 
-        case actionTypes.CHOOSE_CATEGORY_HOS_SUCCESS:
-            debugger
+        case actionTypes.FETCH_DAILYLIST_QUERY_SUCCESS:
             return {
                 ...state,
                 isFetching: true,
-                listInFeeDetail: action.response.listInFeeDetail
+                listInFeeDetail: action.response.data.listInFeeDetail,
+                pageNo: action.response.data.pageNo,
+                pageCount: action.response.data.totPage
             }
         default:
             return state
