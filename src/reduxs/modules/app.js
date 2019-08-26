@@ -35,8 +35,6 @@ const reducer = (state = initialState, action) => {
     } else if (error) {
         return {...state, error: error}
     }
-
-
     return state
 }
 

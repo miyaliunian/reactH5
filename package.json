@@ -15,6 +15,7 @@
     "http-proxy-middleware": "^0.19.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "normalize.css": "^8.0.1",
     "postcss-aspect-ratio-mini": "^1.0.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-px-to-viewport": "^1.1.0",
@@ -37,7 +38,8 @@
     "react-slick": "^0.24.0",
     "react-transition-group": "^4.1.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.3.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
