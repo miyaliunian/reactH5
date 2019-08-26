@@ -1,38 +1,193 @@
 /**
  * Class: routerMap
- * Author: wufei
+ * requiresAuthor: wufei
  * Date: 2019/6/10
  * Description:
  *  路由映射: 路由组件化
  */
 
-import Home from '@containers/Home/HomeContainer'
-import Hospitals from "@containers/Hospitals/HospitalsContainer";
-import Login from "@containers/Login/LoginContainer";
-import LoadingMask from "@components/Loading/LoadingMask";
-import Division from "@containers/Division/DivisionContainer";
-import BindCard from "@components/BindCard/BindCardContainer"
-import BindCardList from "@components/BindCard/components/BindCardList/BindCardList";
-import DoctorList from "@containers/DoctorList/DoctorListContainer";
-import Doctor from "@containers/Doctor/DoctorContainer"
-import ReservationContainer from "@containers/Reservation/ReservationContainer";
-import IntelligentWaitingContainer from "@containers/IntelligentWaiting/IntelligentWaitingContainer";
-import RegisterContainer from "@containers/Register/RegisterContainer";
-import HospitalizationManagementContainer
-    from "@containers/HospitalizationManagement/HospitalizationManagementContainer";
-import MakeUpAdvancePayment
-    from "@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePaymentContainer";
-import HistoryAdvancePayment
-    from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer";
-import DailyListQueryPayment
-    from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPaymentContainer";
-import PayContainer from "@containers/Pay/PayContainer";
+import React, {lazy, Suspense} from 'react'
+const HomeComponent = lazy(() => import("@containers/Home/HomeContainer"));
+const Home = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <HomeComponent {...props}></HomeComponent>
+        </Suspense>
+    )
+};
+
+
+
+const HospitalsComponent = lazy(() => import("@containers/Hospitals/HospitalsContainer"));
+const Hospitals = (props) => {
+    return (
+        <Suspense fallback={<div>加载中</div>}>
+            <HospitalsComponent {...props}></HospitalsComponent>
+        </Suspense>
+    )
+};
+
+
+const LoginComponent = lazy(() => import("@containers/Login/LoginContainer"));
+const Login = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <LoginComponent {...props}></LoginComponent>
+        </Suspense>
+    )
+};
+
+
+const LoadingMaskComponent = lazy(() => import("@components/Loading/LoadingMask"));
+const LoadingMask = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <LoadingMaskComponent {...props}></LoadingMaskComponent>
+        </Suspense>
+    )
+};
+
+
+const DivisionComponent = lazy(() => import("@containers/Division/DivisionContainer"));
+const Division = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <DivisionComponent {...props}></DivisionComponent>
+        </Suspense>
+    )
+};
+
+
+const BindCardComponent = lazy(() => import("@components/BindCard/BindCardContainer"));
+const BindCard = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <BindCardComponent {...props}></BindCardComponent>
+        </Suspense>
+    )
+};
+
+
+const BindCardListComponent = lazy(() => import("@components/BindCard/components/BindCardList/BindCardList"));
+const BindCardList = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <BindCardListComponent {...props}></BindCardListComponent>
+        </Suspense>
+    )
+};
+
+
+const DoctorListComponent = lazy(() => import("@containers/DoctorList/DoctorListContainer"));
+const DoctorList = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <DoctorListComponent {...props}></DoctorListComponent>
+        </Suspense>
+    )
+};
+
+
+const DoctorComponent = lazy(() => import("@containers/Doctor/DoctorContainer"));
+const Doctor = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <DoctorComponent {...props}></DoctorComponent>
+        </Suspense>
+    )
+};
+
+
+const ReservationContainerComponent = lazy(() => import("@containers/Reservation/ReservationContainer"));
+const ReservationContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <ReservationContainerComponent {...props}></ReservationContainerComponent>
+        </Suspense>
+    )
+};
+
+
+const IntelligentWaitingContainerComponent = lazy(() => import("@containers/IntelligentWaiting/IntelligentWaitingContainer"));
+const IntelligentWaitingContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <IntelligentWaitingContainerComponent {...props}></IntelligentWaitingContainerComponent>
+        </Suspense>
+    )
+};
+
+
+const RegisterContainerComponent = lazy(() => import("@containers/Register/RegisterContainer"));
+const RegisterContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <RegisterContainerComponent {...props}></RegisterContainerComponent>
+        </Suspense>
+    )
+};
+
+
+
+const HospitalizationManagementContainerComponent = lazy(() => import("@containers/HospitalizationManagement/HospitalizationManagementContainer"));
+const HospitalizationManagementContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <HospitalizationManagementContainerComponent {...props}></HospitalizationManagementContainerComponent>
+        </Suspense>
+    )
+};
+
+
+
+const MakeUpAdvancePaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePaymentContainer"));
+const MakeUpAdvancePayment = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <MakeUpAdvancePaymentComponent {...props}></MakeUpAdvancePaymentComponent>
+        </Suspense>
+    )
+};
+
+
+
+const HistoryAdvancePaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer"));
+const HistoryAdvancePayment = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <HistoryAdvancePaymentComponent {...props}></HistoryAdvancePaymentComponent>
+        </Suspense>
+    )
+};
+
+
+
+const DailyListQueryPaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPaymentContainer"));
+const DailyListQueryPayment = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <DailyListQueryPaymentComponent {...props}></DailyListQueryPaymentComponent>
+        </Suspense>
+    )
+};
+
+
+
+const PayContainerComponent = lazy(() => import("@containers/Pay/PayContainer"));
+const PayContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <PayContainerComponent {...props}></PayContainerComponent>
+        </Suspense>
+    )
+};
 
 
 const routerMap = [
     {
         path: '/',
         name: 'Home',
+        exact: true,
         component: Home,
     },
     {
@@ -73,13 +228,13 @@ const routerMap = [
     {
         path: '/reservation',
         name: 'Reservation',
-        auth: true,
+        requiresAuth: true,
         component: ReservationContainer
     },
     {
         path: '/bindCard',
         name: 'BindCard',
-        auth: true,
+        requiresAuth: true,
         component: BindCard
     },
     {
@@ -90,13 +245,13 @@ const routerMap = [
     {
         path: '/intelligentWaiting',
         name: 'IntelligentWaiting',
-        auth: true,
+        requiresAuth: true,
         component: IntelligentWaitingContainer
     },
     {
         path: '/hospitalizationManagement',
         name: 'hospitalizationManagement',
-        auth: true,
+        requiresAuth: true,
         component: HospitalizationManagementContainer
     },
     {
