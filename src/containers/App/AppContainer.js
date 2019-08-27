@@ -1,13 +1,15 @@
-import React, {Component, Fragment, lazy, Suspense} from 'react';
+import React, {Component, lazy, Suspense} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
-import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from "react-router-dom"
+import {BrowserRouter, Route, Switch, withRouter, Redirect} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import routerMap from '@routes/routerMap'
+import renderRoutes from '@utils/renderRoutes'
+
 
 const RouteModule = function (props) {
     return (
@@ -25,15 +27,18 @@ const RouteModule = function (props) {
             >
                 <div>
                     <Switch location={props.location}>
-                        {routerMap.map((v, index) => {
-                            return <Route key={index} path={v.path} exact render={props =>
-                                (!v.requiresAuth ? (<v.component {...props} />) : (isLogin() ? <v.component {...props} /> :
-                                        <Redirect to={{
-                                            pathname: '/login',
-                                            state: {from: props.location}
-                                        }}/>)
-                                )}/>
-                        })}
+                        {/*{routerMap.map((v, index) => {*/}
+                            {/*return <Route key={index} path={v.path} exact render={props =>*/}
+                                {/*(!v.requiresAuth ? (<v.component {...props} />) : (isLogin() ?*/}
+                                        {/*<v.component {...props} /> :*/}
+                                        {/*<Redirect to={{*/}
+                                            {/*pathname: '/login',*/}
+                                            {/*state: {from: props.location}*/}
+                                        {/*}}/>)*/}
+                                {/*)}/>*/}
+                        {/*})}*/}
+
+                        {renderRoutes(routerMap, isLogin())}
                     </Switch>
                 </div>
             </CSSTransition>
@@ -47,9 +52,9 @@ class AppContainer extends Component {
         const Routes = withRouter(RouteModule);
         return (
             <div>
-                <Router forceRefresh={false}>
+                <BrowserRouter>
                     <Routes/>
-                </Router>
+                </BrowserRouter>
                 {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
             </div>
         );
