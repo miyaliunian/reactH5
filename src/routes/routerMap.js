@@ -7,6 +7,9 @@
  */
 
 import React, {lazy, Suspense} from 'react'
+import LoadingMask from "@components/Loading/LoadingMask";
+
+
 const HomeComponent = lazy(() => import("@containers/Home/HomeContainer"));
 const Home = (props) => {
     return (
@@ -15,7 +18,6 @@ const Home = (props) => {
         </Suspense>
     )
 };
-
 
 
 const HospitalsComponent = lazy(() => import("@containers/Hospitals/HospitalsContainer"));
@@ -36,17 +38,6 @@ const Login = (props) => {
         </Suspense>
     )
 };
-
-
-const LoadingMaskComponent = lazy(() => import("@components/Loading/LoadingMask"));
-const LoadingMask = (props) => {
-    return (
-        <Suspense fallback={null}>
-            <LoadingMaskComponent {...props}></LoadingMaskComponent>
-        </Suspense>
-    )
-};
-
 
 const DivisionComponent = lazy(() => import("@containers/Division/DivisionContainer"));
 const Division = (props) => {
@@ -128,16 +119,14 @@ const RegisterContainer = (props) => {
 };
 
 
-
 const HospitalizationManagementContainerComponent = lazy(() => import("@containers/HospitalizationManagement/HospitalizationManagementContainer"));
 const HospitalizationManagementContainer = (props) => {
     return (
-        <Suspense fallback={null}>
+        <Suspense fallback={<LoadingMask/>}>
             <HospitalizationManagementContainerComponent {...props}></HospitalizationManagementContainerComponent>
         </Suspense>
     )
 };
-
 
 
 const MakeUpAdvancePaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePaymentContainer"));
@@ -150,7 +139,6 @@ const MakeUpAdvancePayment = (props) => {
 };
 
 
-
 const HistoryAdvancePaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer"));
 const HistoryAdvancePayment = (props) => {
     return (
@@ -161,7 +149,6 @@ const HistoryAdvancePayment = (props) => {
 };
 
 
-
 const DailyListQueryPaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/DailyListQueryPayment/DailyListQueryPaymentContainer"));
 const DailyListQueryPayment = (props) => {
     return (
@@ -170,7 +157,6 @@ const DailyListQueryPayment = (props) => {
         </Suspense>
     )
 };
-
 
 
 const PayContainerComponent = lazy(() => import("@containers/Pay/PayContainer"));
@@ -189,11 +175,6 @@ const routerMap = [
         name: 'Home',
         exact: true,
         component: Home,
-    },
-    {
-        path: '/loading',
-        name: 'LoadingMask',
-        component: LoadingMask
     },
     {
         path: '/hospitals',
