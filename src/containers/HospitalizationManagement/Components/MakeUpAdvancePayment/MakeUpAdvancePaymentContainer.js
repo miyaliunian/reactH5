@@ -23,7 +23,7 @@ class MakeUpAdvancePaymentContainer extends Component {
     render() {
         const {inName, inHosNo} = this.props.match.params
         return (
-            <div className={'makeUpAdvancePayment'}>
+            <div className={'makeUpAdvancePayment'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'补缴预交金'} isRight={false} onBack={this.handleBack}/>
                 <div className={'makeUpAdvancePayment_header'}>
                     <div className={'makeUpAdvancePayment_header_row'}>

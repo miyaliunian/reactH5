@@ -22,7 +22,7 @@ class LoginContainer extends Component {
         }
 
         return (
-            <div>
+            <div style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <LoginHeader/>
                 <LoginForm
                     username={username}

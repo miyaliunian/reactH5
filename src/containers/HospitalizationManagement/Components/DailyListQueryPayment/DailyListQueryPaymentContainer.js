@@ -38,7 +38,7 @@ class DailyListQueryPaymentContainer extends Component {
     render() {
         const {fetchingStatus, details} = this.props
         return (
-            <div className={'dailyListQueryPayment'}>
+            <div className={'dailyListQueryPayment'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
                 <DynamicTabs queryTitle={this.state.queryStatus} pre={() => this.pre()} nex={() => this.nex()}/>
                 <ListOfContent list={details}/>

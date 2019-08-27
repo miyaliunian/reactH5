@@ -46,7 +46,7 @@ class HospitalizationManagementContainer extends Component {
     render() {
         const {fetchingStatus, bindCardList, hospitalizationSel, hospitalDetails} = this.props
         return (
-            <div className={'hospitalizationManagement'}>
+            <div className={'hospitalizationManagement'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'住院服务'} isRight={false} onBack={this.handleBack}/>
                 {/*-------------------------选择成员信息*/}
                 <BindCardItem data={bindCardList} isRefresh={this.refresh}

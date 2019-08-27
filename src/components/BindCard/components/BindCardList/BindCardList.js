@@ -26,7 +26,7 @@ class BindCardList extends Component {
     render() {
         const {state} = this.props.location
         return (
-            <div className={'bindCardList'}>
+            <div className={'bindCardList'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'成员信息'} isRight={false} onBack={this.handleBack}/>
                 {state.map(item => {
                     return (

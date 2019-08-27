@@ -2,7 +2,6 @@ import React, {Component, Fragment, lazy, Suspense} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
 import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from "react-router-dom"
-import {renderRoutes} from 'react-router-config'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
@@ -13,7 +12,7 @@ import routerMap from '@routes/routerMap'
 const RouteModule = function (props) {
     return (
         <TransitionGroup
-            style={{position: 'releative'}}
+            style={{position: 'relative'}}
             childFactory={child => React.cloneElement(
                 child,
                 {classNames: props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
@@ -28,7 +27,7 @@ const RouteModule = function (props) {
                     <Switch location={props.location}>
                         {routerMap.map((v, index) => {
                             return <Route key={index} path={v.path} exact render={props =>
-                                (!v.auth ? (<v.component {...props} />) : (isLogin() ? <v.component {...props} /> :
+                                (!v.requiresAuth ? (<v.component {...props} />) : (isLogin() ? <v.component {...props} /> :
                                         <Redirect to={{
                                             pathname: '/login',
                                             state: {from: props.location}
@@ -47,13 +46,12 @@ class AppContainer extends Component {
         const {error, appActions: {clearError}} = this.props;
         const Routes = withRouter(RouteModule);
         return (
-            <Fragment>
-                {/*<CssBaseline />*/}
+            <div>
                 <Router forceRefresh={false}>
                     <Routes/>
                 </Router>
                 {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
-            </Fragment>
+            </div>
         );
     }
 }

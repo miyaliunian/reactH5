@@ -34,7 +34,7 @@ class DivisionContainer extends Component {
         const {name} = this.props.match.params
         const {fetchingStatus, divisionList, departmentList} = this.props
         return (
-            <div className={'clinic'}>
+            <div className={'clinic'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={name} onBack={this.handleBack} isRight={false}/>
                 <div className={'clinic__bar border-bottom'}>
                     <div>进入医院主页</div>

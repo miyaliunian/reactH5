@@ -19,7 +19,7 @@ import './style.less'
 class Home extends Component {
     render() {
         return (
-            <div>
+            <div style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 {/*<Banner/>*/}
                 <Category category={(index) => {
                     this.categoryClick(index)

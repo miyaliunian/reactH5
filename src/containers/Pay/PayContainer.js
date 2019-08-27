@@ -13,7 +13,7 @@ import './style.less'
 class PayContainer extends Component {
     render() {
         return (
-            <div className={'payComponent'}>
+            <div className={'payComponent'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'选择支付方式'} isRight={false} onBack={this.handleBack}/>
                 <div className={'payComponent_info'}>
                     <div className={'payComponent_info_row'}>

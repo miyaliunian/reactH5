@@ -29,7 +29,7 @@ class RegisterContainer extends Component {
     render() {
         const {siTypes, siMap,loadStatus,r_cellphoneNumber} = this.props
         return (
-            <div className={'register'}>
+            <div className={'register'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'用户注册'} isRight={false} onBack={this.handleBack}/>
                 <RegisterForm
                     onChange={this.handleChange}

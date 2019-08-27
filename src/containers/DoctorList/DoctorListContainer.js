@@ -52,7 +52,7 @@ class DoctorListContainer extends Component {
         const {name} = this.props.match.params
         const {fetchingStatus, doctors, reservations, seeDate} = this.props
         return (
-            <div className={'doctorList'}>
+            <div className={'doctorList'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header
                     title={name}
                     isRight={false}

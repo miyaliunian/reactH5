@@ -23,7 +23,7 @@ class BindCardContainer extends Component {
     render() {
         const {list} = this.props
         return (
-            <div className={'bindCard'}>
+            <div className={'bindCard'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
                 <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
                 <BindCardItem data={list} isRefresh={this.refresh}/>
             </div>
