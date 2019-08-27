@@ -13,13 +13,12 @@ import Banner from './components/Banner'
 import Category from './components/Category'
 import HeadLine from './components/HeadLine'
 import Activity from "./components/Activity/Activity";
-
 import './style.less'
 
 class Home extends Component {
     render() {
         return (
-            <div style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+            <div className={'home'}>
                 {/*<Banner/>*/}
                 <Category category={(index) => {
                     this.categoryClick(index)

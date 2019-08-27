@@ -21,7 +21,7 @@ import {
     actions as dailyListQueryPaymentActions,
 } from '@reduxs/modules/dailyListQueryPayment'
 import LoadingMask from "@components/Loading/LoadingMask";
-
+import './style.less'
 
 class DailyListQueryPaymentContainer extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class DailyListQueryPaymentContainer extends Component {
     render() {
         const {fetchingStatus, details} = this.props
         return (
-            <div className={'dailyListQueryPayment'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+            <div className={'dailyListQueryPayment'} >
                 <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
                 <DynamicTabs queryTitle={this.state.queryStatus} pre={() => this.pre()} nex={() => this.nex()}/>
                 <ListOfContent list={details}/>

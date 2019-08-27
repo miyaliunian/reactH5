@@ -25,7 +25,7 @@ class HistoryAdvancePaymentContainer extends Component {
         const {fetchingStatus, itemList} = this.props
         let data = itemList.data ? itemList.data.listPrePayList : []
         return (
-            <div className={'historyAdvancePayment'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+            <div className={'historyAdvancePayment'}>
                 <Header title={'历史缴纳预交金'} isRight={false} onBack={this.handleBack}/>
                 <div className={'historyAdvancePayment_container'} ref={'historyAdvancePaymentWrapper'}>
                     <div>

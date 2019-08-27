@@ -30,7 +30,7 @@ class HospitalsContainer extends PureComponent {
                 id='hospitalsContainer'
                 onTouchMove={(e) => this.handleTouchMove(e)}
                 className={'hospitalsContainer'}
-                style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+                >
                 <Header title={'医院列表'} onBack={this.handleBack} isRight={true}/>
                 <Tabs
                     handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}

@@ -28,7 +28,7 @@ class DoctorContainer extends Component {
         const {fetchingStatus, isLastPage, clinicData, reservationData, timeInterval} = this.props
         const {introduction,skills} = this.props.location.state
         return (
-            <div className={'doctor'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+            <div className={'doctor'} >
                 <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
                 <DoctorTitle data={this.props.location.state}/>
                 <DoctorDesc introduction={introduction} skills={skills}/>

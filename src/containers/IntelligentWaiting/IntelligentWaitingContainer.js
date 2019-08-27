@@ -43,7 +43,7 @@ class IntelligentWaitingContainer extends Component {
             <div
                 id='intelligentWaitingContainer'
                 onTouchMove={(e) => this.handleTouchMove(e)}
-                className={'intelligentWaitingContainer'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+                className={'intelligentWaitingContainer'}>
                 <div style={{position:'fixed',top:0,leift:0,right:0,width:'100%',zIndex:'999'}}>
                     <Header id='intelligentWaitingContainer__header' title={'智能候诊'} onBack={this.handleBack} isRight={false}/>
                     <BindCardItem id='intelligentWaitingContainer__bindCardItem' data={list} isRefresh={false}/>

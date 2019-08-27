@@ -31,7 +31,7 @@ class ReservationContainer extends Component {
         const {doctorInfo, reservationInfo, timeInterval} = this.props.location.state
         const {diagnosis,fetchingStatus, payType, switchInfo, medicalType, bindCards, isRefresh} = this.props
         return (
-            <div className={'reservation'} style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+            <div className={'reservation'} >
                 <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
                 <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}
                                    timeInterval={timeInterval}/>

@@ -12,7 +12,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Redirect} from 'react-router-dom'
 import {actions as loginActions, isLogin, getPassword, getUserName} from '../../reduxs/modules/login'
-
+import './style.less'
 class LoginContainer extends Component {
     render() {
         const {username, password, login} = this.props
@@ -22,7 +22,7 @@ class LoginContainer extends Component {
         }
 
         return (
-            <div style={{position: 'absolute', left:'0',top:'0',width:'100vw',height:'100vh'}}>
+            <div className={'login'} >
                 <LoginHeader/>
                 <LoginForm
                     username={username}
