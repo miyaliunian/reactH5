@@ -159,6 +159,15 @@ const DailyListQueryPayment = (props) => {
 };
 
 
+const AdvanceSettlementContainerComponent = lazy(() => import("@containers/Settlement/Advance/AdvanceSettlementContainer"));
+const AdvanceSettlementContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <AdvanceSettlementContainerComponent {...props}></AdvanceSettlementContainerComponent>
+        </Suspense>
+    )
+};
+
 const PayContainerComponent = lazy(() => import("@containers/Pay/PayContainer"));
 const PayContainer = (props) => {
     return (
@@ -241,11 +250,6 @@ const routerMap = [
         component: MakeUpAdvancePayment
     },
     {
-        path: '/payContainer',
-        name: 'payContainer',
-        component: PayContainer
-    },
-    {
         path: '/historyAdvancePayment/:hosId/:inHosNo',
         name: 'historyAdvancePayment',
         component: HistoryAdvancePayment
@@ -254,6 +258,16 @@ const routerMap = [
         path: '/dailyListQueryPayment/:hosId/:inHosNo',
         name: 'dailyListQueryPayment',
         component: DailyListQueryPayment
+    },
+    {
+        path: '/advanceSettlementContainer',
+        name: 'advanceSettlementContainer',
+        component: AdvanceSettlementContainer
+    },
+    {
+        path: '/payContainer',
+        name: 'payContainer',
+        component: PayContainer
     },
 ]
 

@@ -76,6 +76,7 @@ class DoctorVisiting extends Component {
                             return (
                                 <div className={'doctorVisiting__item border-bottom'} key={index}
                                      onClick={() => this.navPage(item)}
+
                                 >
                                     {this.renderDesc(item)}
                                     <div className={'item__right'}>
@@ -125,11 +126,10 @@ class DoctorVisiting extends Component {
 
 
     componentDidMount() {
-
-
         //预约滚动列表
         this.scroll = new Bscroll(this.refs.doctorVisitingList, {
             mouseWheel: true,
+            probeType: 3,
             click: true,
             tap: true,
             pullUpLoad: {
@@ -195,6 +195,7 @@ class DoctorVisiting extends Component {
      * @param data
      */
     navPage(data) {
+        debugger
         this.reservationInfoSel = data
         this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this)
 

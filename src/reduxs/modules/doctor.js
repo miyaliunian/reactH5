@@ -55,7 +55,7 @@ export const actions = {
                         }
                     })
                     dispatch(loadClinicListSuccess(data.data))
-                    const target = URL.API_DOCTOR_VISITING_LIST(hosId, data.data[0].id, doctid, null, getstate().doctor.page)
+                    const target = URL.API_DOCTOR_VISITING_LIST(hosId, data.data[0].id, doctid, getstate().doctor.page)
                     return dispatch(loadReservationList(target))
                 },
                 error => {
@@ -72,7 +72,7 @@ export const actions = {
             if (isPage) {
                 pageNu = getstate().doctor.page
             }
-            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, pageNu)
+            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid,  pageNu)
             return dispatch(loadReservationList(target))
         }
     },
@@ -81,7 +81,7 @@ export const actions = {
     //点击科室下拉列表，获取(可预约)数据
     fetchReservationList: (hosId, deptId, doctid, date) => {
         return (dispatch, getstate) => {
-            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, date, 1)
+            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, 1)
             return dispatch(fetchReservationList(target))
         }
     },

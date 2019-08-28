@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@types/react, @types/react-native, @types/react-navigation, @types/react-redux, @types/react-router, @types/react-router-config, @types/react-router-dom}" />
+    <file url="PROJECT" libraries="{@types/react, @types/react-native, @types/react-navigation, @types/react-redux, @types/react-router, @types/react-router-config, @types/react-router-dom, @types/styled-components}" />
   </component>
 </project>

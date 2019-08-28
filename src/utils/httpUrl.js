@@ -5,13 +5,8 @@
  * Description:  网络请求url 常量
  */
 
-/**
- * 登录前缀
- * @type {string}
- */
-const BASE_URL = 'http://58.208.84.112:10086/t-core'
-// const BASE_URL = 'https://www.ntyibao.com/t-core'
 
+import {BASE_URL} from '@assets/static/DictionaryConstant'
 /**
  * 业务请求URL
  */
@@ -52,7 +47,7 @@ export default {
     //医生详情->科室列表
     API_DOCTOR_CLINIC_LIST: (doctid) => `${BASE_URL}/hisdept/v1.0/list/${doctid}.action`,
     //医生详情->预约列表
-    API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, date = null, pageno) => `${BASE_URL}/schedule/v1.2/list/${hosid}/${deptid}/${doctid}/${date}/${pageno}.action`,
+    API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, pageno) => `${BASE_URL}/schedule/v1.1/list/${hosid}/${deptid}/${doctid}/${pageno}.action`,
     //医生详情->预约时间段
     API_DOCTOR_SCHEDULE_TIME: (scheduleid) => `${BASE_URL}/timeinterval/v1.0/list/${scheduleid}.action`,
 
