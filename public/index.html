@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport" content="minimum-scale=1.0, initial-scale=1.0, width=device-width,viewport-fit=cover, shrink-to-fit=no user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
@@ -28,6 +28,17 @@
         window.viewportUnitsBuggyfill.init({
             hacks: window.viewportUnitsBuggyfillHacks
         });
+
+
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault()
+            }
+        })
+        document.addEventListener('gesturestart', function (event) {
+            event.preventDefault()
+        })
+
     }
 
 
