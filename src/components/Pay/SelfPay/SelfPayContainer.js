@@ -1,19 +1,19 @@
 /**
- * Class: PayContainer
+ * Class: SelfPayContainer
  * Author: wufei
  * Date: 2019/8/16
  * Description:
- *  支付公用页面
+ *  自费支付
  */
 import React, {Component} from 'react'
 import Header from "@components/Header/NavBar";
 import {withRouter} from 'react-router-dom'
 import './style.less'
 
-class PayContainer extends Component {
+class SelfPayContainer extends Component {
     render() {
         return (
-            <div className={'payComponent'}>
+            <div className={'selfPay'}>
                 <Header title={'选择支付方式'} isRight={false} onBack={this.handleBack}/>
                 <div className={'payComponent_info'}>
                     <div className={'payComponent_info_row'}>
@@ -63,4 +63,4 @@ class PayContainer extends Component {
 }
 
 
-export default withRouter(PayContainer)
+export default withRouter(SelfPayContainer)

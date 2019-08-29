@@ -1,6 +1,7 @@
-@import "../../assets/less/varibles";
-.payComponent {
-  .container();
+@import "../../../assets/less/varibles";
+
+.medicarePay {
+  //.container();
   .payComponent_info {
     background-color: white;
     padding: 15px;
@@ -11,26 +12,34 @@
       height: 30px;
       line-height: 30px;
       justify-content: space-between;
+
     }
   }
   .payComponent_payType {
     background-color: white;
-    padding: 15px 15px 0 15px;
     box-sizing: border-box;
     .payComponent_payBtn_row {
-      flex: 1;
       display: flex;
       flex-direction: row;
-      height: 40px;
-      line-height: 40px;
+      height: 70px;
+      line-height: 70px;
+      box-sizing: border-box;
+      padding: 15px 10px;
+      .payComponent_payBtn_row_right {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 20px;
+        line-height: 20px;
+      }
     }
   }
   .payComponent_bottomBtn {
-    position:fixed;
-    bottom:0;
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    height: 45px;
-    line-height: 45px;
+    height: 55px;
+    line-height: 55px;
     display: flex;
     flex-direction: row;
     .payComponent_desc {
@@ -45,8 +54,16 @@
       color: white;
       text-align: center;
       font-weight: bold;
+      font-size: large;
       background-color: rgb(48, 135, 254);
     }
 
+  }
+}
+
+.am-modal-transparent {
+  width: calc(100% - 70px);
+  .am-modal-body {
+    color: rgb(0, 0, 0);
   }
 }

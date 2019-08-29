@@ -168,11 +168,11 @@ const AdvanceSettlementContainer = (props) => {
     )
 };
 
-const PayContainerComponent = lazy(() => import("@containers/Pay/PayContainer"));
-const PayContainer = (props) => {
+const MedicarePayComponent = lazy(() => import("@components/Pay/MedicarePay/MedicarePayContainer"));
+const MedicarePayContainer = (props) => {
     return (
         <Suspense fallback={null}>
-            <PayContainerComponent {...props}></PayContainerComponent>
+            <MedicarePayComponent {...props}></MedicarePayComponent>
         </Suspense>
     )
 };
@@ -265,9 +265,9 @@ const routerMap = [
         component: AdvanceSettlementContainer
     },
     {
-        path: '/payContainer',
-        name: 'payContainer',
-        component: PayContainer
+        path: '/medicarePayContainer',
+        name: 'medicarePayContainer',
+        component: MedicarePayContainer
     },
 ]
 
