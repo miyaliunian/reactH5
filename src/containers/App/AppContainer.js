@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
-import routerMap from '@routes/routerMap'
+import routerMap from '@routes/RouterConfig'
 import renderRoutes from '@utils/renderRoutes'
 
 
