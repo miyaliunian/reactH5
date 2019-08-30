@@ -6,22 +6,24 @@
  *  医保支付
  */
 import React, {Component} from 'react'
-import Header from "@components/Header/NavBar";
 import {withRouter} from 'react-router-dom'
-import icon_ybzf from '@images/Pay/ico_ybk_png.png';
-import {Modal, Icon} from 'antd-mobile'
-import {Content} from './style'
-import './style.less'
+import Header from "@components/Header/NavBar";
 import CodeInput from "@components/CodeInput/CodeInput";
+import PopUP from "@components/PopUp/PopUpContainer";
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {actions as popUpActions, getPopupState} from "@reduxs/modules/popUp";
+
+import icon_ybzf from '@images/Pay/ico_ybk_png.png';
+
+
+import './style.less'
 
 
 class MedicarePayContainer extends Component {
 
-    state = {
-        openModal: false,
-    }
-
     render() {
+        const {popUpActions} = this.props
         return (
             <div className={'medicarePay'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
                 <Header title={'医保支付'} isRight={false} onBack={this.handleBack}/>
@@ -56,36 +58,10 @@ class MedicarePayContainer extends Component {
                 </div>
                 <div className={'payComponent_bottomBtn'}>
                     <span className={'payComponent_desc'}>待支付：￥1wwww</span>
-                    <span className={'payComponent_btn'} onClick={() => {
-                        this.setState({openModal: true})
-                    }}>支  付</span>
+                    <span className={'payComponent_btn'} onClick={() => popUpActions.showPopup()}>支  付</span>
                 </div>
-                <Modal
-                    animated
-                    transparent={true}
-                    visible={this.state.openModal}
-                >
-                    <Content>
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            borderBottom: '1px solid #0084ff',
-                        }}>
-                            <Icon type={'cross'} onClick={() => this.setState({openModal: false})}/>
-                            <p style={{
-                                flex: 1,
-                                height: '40px',
-                                lineHeight: '40px',
-                                fontSize: '18px',
 
-                            }}>请输入社保卡密码</p>
-                        </div>
-                        <p style={{marginTop: '10px', fontSize: '17px'}}>扫描购药</p>
-                        <p style={{marginBottom: '10px', fontSize: '28px', fontWeight: 'bolder'}}>￥30.20</p>
-                        <CodeInput/>
-                    </Content>
-                </Modal>
+                <PopUP/>
             </div>
         )
     }
@@ -103,4 +79,17 @@ class MedicarePayContainer extends Component {
 }
 
 
-export default withRouter(MedicarePayContainer)
+const mapStateToProps = (state) => {
+    return {
+        popupState: getPopupState(state),
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        popUpActions: bindActionCreators(popUpActions, dispatch)
+    }
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MedicarePayContainer))

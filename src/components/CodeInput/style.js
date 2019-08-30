@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-    width:100%;
     display:flex;
-    flex-direction: row;
-    text-align: center;
+    flex:1;
+    backgroundColor: 'orange'; 
+    justifyContent: 'center',
     >span {
-    
+        display:flex;
     }
     >span >input  {
         border-right : 1px solid lightGray;

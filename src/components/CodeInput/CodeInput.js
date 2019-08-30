@@ -15,39 +15,39 @@ export default class CodeInput extends React.Component {
     render() {
         return (
             <Content>
-                <span>
-                  <AutoTabInput
-                      ref="inputmy"
-                      type="tel"
-                      autoFocus
-                      maxLength={1}
-                      onChange={this.unitOnChange.bind(null, 0)}
-                  />
-                  <AutoTabInput
-                      type="tel"
-                      maxLength={1}
-                      onChange={this.unitOnChange.bind(null, 1)}
-                  />
-                  <AutoTabInput
-                      type="tel"
-                      maxLength={1}
-                      onChange={this.unitOnChange.bind(null, 2)}
-                  />
-                  <AutoTabInput
-                      type="tel"
-                      maxLength={1}
-                      onChange={this.unitOnChange.bind(null, 3)}
-                  />
-                  <AutoTabInput
-                      type="tel"
-                      maxLength={1}
-                      onChange={this.unitOnChange.bind(null, 4)}
-                  />
-                  <AutoTabInput
-                      type="tel"
-                      maxLength={1}
-                      onChange={this.unitOnChange.bind(null, 5)}
-                  />
+                <span style={{display: 'flex', flex: '1', justifyContent: 'center', alignItems: 'center'}}>
+                <AutoTabInput
+                    ref="inputmy"
+                    type="tel"
+                    autoFocus
+                    maxLength={1}
+                    onChange={this.unitOnChange.bind(null, 0)}
+                />
+                <AutoTabInput
+                    type="tel"
+                    maxLength={1}
+                    onChange={this.unitOnChange.bind(null, 1)}
+                />
+                <AutoTabInput
+                    type="tel"
+                    maxLength={1}
+                    onChange={this.unitOnChange.bind(null, 2)}
+                />
+                <AutoTabInput
+                    type="tel"
+                    maxLength={1}
+                    onChange={this.unitOnChange.bind(null, 3)}
+                />
+                <AutoTabInput
+                    type="tel"
+                    maxLength={1}
+                    onChange={this.unitOnChange.bind(null, 4)}
+                />
+                <AutoTabInput
+                    type="tel"
+                    maxLength={1}
+                    onChange={this.unitOnChange.bind(null, 5)}
+                />
                 </span>
             </Content>
         );
