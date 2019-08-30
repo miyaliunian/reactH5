@@ -23,7 +23,7 @@ export default  class AutoTabInput extends PureComponent {
         if (this.props.autoFocus) {
             setTimeout(() => {
                 this._input.focus();
-            }, 300)
+            }, 100)
         }
     }
     handleChange(e) {

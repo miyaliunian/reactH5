@@ -37,7 +37,7 @@ class Tabs extends Component {
         return (
             <div className={'tabs'}>
                 <div className={'tabs__searchTOPWrapper border-bottom'}>
-                    <div className={this.state.tab1focused ? 'searchItem  itemSelected' : 'searchItem'}
+                    <div className={this.state.tab1focused ? 'searchItem  itemSelected ' : 'searchItem'}
                          onClick={() => this.tabSelc(1)}>
                         {this.state.tab1focused_title}
                     </div>

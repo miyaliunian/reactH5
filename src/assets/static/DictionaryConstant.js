@@ -10,7 +10,7 @@
 // export const cityID = '320600'
 // export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 
-export const BASE_URL = 'http://ykt.nn12333.com:7070/t-core'
+export const BASE_URL = 'http://ykt.nn12333.com:7070/t-core3-t/'
 export const cityID = '450100'
 
 //预约挂号-医院列表
