@@ -17,6 +17,7 @@ import icon_sj from '@images/Home/三甲图标IOS.png';
 import icon_bg from '@images/Home/报告图标IOS.png';
 import icon_zh from '@images/Home/综合图标IOS.png';
 import icon_yy from '@images/Home/预约图标IOS.png';
+import EntryLoader from "@components/entryLoader";
 
 class HospitalsItem extends Component {
 
@@ -68,18 +69,14 @@ class HospitalsItem extends Component {
         return (
             <ul className={'hospitalsItem'} ref={'hospitalsItem'}>
                 <div>
-                    {this.state.isShowRefreshHeader
-                        ?
-                        <RefreshHeader/>
-                        :
-                        <div/>
-                    }
+                    {this.state.isShowRefreshHeader && <EntryLoader/>}
                     {data.map((item, index) => {
                         return (
                             <Link to={`/division/${item.id}/${item.name}`}
                                   key={index}
                             >
                                 <li className="hospitalsItem__con border-bottom">
+
                                     <div className="hospitalsItem__title">{item.name}</div>
                                     <div className="hospitalsItem__middle">
                                         <div className={'hospitalsItem__middle__item'}>
@@ -117,7 +114,6 @@ class HospitalsItem extends Component {
                             </Link>
                         )
                     })}
-                    <RefreshFooter refreshStatus={isLastPage}/>
                 </div>
             </ul>
         )

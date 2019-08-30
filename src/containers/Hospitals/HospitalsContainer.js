@@ -19,6 +19,7 @@ import {
 } from '../../reduxs/modules/hospital'
 import './style.less'
 import LoadingMask from "../../components/Loading/LoadingMask";
+import EntryLoader from "@components/entryLoader";
 
 
 class HospitalsContainer extends PureComponent {
@@ -30,7 +31,7 @@ class HospitalsContainer extends PureComponent {
                 id='hospitalsContainer'
                 onTouchMove={(e) => this.handleTouchMove(e)}
                 className={'hospitalsContainer'}
-                >
+            >
                 <Header title={'医院列表'} onBack={this.handleBack} isRight={true}/>
                 <Tabs
                     handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
@@ -43,13 +44,13 @@ class HospitalsContainer extends PureComponent {
                     pullingDownHandler={() => this.pullingDownHandler()}
                     pullingUpHandler={() => this.pullingUpHandler()}
                 />
+                {fetchingStatus && <EntryLoader/>}
                 {fetchingStatus
                     ?
                     <LoadingMask/>
                     :
                     null
                 }
-
             </div>
         )
     }
