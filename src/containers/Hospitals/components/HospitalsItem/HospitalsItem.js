@@ -66,7 +66,7 @@ class HospitalsItem extends Component {
     render() {
         const {data, isLastPage} = this.props
         return (
-            <div className={'hospitalsItem'} ref={'hospitalsItem'}>
+            <ul className={'hospitalsItem'} ref={'hospitalsItem'}>
                 <div>
                     {this.state.isShowRefreshHeader
                         ?
@@ -79,7 +79,7 @@ class HospitalsItem extends Component {
                             <Link to={`/division/${item.id}/${item.name}`}
                                   key={index}
                             >
-                                <div className="hospitalsItem__con border-bottom">
+                                <li className="hospitalsItem__con border-bottom">
                                     <div className="hospitalsItem__title">{item.name}</div>
                                     <div className="hospitalsItem__middle">
                                         <div className={'hospitalsItem__middle__item'}>
@@ -113,13 +113,13 @@ class HospitalsItem extends Component {
                                         }
                                     </div>
                                     <div className="hospitalsItem__bottom">地址：{item.fullAddress}</div>
-                                </div>
+                                </li>
                             </Link>
                         )
                     })}
                     <RefreshFooter refreshStatus={isLastPage}/>
                 </div>
-            </div>
+            </ul>
         )
     }
 
