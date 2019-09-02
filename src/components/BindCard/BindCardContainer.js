@@ -16,6 +16,7 @@ import {
     getBindCardList
 } from "@reduxs/modules/bindCard";
 import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 
 class BindCardContainer extends Component {
@@ -23,9 +24,10 @@ class BindCardContainer extends Component {
     render() {
         const {list} = this.props
         return (
-            <div className={'bindCard'} >
-                <Header title={'成员列表'} onBack={this.handleBack} isRight={false}/>
-                <BindCardItem data={list} isRefresh={this.refresh}/>
+            <div className={'bindCard'}>
+                <SafeAreaView showBar={true} title={'成员列表'} isRight={false} handleBack={this.handleBack}>
+                    <BindCardItem data={list} isRefresh={this.refresh}/>
+                </SafeAreaView>
             </div>
         )
     }

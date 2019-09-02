@@ -25,6 +25,7 @@ import {
 
 import './style.less'
 import LoadingMask from "@components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 
 const getMonths = (data) => {
@@ -53,39 +54,36 @@ class DoctorListContainer extends Component {
         const {fetchingStatus, doctors, reservations, seeDate} = this.props
         return (
             <div className={'doctorList'}>
-                <Header
-                    title={name}
-                    isRight={false}
-                    onBack={this.handleBack}
-                />
-                <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
-                <div ref={'reservations'}>
-                    {!reservations ?
-                        null
-                        :
-                        <Reservaes reservations={reservations}
-                                   fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
-                                   filterConditions={this.filterConditions}
-                                   showModal={() => this.showModal()}
-                        />
-                    }
-                </div>
-                <DoctorItem data={doctors}/>
-                <Modal
-                    visible={this.state.isShow}
-                    title=""
-                    afterClose={() => {
-                    }}
-                >
-                    <div className={'calendar_box'}>
-                        <Header title={'选择出诊日期'} isRight={false} onBack={() => this.closeModal()}/>
-                        <Calendar reservations={reservations}
-                                  markSelDate={(date) => {
-                                      this.markSelDate(date)
-                                  }}/>
+                <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
+                    <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
+                    <div ref={'reservations'}>
+                        {!reservations ?
+                            null
+                            :
+                            <Reservaes reservations={reservations}
+                                       fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
+                                       filterConditions={this.filterConditions}
+                                       showModal={() => this.showModal()}
+                            />
+                        }
                     </div>
-                </Modal>
-                {fetchingStatus ? <LoadingMask/> : null}
+                    <DoctorItem data={doctors}/>
+                    <Modal
+                        visible={this.state.isShow}
+                        title=""
+                        afterClose={() => {
+                        }}
+                    >
+                        <div className={'calendar_box'}>
+                            <Header title={'选择出诊日期'} isRight={false} onBack={() => this.closeModal()}/>
+                            <Calendar reservations={reservations}
+                                      markSelDate={(date) => {
+                                          this.markSelDate(date)
+                                      }}/>
+                        </div>
+                    </Modal>
+                    {fetchingStatus ? <LoadingMask/> : null}
+                </SafeAreaView>
             </div>
         )
     }

@@ -16,6 +16,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as bindCardActions} from "@reduxs/modules/bindCard";
 import {actions as reservationActions} from "@reduxs/modules/reservation";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 
 class BindCardList extends Component {
@@ -27,31 +28,32 @@ class BindCardList extends Component {
         const {state} = this.props.location
         return (
             <div className={'bindCardList'} >
-                <Header title={'成员信息'} isRight={false} onBack={this.handleBack}/>
-                {state.map(item => {
-                    return (
+                <SafeAreaView showBar={true} title={'成员信息'} isRight={false} handleBack={this.handleBack}>
+                    {state.map(item => {
+                        return (
 
-                        <div className={'bindCardList__con'} key={item.id} onClick={() => this.handleItemClick(item)}>
-                            <div className={'bindCardList__left'}>
-                                <img src={item.sex === '男' ? avatar_man : avatar_wman}
-                                     className={'bindCardList__avatar'}/>
-                            </div>
-                            <div className={'bindCardList__middle'}>
-                                <div className={'bindCardList__middle__top'}>
-                                    <div className={'bindCardList__name'}>
-                                        {item.name}
-                                    </div>
-                                    <img src={item.sex === '男' ? ico_man : ico_wman}
-                                         className={'bindCardList__middle__icon'}/>
-                                    <div>
-                                        {item.age}岁
-                                    </div>
+                            <div className={'bindCardList__con'} key={item.id} onClick={() => this.handleItemClick(item)}>
+                                <div className={'bindCardList__left'}>
+                                    <img src={item.sex === '男' ? avatar_man : avatar_wman}
+                                         className={'bindCardList__avatar'}/>
                                 </div>
-                                <div className={'bindCardList__middle__bottom'}>{item.siNo}</div>
+                                <div className={'bindCardList__middle'}>
+                                    <div className={'bindCardList__middle__top'}>
+                                        <div className={'bindCardList__name'}>
+                                            {item.name}
+                                        </div>
+                                        <img src={item.sex === '男' ? ico_man : ico_wman}
+                                             className={'bindCardList__middle__icon'}/>
+                                        <div>
+                                            {item.age}岁
+                                        </div>
+                                    </div>
+                                    <div className={'bindCardList__middle__bottom'}>{item.siNo}</div>
+                                </div>
                             </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </SafeAreaView>
             </div>
         )
     }

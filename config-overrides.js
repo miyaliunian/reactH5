@@ -51,6 +51,7 @@ const path = require('path')
 module.exports = override(
     addWebpackAlias({
         '@assets': path.resolve(__dirname, 'src/assets'),
+        '@baseUI': path.resolve(__dirname, 'src/baseUI'),
         '@components': path.resolve(__dirname, 'src/components'),
         '@containers': path.resolve(__dirname, 'src/containers'),
         '@images': path.resolve(__dirname, 'src/images'),

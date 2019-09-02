@@ -22,6 +22,7 @@ import {
 } from '@reduxs/modules/dailyListQueryPayment'
 import LoadingMask from "@components/Loading/LoadingMask";
 import './style.less'
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 class DailyListQueryPaymentContainer extends Component {
     constructor(props) {
@@ -39,10 +40,11 @@ class DailyListQueryPaymentContainer extends Component {
         const {fetchingStatus, details} = this.props
         return (
             <div className={'dailyListQueryPayment'} >
-                <Header title={'一日清单'} isRight={false} onBack={this.handleBack}/>
-                <DynamicTabs queryTitle={this.state.queryStatus} pre={() => this.pre()} nex={() => this.nex()}/>
-                <ListOfContent list={details}/>
-                {fetchingStatus ? <LoadingMask/> : null}
+                <SafeAreaView showBar={true} title={'一日清单'} isRight={false} handleBack={this.handleBack}>
+                    <DynamicTabs queryTitle={this.state.queryStatus} pre={() => this.pre()} nex={() => this.nex()}/>
+                    <ListOfContent list={details}/>
+                    {fetchingStatus ? <LoadingMask/> : null}
+                </SafeAreaView>
             </div>
         );
     }

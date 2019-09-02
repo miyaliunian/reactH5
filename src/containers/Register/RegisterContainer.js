@@ -22,6 +22,7 @@ import {
 } from '@reduxs/modules/register'
 import './style.less'
 import LoadingMask from "@components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 
 class RegisterContainer extends Component {
@@ -30,19 +31,20 @@ class RegisterContainer extends Component {
         const {siTypes, siMap,loadStatus,r_cellphoneNumber} = this.props
         return (
             <div className={'register'} >
-                <Header title={'用户注册'} isRight={false} onBack={this.handleBack}/>
-                <RegisterForm
-                    onChange={this.handleChange}
-                    siTypes={siTypes}
-                    siMap={siMap}
-                    loadStatus={loadStatus}
-                    r_cellphoneNumber={r_cellphoneNumber}
-                    {...this.props}
-                    // onSubmit={this.checkCellphoneNumber}
-                    // checkPhone={()=>this.checkCellphoneNumber()}
-                    // checkPage={this.checkPageParams}
-                />
-                {loadStatus ? <LoadingMask/> : null}
+                <SafeAreaView showBar={true} title={'用户注册'} isRight={false} handleBack={this.handleBack}>
+                    <RegisterForm
+                        onChange={this.handleChange}
+                        siTypes={siTypes}
+                        siMap={siMap}
+                        loadStatus={loadStatus}
+                        r_cellphoneNumber={r_cellphoneNumber}
+                        {...this.props}
+                        // onSubmit={this.checkCellphoneNumber}
+                        // checkPhone={()=>this.checkCellphoneNumber()}
+                        // checkPage={this.checkPageParams}
+                    />
+                    {loadStatus ? <LoadingMask/> : null}
+                </SafeAreaView>
             </div>
         )
     }

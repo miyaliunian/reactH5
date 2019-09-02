@@ -6,9 +6,11 @@
  *              医院列表容器
  */
 import React, {PureComponent} from 'react'
-import Header from "@components/Header/NavBar";
 import HospitalsItem from "./components/HospitalsItem/HospitalsItem";
 import Tabs from "./components/Tabs/Tabs";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import LoadingMask from "../../components/Loading/LoadingMask";
+import EntryLoader from "@components/entryLoader";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
@@ -18,8 +20,6 @@ import {
     getIsLastPage
 } from '../../reduxs/modules/hospital'
 import './style.less'
-import LoadingMask from "../../components/Loading/LoadingMask";
-import EntryLoader from "@components/entryLoader";
 
 
 class HospitalsContainer extends PureComponent {
@@ -32,25 +32,26 @@ class HospitalsContainer extends PureComponent {
                 onTouchMove={(e) => this.handleTouchMove(e)}
                 className={'hospitalsContainer'}
             >
-                <Header title={'医院列表'} onBack={this.handleBack} isRight={true}/>
-                <Tabs
-                    handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
-                    handelTabItemSel={(item) => this.handelTabItemSel(item)}
-                />
-                <HospitalsItem
-                    data={this.props.hospitalList}
-                    fetchingStatus={fetchingStatus}
-                    isLastPage={isLastPage}
-                    pullingDownHandler={() => this.pullingDownHandler()}
-                    pullingUpHandler={() => this.pullingUpHandler()}
-                />
-                {fetchingStatus && <EntryLoader/>}
-                {fetchingStatus
-                    ?
-                    <LoadingMask/>
-                    :
-                    null
-                }
+                <SafeAreaView showBar={true} title={'医院列表'} isRight={false}  handleBack={this.handleBack}>
+                    <Tabs
+                        handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
+                        handelTabItemSel={(item) => this.handelTabItemSel(item)}
+                    />
+                    <HospitalsItem
+                        data={this.props.hospitalList}
+                        fetchingStatus={fetchingStatus}
+                        isLastPage={isLastPage}
+                        pullingDownHandler={() => this.pullingDownHandler()}
+                        pullingUpHandler={() => this.pullingUpHandler()}
+                    />
+                    {fetchingStatus && <EntryLoader/>}
+                    {fetchingStatus
+                        ?
+                        <LoadingMask/>
+                        :
+                        null
+                    }
+                </SafeAreaView>
             </div>
         )
     }

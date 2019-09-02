@@ -13,6 +13,8 @@ import {bindActionCreators} from 'redux'
 import {Redirect} from 'react-router-dom'
 import {actions as loginActions, isLogin, getPassword, getUserName} from '../../reduxs/modules/login'
 import './style.less'
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+
 class LoginContainer extends Component {
     render() {
         const {username, password, login} = this.props
@@ -22,17 +24,20 @@ class LoginContainer extends Component {
         }
 
         return (
-            <div className={'login'} >
-                <LoginHeader/>
-                <LoginForm
-                    username={username}
-                    password={password}
-                    onChange={this.handleChange}
-                    onSubmit={this.onSubmit}
-                />
+            <div className={'login'}>
+                {/*<LoginHeader/>*/}
+                <SafeAreaView showBar={true} title={'账号密码登录'} isRight={false} handleBack={this.handleBack}>
+                    <LoginForm
+                        username={username}
+                        password={password}
+                        onChange={this.handleChange}
+                        onSubmit={this.onSubmit}
+                    />
+                </SafeAreaView>
             </div>
         )
     }
+
 
     handleChange = (e) => {
         if (e.target.name === "username") {
@@ -40,6 +45,10 @@ class LoginContainer extends Component {
         } else if (e.target.name === "password") {
             this.props.loginActions.setPassword(e.target.value)
         }
+    }
+
+    handleBack = () => {
+        this.props.history.goBack()
     }
 
 

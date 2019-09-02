@@ -23,32 +23,34 @@ import {
 } from '@reduxs/modules/reservation'
 import './style.less'
 import LoadingMask from "@components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 
 class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo, timeInterval} = this.props.location.state
-        const {diagnosis,fetchingStatus, payType, switchInfo, medicalType, bindCards, isRefresh} = this.props
+        const {diagnosis, fetchingStatus, payType, switchInfo, medicalType, bindCards, isRefresh} = this.props
         return (
-            <div className={'reservation'} >
-                <Header title={'预约信息'} isRight={false} onBack={this.handleBack}/>
-                <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}
-                                   timeInterval={timeInterval}/>
-                <div className={'reservation__interval'}/>
-                <ReservationForm
-                    {...this.props}
-                    bindCards={bindCards}
-                    diagnosis={diagnosis}
-                    medicalType={medicalType}
-                    payType={payType}
-                    switchInfo={switchInfo}
-                    refreshPage={() => this.setRefreshPage()}
-                />
-                <div className={'reservationForm__btn'}>
-                    <Button txt={'确认预约'} onSubmit={() => this.onBtnClick()}/>
-                </div>
-                {fetchingStatus ? <LoadingMask/> : null}
+            <div className={'reservation'}>
+                <SafeAreaView showBar={true} title={'预约信息'} isRight={false} handleBack={this.handleBack}>
+                    <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo}
+                                       timeInterval={timeInterval}/>
+                    <div className={'reservation__interval'}/>
+                    <ReservationForm
+                        {...this.props}
+                        bindCards={bindCards}
+                        diagnosis={diagnosis}
+                        medicalType={medicalType}
+                        payType={payType}
+                        switchInfo={switchInfo}
+                        refreshPage={() => this.setRefreshPage()}
+                    />
+                    <div className={'reservationForm__btn'}>
+                        <Button txt={'确认预约'} onSubmit={() => this.onBtnClick()}/>
+                    </div>
+                    {fetchingStatus ? <LoadingMask/> : null}
+                </SafeAreaView>
             </div>
         )
     }

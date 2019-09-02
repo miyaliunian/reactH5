@@ -21,6 +21,7 @@ import {
     getDivisionList,
     getDepartmentList
 } from "@reduxs/modules/division";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 class DivisionContainer extends Component {
 
@@ -35,7 +36,7 @@ class DivisionContainer extends Component {
         const {fetchingStatus, divisionList, departmentList} = this.props
         return (
             <div className={'clinic'} >
-                <Header title={name} onBack={this.handleBack} isRight={false}/>
+                <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
                 <div className={'clinic__bar border-bottom'}>
                     <div>进入医院主页</div>
                     <Icon className={'clinic__bar__icon'} type={'right'}/>
@@ -70,6 +71,7 @@ class DivisionContainer extends Component {
                     :
                     null
                 }
+                </SafeAreaView>
             </div>
         )
     }

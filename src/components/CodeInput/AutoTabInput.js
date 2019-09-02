@@ -26,6 +26,9 @@ export default  class AutoTabInput extends PureComponent {
             }, 100)
         }
     }
+
+
+
     handleChange(e) {
         const input = e.target.value
         if (this.props.onChange) {

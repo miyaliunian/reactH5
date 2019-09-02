@@ -177,17 +177,6 @@ const MedicarePayContainer = (props) => {
     )
 };
 
-
-const PopUPComponent = lazy(() => import("@components/PopUp/PopUpContainer"));
-const PopUpContainer = (props) => {
-    return (
-        <Suspense fallback={null}>
-            <PopUPComponent {...props}></PopUPComponent>
-        </Suspense>
-    )
-};
-
-
 const routerMap = [
     {
         path: '/',
@@ -278,11 +267,6 @@ const routerMap = [
         path: '/medicarePayContainer',
         name: 'medicarePayContainer',
         component: MedicarePayContainer
-    },
-    {
-        path: '/popUpContainer',
-        name: 'popUpContainer',
-        component: PopUpContainer
     },
 ]
 

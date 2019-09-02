@@ -7,3 +7,66 @@
   font-size: 32px;
   text-align: center;
 }
+
+.pay-password {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #999999;
+  margin: 0 auto;
+  position: relative;
+}
+
+.pay-password .real-ipt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  opacity: 0;
+  z-index: 3;
+}
+
+.pay-password .surface-ipts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.pay-password .surface-ipts .surface-ipt {
+  height: 45px;
+  line-height: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pay-password .surface-ipts .surface-ipt div {
+  width: calc(100% / 6);
+  height: 45px;
+  line-height: 45px;
+  border: 0;
+  border-right: 1px solid #999999;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.pay-password .surface-ipts .surface-ipt div:last-child {
+  border-right: none;
+}
+
+.pay-password .surface-ipts .surface-ipt .active {
+  height: 15px;
+  width: 15px;
+  background-color: #2b333b;
+  border-radius: 7.5px;
+}
+
+

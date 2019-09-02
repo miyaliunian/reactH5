@@ -9,6 +9,7 @@ module.exports = {
     resolve: {
         alias: {
             '@assets': require('path').resolve(__dirname, 'src/assets'),
+            '@baseUI': path.resolve(__dirname, 'src/baseUI'),
             '@components': require('path').resolve(__dirname, 'src/components'),
             '@containers': require('path').resolve(__dirname, 'src/containers'),
             '@images': require('path').resolve(__dirname, 'src/images'),
