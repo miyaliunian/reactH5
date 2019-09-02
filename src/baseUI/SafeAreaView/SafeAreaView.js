@@ -8,7 +8,7 @@
 import React, {Component} from 'react'
 import Header from "@components/Header/NavBar";
 import PropTypes from 'prop-types'
-import './style.less'
+import {StyledComponent} from './style'
 
 export default class SafeAreaView extends Component {
 
@@ -22,10 +22,10 @@ export default class SafeAreaView extends Component {
     render() {
         const {showBar, title, isRight, handleBack} = this.props
         return (
-            <div>
+            <StyledComponent>
                 {showBar ? <Header title={title} isRight={isRight} onBack={handleBack}/> : null}
                 {this.props.children}
-            </div>
+            </StyledComponent>
         )
     }
 }    

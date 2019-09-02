@@ -11,6 +11,7 @@ const {
     fixBabelImports,
     addWebpackAlias,
     addLessLoader,
+    addDecoratorsLegacy,
 } = require('customize-cra');
 const addCustomize = () => config => {
     require('react-app-rewire-postcss')(config, {
@@ -69,4 +70,5 @@ module.exports = override(
         modifyVars: theme
     }),
     addCustomize(),
+    addDecoratorsLegacy(),
 );
