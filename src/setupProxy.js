@@ -5,14 +5,14 @@
  * Description:
  */
 
-// const BASE_URL = 'http://58.208.84.112:10086/t-core'
-const BASE_URL = 'http://ykt.nn12333.com:7070/t-core3-t'
+
+const BASE_URL = 'http://61.132.94.72:10086/t-core/'
 const proxy = require('http-proxy-middleware');
 
 module.exports = function (app) {
     app.use(proxy('/baseURL', {
         target: BASE_URL,
-        // changeOrigin: true,
+        changeOrigin: true,
         pathRewrite: {
             "^/baseURL": "/"
         }
