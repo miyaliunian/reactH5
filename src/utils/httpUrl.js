@@ -7,6 +7,7 @@
 
 
 import {BASE_URL} from '@assets/static/DictionaryConstant'
+
 /**
  * 业务请求URL
  */
@@ -86,4 +87,9 @@ export default {
     API_QUERY_INHOSPASTIENT: (type, hosId, perId) => `/baseURL/${type}/v1.1/queryInHosPatient/${hosId}/${perId}.do`,
     API_QUERY_IN_PAY_LIST: (type, hosId, inHosNo) => `/baseURL/${type}/v1.0/${hosId}/${inHosNo}/queryInPrePayList.do`,
     API_QUERY_INHOSDETAIL: (type) => `/baseURL/${type}/v1.0/queryInHosDetail.do`,
+
+
+    /* 11:--------------------------------------------结算-----*/
+    API_ADVANCE_SETTLE: (ordertype, orderid) => `/baseURL/wallet/v1.2/presettle/${ordertype}/${orderid}.do`  // 预结算
+
 }

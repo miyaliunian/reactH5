@@ -6,7 +6,6 @@
  *   预约信息
  */
 import React, {Component} from 'react'
-import Header from "@components/Header/NavBar";
 import Button from "@components/Button/Button";
 import ReservationHeader from "@containers/Reservation/Components/ReservationHeader/ReservationHeader";
 import ReservationForm from "@containers/Reservation/Components/ReservationForm/ReservationForm";
@@ -78,7 +77,7 @@ class ReservationContainer extends Component {
 
 
     onBtnClick() {
-        this.props.reservationActions.onSubmit({...this.props.location.state})
+        this.props.reservationActions.onSubmit({...this.props.location.state}, {...this.props.history})
     }
 }
 

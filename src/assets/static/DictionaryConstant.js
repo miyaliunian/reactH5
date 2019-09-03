@@ -10,8 +10,8 @@
 // export const cityID = '320600'
 // export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 
-export const BASE_URL = 'http://ykt.nn12333.com:7070/t-core3-t/'
-export const cityID = '450100'
+export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
+export const cityID = '320400'
 
 //预约挂号-医院列表
 //
@@ -21,6 +21,8 @@ export const ZHPX = [
     {title: '综合排序', value: 'register'},
     {title: '医院等级', value: 'grade'}
 ]
+
+
 
 //筛选->医院类型
 export const SX_YYLX = {
@@ -106,3 +108,10 @@ export const HosGradeAppType = {
     othersGrade: 'othersGrade'
 }
 
+
+export const OrderType={
+    register:'线上挂号',
+    recipe:'门诊缴费',
+    medicineScan:'扫码购药',
+    inPrePay:'住院押金'
+}

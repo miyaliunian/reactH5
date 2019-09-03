@@ -6,11 +6,10 @@
  *  预约信息
  */
 import URL from '@utils/httpUrl'
+import {OrderType} from '@assets/static/DictionaryConstant'
 import {post} from "@utils/httpUtil";
-import {FETCH_DATA} from "@reduxs/middleware/api";
-
 import {Toast} from 'antd-mobile';
-
+import {FETCH_DATA} from "@reduxs/middleware/api";
 
 const initialState = {
     isFetching: false,
@@ -70,29 +69,30 @@ export const actions = {
                 return
             }
             dispatch(fetchPayTypeRequest(true))
-            return post(targetURL).then(
-                data => {
-                    // 实际用的是列表的第0条数据。
-                    if (data.data[0].id === 1) {
-                        //不显示Switch组件
-                        dispatch(fetchPayTypeSuccess({
-                            switchTxt: '去医院支付',
-                            showSwitch: false,
-                            data: data.data[0]
-                        }))
-                    } else {
-                        //显示Switch组件
-                        dispatch(fetchPayTypeSuccess({
-                            switchTxt: '使用医保支付',
-                            showSwitch: true,
-                            data: data.data[0]
-                        }))
+            return post(targetURL)
+                .then(
+                    data => {
+                        // 实际用的是列表的第0条数据。
+                        if (data.data[0].id === 1) {
+                            //不显示Switch组件
+                            dispatch(fetchPayTypeSuccess({
+                                switchTxt: '去医院支付',
+                                showSwitch: false,
+                                data: data.data[0]
+                            }))
+                        } else {
+                            //显示Switch组件
+                            dispatch(fetchPayTypeSuccess({
+                                switchTxt: '使用医保支付',
+                                showSwitch: true,
+                                data: data.data[0]
+                            }))
+                        }
+                    },
+                    error => {
+                        Toast.info('登录信息过期', 1)
                     }
-                },
-                error => {
-
-                }
-            )
+                )
         }
     },
 
@@ -232,9 +232,11 @@ export const actions = {
 
     /**
      * 确认预约:按钮点击
+     * @param data
+     * @param history
      * @returns {function(*, *)}
      */
-    onSubmit: (data) => {
+    onSubmit: (data, route) => {
         return (dispatch, getstate) => {
 
             /**
@@ -316,7 +318,24 @@ export const actions = {
             }
 
             const targetUrl = URL.API_REGISTER_UNION()
-            return dispatch(submitBtnClick(targetUrl, PARAM))
+            dispatch(submitBtn_request())
+            return post(targetUrl, PARAM)
+                .then(data => {
+                    if (data.infocode === 1) {
+                        let path = {
+                            pathname: '/advanceSettlementContainer',
+                            from:OrderType.register,
+                            state: data.data
+                        }
+                        route.push(path)
+                    } else {
+                        Toast.fail(data.infomessage, 2);
+                    }
+                    dispatch(submitBtn_success())
+                })
+                .catch(err => {
+                    dispatch(submitBtn_failure())
+                })
         }
     },
 
@@ -366,16 +385,16 @@ const setSwitchInfo = (data) => ({
 })
 
 
-const submitBtnClick = (targetURL, param) => ({
-    [FETCH_DATA]: {
-        types: [
-            actionTypes.BTN_SUBMIT_REQUEST,
-            actionTypes.BTN_SUBMIT_SUCCESS,
-            actionTypes.BTN_SUBMIT_FAILURE,
-        ],
-        targetURL,
-    },
-    param
+const submitBtn_request = () => ({
+    type: actionTypes.BTN_SUBMIT_REQUEST,
+})
+
+const submitBtn_success = () => ({
+    type: actionTypes.BTN_SUBMIT_SUCCESS,
+})
+
+const submitBtn_failure = () => ({
+    type: actionTypes.BTN_SUBMIT_FAILURE,
 })
 
 const reducer = (state = initialState, action) => {
@@ -443,9 +462,6 @@ const reducer = (state = initialState, action) => {
                 isFetching: true
             }
         case actionTypes.BTN_SUBMIT_SUCCESS:
-            if (action.response.infocode !== 1) {
-                Toast.fail(action.response.infomessage, 2);
-            }
             return {
                 ...state,
                 isFetching: false

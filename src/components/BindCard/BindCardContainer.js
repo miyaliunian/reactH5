@@ -7,10 +7,8 @@
  */
 import React, {Component} from 'react'
 import './style.less'
-import Header from "@components/Header/NavBar";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import PropTypes from 'prop-types'
 import {
     actions as bindCardActions,
     getBindCardList

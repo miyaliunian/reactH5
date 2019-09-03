@@ -6,7 +6,7 @@
  */
 
 
-const BASE_URL = 'http://61.132.94.72:10086/t-core/'
+const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
 const proxy = require('http-proxy-middleware');
 
 module.exports = function (app) {

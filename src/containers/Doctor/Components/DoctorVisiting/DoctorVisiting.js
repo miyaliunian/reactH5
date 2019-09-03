@@ -195,7 +195,6 @@ class DoctorVisiting extends Component {
      * @param data
      */
     navPage(data) {
-        debugger
         this.reservationInfoSel = data
         this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this)
 
