@@ -324,7 +324,8 @@ export const actions = {
                     if (data.infocode === 1) {
                         let path = {
                             pathname: '/advanceSettlementContainer',
-                            from:OrderType.register,
+                            fromName: OrderType[0].register,
+                            from: OrderType[0].status,
                             state: data.data
                         }
                         route.push(path)

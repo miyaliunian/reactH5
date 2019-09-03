@@ -25,6 +25,7 @@ export const actions = {
     loadAdvanceSettleInfo: (ordertype, orderid) => {
         return (dispatch, getstate) => {
             const targetUrl = URL.API_ADVANCE_SETTLE(ordertype, orderid)
+            debugger
             dispatch(fetchRequest())
             return post(targetUrl)
                 .then(data => {

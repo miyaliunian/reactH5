@@ -23,7 +23,6 @@ export const ZHPX = [
 ]
 
 
-
 //筛选->医院类型
 export const SX_YYLX = {
     title: '不限',
@@ -109,9 +108,10 @@ export const HosGradeAppType = {
 }
 
 
-export const OrderType={
-    register:'线上挂号',
-    recipe:'门诊缴费',
-    medicineScan:'扫码购药',
-    inPrePay:'住院押金'
-}
+export const OrderType =
+    [
+        {register: '线上挂号', status: 'register'},
+        {recipe: '门诊缴费', status: 'recipe'},
+        {medicineScan: '扫码购药', status: 'medicineScan'},
+        {inPrePay: '住院押金', status: 'inPrePay'}
+    ]

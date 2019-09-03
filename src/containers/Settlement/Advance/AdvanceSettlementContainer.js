@@ -4,11 +4,11 @@
  * Date: 2019/8/28
  * Description:
  *  订单预结算
- *   自费 从来不显示 已支付
- *  paymentStatus  === 1(医保已支付) 账号、统筹 均显示已支付  ： paymentStatus  === 0(医保未支付) 账号、统筹(不显示已支付)
+ *   自费 从来不显示 [已支付]
+ *  paymentStatus  === 1(医保已支付) 账号、统筹 均显示[已支付]  ： paymentStatus  === 0(医保未支付) 账号、统筹均不显示[已支付]
  *  paymentStatus ===0   账户余额:prePayBalance
  *  paymentStatus ===1   账户余额:postPayBalance
- *  ownPayAmt  ==  总金额(纯自费)  账号、统筹 均显示已支付
+ *  ownPayAmt  ==  总金额(纯自费)  账号、统筹 均显示[已支付]
  */
 import React, {Component} from 'react'
 import classNames from 'classnames'
@@ -43,7 +43,7 @@ class AdvanceSettlementContainer extends Component {
                         </InfoRow>
                         <InfoRow showBorder={false}>
                             <span style={{color: '#737373', fontSize: '17px'}}>商品名称</span>
-                            <span>{this.props.location.from}</span>
+                            <span>{this.props.location.fromName}</span>
                         </InfoRow>
                         <InfoRow showBorder={false}>
                             <span style={{color: '#737373', fontSize: '17px'}}>总金额</span>
@@ -164,24 +164,18 @@ class AdvanceSettlementContainer extends Component {
          ownPayf     = _hisRegister.ownCost;//自费
          totalPayf   = _hisRegister.regFee;//总金额
          */
-
+        const {history} = this.props
         const {unifiedOrderId, paymentStatus} = this.props.location.state
-        if (paymentStatus === 0) {
+        if (history.action === 'PUSH') {
             //paymentStatus === 0 未支付
-            //预结算
-            this.props.advanceSettlementActions.loadAdvanceSettleInfo('register', unifiedOrderId)
-        } else {
-            //已支付
-            //查询账户余额
-            const {unifiedOrderId, payCost, ownCos, pubCost, regFee} = this.props.location.state
+            if (paymentStatus === 0) {
+                //预结算
+                this.props.advanceSettlementActions.loadAdvanceSettleInfo(this.props.location.from, unifiedOrderId)
+            } else {
+                //已支付
+                const {unifiedOrderId, payCost, ownCos, pubCost, regFee} = this.props.location.state
+            }
         }
-
-
-        // document.getElementById('AdvanceSettlementContainer').addEventListener("touchstart", (event) => {
-        //     event.preventDefault();
-        // }, {
-        //     passive: false //  禁止 passive 效果
-        // })
     }
 
     handleBack = () => {
