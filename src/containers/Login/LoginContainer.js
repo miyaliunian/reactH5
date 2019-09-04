@@ -6,7 +6,6 @@
  *
  */
 import React, {Component} from 'react'
-import LoginHeader from "./components/LoginHeader/LoginHeader";
 import LoginForm from "./components/LoginForm/LoginForm";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -25,7 +24,6 @@ class LoginContainer extends Component {
 
         return (
             <div className={'login'}>
-                {/*<LoginHeader/>*/}
                 <SafeAreaView showBar={true} title={'账号密码登录'} isRight={false} handleBack={this.handleBack}>
                     <LoginForm
                         username={username}

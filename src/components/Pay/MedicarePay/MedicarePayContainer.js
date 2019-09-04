@@ -15,6 +15,7 @@ import PopUP from "@components/PopUp/PopUpContainer";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as popUpActions, getPopupState} from "@reduxs/modules/popUp";
+import {actions as medicarePayActions, getFetchingStatus} from "@reduxs/modules/medicarePay";
 import icon_ybzf from '@images/Pay/ico_ybk_png.png';
 import './style.less'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
@@ -64,7 +65,7 @@ class MedicarePayContainer extends Component {
                         >待支付：￥{(orderPayment.siPayAmt + orderPayment.pubPayAmt).toFixed(2)}</span>
                         <span className={'payComponent_btn'} onClick={() => popUpActions.showPopup()}>支  付</span>
                     </div>
-                    <PopUP price={orderPayment} title={fromName} callBack={(e)=>this.handleInputValus(e)}/>
+                    <PopUP price={orderPayment} title={fromName} callBack={(e) => this.handleInputValus(e)}/>
                 </SafeAreaView>
             </div>
         )
@@ -74,8 +75,8 @@ class MedicarePayContainer extends Component {
         this.props.history.goBack()
     }
 
-    handleInputValus(e){
-        console.log(e)
+    handleInputValus(e) {
+        this.props.medicarePayActions.pay(e)
     }
 
     componentDidMount() {
@@ -93,12 +94,14 @@ class MedicarePayContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         popupState: getPopupState(state),
+        fetchStatus: getFetchingStatus(state)
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        popUpActions: bindActionCreators(popUpActions, dispatch)
+        popUpActions: bindActionCreators(popUpActions, dispatch),
+        medicarePayActions: bindActionCreators(medicarePayActions, dispatch)
     }
 }
 
