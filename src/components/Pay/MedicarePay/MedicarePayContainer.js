@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/8/16
  * Description:
- *  医保支付
+ *  医保支付(结算)
  *
  *    账户支付：siPayAmt + pubPayAmt
  *    账户余额:prePayBalance
@@ -15,17 +15,18 @@ import PopUP from "@components/PopUp/PopUpContainer";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as popUpActions, getPopupState} from "@reduxs/modules/popUp";
-import {actions as medicarePayActions, getFetchingStatus} from "@reduxs/modules/medicarePay";
+import {actions as medicarePayActions, getFetchingStatus, getVerifyEntity} from "@reduxs/modules/medicarePay";
 import icon_ybzf from '@images/Pay/ico_ybk_png.png';
 import './style.less'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class MedicarePayContainer extends Component {
 
     render() {
-        const {popUpActions} = this.props
-        const {person, orderPayment, ObjEntity, fromName, from} = this.props.location.state
+        const {popUpActions, fetchStatus} = this.props
+        const {orderPayment, ObjEntity, fromName} = this.props.location.state
         return (
             <div className={'medicarePay'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
                 <SafeAreaView showBar={true} title={'医保支付'} isRight={false} handleBack={this.handleBack}>
@@ -67,6 +68,7 @@ class MedicarePayContainer extends Component {
                     </div>
                     <PopUP price={orderPayment} title={fromName} callBack={(e) => this.handleInputValus(e)}/>
                 </SafeAreaView>
+                {fetchStatus ? <LoadingMask/> : ''}
             </div>
         )
     }
@@ -76,17 +78,24 @@ class MedicarePayContainer extends Component {
     }
 
     handleInputValus(e) {
-        this.props.medicarePayActions.pay(e)
+        const {from: orderType, ObjEntity, orderPayment} = this.props.location.state
+        this.props.medicarePayActions.pay(e, orderType, ObjEntity, orderPayment, (data) => this.popGoback(data))
+    }
+
+
+    popGoback(data) {
+        this.props.location.callBack(data)
+        setTimeout(() => {
+            this.props.history.goBack()
+        }, 200)
     }
 
     componentDidMount() {
         const {history} = this.props
         if (history.action === 'PUSH') {
-            console.log('第一次进入页面')
+            const {person} = this.props.location.state
+            this.props.medicarePayActions.loadVerifyInfo(person)
         }
-
-        console.log('医保支付页面')
-        console.log(this.props.location.state)
     }
 }
 
@@ -94,7 +103,8 @@ class MedicarePayContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         popupState: getPopupState(state),
-        fetchStatus: getFetchingStatus(state)
+        fetchStatus: getFetchingStatus(state),
+        verify: getVerifyEntity(state)
     }
 }
 

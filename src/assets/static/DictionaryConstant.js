@@ -115,3 +115,6 @@ export const OrderType =
         {medicineScan: '扫码购药', status: 'medicineScan'},
         {inPrePay: '住院押金', status: 'inPrePay'}
     ]
+
+
+export const payMethodId = '1'

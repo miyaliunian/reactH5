@@ -1,9 +1,9 @@
 /**
- * Class: medicarePay
+ * Class: thirdPay
  * Author: wufei
  * Date: 2019/9/4
  * Description:
- *  医保支付
+ *  第三方支付
  */
 
 import URL from '@utils/httpUrl';
@@ -19,10 +19,10 @@ const initialState = {
 }
 
 const actionTypes = {
-    FETCH_REQUEST: 'MEDICARE_PAY/FETCH_MEDICARE_PAY_REQUEST',
-    FETCH_SIGNABLE_SUCCESS: 'MEDICARE_PAY/FETCH_SIGNABLE_SUCCESS',
-    FETCH_PAY_METHOD_ATTRI_SUCCESS: 'MEDICARE_PAY/FETCH_PAY_METHOD_ATTRI_SUCCESS',
-    FETCH_FAILURE: 'MEDICARE_PAY/FETCH_MEDICARE_PAY_FAILURE',
+    FETCH_REQUEST: 'THIRD_PAY/FETCH_THIRD_PAY_REQUEST',
+    FETCH_SIGNABLE_SUCCESS: 'THIRD_PAY/FETCH_SIGNABLE_SUCCESS',
+    FETCH_PAY_METHOD_ATTRI_SUCCESS: 'THIRD_PAY/FETCH_PAY_METHOD_ATTRI_SUCCESS',
+    FETCH_FAILURE: 'THIRD_PAY/FETCH_THIRD_PAY_FAILURE',
 }
 
 export const actions = {
@@ -55,8 +55,6 @@ export const actions = {
     loadVerifyInfo: (per) => {
         return (dispatch, getstate) => {
             const targetUrl = URL.API_PAY_METHOD_ATTRIBUTES(cityID, per.siTypeCode, payMethodId)
-            dispatch(fetchRequest())
-            debugger
             return post(targetUrl)
                 .then((data) => {
                         if (data.infocode && data.infocode === 1) {
@@ -109,8 +107,8 @@ export const actions = {
                         if (data.infocode && data.infocode === 1) {
                             let orderPaymentEntity = data.data
                             if (orderPaymentEntity.ownPayAmt > 0) {
-                            //回退到预结算(修改支付状态：将未医保支付 改成已经医保支付)
-                                callBack({paymentStatus:1})
+                            //回退到预结算
+                                callBack({paymentStatus:1,})
                             } else {
 
                             }
@@ -184,13 +182,13 @@ export default reducer
 
 //selectors
 export const getFetchingStatus = (state) => {
-    return state.medicarePay.isFetching
+    return state.thirdPay.isFetching
 }
 
 export const getIsSignableEntity = (state) => {
-    return state.medicarePay.isSignableEntity
+    return state.thirdPay.isSignableEntity
 }
 
 export const getVerifyEntity = (state) => {
-    return state.medicarePay.verify
+    return state.thirdPay.verify
 }

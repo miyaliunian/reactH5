@@ -32,9 +32,7 @@ export const InfoRow = styled.div`
         flex-direction: row;
     }    
 `
-
-
-export const PerContent = styled.div`
+export const PayStatusContent = styled.div`
     line-height:50px;
     background-color:rgb(239,238,239);
     padding: 0 10px;
@@ -43,14 +41,25 @@ export const PerContent = styled.div`
     align-items: center;
     height: 50px;
     border-bottom: 1px solid #f1f1f1;
-    
+    display:${props=>props.show ? 'block' : 'none'}
+`
+
+
+export const PerContent = styled.div`
+    line-height:50px;
+    background-color:rgb(249,249,249);
+    padding: 0 10px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid #f1f1f1;
 `
 
 
 export const PayInfoContent = styled.div`
     background-color:white;
 `
-
 
 
 export const BtnContent = styled.div`

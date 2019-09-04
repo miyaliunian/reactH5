@@ -18,28 +18,33 @@
  *
  */
 import React, {Component} from 'react'
-import classNames from 'classnames'
 import ico_user from '@images/Home/ico_user.png'
 import Button from "@components/Button/Button";
-import {PerContent, SettleInfoContent, InfoRow, Separation, PayInfoContent, BtnContent} from './style'
+import {PayStatusContent, PerContent, SettleInfoContent, InfoRow, Separation, PayInfoContent, BtnContent} from './style'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {
+    getPaymentStatus,
     getFetchingStatus,
     getAdvanceSttle,
     getPerInfo,
     actions as advanceSettlementActions
 } from "@reduxs/modules/advanceSettlement";
+import LoadingMask from "@components/Loading/LoadingMask";
 
 class AdvanceSettlementContainer extends Component {
+
     render() {
-        const {patientName, sn, regFee, paymentStatus} = this.props.location.state
-        console.log(this.props.advanceSettleInfo)
+        const {patientName, sn, regFee} = this.props.location.state
+        const {paymentStatus, fetchingStatus} = this.props
         return (
             <div id={'AdvanceSettlementContainer'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
                 <SafeAreaView showBar={true} title={'订单预结算'} isRight={false} handleBack={this.handleBack}>
+                    <PayStatusContent show={paymentStatus === 1 ? true : false}>
+                        <span>医保支付成功,请继续完成自费支付</span>
+                    </PayStatusContent>
                     <PerContent>
                         <img src={ico_user} className={'bindCard__icon'} width={'35px'} height={'35px'}/>
                         <span style={{marginLeft: '10px', fontSize: '20px'}}>{patientName}</span>
@@ -66,6 +71,7 @@ class AdvanceSettlementContainer extends Component {
                     {paymentStatus === 1 ? this.renderSettleInfo1() : this.renderSettleInfo0()}
                     {this.renderBtnTitle()}
                 </SafeAreaView>
+                {fetchingStatus ? <LoadingMask/> : ''}
             </div>
         )
     }
@@ -76,6 +82,8 @@ class AdvanceSettlementContainer extends Component {
      */
     renderSettleInfo1() {
         const {pubPayAmt, siPayAmt, ownPayAmt, postPayBalance, totalAmt} = this.props.advanceSettleInfo
+        console.log('医保已经支付')
+        console.log(this.props.advanceSettleInfo)
         return (
             <PayInfoContent>
                 <InfoRow showBorder={true}>
@@ -124,6 +132,8 @@ class AdvanceSettlementContainer extends Component {
         if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt === totalAmt) {
             show = true
         }
+        console.log('医保未支付')
+        console.log(this.props.advanceSettleInfo)
         return (
             <PayInfoContent>
                 <InfoRow showBorder={true}>
@@ -171,7 +181,7 @@ class AdvanceSettlementContainer extends Component {
      * @returns {*}
      */
     renderBtnTitle() {
-        const {paymentStatus} = this.props.location.state
+        const {paymentStatus} = this.props
         const {siPayAmt, ownPayAmt, totalAmt} = this.props.advanceSettleInfo
         let titleStr = ''
         let targetUrl = ''
@@ -181,14 +191,14 @@ class AdvanceSettlementContainer extends Component {
         } else {
             if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt === totalAmt) {
                 titleStr = `自费支付 ${totalAmt.toFixed(2)}元`
-                targetUrl = '/medicarePayContainer'
+                targetUrl = '/thirdPayContainer'
             } else if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt != totalAmt) {
                 if (paymentStatus === 0) {
                     titleStr = `医保支付 ${siPayAmt.toFixed(2)}元`
                     targetUrl = '/medicarePayContainer'
                 } else if (paymentStatus === 1) {
                     titleStr = `自费支付 ${ownPayAmt.toFixed(2)}元`
-                    targetUrl = '/medicarePayContainer'
+                    targetUrl = '/thirdPayContainer'
                 }
             }
         }
@@ -197,6 +207,15 @@ class AdvanceSettlementContainer extends Component {
                 <Button txt={titleStr} onSubmit={() => this.navPage(targetUrl)}/>
             </BtnContent>
         )
+    }
+
+
+    componentWillMount() {
+        const {history} = this.props
+        if (history.action === 'PUSH') {
+            const {paymentStatus} = this.props.location.state
+            this.props.advanceSettlementActions.setPaymentStatus(paymentStatus)
+        }
     }
 
     componentDidMount() {
@@ -208,8 +227,8 @@ class AdvanceSettlementContainer extends Component {
          totalPayf   = _hisRegister.regFee;//总金额
          */
         const {history} = this.props
-        const {unifiedOrderId, paymentStatus, patientId} = this.props.location.state
         if (history.action === 'PUSH') {
+            const {unifiedOrderId, paymentStatus, patientId} = this.props.location.state
             if (paymentStatus === 0) {
                 //预结算
                 this.props.advanceSettlementActions.loadPersonAndAdvanceSettleInfo(this.props.location.from, unifiedOrderId, patientId)
@@ -217,6 +236,8 @@ class AdvanceSettlementContainer extends Component {
                 //已支付
                 const {unifiedOrderId, payCost, ownCos, pubCost, regFee} = this.props.location.state
             }
+        } else {
+
         }
     }
 
@@ -232,17 +253,23 @@ class AdvanceSettlementContainer extends Component {
                 orderPayment: this.props.advanceSettleInfo,
                 ObjEntity: this.props.location.state,
                 fromName: this.props.location.fromName,
-                from: this.props.location.from
-            }
+                from: this.props.location.from,
+            },
+            callBack: (data) => this.callBack(data)
         }
         this.props.history.push(path)
-
     }
+
+    callBack(data) {
+        this.props.advanceSettlementActions.setPaymentStatus(data.paymentStatus)
+    }
+
 }
 
 
 const mapStateToProps = (state) => {
     return {
+        paymentStatus: getPaymentStatus(state),
         fetchingStatus: getFetchingStatus(state),
         advanceSettleInfo: getAdvanceSttle(state),
         person: getPerInfo(state),

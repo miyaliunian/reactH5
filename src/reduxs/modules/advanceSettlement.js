@@ -13,11 +13,13 @@ import {post} from "@utils/httpUtil";
 
 const initialState = {
     isFetching: false,
+    paymentStatus: '',
     personEntity: '',
     settleEntity: ''
 }
 
 const actionTypes = {
+    SET_PAYMENT: 'ADVANCE_SETTLE/SET_PAYMENT',
     FETCH_REQUEST: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_REQUEST',
     FETCH_PERSON_SUCCESS: 'ADVANCE_SETTLE/FETCH_PERSON_SUCCESS',
     FETCH_ADVANCE_SETTLE_SUCCESS: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_SUCCESS',
@@ -28,13 +30,20 @@ export const actions = {
     loadPersonAndAdvanceSettleInfo: (ordertype, orderid, patientId) => {
         return (dispatch, getstate) => {
             dispatch(fetchRequest())
-            Axios.all([loadPerson(URL.API_PERSON(patientId),dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid),dispatch)])
+            Axios.all([loadPerson(URL.API_PERSON(patientId), dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid), dispatch)])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
-                    console.log('成功')
+                    // console.log('成功')
                 }))
                 .catch(Axios.spread((personResp, advanceSettleResp) => {
-                    console.log('失败')
+                    // console.log('失败')
                 }))
+        }
+    },
+
+
+    setPaymentStatus: (value) => {
+        return (dispatch, getstate) => {
+            dispatch(setPaymentStatus(value))
         }
     }
 }
@@ -42,7 +51,7 @@ export const actions = {
 
 //加载人员信息
 function loadPerson(targetUrl, dispatch) {
-    
+
     return post(targetUrl)
         .then((data) => {
                 if (data.infocode && data.infocode === 1) {
@@ -66,8 +75,6 @@ function loadAdvanceSettleInfo(targetUrl, dispatch) {
         .then(data => {
             if (data.infocode === 1) {
                 dispatch(fetchSettleSuccess(data.data))
-                console.log('预结算信息')
-                console.log(data.data)
             } else {
                 Toast.fail(data.infomessage, 2);
             }
@@ -77,6 +84,11 @@ function loadAdvanceSettleInfo(targetUrl, dispatch) {
         })
 }
 
+
+const setPaymentStatus = (data) => ({
+    type: actionTypes.SET_PAYMENT,
+    response: data
+})
 
 const fetchRequest = () => ({
     type: actionTypes.FETCH_REQUEST,
@@ -101,13 +113,18 @@ const fetchFailure = () => ({
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.SET_PAYMENT:
+            return {
+                ...state,
+                paymentStatus: action.response
+            }
         case actionTypes.FETCH_REQUEST:
             return {
                 ...state,
                 isFetching: true
             }
         case actionTypes.FETCH_PERSON_SUCCESS:
-            
+
             return {
                 ...state,
                 isFetching: false,
@@ -133,10 +150,13 @@ export default reducer
 
 
 //selectors
+export const getPaymentStatus = (state) => {
+    return state.advanceSettlement.paymentStatus
+}
+
 export const getFetchingStatus = (state) => {
     return state.advanceSettlement.isFetching
 }
-
 
 export const getPerInfo = (state) => {
     return state.advanceSettlement.personEntity

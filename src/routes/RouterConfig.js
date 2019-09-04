@@ -168,11 +168,23 @@ const AdvanceSettlementContainer = (props) => {
     )
 };
 
+
+//医保支付
 const MedicarePayComponent = lazy(() => import("@components/Pay/MedicarePay/MedicarePayContainer"));
 const MedicarePayContainer = (props) => {
     return (
         <Suspense fallback={null}>
             <MedicarePayComponent {...props}></MedicarePayComponent>
+        </Suspense>
+    )
+}
+
+//第三方支付
+const ThirdPayContainerComponent = lazy(() => import("@components/Pay/ThirdPay/ThirdPayContainer"));
+const ThirdPayContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <ThirdPayContainerComponent {...props}></ThirdPayContainerComponent>
         </Suspense>
     )
 };
@@ -267,6 +279,11 @@ const routerMap = [
         path: '/medicarePayContainer',
         name: 'medicarePayContainer',
         component: MedicarePayContainer
+    },
+    {
+        path: '/thirdPayContainer',
+        name: 'thirdPayContainer',
+        component: ThirdPayContainer
     },
 ]
 
