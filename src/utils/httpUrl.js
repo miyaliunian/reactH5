@@ -90,6 +90,8 @@ export default {
 
 
     /* 11:--------------------------------------------结算-----*/
+    API_PERSON:(personId)=>`/baseURL/person/v1.2/getcardmsg/${personId}.do`,
+    API_PERSON_BALANCE:(personId)=>`/baseURL/bindCard/v1.0/getById/${personId}.do`,
     API_ADVANCE_SETTLE: (ordertype, orderid) => `/baseURL/wallet/v1.2/presettle/${ordertype}/${orderid}.do`  // 预结算
 
 }

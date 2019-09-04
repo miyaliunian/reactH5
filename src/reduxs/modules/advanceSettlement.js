@@ -7,72 +7,120 @@
  */
 
 import URL from '@utils/httpUrl';
+import Axios from 'axios'
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";
 
 const initialState = {
     isFetching: false,
-    entity: ''
+    personEntity: '',
+    settleEntity: ''
 }
 
 const actionTypes = {
-    FETCH_ADVANCE_SETTLE_REQUEST: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_REQUEST',
+    FETCH_REQUEST: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_REQUEST',
+    FETCH_PERSON_SUCCESS: 'ADVANCE_SETTLE/FETCH_PERSON_SUCCESS',
     FETCH_ADVANCE_SETTLE_SUCCESS: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_SUCCESS',
-    FETCH_ADVANCE_SETTLE_FAILURE: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_FAILURE',
+    FETCH_FAILURE: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_FAILURE',
 }
 
 export const actions = {
-    loadAdvanceSettleInfo: (ordertype, orderid) => {
+    loadPersonAndAdvanceSettleInfo: (ordertype, orderid, patientId) => {
         return (dispatch, getstate) => {
-            const targetUrl = URL.API_ADVANCE_SETTLE(ordertype, orderid)
-            debugger
             dispatch(fetchRequest())
-            return post(targetUrl)
-                .then(data => {
-                    if (data.infocode === 1) {
-                        dispatch(fetchSuccess(data.data))
-                    } else {
-                        Toast.fail(data.infomessage, 2);
-                    }
-                })
-                .catch(err => {
-                    dispatch(fetchFailure())
-                })
+            Axios.all([loadPerson(URL.API_PERSON(patientId),dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid),dispatch)])
+                .then(Axios.spread((personResp, advanceSettleResp) => {
+                    console.log('成功')
+                }))
+                .catch(Axios.spread((personResp, advanceSettleResp) => {
+                    console.log('失败')
+                }))
         }
     }
 }
 
 
+//加载人员信息
+function loadPerson(targetUrl, dispatch) {
+    
+    return post(targetUrl)
+        .then((data) => {
+                if (data.infocode && data.infocode === 1) {
+                    dispatch(fetchPersonSuccess(data.data))
+                } else {
+                    Toast.fail(data.infomessage, 2);
+                }
+            }
+        )
+        .catch(err => {
+            dispatch(fetchFailure())
+        })
+
+}
+
+
+//加载预结算信息
+function loadAdvanceSettleInfo(targetUrl, dispatch) {
+
+    return post(targetUrl)
+        .then(data => {
+            if (data.infocode === 1) {
+                dispatch(fetchSettleSuccess(data.data))
+                console.log('预结算信息')
+                console.log(data.data)
+            } else {
+                Toast.fail(data.infomessage, 2);
+            }
+        })
+        .catch(err => {
+            dispatch(fetchFailure())
+        })
+}
+
+
 const fetchRequest = () => ({
-    type: actionTypes.FETCH_ADVANCE_SETTLE_REQUEST,
+    type: actionTypes.FETCH_REQUEST,
+})
+
+const fetchPersonSuccess = (data) => ({
+    type: actionTypes.FETCH_PERSON_SUCCESS,
+    response: data
 })
 
 
-const fetchSuccess = (data) => ({
+const fetchSettleSuccess = (data) => ({
     type: actionTypes.FETCH_ADVANCE_SETTLE_SUCCESS,
     response: data
 })
 
 
 const fetchFailure = () => ({
-    type: actionTypes.FETCH_ADVANCE_SETTLE_FAILURE,
+    type: actionTypes.FETCH_FAILURE,
 })
 
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_ADVANCE_SETTLE_REQUEST:
+        case actionTypes.FETCH_REQUEST:
             return {
                 ...state,
                 isFetching: true
             }
-        case actionTypes.FETCH_ADVANCE_SETTLE_SUCCESS:
+        case actionTypes.FETCH_PERSON_SUCCESS:
+            
             return {
                 ...state,
                 isFetching: false,
-                entity:action.response
+                personEntity: action.response
             }
-        case actionTypes.FETCH_ADVANCE_SETTLE_FAILURE:
+        case actionTypes.FETCH_ADVANCE_SETTLE_SUCCESS:
+
+            return {
+                ...state,
+                isFetching: false,
+                settleEntity: action.response
+            }
+        case actionTypes.FETCH_FAILURE:
             return {
                 ...state,
                 isFetching: false
@@ -90,6 +138,10 @@ export const getFetchingStatus = (state) => {
 }
 
 
+export const getPerInfo = (state) => {
+    return state.advanceSettlement.personEntity
+}
+
 export const getAdvanceSttle = (state) => {
-    return state.advanceSettlement.entity
+    return state.advanceSettlement.settleEntity
 }

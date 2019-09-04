@@ -18,19 +18,24 @@ import {Content} from './style'
 
 class PopUpContainer extends Component {
     render() {
-        const {popupState, popUpActions} = this.props
+        const {popupState, popUpActions, price, title} = this.props
         return (
             <div className={classNames({'popup-wrapper': true, active: popupState})}>
                 <div className={classNames({content: true, active: popupState})}>
                     <Content>
                         <div className={'header border-bottom'}>
-                            <Icon type={'cross'} style={{color:'black',position:'absolute',left:'10px'}} onClick={()=>popUpActions.hidePopup()}/>
+                            <Icon type={'cross'} style={{color: 'black', position: 'absolute', left: '10px'}}
+                                  onClick={() => popUpActions.hidePopup()}/>
                             <h4 className={'title'}>请输入社保卡密码</h4>
                         </div>
 
                         <div className={'header_body'}>
-                            <p style={{margin: '10px 0', fontSize: '15px'}}>扫描购药</p>
-                            <p style={{marginBottom: '10px', fontSize: '28px', fontWeight: 'bolder'}}>￥30.20</p>
+                            <p style={{margin: '10px 0', fontSize: '15px'}}>{title}</p>
+                            <p style={{
+                                marginBottom: '10px',
+                                fontSize: '28px',
+                                fontWeight: 'bolder'
+                            }}>￥{(price.siPayAmt + price.pubPayAmt).toFixed(2)}</p>
                         </div>
                         <CodeInput/>
                     </Content>

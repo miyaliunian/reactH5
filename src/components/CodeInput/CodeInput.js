@@ -47,7 +47,6 @@ export default class CodeInput extends Component {
 
     unitOnChange(e) {
         let pas = Array.from(e.target.value)
-
         if (this.iniIndex < pas.length) {
             for (let i = 0; i < pas.length; i++) {
                 this.state.v.map((item) => {

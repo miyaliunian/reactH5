@@ -4,19 +4,18 @@
  * Date: 2019/8/16
  * Description:
  *  医保支付
+ *
+ *    账户支付：siPayAmt + pubPayAmt
+ *    账户余额:prePayBalance
+ *    待支付：siPayAmt + pubPayAmt
  */
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
-import Header from "@components/Header/NavBar";
-import CodeInput from "@components/CodeInput/CodeInput";
 import PopUP from "@components/PopUp/PopUpContainer";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as popUpActions, getPopupState} from "@reduxs/modules/popUp";
-
 import icon_ybzf from '@images/Pay/ico_ybk_png.png';
-
-
 import './style.less'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
@@ -25,21 +24,23 @@ class MedicarePayContainer extends Component {
 
     render() {
         const {popUpActions} = this.props
+        const {person, orderPayment, ObjEntity, fromName, from} = this.props.location.state
         return (
             <div className={'medicarePay'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
                 <SafeAreaView showBar={true} title={'医保支付'} isRight={false} handleBack={this.handleBack}>
                     <div className={'payComponent_info'}>
                         <div className={'payComponent_info_row'}>
                             <span>订单号</span>
-                            <span>订单号</span>
+                            <span>{ObjEntity.sn}</span>
                         </div>
                         <div className={'payComponent_info_row'}>
                             <span>商品名称</span>
-                            <span>住院预交金</span>
+                            <span>{fromName}</span>
                         </div>
                         <div className={'payComponent_info_row'}>
                             <span>账户支付</span>
-                            <span style={{color: 'orange'}}>￥{12988}</span>
+                            <span
+                                style={{color: 'orange'}}>￥{(orderPayment.siPayAmt + orderPayment.pubPayAmt).toFixed(2)}</span>
                         </div>
                     </div>
                     <div style={{height: '10px', backgroundColor: 'rgb(230,230,230)'}}/>
@@ -53,15 +54,17 @@ class MedicarePayContainer extends Component {
                                     color: 'rgb(126,126,126)',
                                     fontSize: '13px',
                                     marginTop: '2px'
-                                }}>账户金额：830.80</span>
+                                }}>账户金额：￥{(orderPayment.prePayBalance.toFixed(2))}</span>
                             </div>
                         </div>
                     </div>
                     <div className={'payComponent_bottomBtn'}>
-                        <span className={'payComponent_desc'}>待支付：￥1wwww</span>
+                        <span
+                            className={'payComponent_desc'}
+                        >待支付：￥{(orderPayment.siPayAmt + orderPayment.pubPayAmt).toFixed(2)}</span>
                         <span className={'payComponent_btn'} onClick={() => popUpActions.showPopup()}>支  付</span>
                     </div>
-                    <PopUP/>
+                    <PopUP price={orderPayment} title={fromName}/>
                 </SafeAreaView>
             </div>
         )
@@ -76,6 +79,9 @@ class MedicarePayContainer extends Component {
         if (history.action === 'PUSH') {
             console.log('第一次进入页面')
         }
+
+        console.log('医保支付页面')
+        console.log(this.props.location.state)
     }
 }
 

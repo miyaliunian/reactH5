@@ -9,6 +9,13 @@
  *  paymentStatus ===0   账户余额:prePayBalance
  *  paymentStatus ===1   账户余额:postPayBalance
  *  ownPayAmt  ==  总金额(纯自费)  账号、统筹 均显示[已支付]
+ *
+ *  按钮显示
+ *      totalAmt === 0  按钮标题：[医保支付 totalAmt元]  点击 跳转 ->医保支付页面
+ *
+ *    （ownPayAmt === totalAmt）  自费支付 totalAmt元  点击 跳转 -> 第三方支付页面
+ *    （ownPayAmt != totalAmt）  （ paymentStatus === 0   医保支付 siPayAmt元  点击 跳转 -> 医保支付页面） ： （ paymentStatus === 1   自费支付 ownPayAmt元  点击 跳转 -> 第三方支付页面）
+ *
  */
 import React, {Component} from 'react'
 import classNames from 'classnames'
@@ -22,6 +29,7 @@ import {bindActionCreators} from "redux";
 import {
     getFetchingStatus,
     getAdvanceSttle,
+    getPerInfo,
     actions as advanceSettlementActions
 } from "@reduxs/modules/advanceSettlement";
 
@@ -56,9 +64,7 @@ class AdvanceSettlementContainer extends Component {
                     </SettleInfoContent>
                     <Separation/>
                     {paymentStatus === 1 ? this.renderSettleInfo1() : this.renderSettleInfo0()}
-                    <BtnContent height={20}>
-                        <Button txt={'自费支付'} onSubmit={() => alert('sss')}/>
-                    </BtnContent>
+                    {this.renderBtnTitle()}
                 </SafeAreaView>
             </div>
         )
@@ -156,6 +162,43 @@ class AdvanceSettlementContainer extends Component {
         )
     }
 
+    /**
+     按钮标题显示
+     *   totalAmt === 0  按钮标题：[医保支付 totalAmt元]  点击 跳转 ->医保支付页面
+     *  （ownPayAmt === totalAmt）  自费支付 totalAmt元  点击 跳转 -> 第三方支付页面
+     *  （ownPayAmt != totalAmt） （ paymentStatus === 0   医保支付 siPayAmt元  点击 跳转 -> 医保支付页面） ： （ paymentStatus === 1   自费支付 ownPayAmt元  点击 跳转 -> 第三方支付页面）
+     *
+     * @returns {*}
+     */
+    renderBtnTitle() {
+        const {paymentStatus} = this.props.location.state
+        const {siPayAmt, ownPayAmt, totalAmt} = this.props.advanceSettleInfo
+        let titleStr = ''
+        let targetUrl = ''
+        if (typeof(totalAmt) != 'undefined' && totalAmt === 0) {
+            titleStr = `医保支付 ${totalAmt.toFixed(2)}元`
+            targetUrl = '/medicarePayContainer'
+        } else {
+            if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt === totalAmt) {
+                titleStr = `自费支付 ${totalAmt.toFixed(2)}元`
+                targetUrl = '/medicarePayContainer'
+            } else if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt != totalAmt) {
+                if (paymentStatus === 0) {
+                    titleStr = `医保支付 ${siPayAmt.toFixed(2)}元`
+                    targetUrl = '/medicarePayContainer'
+                } else if (paymentStatus === 1) {
+                    titleStr = `自费支付 ${ownPayAmt.toFixed(2)}元`
+                    targetUrl = '/medicarePayContainer'
+                }
+            }
+        }
+        return (
+            <BtnContent height={20}>
+                <Button txt={titleStr} onSubmit={() => this.navPage(targetUrl)}/>
+            </BtnContent>
+        )
+    }
+
     componentDidMount() {
         /**
          *  显示条件：从我的订单、挂号详情
@@ -165,12 +208,11 @@ class AdvanceSettlementContainer extends Component {
          totalPayf   = _hisRegister.regFee;//总金额
          */
         const {history} = this.props
-        const {unifiedOrderId, paymentStatus} = this.props.location.state
+        const {unifiedOrderId, paymentStatus, patientId} = this.props.location.state
         if (history.action === 'PUSH') {
-            //paymentStatus === 0 未支付
             if (paymentStatus === 0) {
                 //预结算
-                this.props.advanceSettlementActions.loadAdvanceSettleInfo(this.props.location.from, unifiedOrderId)
+                this.props.advanceSettlementActions.loadPersonAndAdvanceSettleInfo(this.props.location.from, unifiedOrderId, patientId)
             } else {
                 //已支付
                 const {unifiedOrderId, payCost, ownCos, pubCost, regFee} = this.props.location.state
@@ -181,6 +223,21 @@ class AdvanceSettlementContainer extends Component {
     handleBack = () => {
         this.props.history.goBack()
     }
+
+    navPage(targetUrl) {
+        let path = {
+            pathname: targetUrl,
+            state: {
+                person: this.props.person,
+                orderPayment: this.props.advanceSettleInfo,
+                ObjEntity: this.props.location.state,
+                fromName: this.props.location.fromName,
+                from: this.props.location.from
+            }
+        }
+        this.props.history.push(path)
+
+    }
 }
 
 
@@ -188,6 +245,7 @@ const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchingStatus(state),
         advanceSettleInfo: getAdvanceSttle(state),
+        person: getPerInfo(state),
     }
 }
 
