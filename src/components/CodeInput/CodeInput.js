@@ -8,6 +8,7 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
 import './style.less'
+import PropTypes from 'prop-types'
 
 export default class CodeInput extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ export default class CodeInput extends Component {
                 {index: 3, status: false},
                 {index: 4, status: false},
                 {index: 5, status: false}],
-            ini:''
+            ini: ''
         };
         this.iniIndex = 0;
     }
@@ -29,7 +30,7 @@ export default class CodeInput extends Component {
         return (
             <div className="pay-password">
                 <input type="tel" maxLength="6" className="real-ipt"
-                       onInput={(e) => this.unitOnChange(e)} />
+                       onInput={(e) => this.unitOnChange(e)}/>
                 <div className="surface-ipts">
                     <div className="surface-ipt">
                         {this.state.v.map((item) => {
@@ -65,8 +66,13 @@ export default class CodeInput extends Component {
         }
         this.setState({v: this.state.v})
         this.iniIndex = pas.length
-        if (pas.length === 6 ) console.log(`你的输入${e.target.value}`)
+        if (pas.length === 6) {
+            this.props.inputValus(e.target.value)
+        }
     };
 }
 
 
+CodeInput.propTypes = {
+    inputValus:PropTypes.func.isRequired,
+}

@@ -64,7 +64,7 @@ class MedicarePayContainer extends Component {
                         >待支付：￥{(orderPayment.siPayAmt + orderPayment.pubPayAmt).toFixed(2)}</span>
                         <span className={'payComponent_btn'} onClick={() => popUpActions.showPopup()}>支  付</span>
                     </div>
-                    <PopUP price={orderPayment} title={fromName}/>
+                    <PopUP price={orderPayment} title={fromName} callBack={(e)=>this.handleInputValus(e)}/>
                 </SafeAreaView>
             </div>
         )
@@ -72,6 +72,10 @@ class MedicarePayContainer extends Component {
 
     handleBack = () => {
         this.props.history.goBack()
+    }
+
+    handleInputValus(e){
+        console.log(e)
     }
 
     componentDidMount() {

@@ -13,12 +13,13 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {getPopupState, actions as popUpActions} from "@reduxs/modules/popUp";
 import './style.less'
+import PropTypes from 'prop-types'
 import {Content} from './style'
 
 
 class PopUpContainer extends Component {
     render() {
-        const {popupState, popUpActions, price, title} = this.props
+        const {popupState, popUpActions, price, title, callBack} = this.props
         return (
             <div className={classNames({'popup-wrapper': true, active: popupState})}>
                 <div className={classNames({content: true, active: popupState})}>
@@ -37,14 +38,21 @@ class PopUpContainer extends Component {
                                 fontWeight: 'bolder'
                             }}>￥{(price.siPayAmt + price.pubPayAmt).toFixed(2)}</p>
                         </div>
-                        <CodeInput/>
+                        <CodeInput inputValus={(e) => callBack(e)}/>
                     </Content>
                 </div>
             </div>
         )
     }
+
 }
 
+
+PopUpContainer.propTypes = {
+    price: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    callBack: PropTypes.func.isRequired,
+}
 
 const mapStateToProps = (state) => {
     return {
