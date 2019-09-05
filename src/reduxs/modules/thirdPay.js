@@ -19,6 +19,7 @@ const initialState = {
 const actionTypes = {
     FETCH_REQUEST: 'THIRD_PAY/FETCH_THIRD_PAY_REQUEST',
     FETCH_PAY_SUCCESS: 'THIRD_PAY/FETCH_PAY_SUCCESS',
+    CLEAR_PAYTYPEITEMS_SUCCESS: 'THIRD_PAY/CLEAR_PAYTYPEITEMS_SUCCESS',
     FETCH_FAILURE: 'THIRD_PAY/FETCH_THIRD_PAY_FAILURE',
 }
 
@@ -34,6 +35,12 @@ export const actions = {
     },
 
 
+    //清空支付类型
+    clearPayTypeItems: () => {
+        return (dispatch, getstate) => {
+            dispatch(clearPayTypeItems())
+        }
+    },
     /**
      *   空跑一遍医保支付
      *    条件 ：
@@ -96,6 +103,9 @@ const fetchPayTypeItemSuccess = (data) => ({
     response: data
 })
 
+const clearPayTypeItems = () => ({
+    type: actionTypes.CLEAR_PAYTYPEITEMS_SUCCESS,
+})
 
 const fetchFailure = () => ({
     type: actionTypes.FETCH_FAILURE,
@@ -114,6 +124,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
                 payList: action.response
+            }
+        case actionTypes.CLEAR_PAYTYPEITEMS_SUCCESS:
+            return {
+                ...state,
+                payList: []
             }
         case actionTypes.FETCH_FAILURE:
             return {

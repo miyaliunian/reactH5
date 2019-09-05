@@ -78,8 +78,8 @@ class MedicarePayContainer extends Component {
     }
 
     handleInputValus(e) {
-        const {reservationCode: orderType, ObjEntity, orderPayment} = this.props.location.state
-        this.props.medicarePayActions.pay(e, orderType, ObjEntity, orderPayment, (data) => this.popGoback(data))
+        const {reservationCode: orderType, ObjEntity, reservationName, orderPayment} = this.props.location.state
+        this.props.medicarePayActions.pay(e, orderType, ObjEntity, reservationName, orderPayment, {...this.props.history}, (data) => this.popGoback(data))
     }
 
 
@@ -96,6 +96,11 @@ class MedicarePayContainer extends Component {
             const {person} = this.props.location.state
             this.props.medicarePayActions.loadVerifyInfo(person)
         }
+    }
+
+
+    componentWillUnmount(){
+        this.props.popUpActions.hidePopup()
     }
 }
 

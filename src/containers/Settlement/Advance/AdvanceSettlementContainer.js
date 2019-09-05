@@ -22,7 +22,8 @@ import ico_user from '@images/Home/ico_user.png'
 import Button from "@components/Button/Button";
 import {PayStatusContent, PerContent, SettleInfoContent, InfoRow, Separation, PayInfoContent, BtnContent} from './style'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
-
+import {Redirect} from 'react-router-dom'
+import {Toast} from 'antd-mobile'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {
@@ -41,7 +42,7 @@ class AdvanceSettlementContainer extends Component {
         const {paymentStatus, fetchingStatus} = this.props
         return (
             <div id={'AdvanceSettlementContainer'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
-                <SafeAreaView showBar={true} title={'订单预结算'} isRight={false} handleBack={this.handleBack}>
+                <SafeAreaView showBar={true} title={'订单预结算'} isRight={false} handleBack={() => this.handleBack()}>
                     <PayStatusContent show={paymentStatus === 1 ? true : false}>
                         <span>医保支付成功,请继续完成自费支付</span>
                     </PayStatusContent>
@@ -130,8 +131,6 @@ class AdvanceSettlementContainer extends Component {
         if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt === totalAmt) {
             show = true
         }
-        console.log('医保未支付')
-        console.log(this.props.advanceSettleInfo)
         return (
             <PayInfoContent>
                 <InfoRow showBorder={true}>
@@ -237,8 +236,11 @@ class AdvanceSettlementContainer extends Component {
         }
     }
 
-    handleBack = () => {
-        this.props.history.goBack()
+    handleBack() {
+        Toast.success('医保账户或个人自费费用尚未完成支付，系统将在20分钟后自动进行退费', 3, () => {
+            const {history} = this.props
+            history.replace('/');
+        }, true);
     }
 
     navPage(targetUrl) {
@@ -249,7 +251,7 @@ class AdvanceSettlementContainer extends Component {
                 orderPayment: this.props.advanceSettleInfo,
                 ObjEntity: this.props.location.state.reservationEntity,
                 reservationName: this.props.location.state.reservationName,
-                paymentMethod:this.props.location.state.paymentMethod,
+                paymentMethod: this.props.location.state.paymentMethod,
                 reservationCode: this.props.location.state.reservationCode,
             },
             callBack: (data) => this.callBack(data)
@@ -264,21 +266,27 @@ class AdvanceSettlementContainer extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        paymentStatus: getPaymentStatus(state),
-        fetchingStatus: getFetchingStatus(state),
-        advanceSettleInfo: getAdvanceSttle(state),
-        person: getPerInfo(state),
+const
+    mapStateToProps = (state) => {
+        return {
+            paymentStatus: getPaymentStatus(state),
+            fetchingStatus: getFetchingStatus(state),
+            advanceSettleInfo: getAdvanceSttle(state),
+            person: getPerInfo(state),
+        }
     }
-}
 
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        advanceSettlementActions: bindActionCreators(advanceSettlementActions, dispatch)
+const
+    mapDispatchToProps = (dispatch) => {
+        return {
+            advanceSettlementActions: bindActionCreators(advanceSettlementActions, dispatch)
+        }
     }
-}
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvanceSettlementContainer)
+export default connect(mapStateToProps, mapDispatchToProps)
+
+(
+    AdvanceSettlementContainer
+)

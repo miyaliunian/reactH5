@@ -15,6 +15,7 @@ import Button from "@components/Button/Button";
 
 class PayResultContainer extends Component {
     render() {
+        const {sn,reservationName,price} = this.props.location.state
         return (
             <div>
                 <SafeAreaView showBar={true}
@@ -26,20 +27,20 @@ class PayResultContainer extends Component {
                         <img className={'img_attr'} src={icon_pay_result} alt={''}/>
                         <span className={'img_title'}>支付成功!</span>
                         <ButtonWrapper>
-                            <Button txt={'完成'} onSubmit={() => {}}/>
+                            <Button txt={'完成'} onSubmit={() => this.props.history.replace('/')}/>
                         </ButtonWrapper>
                         <FormWrapper>
                             <div className={'form_row'}>
                                 <span>订单号</span>
-                                <span>订单号</span>
+                                <span>{sn}</span>
                             </div>
                             <div className={'form_row'}>
                                 <span>商品名称</span>
-                                <span>订单号</span>
+                                <span>{reservationName}</span>
                             </div>
                             <div className={'form_row'}>
                                 <span>总金额</span>
-                                <span>￥{5.00}</span>
+                                <span>￥{price.toFixed(2)}</span>
                             </div>
                         </FormWrapper>
                     </ContentWrapper>
@@ -50,7 +51,7 @@ class PayResultContainer extends Component {
 
 
     handleBack() {
-        this.props.history.goBack()
+        this.props.history.replace('/')
     }
 }
 

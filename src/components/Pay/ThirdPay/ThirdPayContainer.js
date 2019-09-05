@@ -133,15 +133,8 @@ class ThirdPayContainer extends Component {
 
 
     Pay() {
-
     }
 
-
-    componentWillMount() {
-        if (this.props.history.action === 'PUSH') {
-
-        }
-    }
 
     componentDidMount() {
         /**
@@ -150,12 +143,17 @@ class ThirdPayContainer extends Component {
         if (this.props.history.action === 'PUSH') {
             const {ObjEntity, reservationCode, paymentMethod, orderPayment} = this.props.location.state
             debugger
-            if (paymentMethod != 2 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
+            if (paymentMethod === 1 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
                 this.props.thirdPayActions.reMedicarePayAndReLoadPayTypeItems(reservationCode, ObjEntity, orderPayment)
             } else {
                 this.props.thirdPayActions.loadPayTypeItems(reservationCode, ObjEntity)
             }
         }
+    }
+
+
+    componentWillUnmount() {
+        this.props.thirdPayActions.clearPayTypeItems()
     }
 }
 

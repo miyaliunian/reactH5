@@ -20,6 +20,7 @@ const initialState = {
 
 const actionTypes = {
     FETCH_REQUEST: 'MEDICARE_PAY/FETCH_MEDICARE_PAY_REQUEST',
+    FETCH_SUCCESS: 'MEDICARE_PAY/FETCH_SUCCESS',
     FETCH_SIGNABLE_SUCCESS: 'MEDICARE_PAY/FETCH_SIGNABLE_SUCCESS',
     FETCH_PAY_METHOD_ATTRI_SUCCESS: 'MEDICARE_PAY/FETCH_PAY_METHOD_ATTRI_SUCCESS',
     FETCH_FAILURE: 'MEDICARE_PAY/FETCH_MEDICARE_PAY_FAILURE',
@@ -78,7 +79,7 @@ export const actions = {
 
 
     //支付
-    pay: (pass, orderType, objEntity, orderPayment,callBack) => {
+    pay: (pass, orderType, objEntity, reservationName, orderPayment, route, callBack) => {
         /**
          * @property (nonatomic, copy) NSString *orderType;//1 register 挂号；2 recipe 诊间支付
          @property (nonatomic, copy) NSString *orderId;
@@ -101,15 +102,26 @@ export const actions = {
                 mgwUploadOrderNo: orderPayment.orderNo,
             } : {orderType: orderType, orderId: objEntity.unifiedOrderId, phone: orderPayment.phone, password: pwdencry}
             const targetURL = URL.API_SI_PAY()
+            dispatch(fetchRequest())
             return post(targetURL, Params)
                 .then((data) => {
+                        dispatch(fetchSuccess())
                         if (data.infocode && data.infocode === 1) {
                             let orderPaymentEntity = data.data
                             if (orderPaymentEntity.ownPayAmt > 0) {
-                            //回退到预结算(修改支付状态：将未医保支付 改成已经医保支付)
-                                callBack({paymentStatus:1})
+                                //回退到预结算(修改支付状态：将未医保支付 改成已经医保支付)
+                                callBack({paymentStatus: 1})
                             } else {
-
+                                //跳转到支付完成
+                                let path = {
+                                    pathname: '/payResultContainer',
+                                    state: {
+                                        sn: objEntity.sn,
+                                        reservationName: reservationName,
+                                        price: orderPayment.siPayAmt + orderPayment.pubPayAmt
+                                    }
+                                }
+                                route.push(path)
                             }
                         } else {
                             Toast.fail(data.infomessage, 2);
@@ -125,6 +137,10 @@ export const actions = {
 
 
 const fetchRequest = () => ({
+    type: actionTypes.FETCH_REQUEST,
+})
+
+const fetchSuccess = () => ({
     type: actionTypes.FETCH_REQUEST,
 })
 
@@ -153,8 +169,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: true
             }
+        case actionTypes.FETCH_SUCCESS:
+            return {
+                ...state,
+                isFetching: false
+            }
         case actionTypes.FETCH_SIGNABLE_SUCCESS:
-
             return {
                 ...state,
                 isFetching: false,
