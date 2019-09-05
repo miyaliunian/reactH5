@@ -56,7 +56,6 @@ export const actions = {
         return (dispatch, getstate) => {
             const targetUrl = URL.API_PAY_METHOD_ATTRIBUTES(cityID, per.siTypeCode, payMethodId)
             dispatch(fetchRequest())
-            debugger
             return post(targetUrl)
                 .then((data) => {
                         if (data.infocode && data.infocode === 1) {

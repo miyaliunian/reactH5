@@ -26,7 +26,7 @@ class MedicarePayContainer extends Component {
 
     render() {
         const {popUpActions, fetchStatus} = this.props
-        const {orderPayment, ObjEntity, fromName} = this.props.location.state
+        const {orderPayment, ObjEntity, reservationName} = this.props.location.state
         return (
             <div className={'medicarePay'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
                 <SafeAreaView showBar={true} title={'医保支付'} isRight={false} handleBack={this.handleBack}>
@@ -37,7 +37,7 @@ class MedicarePayContainer extends Component {
                         </div>
                         <div className={'payComponent_info_row'}>
                             <span>商品名称</span>
-                            <span>{fromName}</span>
+                            <span>{reservationName}</span>
                         </div>
                         <div className={'payComponent_info_row'}>
                             <span>账户支付</span>
@@ -66,7 +66,7 @@ class MedicarePayContainer extends Component {
                         >待支付：￥{(orderPayment.siPayAmt + orderPayment.pubPayAmt).toFixed(2)}</span>
                         <span className={'payComponent_btn'} onClick={() => popUpActions.showPopup()}>支  付</span>
                     </div>
-                    <PopUP price={orderPayment} title={fromName} callBack={(e) => this.handleInputValus(e)}/>
+                    <PopUP price={orderPayment} title={reservationName} callBack={(e) => this.handleInputValus(e)}/>
                 </SafeAreaView>
                 {fetchStatus ? <LoadingMask/> : ''}
             </div>
@@ -78,7 +78,7 @@ class MedicarePayContainer extends Component {
     }
 
     handleInputValus(e) {
-        const {from: orderType, ObjEntity, orderPayment} = this.props.location.state
+        const {reservationCode: orderType, ObjEntity, orderPayment} = this.props.location.state
         this.props.medicarePayActions.pay(e, orderType, ObjEntity, orderPayment, (data) => this.popGoback(data))
     }
 

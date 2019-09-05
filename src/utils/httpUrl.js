@@ -96,5 +96,6 @@ export default {
     API_IS_SIGNABLE: () => `${BASE_URL}/bindecard/v1.0/isSignable.action`,//获取渠道支付信息
     API_PAY_METHOD_ATTRIBUTES: (cityId, siTypeCode, payMethodId) => `/baseURL/paymethod/v1.0/getPayMethodAttributes/${cityId}/${siTypeCode}/${payMethodId}.do`,
     API_SI_PAY: () => `/baseURL/wallet/v1.2/pay.do`, //医保支付
-    API_THIRD_PAY: () => `/baseURL/wallet/v1.2/pay.do` //第三方支付
+    API_THIRD_PAY_REGISTERED: (hosid) => `/baseURL/paymethod/v1.2/thirdList/${hosid}.do`, //第三方支付:当日挂号
+    API_THIRD_PAY_PURCHASE_MEDICINE: (storeCode) => `/baseURL/paymethod/v1.2/store/thirdList/${storeCode}.do` //第三方支付:扫码购药
 }

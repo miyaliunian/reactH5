@@ -37,7 +37,7 @@ import LoadingMask from "@components/Loading/LoadingMask";
 class AdvanceSettlementContainer extends Component {
 
     render() {
-        const {patientName, sn, regFee} = this.props.location.state
+        const {reservationEntity, reservationName, reservationCode} = this.props.location.state
         const {paymentStatus, fetchingStatus} = this.props
         return (
             <div id={'AdvanceSettlementContainer'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
@@ -47,16 +47,16 @@ class AdvanceSettlementContainer extends Component {
                     </PayStatusContent>
                     <PerContent>
                         <img src={ico_user} className={'bindCard__icon'} width={'35px'} height={'35px'}/>
-                        <span style={{marginLeft: '10px', fontSize: '20px'}}>{patientName}</span>
+                        <span style={{marginLeft: '10px', fontSize: '20px'}}>{reservationEntity.patientName}</span>
                     </PerContent>
                     <SettleInfoContent>
                         <InfoRow showBorder={false}>
                             <span style={{color: '#737373', fontSize: '17px'}}>订单号</span>
-                            <span>{sn}</span>
+                            <span>{reservationEntity.sn}</span>
                         </InfoRow>
                         <InfoRow showBorder={false}>
                             <span style={{color: '#737373', fontSize: '17px'}}>商品名称</span>
-                            <span>{this.props.location.fromName}</span>
+                            <span>{reservationName}</span>
                         </InfoRow>
                         <InfoRow showBorder={false}>
                             <span style={{color: '#737373', fontSize: '17px'}}>总金额</span>
@@ -64,7 +64,7 @@ class AdvanceSettlementContainer extends Component {
                                 color: 'orange',
                                 fontSize: '22px',
                                 fontWeight: 'bold'
-                            }}>￥{regFee.toFixed(2)}</span>
+                            }}>￥{reservationEntity.regFee.toFixed(2)}</span>
                         </InfoRow>
                     </SettleInfoContent>
                     <Separation/>
@@ -81,9 +81,7 @@ class AdvanceSettlementContainer extends Component {
      * @returns {*}
      */
     renderSettleInfo1() {
-        const {pubPayAmt, siPayAmt, ownPayAmt, postPayBalance, totalAmt} = this.props.advanceSettleInfo
-        console.log('医保已经支付')
-        console.log(this.props.advanceSettleInfo)
+        const {pubPayAmt, siPayAmt, ownPayAmt, postPayBalance} = this.props.advanceSettleInfo
         return (
             <PayInfoContent>
                 <InfoRow showBorder={true}>
@@ -213,8 +211,8 @@ class AdvanceSettlementContainer extends Component {
     componentWillMount() {
         const {history} = this.props
         if (history.action === 'PUSH') {
-            const {paymentStatus} = this.props.location.state
-            this.props.advanceSettlementActions.setPaymentStatus(paymentStatus)
+            const {reservationEntity} = this.props.location.state
+            this.props.advanceSettlementActions.setPaymentStatus(reservationEntity.paymentStatus)
         }
     }
 
@@ -228,13 +226,11 @@ class AdvanceSettlementContainer extends Component {
          */
         const {history} = this.props
         if (history.action === 'PUSH') {
-            const {unifiedOrderId, paymentStatus, patientId} = this.props.location.state
-            if (paymentStatus === 0) {
+            const {reservationEntity, reservationCode} = this.props.location.state
+            if (reservationEntity.paymentStatus === 0) {
                 //预结算
-                this.props.advanceSettlementActions.loadPersonAndAdvanceSettleInfo(this.props.location.from, unifiedOrderId, patientId)
+                this.props.advanceSettlementActions.loadPersonAndAdvanceSettleInfo(reservationCode, reservationEntity.unifiedOrderId, reservationEntity.patientId)
             } else {
-                //已支付
-                const {unifiedOrderId, payCost, ownCos, pubCost, regFee} = this.props.location.state
             }
         } else {
 
@@ -251,9 +247,9 @@ class AdvanceSettlementContainer extends Component {
             state: {
                 person: this.props.person,
                 orderPayment: this.props.advanceSettleInfo,
-                ObjEntity: this.props.location.state,
-                fromName: this.props.location.fromName,
-                from: this.props.location.from,
+                ObjEntity: this.props.location.state.reservationEntity,
+                reservationName: this.props.location.state.reservationName,
+                reservationCode: this.props.location.state.reservationCode,
             },
             callBack: (data) => this.callBack(data)
         }

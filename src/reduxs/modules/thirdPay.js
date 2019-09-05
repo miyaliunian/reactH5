@@ -9,36 +9,30 @@
 import URL from '@utils/httpUrl';
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";
-import {PUBLIC_LEY} from "@assets/static";
-import {cityID, payMethodId} from '@assets/static/DictionaryConstant'
+import {OrderType} from '@assets/static/DictionaryConstant'
 
 const initialState = {
     isFetching: false,
-    isSignableEntity: '',
-    verify: '2'
+    payList: [],
 }
 
 const actionTypes = {
     FETCH_REQUEST: 'THIRD_PAY/FETCH_THIRD_PAY_REQUEST',
-    FETCH_SIGNABLE_SUCCESS: 'THIRD_PAY/FETCH_SIGNABLE_SUCCESS',
-    FETCH_PAY_METHOD_ATTRI_SUCCESS: 'THIRD_PAY/FETCH_PAY_METHOD_ATTRI_SUCCESS',
+    FETCH_PAY_SUCCESS: 'THIRD_PAY/FETCH_PAY_SUCCESS',
     FETCH_FAILURE: 'THIRD_PAY/FETCH_THIRD_PAY_FAILURE',
 }
 
 export const actions = {
-    //获取渠道支付信息
-    loadSignable: (per) => {
+    //获取支付方式列表
+    loadPayList: (payType, objEntity) => {
         return (dispatch, getstate) => {
-            const targetURL = URL.API_IS_SIGNABLE()
+            //线上挂号、扫描购药 调用不同的Url
+            const targetURL = payType === OrderType[0].status ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId) : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
             dispatch(fetchRequest())
-            let param = {
-                idNumber: per.idenNo,
-                name: per.name
-            }
-            return post(targetURL, param)
+            return post(targetURL)
                 .then((data) => {
                         if (data.infocode && data.infocode === 1) {
-                            dispatch(fetchSignableSuccess(data.data))
+                            dispatch(fetchPaySuccess(data.data))
                         } else {
                             Toast.fail(data.infomessage, 2);
                         }
@@ -50,78 +44,6 @@ export const actions = {
         }
     },
 
-
-    // 获取密码验证方式
-    loadVerifyInfo: (per) => {
-        return (dispatch, getstate) => {
-            const targetUrl = URL.API_PAY_METHOD_ATTRIBUTES(cityID, per.siTypeCode, payMethodId)
-            return post(targetUrl)
-                .then((data) => {
-                        if (data.infocode && data.infocode === 1) {
-                            if (data.data.length > 0) {
-                                let obj = data.data[0]
-                                dispatch(fetchPayMethodAttriSuccess(obj.id === 1 ? '1' : '2'))
-                            } else {
-                                dispatch(fetchPayMethodAttriSuccess('2'))
-                            }
-                        } else {
-                            Toast.fail(data.infomessage, 2);
-                        }
-                    }
-                )
-                .catch(err => {
-                    dispatch(fetchFailure())
-                })
-        }
-    },
-
-
-    //支付
-    pay: (pass, orderType, objEntity, orderPayment,callBack) => {
-        /**
-         * @property (nonatomic, copy) NSString *orderType;//1 register 挂号；2 recipe 诊间支付
-         @property (nonatomic, copy) NSString *orderId;
-         @property (nonatomic, copy) NSString *phone;//签约手机号
-         @property (nonatomic, copy) NSString *smsCode;//支付验证码
-         @property (nonatomic, copy) NSString *password;//支付密码
-         @property (nonatomic, copy) NSString *mgwUploadOrderNo;//商户网关编码(后台使用),扫码购药时需要传此值
-         */
-        return (dispatch, getstate) => {
-            //RAS:处理加密
-            let encrypt = new window.JSEncrypt()
-            encrypt.setPublicKey(PUBLIC_LEY);
-            let pwdencry = encrypt.encrypt(pass);
-            //判断是否为扫描购药(medicineScan）
-            let Params = orderType === 'medicineScan' ? {
-                orderType: orderType,
-                orderId: objEntity.unifiedOrderId,
-                phone: orderPayment.phone,
-                password: pwdencry,
-                mgwUploadOrderNo: orderPayment.orderNo,
-            } : {orderType: orderType, orderId: objEntity.unifiedOrderId, phone: orderPayment.phone, password: pwdencry}
-            const targetURL = URL.API_SI_PAY()
-            callBack({paymentStatus:1,})
-            return
-            return post(targetURL, Params)
-                .then((data) => {
-                        if (data.infocode && data.infocode === 1) {
-                            let orderPaymentEntity = data.data
-                            if (orderPaymentEntity.ownPayAmt > 0) {
-                            //回退到预结算
-                                callBack({paymentStatus:1,})
-                            } else {
-
-                            }
-                        } else {
-                            Toast.fail(data.infomessage, 2);
-                        }
-                    }
-                )
-                .catch(err => {
-                    dispatch(fetchFailure())
-                })
-        }
-    }
 }
 
 
@@ -130,14 +52,8 @@ const fetchRequest = () => ({
 })
 
 
-const fetchSignableSuccess = (data) => ({
-    type: actionTypes.FETCH_SIGNABLE_SUCCESS,
-    response: data
-})
-
-
-const fetchPayMethodAttriSuccess = (data) => ({
-    type: actionTypes.FETCH_PAY_METHOD_ATTRI_SUCCESS,
+const fetchPaySuccess = (data) => ({
+    type: actionTypes.FETCH_PAY_SUCCESS,
     response: data
 })
 
@@ -154,19 +70,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: true
             }
-        case actionTypes.FETCH_SIGNABLE_SUCCESS:
-
+        case actionTypes.FETCH_PAY_SUCCESS:
             return {
                 ...state,
                 isFetching: false,
-                isSignableEntity: action.response
-            }
-        case actionTypes.FETCH_PAY_METHOD_ATTRI_SUCCESS:
-
-            return {
-                ...state,
-                isFetching: false,
-                verify: action.response
+                payList: action.response
             }
         case actionTypes.FETCH_FAILURE:
             return {
@@ -185,10 +93,7 @@ export const getFetchingStatus = (state) => {
     return state.thirdPay.isFetching
 }
 
-export const getIsSignableEntity = (state) => {
-    return state.thirdPay.isSignableEntity
+export const getPayList = (state) => {
+    return state.thirdPay.payList
 }
 
-export const getVerifyEntity = (state) => {
-    return state.thirdPay.verify
-}

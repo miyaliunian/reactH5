@@ -324,9 +324,11 @@ export const actions = {
                     if (data.infocode === 1) {
                         let path = {
                             pathname: '/advanceSettlementContainer',
-                            fromName: OrderType[0].register,
-                            from: OrderType[0].status,
-                            state: data.data
+                            state: {
+                                reservationName: OrderType[0].register,
+                                reservationCode: OrderType[0].status,
+                                reservationEntity: data.data
+                            }
                         }
                         route.push(path)
                     } else {
