@@ -189,6 +189,17 @@ const ThirdPayContainer = (props) => {
     )
 };
 
+
+//支付结果
+const PayResultComponent = lazy(() => import ("@components/Pay/Result/PayResultContainer"))
+const PayResultContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <PayResultComponent {...props}></PayResultComponent>
+        </Suspense>
+    )
+}
+
 const routerMap = [
     {
         path: '/',
@@ -284,7 +295,11 @@ const routerMap = [
         path: '/thirdPayContainer',
         name: 'thirdPayContainer',
         component: ThirdPayContainer
-    },
+    }, {
+        path: '/payResultContainer',
+        name: 'payResultContainer',
+        component: PayResultContainer
+    }
 ]
 
 export default routerMap

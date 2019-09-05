@@ -15,7 +15,7 @@ export const OrderTypeWrapper = styled.div`
 
 export const PayTypeList = styled.div`
     background-color: white;
-    padding: 15px 15px 0 15px;
+    padding: 15px;
     box-sizing: border-box;
     .payComponent_payBtn_row {
       flex: 1;
@@ -23,6 +23,7 @@ export const PayTypeList = styled.div`
       flex-direction: row;
       height: 40px;
       line-height: 40px;
+      align-items: center;
     }
 `
 

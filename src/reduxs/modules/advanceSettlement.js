@@ -21,6 +21,7 @@ const initialState = {
 const actionTypes = {
     SET_PAYMENT: 'ADVANCE_SETTLE/SET_PAYMENT',
     FETCH_REQUEST: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_REQUEST',
+    FETCH_SUCCESS: 'ADVANCE_SETTLE/FETCH_SUCCESS',
     FETCH_PERSON_SUCCESS: 'ADVANCE_SETTLE/FETCH_PERSON_SUCCESS',
     FETCH_ADVANCE_SETTLE_SUCCESS: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_SUCCESS',
     FETCH_FAILURE: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_FAILURE',
@@ -32,10 +33,10 @@ export const actions = {
             dispatch(fetchRequest())
             Axios.all([loadPerson(URL.API_PERSON(patientId), dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid), dispatch)])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
-                    // console.log('成功')
+                    dispatch(fetchSuccess())
                 }))
                 .catch(Axios.spread((personResp, advanceSettleResp) => {
-                    // console.log('失败')
+                    dispatch(fetchFailure())
                 }))
         }
     },
@@ -51,7 +52,6 @@ export const actions = {
 
 //加载人员信息
 function loadPerson(targetUrl, dispatch) {
-
     return post(targetUrl)
         .then((data) => {
                 if (data.infocode && data.infocode === 1) {
@@ -64,7 +64,6 @@ function loadPerson(targetUrl, dispatch) {
         .catch(err => {
             dispatch(fetchFailure())
         })
-
 }
 
 
@@ -92,6 +91,10 @@ const setPaymentStatus = (data) => ({
 
 const fetchRequest = () => ({
     type: actionTypes.FETCH_REQUEST,
+})
+
+const fetchSuccess = () => ({
+    type: actionTypes.FETCH_SUCCESS,
 })
 
 const fetchPersonSuccess = (data) => ({
@@ -123,18 +126,21 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: true
             }
+        case actionTypes.FETCH_SUCCESS:
+            return {
+                ...state,
+                isFetching: false
+            }
         case actionTypes.FETCH_PERSON_SUCCESS:
 
             return {
                 ...state,
-                isFetching: false,
                 personEntity: action.response
             }
         case actionTypes.FETCH_ADVANCE_SETTLE_SUCCESS:
 
             return {
                 ...state,
-                isFetching: false,
                 settleEntity: action.response
             }
         case actionTypes.FETCH_FAILURE:

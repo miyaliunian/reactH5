@@ -58,6 +58,9 @@ class Home extends Component {
             case 9 :
                 this.props.history.push('/medicarePayContainer')
                 break
+            case 10 :
+                this.props.history.push('/payResultContainer')
+                break
         }
     }
 

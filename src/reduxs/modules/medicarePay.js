@@ -101,8 +101,6 @@ export const actions = {
                 mgwUploadOrderNo: orderPayment.orderNo,
             } : {orderType: orderType, orderId: objEntity.unifiedOrderId, phone: orderPayment.phone, password: pwdencry}
             const targetURL = URL.API_SI_PAY()
-            callBack({paymentStatus:1,})
-            return
             return post(targetURL, Params)
                 .then((data) => {
                         if (data.infocode && data.infocode === 1) {

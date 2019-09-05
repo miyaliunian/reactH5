@@ -238,7 +238,7 @@ export const actions = {
      */
     onSubmit: (data, route) => {
         return (dispatch, getstate) => {
-
+            debugger
             /**
              * 请求的Body
              * @type {{}}
@@ -305,10 +305,10 @@ export const actions = {
             } else if (payObj.id === 2) {
                 if (bindCardObj[0].auth) {
                     if (getstate().reservation.switchInfo.checked) {
-                        PARAM.paymentMethod = 1
+                        PARAM.paymentMethod = 1 //混合支付
                         PARAM.paymentMethodName = '在线支付'
                     } else {
-                        PARAM.paymentMethod = 2
+                        PARAM.paymentMethod = 2 // 存自费
                         PARAM.paymentMethodName = '在线支付'
                     }
                 } else {
@@ -316,7 +316,6 @@ export const actions = {
                     PARAM.paymentMethodName = '在线支付'
                 }
             }
-
             const targetUrl = URL.API_REGISTER_UNION()
             dispatch(submitBtn_request())
             return post(targetUrl, PARAM)
@@ -327,7 +326,8 @@ export const actions = {
                             state: {
                                 reservationName: OrderType[0].register,
                                 reservationCode: OrderType[0].status,
-                                reservationEntity: data.data
+                                reservationEntity: data.data,
+                                paymentMethod:PARAM.paymentMethod
                             }
                         }
                         route.push(path)

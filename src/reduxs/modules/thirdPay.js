@@ -24,15 +24,39 @@ const actionTypes = {
 
 export const actions = {
     //获取支付方式列表
-    loadPayList: (payType, objEntity) => {
+    loadPayTypeItems: (payType, objEntity) => {
         return (dispatch, getstate) => {
             //线上挂号、扫描购药 调用不同的Url
             const targetURL = payType === OrderType[0].status ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId) : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
             dispatch(fetchRequest())
-            return post(targetURL)
+            fetchPayTypeItems(targetURL, dispatch)
+        }
+    },
+
+
+    /**
+     *   空跑一遍医保支付
+     *    条件 ：
+     *          自费金额 ===  总金额  &&  paymentStatus === 0
+     * @returns {function(*, *)}
+     */
+    reMedicarePayAndReLoadPayTypeItems(orderType, objEntity, orderPayment) {
+        return (dispatch, getstate) => {
+            let Params = orderType === 'medicineScan' ? {
+                orderType: orderType,
+                orderId: objEntity.unifiedOrderId,
+                phone: orderPayment.phone,
+                mgwUploadOrderNo: orderPayment.orderNo,
+            } : {orderType: orderType, orderId: objEntity.unifiedOrderId, phone: orderPayment.phone,}
+            const targetURL = URL.API_SI_PAY()
+            dispatch(fetchRequest())
+            debugger
+            return post(targetURL, Params)
                 .then((data) => {
                         if (data.infocode && data.infocode === 1) {
-                            dispatch(fetchPaySuccess(data.data))
+                            debugger
+                            let targetURL = orderType === OrderType[0].status ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId) : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
+                            fetchPayTypeItems(targetURL, dispatch)
                         } else {
                             Toast.fail(data.infomessage, 2);
                         }
@@ -42,8 +66,23 @@ export const actions = {
                     dispatch(fetchFailure())
                 })
         }
-    },
+    }
+}
 
+//获取支付方式列表
+function fetchPayTypeItems(targetUrl, dispatch) {
+    return post(targetUrl)
+        .then((data) => {
+                if (data.infocode && data.infocode === 1) {
+                    dispatch(fetchPayTypeItemSuccess(data.data))
+                } else {
+                    Toast.fail(data.infomessage, 2);
+                }
+            }
+        )
+        .catch(err => {
+            dispatch(fetchFailure())
+        })
 }
 
 
@@ -52,7 +91,7 @@ const fetchRequest = () => ({
 })
 
 
-const fetchPaySuccess = (data) => ({
+const fetchPayTypeItemSuccess = (data) => ({
     type: actionTypes.FETCH_PAY_SUCCESS,
     response: data
 })
