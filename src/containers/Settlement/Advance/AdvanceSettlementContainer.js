@@ -249,6 +249,7 @@ class AdvanceSettlementContainer extends Component {
                 orderPayment: this.props.advanceSettleInfo,
                 ObjEntity: this.props.location.state.reservationEntity,
                 reservationName: this.props.location.state.reservationName,
+                paymentMethod:this.props.location.state.paymentMethod,
                 reservationCode: this.props.location.state.reservationCode,
             },
             callBack: (data) => this.callBack(data)

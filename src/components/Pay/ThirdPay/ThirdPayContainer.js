@@ -147,7 +147,6 @@ class ThirdPayContainer extends Component {
         /**
          *   paymentMethod === 2   ?(纯自费) 直接获取支付方式 : (自费金额 ===  总金额  &&  paymentStatus === 0   空炮一遍医保支付)
          */
-        debugger
         if (this.props.history.action === 'PUSH') {
             const {ObjEntity, reservationCode, paymentMethod, orderPayment} = this.props.location.state
             debugger

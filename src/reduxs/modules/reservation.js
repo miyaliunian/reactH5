@@ -238,7 +238,6 @@ export const actions = {
      */
     onSubmit: (data, route) => {
         return (dispatch, getstate) => {
-            debugger
             /**
              * 请求的Body
              * @type {{}}
