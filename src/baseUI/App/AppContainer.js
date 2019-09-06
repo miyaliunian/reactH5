@@ -1,5 +1,6 @@
 import React, {Component, lazy, Suspense,} from 'react';
 import './style.less';
+import CssBaseline from '@material-ui/core/CssBaseline'
 import {bindActionCreators} from 'redux'
 import {BrowserRouter, Route, Switch, withRouter, Redirect} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
@@ -9,7 +10,6 @@ import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import routerMap from '@routes/RouterConfig'
 import renderRoutes from '@utils/renderRoutes'
-
 
 
 const RouteModule = function (props) {
@@ -42,12 +42,12 @@ class AppContainer extends Component {
         const Routes = withRouter(RouteModule);
         return (
             <div>
-
+                <CssBaseline>
                     <BrowserRouter>
                         <Routes/>
                     </BrowserRouter>
                     {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
-
+                </CssBaseline>
             </div>
         );
     }

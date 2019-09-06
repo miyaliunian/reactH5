@@ -6,7 +6,10 @@
  *
  */
 import React, {Component} from 'react'
+import PrimaryButton from "@baseUI/Button/PrimaryButton";
 import './style.less'
+
+
 
 export default class LoginForm extends Component {
     render() {
@@ -33,9 +36,7 @@ export default class LoginForm extends Component {
                     </div>
                 </div>
                 <div className="loginForm__btnContainer">
-                    <button className="loginForm__btn" onClick={onSubmit}>
-                        登录
-                    </button>
+                    <PrimaryButton txt={'登录'} onSubmit={onSubmit}/>
                 </div>
             </div>
         );

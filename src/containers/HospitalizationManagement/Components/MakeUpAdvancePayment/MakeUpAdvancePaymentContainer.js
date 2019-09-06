@@ -6,8 +6,7 @@
  * 补缴预交金
  */
 import React, {Component} from 'react';
-import Header from "@components/Header/NavBar";
-import Button from "@components/Button/Button";
+import ButtonWrapper from "@baseUI/Button/PrimaryButton";
 import {withRouter} from 'react-router-dom'
 import {Toast} from 'antd-mobile'
 import './style.less'
@@ -68,7 +67,7 @@ class MakeUpAdvancePaymentContainer extends Component {
                                value={this.state.amountSel}
                                onChange={(e) => this.setState({amountSel: e.target.value})}/>
 
-                        <Button txt={'立即缴费'} onSubmit={() => this.submitBtn()}/>
+                        <ButtonWrapper txt={'立即缴费'} onSubmit={() => this.submitBtn()}/>
                     </div>
                 </SafeAreaView>
             </div>

@@ -11,7 +11,7 @@ import {withRouter} from 'react-router-dom'
 //图标
 import icon_pay_result from '@images/Pay/ico_zfcg_png.png'
 import {ContentWrapper, ButtonWrapper,FormWrapper} from './style'
-import Button from "@components/Button/Button";
+import PrimaryButton from "@baseUI/Button/PrimaryButton";
 
 class PayResultContainer extends Component {
     render() {
@@ -27,7 +27,7 @@ class PayResultContainer extends Component {
                         <img className={'img_attr'} src={icon_pay_result} alt={''}/>
                         <span className={'img_title'}>支付成功!</span>
                         <ButtonWrapper>
-                            <Button txt={'完成'} onSubmit={() => this.props.history.replace('/')}/>
+                            <PrimaryButton txt={'完成'} onSubmit={() => this.props.history.replace('/')}/>
                         </ButtonWrapper>
                         <FormWrapper>
                             <div className={'form_row'}>

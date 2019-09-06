@@ -19,7 +19,7 @@
  */
 import React, {Component} from 'react'
 import ico_user from '@images/Home/ico_user.png'
-import Button from "@components/Button/Button";
+import ButtonWrapper from "@baseUI/Button/PrimaryButton";
 import {PayStatusContent, PerContent, SettleInfoContent, InfoRow, Separation, PayInfoContent, BtnContent} from './style'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import {Redirect} from 'react-router-dom'
@@ -201,7 +201,7 @@ class AdvanceSettlementContainer extends Component {
         }
         return (
             <BtnContent height={20}>
-                <Button txt={titleStr} onSubmit={() => this.navPage(targetUrl)}/>
+                <ButtonWrapper txt={titleStr} onSubmit={() => this.navPage(targetUrl)}/>
             </BtnContent>
         )
     }

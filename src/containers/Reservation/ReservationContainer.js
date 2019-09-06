@@ -6,7 +6,7 @@
  *   预约信息
  */
 import React, {Component} from 'react'
-import Button from "@components/Button/Button";
+import ButtonWrapper from "@baseUI/Button/PrimaryButton";
 import ReservationHeader from "@containers/Reservation/Components/ReservationHeader/ReservationHeader";
 import ReservationForm from "@containers/Reservation/Components/ReservationForm/ReservationForm";
 import {connect} from "react-redux";
@@ -46,7 +46,7 @@ class ReservationContainer extends Component {
                         refreshPage={() => this.setRefreshPage()}
                     />
                     <div className={'reservationForm__btn'}>
-                        <Button txt={'确认预约'} onSubmit={() => this.onBtnClick()}/>
+                        <ButtonWrapper txt={'确认预约'} onSubmit={() => this.onBtnClick()}/>
                     </div>
                     {fetchingStatus ? <LoadingMask/> : null}
                 </SafeAreaView>
