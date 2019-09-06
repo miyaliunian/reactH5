@@ -1,6 +1,9 @@
 import React, {Component, lazy, Suspense,} from 'react';
 import './style.less';
 import CssBaseline from '@material-ui/core/CssBaseline'
+import {ThemeProvider, createGenerateClassName, StylesProvider} from '@material-ui/styles'
+import {lightBlue, pink, orange} from '@material-ui/core/colors'
+import {createMuiTheme} from '@material-ui/core/styles'
 import {bindActionCreators} from 'redux'
 import {BrowserRouter, Route, Switch, withRouter, Redirect} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
@@ -36,18 +39,28 @@ const RouteModule = function (props) {
     );
 };
 
+
+const theme = createMuiTheme({
+    palette: {
+        primary: lightBlue,
+        secondary: pink,
+    },
+});
+
+
 class AppContainer extends Component {
     render() {
         const {error, appActions: {clearError}} = this.props;
         const Routes = withRouter(RouteModule);
         return (
             <div>
-                <CssBaseline>
-                    <BrowserRouter>
-                        <Routes/>
-                    </BrowserRouter>
+                {/*<CssBaseline/>*/}
+                    <ThemeProvider theme={theme}>
+                        <BrowserRouter>
+                            <Routes/>
+                        </BrowserRouter>
+                    </ThemeProvider>
                     {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
-                </CssBaseline>
             </div>
         );
     }
