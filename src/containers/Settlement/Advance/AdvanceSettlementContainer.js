@@ -22,8 +22,7 @@ import ico_user from '@images/Home/ico_user.png'
 import ButtonWrapper from "@baseUI/Button/PrimaryButton";
 import {PayStatusContent, PerContent, SettleInfoContent, InfoRow, Separation, PayInfoContent, BtnContent} from './style'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
-import {Redirect} from 'react-router-dom'
-import {Toast} from 'antd-mobile'
+import SlideDownSnackBar from "@components/SlideDownSnackBar/SlideDownSnackBar";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {
@@ -35,7 +34,12 @@ import {
 } from "@reduxs/modules/advanceSettlement";
 import LoadingMask from "@components/Loading/LoadingMask";
 
+
 class AdvanceSettlementContainer extends Component {
+
+    state = {
+        showBar: false
+    }
 
     render() {
         const {reservationEntity, reservationName, reservationCode} = this.props.location.state
@@ -73,6 +77,11 @@ class AdvanceSettlementContainer extends Component {
                     {this.renderBtnTitle()}
                 </SafeAreaView>
                 {fetchingStatus ? <LoadingMask/> : ''}
+                <SlideDownSnackBar desc={'医保账户或个人自费费用尚未完成支付，系统将在20分钟后自动进行退费'} show={this.state.showBar}
+                                handleClose={() => {
+                                    const {history} = this.props
+                                    history.replace('/');
+                                }}/>
             </div>
         )
     }
@@ -237,10 +246,18 @@ class AdvanceSettlementContainer extends Component {
     }
 
     handleBack() {
-        Toast.success('医保账户或个人自费费用尚未完成支付，系统将在20分钟后自动进行退费', 3, () => {
-            const {history} = this.props
-            history.replace('/');
-        }, true);
+        // Toast.loading('医保账户或个人自费费用尚未完成支付，系统将在20分钟后自动进行退费', 3, () => {
+        //     const {history} = this.props
+        //     history.replace('/');
+        // }, true);
+        this.setState({
+            showBar: true
+        })
+    }
+
+
+    handleClose() {
+        console.log('handleClose')
     }
 
     navPage(targetUrl) {

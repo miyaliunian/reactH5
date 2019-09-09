@@ -191,11 +191,11 @@ const ThirdPayContainer = (props) => {
 
 
 //支付结果
-const PayResultComponent = lazy(() => import ("@components/Pay/Result/PayResultContainer"))
-const PayResultContainer = (props) => {
+const SimpleSnackBar = lazy(() => import ("@components/SlideDownSnackBar/SlideDownSnackBar"))
+const SimpleSnackBarContainer = (props) => {
     return (
         <Suspense fallback={null}>
-            <PayResultComponent {...props}></PayResultComponent>
+            <SimpleSnackBar {...props}></SimpleSnackBar>
         </Suspense>
     )
 }
@@ -296,9 +296,9 @@ const routerMap = [
         name: 'thirdPayContainer',
         component: ThirdPayContainer
     }, {
-        path: '/payResultContainer',
-        name: 'payResultContainer',
-        component: PayResultContainer
+        path: '/simpleSnackBarContainer',
+        name: 'simpleSnackBarContainer',
+        component: SimpleSnackBarContainer
     }
 ]
 
