@@ -7,6 +7,7 @@
  */
 import React, {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import Bscroll from 'better-scroll'
 import ico_doctor_status from '@images/Home/ico_doctor_status.png'
 import ico_doctor_status_h from '@images/Home/ico_doctor_status_h.png'
 import './style.less'
@@ -15,46 +16,48 @@ class DoctorItem extends Component {
     render() {
         const {data} = this.props
         return (
-            <div className={'doctorItem'}>
-                {data.map(item => {
-                    return (
-                        <div
-                            key={item.id}
-                            className={'doctorItem__item border-bottom'}
-                            onClick={() => this.handelPageNav(item)}
-                        >
-                            <div className={'doctorItem__avator'}>
-                                {this.drawReact(item.name)}
-                            </div>
-                            <div className={'doctorItem__info'}>
-                                <div className={'doctorItem__name_title'}>
-                                    <div className={'doctorItem__name'}>{item.name}</div>
-                                    <div className={'doctorItem__title'}>{item.title}</div>
+            <ul className={'doctorItem'} ref={'doctorItems'}>
+                <div>
+                    {data.map(item => {
+                        return (
+                            <li
+                                key={item.id}
+                                className={'doctorItem__item border-bottom'}
+                                onClick={() => this.handelPageNav(item)}
+                            >
+                                <div className={'doctorItem__avator'}>
+                                    {this.drawReact(item.name)}
                                 </div>
-                                <div
-                                    className={'doctorItem__skills'}>
-                                    擅长: {item.skills ? item.skills : '暂无'}
+                                <div className={'doctorItem__info'}>
+                                    <div className={'doctorItem__name_title'}>
+                                        <div className={'doctorItem__name'}>{item.name}</div>
+                                        <div className={'doctorItem__title'}>{item.title}</div>
+                                    </div>
+                                    <div
+                                        className={'doctorItem__skills'}>
+                                        擅长: {item.skills ? item.skills : '暂无'}
+                                    </div>
                                 </div>
-                            </div>
-                            {
-                                item.appoint
-                                    ?
-                                    (<div className={'doctorItem__right__icon'}>
-                                            <img className={'doctorItem__icon'} src={ico_doctor_status_h}/>
-                                        </div>
-                                    )
-                                    :
-                                    (<div className={'doctorItem__right__icon'}>
-                                            <img className={'doctorItem__icon'} src={ico_doctor_status}/>
-                                        </div>
-                                    )
-                            }
+                                {
+                                    item.appoint
+                                        ?
+                                        (<div className={'doctorItem__right__icon'}>
+                                                <img className={'doctorItem__icon'} src={ico_doctor_status_h}/>
+                                            </div>
+                                        )
+                                        :
+                                        (<div className={'doctorItem__right__icon'}>
+                                                <img className={'doctorItem__icon'} src={ico_doctor_status}/>
+                                            </div>
+                                        )
+                                }
 
-                        </div>
+                            </li>
 
-                    )
-                })}
-            </div>
+                        )
+                    })}
+                </div>
+            </ul>
         )
     }
 
@@ -79,6 +82,20 @@ class DoctorItem extends Component {
             state: data
         }
         this.props.history.push(path)
+    }
+
+
+    componentDidMount(){
+        this.bscroll = new Bscroll(this.refs.doctorItems, {
+            mouseWheel: true,
+            probeType: 3,
+            click: true,
+            tap: true,
+            bounce: {
+                top: true,
+                bottom: true,
+            }
+        })
     }
 }
 
