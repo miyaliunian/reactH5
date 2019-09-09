@@ -9,6 +9,7 @@ import React, {Component} from 'react'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
 import {Icon, Modal, List, Radio} from 'antd-mobile'
+import Paper from '@material-ui/core/Paper'
 import posed from 'react-pose'
 import {getDate} from '@utils/dayutils'
 import {Link, withRouter} from 'react-router-dom'
@@ -55,18 +56,20 @@ class DoctorVisiting extends Component {
                         <Icon type={'left'}/>
                     </div>
                 </div>
-                <Box className="clinic__box border" pose={isVisible ? 'visible' : 'hidden'} ref={'clinic__box'}>
+                {isVisible ? <Paper className="clinic__box border">
                     <div>
                         <ul>
                             {clinicData.map(item => {
                                 return (
-                                    <span key={item.id} className={'box__item border-bottom'}
-                                          onClick={() => this.itemClick(item)}>{item.name}</span>
+                                    <li>
+                                        <span key={item.id} className={'box__item border-bottom'}
+                                              onClick={() => this.itemClick(item)}>{item.name}</span>
+                                    </li>
                                 )
                             })}
                         </ul>
                     </div>
-                </Box>
+                </Paper> : null}
                 <div className={'doctorVisiting__list'}
                      ref={'doctorVisitingList'}
                 >
@@ -82,7 +85,7 @@ class DoctorVisiting extends Component {
                                     <div className={'item__right'}>
                                         <div className={'item__right__price'}>￥{item.regFee.toFixed(2)}</div>
                                         <div
-                                            className={item.status != 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
+                                            className={item.status !== 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>{item.status === 2 ? '约满' : (item.status === 0 ? '停诊' : '预约')}
                                         </div>
                                     </div>
                                 </div>
@@ -141,12 +144,12 @@ class DoctorVisiting extends Component {
 
 
         //诊室滚动列表
-        this.clinicScroll = new Bscroll(this.refs.clinic__box, {
-            mouseWheel: true,
-            click: true,
-            tap: true,
-            useTransition: false
-        })
+        // this.clinicScroll = new Bscroll(this.refs.clinic__box, {
+        //     mouseWheel: true,
+        //     click: true,
+        //     tap: true,
+        //     useTransition: false
+        // })
 
     }
 

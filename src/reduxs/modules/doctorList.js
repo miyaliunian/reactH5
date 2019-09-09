@@ -48,7 +48,7 @@ export const actions = {
                 hosGrade: null,
                 seeDate: null
             }
-            if (seeDate != '') {
+            if (seeDate !== '') {
                 param.seeDate = seeDate
             }
             const targetURL = url.API_DOCTOR_LIST(PlatformType.HospitalDepartments, id, DoctorOrderType.title, getstate().doctorList.page)

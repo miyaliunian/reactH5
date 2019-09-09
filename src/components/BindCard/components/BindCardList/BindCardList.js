@@ -7,7 +7,6 @@
  */
 import React, {Component} from 'react'
 import './style.less'
-import Header from "@components/Header/NavBar";
 import ico_man from '@images/Home/ico_man.png'
 import avatar_man from '@images/Home/pic_man.png'
 import ico_wman from '@images/Home/ico_wman.png'

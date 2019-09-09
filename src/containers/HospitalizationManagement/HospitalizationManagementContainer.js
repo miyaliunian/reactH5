@@ -7,7 +7,6 @@
  */
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Header from "@components/Header/NavBar";
 import CategoryHosList from "@components/CategoryHosList/CategoryHosList";
 import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
 import {Icon} from 'antd-mobile';
@@ -38,7 +37,7 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.bindCardList != this.props.bindCardList) {
+        if (nextProps.bindCardList !== this.props.bindCardList) {
             let perObj = nextProps.bindCardList.filter(item => item.def)
             this.props.hospitalizationManagementActions.getRegedListByOpenType('inPrePay', perObj[0])
         }
@@ -163,7 +162,7 @@ class HospitalizationManagementContainer extends Component {
 
     componentWillUnmount() {
         const {history} = this.props
-        if (history.action != 'PUSH') {
+        if (history.action !== 'PUSH') {
             setTimeout(() => this.props.hospitalizationManagementActions.setHospNUll(), 200)
         }
 

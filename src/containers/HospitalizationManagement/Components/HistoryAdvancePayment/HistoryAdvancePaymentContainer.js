@@ -7,7 +7,6 @@
  */
 import React, {Component} from 'react';
 import Bscroll from 'better-scroll'
-import Header from "@components/Header/NavBar";
 import LoadingMask from "@components/Loading/LoadingMask";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'

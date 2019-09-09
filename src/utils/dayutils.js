@@ -78,7 +78,7 @@ export function getNoon(str) {
 
 
 export function getStartDate(str = '') {
-    if (str != '') {
+    if (str !== '') {
         let date = new Date(str),
             Y = date.getFullYear(),
             M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1),
@@ -97,7 +97,7 @@ export function getStartDate(str = '') {
 
 export function getCurrentMMddWed(str = '') {
     let weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-    if (str != '') {
+    if (str !== '') {
         let date = new Date(str),
             M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月',
             D = date.getDate() < 10 ? '0' + date.getDate() + '日' : date.getDate() + '日',

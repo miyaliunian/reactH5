@@ -88,7 +88,7 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>统筹支付</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(pubPayAmt) != 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof(pubPayAmt) !== 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
                         <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span>
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -97,7 +97,7 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>账户支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(siPayAmt) != 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof(siPayAmt) !== 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
                         <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span>
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -106,13 +106,13 @@ class AdvanceSettlementContainer extends Component {
                             marginLeft: '10px',
                             fontSize: '10px',
                             color: '#737373'
-                        }}>{(typeof(postPayBalance) != 'undefined' ? postPayBalance.toFixed(2) : '')}</span>
+                        }}>{(typeof(postPayBalance) !== 'undefined' ? postPayBalance.toFixed(2) : '')}</span>
                     </div>
                 </InfoRow>
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>自费支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(ownPayAmt) != 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof(ownPayAmt) !== 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
                     </div>
                     <div className={'infoRow_item_right'}>
                     </div>
@@ -128,7 +128,7 @@ class AdvanceSettlementContainer extends Component {
     renderSettleInfo0() {
         const {pubPayAmt, siPayAmt, ownPayAmt, prePayBalance, totalAmt} = this.props.advanceSettleInfo
         let show = false
-        if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt === totalAmt) {
+        if (typeof(ownPayAmt) !== 'undefined' && typeof(totalAmt) !== 'undefined' && ownPayAmt === totalAmt) {
             show = true
         }
         return (
@@ -136,7 +136,7 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>统筹支付</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(pubPayAmt) != 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof(pubPayAmt) !== 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
                         {show ? <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span> : null}
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -145,7 +145,7 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>账户支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(siPayAmt) != 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof(siPayAmt) !== 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
                         {show ? <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span> : null}
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -154,13 +154,13 @@ class AdvanceSettlementContainer extends Component {
                             marginLeft: '10px',
                             fontSize: '10px',
                             color: '#737373'
-                        }}>{(typeof(prePayBalance) != 'undefined' ? prePayBalance.toFixed(2) : '')}</span>
+                        }}>{(typeof(prePayBalance) !== 'undefined' ? prePayBalance.toFixed(2) : '')}</span>
                     </div>
                 </InfoRow>
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>自费支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(ownPayAmt) != 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof(ownPayAmt) !== 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
                     </div>
                     <div className={'infoRow_item_right'}>
                     </div>
@@ -182,14 +182,14 @@ class AdvanceSettlementContainer extends Component {
         const {siPayAmt, ownPayAmt, totalAmt} = this.props.advanceSettleInfo
         let titleStr = ''
         let targetUrl = ''
-        if (typeof(totalAmt) != 'undefined' && totalAmt === 0) {
+        if (typeof(totalAmt) !== 'undefined' && totalAmt === 0) {
             titleStr = `医保支付 ${totalAmt.toFixed(2)}元`
             targetUrl = '/medicarePayContainer'
         } else {
-            if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt === totalAmt) {
+            if (typeof(ownPayAmt) !== 'undefined' && typeof(totalAmt) !== 'undefined' && ownPayAmt === totalAmt) {
                 titleStr = `自费支付 ${totalAmt.toFixed(2)}元`
                 targetUrl = '/thirdPayContainer'
-            } else if (typeof(ownPayAmt) != 'undefined' && typeof(totalAmt) != 'undefined' && ownPayAmt != totalAmt) {
+            } else if (typeof(ownPayAmt) !== 'undefined' && typeof(totalAmt) !== 'undefined' && ownPayAmt !== totalAmt) {
                 if (paymentStatus === 0) {
                     titleStr = `医保支付 ${siPayAmt.toFixed(2)}元`
                     targetUrl = '/medicarePayContainer'

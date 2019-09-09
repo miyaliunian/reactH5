@@ -27,6 +27,7 @@ const actionTypes = {
     FETCH_PAY_TYPE_REQUEST: 'RESERVATION/FETCH_PAY_TYPE_REQUEST',
     FETCH_PAY_TYPE_SUCCESS: 'RESERVATION/FETCH_PAY_TYPE_SUCCESS',
     FETCH_PAY_TYPE_FAILURE: 'RESERVATION/FETCH_PAY_TYPE_FAILURE',
+    FETCH_FAILURE: 'RESERVATION/FETCH_FAILURE',
 
     //家庭成员列表
     FETCH_RESERVATION_BIND_CARD_SUCCESS: 'RESERVATION/FETCH_RESERVATION_BIND_CARD_SUCCESS',
@@ -147,7 +148,7 @@ export const actions = {
                 },
                 error => {
                     console.log('出现错误')
-                    console.log(error)
+                    dispatch(fetchFailure())
                 }
             )
 
@@ -365,6 +366,10 @@ const fetchPayTypeSuccess = (data) => ({
     data
 })
 
+const fetchFailure = () => ({
+    type: actionTypes.FETCH_FAILURE,
+})
+
 const fetchBindCardSuccess = (data) => ({
     type: actionTypes.FETCH_RESERVATION_BIND_CARD_SUCCESS,
     data
@@ -469,6 +474,11 @@ const reducer = (state = initialState, action) => {
                 isFetching: false
             }
         case actionTypes.BTN_SUBMIT_FAILURE:
+            return {
+                ...state,
+                isFetching: false
+            }
+        case actionTypes.FETCH_FAILURE:
             return {
                 ...state,
                 isFetching: false

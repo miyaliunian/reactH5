@@ -6,7 +6,7 @@
  *  医生详情
  */
 import React, {Component} from 'react'
-import Header from "@components/Header/NavBar";
+
 import LoadingMask from "@components/Loading/LoadingMask";
 import DoctorTitle from "@containers/Doctor/Components/DoctorTitle/DoctorTitle";
 import DoctorDesc from "@containers/Doctor/Components/DoctorDesc/DoctorDesc";
@@ -22,28 +22,31 @@ import {
     getTimeInterval
 } from "@reduxs/modules/doctor";
 import './style.less'
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 class DoctorContainer extends Component {
     render() {
         const {fetchingStatus, isLastPage, clinicData, reservationData, timeInterval} = this.props
-        const {introduction,skills} = this.props.location.state
+        const {introduction, skills} = this.props.location.state
         return (
-            <div className={'doctor'} >
-                <Header title={'医生详情'} isRight={false} onBack={this.handleBack}/>
-                <DoctorTitle data={this.props.location.state}/>
-                <DoctorDesc introduction={introduction} skills={skills}/>
-                <div className={'doctor__interval'}/>
-                <DoctorVisiting
-                {...this.props}
-                doctorInfo={this.props.location.state}
-                clinicData={clinicData}
-                reservationData={reservationData}
-                fetchReservationList={(item) => this.fetchReservationList(item)}
-                timeInterval={timeInterval}
-                isLastPage={isLastPage}
-                pullingUpHandler={() => this.pullingUpHandler()}
-            />
+            <div className={'doctor'}>
+                <SafeAreaView showBar={true} title={'医生详情'} isRight={false} handleBack={this.handleBack}>
+                    <DoctorTitle data={this.props.location.state}/>
+                    <DoctorDesc introduction={introduction} skills={skills}/>
+                    <div className={'doctor__interval'}/>
+                    <DoctorVisiting
+                        {...this.props}
+                        doctorInfo={this.props.location.state}
+                        clinicData={clinicData}
+                        reservationData={reservationData}
+                        fetchReservationList={(item) => this.fetchReservationList(item)}
+                        timeInterval={timeInterval}
+                        isLastPage={isLastPage}
+                        pullingUpHandler={() => this.pullingUpHandler()}
+                    />
+                </SafeAreaView>
                 {fetchingStatus ? <LoadingMask/> : null}
+
             </div>
         )
     }

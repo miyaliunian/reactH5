@@ -42,8 +42,18 @@ const RouteModule = function (props) {
 
 const theme = createMuiTheme({
     palette: {
-        primary: lightBlue,
-        secondary: pink,
+        primary: {
+            light: '#757ce8',
+            main: '#0084ff',
+            dark: '#002884',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+        }
     },
 });
 
