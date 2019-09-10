@@ -130,3 +130,5 @@ export function getNexDate(str) {
         W = weekDays[date.getDay()] + ''
     return M + D + W
 }
+
+

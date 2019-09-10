@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"/>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
@@ -16,6 +16,7 @@
     <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
     <script src="https://unpkg.com/react-poppop/dist/react-poppop.min.js"></script>
     <script src="/js/jsencrypt.min.js"></script>
+    <script src="/js/j2c_main_code.js"></script>
     <script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
     <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
     <title>智慧医保</title>
@@ -41,9 +42,34 @@
             event.preventDefault()
         })
 
+        //*****************************注册J2C
+        if (undefined == window['J2C']) {
+            window['J2C'] = {};
+        }
+
+
+        //唤起微信支付
+        function H5WXPay() {
+            if (window.iosdkqgqc) {
+                window.webkit.messageHandlers.H5WXPay.postMessage(1);
+            } else if (window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler(
+                    'Native.H5WXPay', {
+                        'param': '测试'
+                    },
+                    function (responseData) {
+                    }
+                );
+
+            } else {
+
+            }
+
+        }
+
+        //*****************************把函数注册到命名空间中
+        window['J2C']['H5WXPay'] = H5WXPay;
     }
-
-
 </script>
 </body>
 </html>

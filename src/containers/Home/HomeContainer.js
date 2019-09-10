@@ -59,7 +59,7 @@ class Home extends Component {
                 this.props.history.push('/medicarePayContainer')
                 break
             case 10 :
-                this.props.history.push('/simpleSnackBarContainer')
+                window['J2C'].H5WXPay()
                 break
         }
     }

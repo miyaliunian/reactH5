@@ -12,11 +12,13 @@ import ico_doctor_status from '@images/Home/ico_doctor_status.png'
 import ico_doctor_status_h from '@images/Home/ico_doctor_status_h.png'
 import './style.less'
 
+//ref={'doctorItems'}
+
 class DoctorItem extends Component {
     render() {
         const {data} = this.props
         return (
-            <ul className={'doctorItem'} ref={'doctorItems'}>
+            <ul className={'doctorItem'} >
                 <div>
                     {data.map(item => {
                         return (
@@ -86,16 +88,16 @@ class DoctorItem extends Component {
 
 
     componentDidMount(){
-        this.bscroll = new Bscroll(this.refs.doctorItems, {
-            mouseWheel: true,
-            probeType: 3,
-            click: true,
-            tap: true,
-            bounce: {
-                top: true,
-                bottom: true,
-            }
-        })
+        // this.bscroll = new Bscroll(this.refs.doctorItems, {
+        //     mouseWheel: true,
+        //     probeType: 3,
+        //     click: true,
+        //     tap: true,
+        //     bounce: {
+        //         top: true,
+        //         bottom: true,
+        //     }
+        // })
     }
 }
 

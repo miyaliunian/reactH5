@@ -14,6 +14,7 @@ import {Modal} from 'antd-mobile'
 import Calendar from "@components/Calendar/Calendar";
 import {getDate, formateTimeStep} from "@utils/dayutils";
 import {connect} from "react-redux";
+import {ContentWrapper,DateFilterBar} from './style'
 import {bindActionCreators} from "redux";
 import {
     actions as doctorListActions,
@@ -53,10 +54,10 @@ class DoctorListContainer extends Component {
         const {name} = this.props.match.params
         const {fetchingStatus, doctors, reservations, seeDate} = this.props
         return (
-            <div className={'doctorList'}>
+            <ContentWrapper>
                 <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
                     <DoctorTabs tabSel={(target) => this.tabSel(target)}/>
-                    <div ref={'reservations'}>
+                    <DateFilterBar ref={'reservations'}>
                         {!reservations ?
                             null
                             :
@@ -66,7 +67,7 @@ class DoctorListContainer extends Component {
                                        showModal={() => this.showModal()}
                             />
                         }
-                    </div>
+                    </DateFilterBar>
                     <DoctorItem data={doctors}/>
                     <Modal
                         visible={this.state.isShow}
@@ -84,7 +85,7 @@ class DoctorListContainer extends Component {
                     </Modal>
                     {fetchingStatus ? <LoadingMask/> : null}
                 </SafeAreaView>
-            </div>
+            </ContentWrapper>
         )
     }
 
@@ -92,7 +93,6 @@ class DoctorListContainer extends Component {
     componentDidMount() {
         // 清空数据
         this.resizeReservationsBox()
-        this.refs.reservations.style.height = 0
         const {id} = this.props.match.params
         this.props.doctorListActions.loadDoctorList(id)
         this.props.doctorListActions.loadReservationList(id)

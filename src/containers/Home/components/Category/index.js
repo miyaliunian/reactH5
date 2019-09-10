@@ -53,7 +53,7 @@ const dataSource = [
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
         {
-            name: "支付结果",
+            name: "H5TNative",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
     ],
