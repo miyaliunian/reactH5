@@ -13,7 +13,7 @@ import {OrderType} from '@assets/static/DictionaryConstant'
 
 const initialState = {
     isFetching: false,
-    payList: [],
+    PayMethodEntity: [],
 }
 
 const actionTypes = {
@@ -123,12 +123,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                payList: action.response
+                PayMethodEntity: action.response
             }
         case actionTypes.CLEAR_PAYTYPEITEMS_SUCCESS:
             return {
                 ...state,
-                payList: []
+                PayMethodEntity: []
             }
         case actionTypes.FETCH_FAILURE:
             return {
@@ -147,7 +147,7 @@ export const getFetchingStatus = (state) => {
     return state.thirdPay.isFetching
 }
 
-export const getPayList = (state) => {
-    return state.thirdPay.payList
+export const getPayMethodEntity = (state) => {
+    return state.thirdPay.PayMethodEntity
 }
 

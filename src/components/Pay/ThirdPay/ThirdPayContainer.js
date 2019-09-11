@@ -25,7 +25,7 @@ import './style.less'
 class ThirdPayContainer extends Component {
     render() {
         const {orderPayment, ObjEntity, reservationName} = this.props.location.state
-        const {fetchStatus, payItems} = this.props
+        const {fetchStatus, PayMethodEntityItems} = this.props
         return (
             <div className={'thirdPay'}>
                 <SafeAreaView showBar={true} title={'选择支付方式'} isRight={false} handleBack={this.handleBack}>
@@ -49,7 +49,7 @@ class ThirdPayContainer extends Component {
                         <p style={{height: '35px', lineHeight: '35px'}} className={'border-bottom'}>请选择支付方式</p>
                         <ul>
                             {
-                                payItems.map((item, index) => {
+                                PayMethodEntityItems.map((item, index) => {
                                     let iconName = ''
                                     let title = ''
                                     switch (item.id) {
@@ -114,9 +114,9 @@ class ThirdPayContainer extends Component {
         )
     }
 
-    renderPayListItems(payItems) {
+    renderPayListItems(PayMethodEntityItems) {
         {
-            payItems.map(item => {
+            PayMethodEntityItems.map(item => {
                 return (
                     <li className={'payComponent_payBtn_row border-top '}>
                         <span style={{fontSize: '17px'}}>{item.name}</span>
@@ -133,7 +133,6 @@ class ThirdPayContainer extends Component {
 
 
     Pay() {
-        debugger
         const {orderPayment, ObjEntity, reservationCode, reservationName} = this.props.location.state
         window['J2C'].H5WXPay({body: {'orderType': reservationCode, 'orderId': ObjEntity.unifiedOrderId}})
     }
@@ -141,14 +140,15 @@ class ThirdPayContainer extends Component {
 
     componentDidMount() {
         /**
-         *   paymentMethod === 2   ?(纯自费) 直接获取支付方式 : (自费金额 ===  总金额  &&  paymentStatus === 0   空炮一遍医保支付)
+         *   paymentMethod === 2   ?(纯自费) 直接获取支付方式 : (自费金额 ===  总金额  &&  paymentStatus === 0   空跑一遍医保支付)
          */
         if (this.props.history.action === 'PUSH') {
             const {ObjEntity, reservationCode, paymentMethod, orderPayment} = this.props.location.state
-            debugger
             if (paymentMethod === 1 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
+                //空跑一遍医保支付
                 this.props.thirdPayActions.reMedicarePayAndReLoadPayTypeItems(reservationCode, ObjEntity, orderPayment)
             } else {
+                //存自费：获取支付方式
                 this.props.thirdPayActions.loadPayTypeItems(reservationCode, ObjEntity)
             }
         }
@@ -163,7 +163,7 @@ class ThirdPayContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         fetchStatus: getFetchingStatus(state),
-        payItems: getPayList(state),
+        PayMethodEntityItems: getPayList(state),
     }
 }
 
