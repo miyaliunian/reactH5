@@ -11,7 +11,7 @@ import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import LoadingMask from "@components/Loading/LoadingMask";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {getFetchingStatus, getPayList, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
+import {getFetchingStatus, getPayMethodEntity, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
 import {OrderTypeWrapper, PayTypeList, ButtonWrapper} from './style'
 //图标
 import icon_ybzf from '@images/Pay/ico_ybk_png.png'; //医保卡支付
@@ -163,7 +163,7 @@ class ThirdPayContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         fetchStatus: getFetchingStatus(state),
-        PayMethodEntityItems: getPayList(state),
+        PayMethodEntityItems: getPayMethodEntity(state),
     }
 }
 
