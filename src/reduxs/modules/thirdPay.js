@@ -57,11 +57,9 @@ export const actions = {
             } : {orderType: orderType, orderId: objEntity.unifiedOrderId, phone: orderPayment.phone,}
             const targetURL = URL.API_SI_PAY()
             dispatch(fetchRequest())
-            debugger
             return post(targetURL, Params)
                 .then((data) => {
                         if (data.infocode && data.infocode === 1) {
-                            debugger
                             let targetURL = orderType === OrderType[0].status ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId) : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
                             fetchPayTypeItems(targetURL, dispatch)
                         } else {
