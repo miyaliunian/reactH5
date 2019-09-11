@@ -133,6 +133,9 @@ class ThirdPayContainer extends Component {
 
 
     Pay() {
+        debugger
+        const {orderPayment, ObjEntity, reservationCode, reservationName} = this.props.location.state
+        window['J2C'].H5WXPay({body: {'orderType': reservationCode, 'orderId': ObjEntity.unifiedOrderId}})
     }
 
 

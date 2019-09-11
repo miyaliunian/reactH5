@@ -49,9 +49,9 @@
 
 
         //唤起微信支付
-        function H5WXPay() {
+        function H5WXPay(i) {
             if (window.iosdkqgqc) {
-                window.webkit.messageHandlers.H5WXPay.postMessage(1);
+                window.webkit.messageHandlers.H5WXPay.postMessage(i);
             } else if (window.WebViewJavascriptBridge) {
                 window.WebViewJavascriptBridge.callHandler(
                     'Native.H5WXPay', {

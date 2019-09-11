@@ -59,7 +59,6 @@ class Home extends Component {
                 this.props.history.push('/medicarePayContainer')
                 break
             case 10 :
-                window['J2C'].H5WXPay()
                 break
         }
     }
