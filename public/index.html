@@ -49,7 +49,8 @@
 
 
         //唤起微信支付
-        function H5WXPay(i) {
+        function H5WXPay(i, e) {
+            H5WXPayCallBack = e;
             if (window.iosdkqgqc) {
                 window.webkit.messageHandlers.H5WXPay.postMessage(i);
             } else if (window.WebViewJavascriptBridge) {
@@ -67,8 +68,15 @@
 
         }
 
+
+        //唤起微信支付->回调
+        function H5WXPayCallBack(e) {
+
+        }
+
         //*****************************把函数注册到命名空间中
         window['J2C']['H5WXPay'] = H5WXPay;
+        window['J2C']['H5WXPayCallBack'] = H5WXPayCallBack;
     }
 </script>
 </body>

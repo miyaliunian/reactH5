@@ -55,10 +55,15 @@ class Home extends Component {
             case 8 :
                 this.props.history.push('/thirdPayContainer')
                 break
-            case 9 :
-                this.props.history.push('/medicarePayContainer')
-                break
             case 10 :
+                alert('dfsdf')
+                window['J2C'].H5WXPay({body: {'orderType': 'reservationCode', 'orderId': 'unifiedOrderId'}},(e)=>{
+
+                })
+                window['J2C']['H5WXPayCallBack'] = function (response) {
+                    alert('-------H5WXPayCallBack')
+                    alert(response)
+                };
                 break
         }
     }
