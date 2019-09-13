@@ -35,27 +35,23 @@ class Home extends Component {
     categoryClick(index) {
         switch (index) {
             case 0 :
-                this.props.history.push('/hospitals')
-                break
-            case 1 :
                 this.props.history.push('/login')
+            case 1 :
+                this.props.history.push('/register')
                 break
             case 2 :
+                this.props.history.push('/hospitals')
+                break
+            case 3 :
                 this.props.history.push('/bindCard')
                 break
             case 4 :
-                this.props.history.push('/register')
-                break
-            case 5 :
                 this.props.history.push('/intelligentWaiting')
                 break
-            case 7 :
+            case 5 :
                 this.props.history.push('/hospitalizationManagement')
                 break
-            case 8 :
-                this.props.history.push('/thirdPayContainer')
-                break
-            case 10 :
+            case 6 :
                 alert('dfsdf')
                 window['J2C'].H5WXPay({body: {'orderType': 'reservationCode', 'orderId': 'unifiedOrderId'}},(e)=>{
 

@@ -12,45 +12,29 @@ import './style.less'
 const dataSource = [
     [
         {
-            name: "当日挂号",
+            name: "登录",
             src:
                 "https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png"
         },
         {
-            name: "预约挂号",
+            name: "注册",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203337jiudian.png"
         },
         {
-            name: "门诊缴费",
+            name: "线上预约",
             src: "https://www.dpfile.com/sc/eleconfig/20160126202841xiuxianyule.png"
         },
         {
-            name: "报告查询",
+            name: "家庭成员",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203251waimai.png"
         },
         {
-            name: "账户购买商险",
-            src: "https://www.dpfile.com/sc/eleconfig/20160204172927huoguo.png"
-        },
-        {
             name: "智能候诊",
-            src: "https://www.dpfile.com/sc/eleconfig/20160126194705meishi.png"
-        },
-        {
-            name: "医保账户查询",
-            src: "https://www.dpfile.com/sc/eleconfig/20160126202946liren.png"
+            src: "https://www.dpfile.com/sc/eleconfig/20160204172927huoguo.png"
         },
         {
             name: "住院管理",
             src: "https://www.dpfile.com/sc/eleconfig/20160126202946liren.png"
-        },
-        {
-            name: "第三方支付",
-            src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
-        },
-        {
-            name: "医保支付",
-            src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
         {
             name: "H5TNative",
