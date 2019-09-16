@@ -196,6 +196,9 @@ class DoctorVisiting extends Component {
      * @param data
      */
     navPage(data) {
+        if (data.status === 2){
+            return
+        }
         this.reservationInfoSel = data
         this.props.doctorActions.loadTimeInterval(this.props.doctorInfo, data, this)
 

@@ -60,9 +60,7 @@ class DoctorContainer extends Component {
         }, {
             passive: false //  禁止 passive 效果
         })
-        if (this.props.history.action === 'PUSH') {
-            this.initailData()
-        }
+        this.initailData()
     }
 
     componentWillUnmount() {
