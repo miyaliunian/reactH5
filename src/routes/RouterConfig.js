@@ -201,6 +201,17 @@ const PayCountdown = (props) => {
 };
 
 
+//支付成功
+const PayResultContainerComponent = lazy(() => import("@components/Pay/Result/PayResultContainer"));
+const PayResultContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <PayResultContainerComponent {...props}></PayResultContainerComponent>
+        </Suspense>
+    )
+};
+
+
 const routerMap = [
     {
         path: '/',
@@ -301,6 +312,11 @@ const routerMap = [
         path: '/payCountdown',
         name: 'payCountdown',
         component: PayCountdown
+    },
+    {
+        path: '/payResultContainer',
+        name: 'payResultContainer',
+        component: PayResultContainer
     }
 
 ]

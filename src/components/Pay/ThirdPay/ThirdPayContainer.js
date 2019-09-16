@@ -13,6 +13,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {getFetchingStatus, getPayMethodEntity, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
 import {OrderTypeWrapper, PayTypeList, ButtonWrapper} from './style'
+import {Toast} from 'antd-mobile'
 //图标
 import icon_ybzf from '@images/Pay/ico_ybk_png.png'; //医保卡支付
 import icon_zfb from '@images/Pay/ico_zfb_png.png';// 支付宝
@@ -133,14 +134,29 @@ class ThirdPayContainer extends Component {
 
 
     Pay() {
+
         const {orderPayment, ObjEntity, reservationCode, reservationName} = this.props.location.state
+        const {history} = this.props
         //H5支付调用
         window['J2C'].H5WXPay({body: {'orderType': reservationCode, 'orderId': ObjEntity.unifiedOrderId}}, (e) => {
         })
         //H5支付回调
         window['J2C']['H5WXPayCallBack'] = function (response) {
-            alert('-------H5WXPayCallBack')
-            alert(response)
+            debugger
+            let resObj = JSON.parse(response)
+            if (resObj.errCode === 0) {
+                let path = {
+                    pathname: '/payResultContainer',
+                    state: {
+                        sn: ObjEntity.sn,
+                        reservationName: reservationName,
+                        price: orderPayment.siPayAmt + orderPayment.pubPayAmt
+                    }
+                }
+                history.push('/payCountdown')
+            } else {
+                Toast.fail(resObj.errMsg, 1)
+            }
         };
     }
 

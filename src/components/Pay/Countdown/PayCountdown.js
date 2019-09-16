@@ -7,10 +7,11 @@
  */
 import React, {Component} from 'react'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import {withRouter} from 'react-router-dom'
 import ReactLoading from 'react-loading';
 import {Container, CountDownWrapper} from './style'
 
-export default class PayCountdown extends Component {
+ class PayCountdown extends Component {
 
     state = {
         countDown: 15
@@ -34,9 +35,18 @@ export default class PayCountdown extends Component {
     }
 
     componentDidMount() {
+        const {sn,reservationName,price} = this.props.location.state
         this.interval = setInterval(() => {
             if (this.state.countDown === 1) {
-                this.props.history.goBack()
+                let path = {
+                    pathname: '/payResultContainer',
+                    state: {
+                        sn: sn,
+                        reservationName: reservationName,
+                        price: price
+                    }
+                }
+                this.props.history.push(path)
             } else {
                 this.setState({countDown: this.state.countDown - 1})
             }
@@ -50,4 +60,6 @@ export default class PayCountdown extends Component {
     handleBack = () => {
         this.props.history.goBack()
     }
-}    
+}
+
+export default withRouter(PayCountdown)
