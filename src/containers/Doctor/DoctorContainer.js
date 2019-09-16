@@ -31,9 +31,11 @@ class DoctorContainer extends Component {
         return (
             <div className={'doctor'}>
                 <SafeAreaView showBar={true} title={'医生详情'} isRight={false} handleBack={this.handleBack}>
-                    <DoctorTitle data={this.props.location.state}/>
-                    <DoctorDesc introduction={introduction} skills={skills}/>
-                    <div className={'doctor__interval'}/>
+                    <div id={'doctorDetailHeader'}>
+                        <DoctorTitle data={this.props.location.state}/>
+                        <DoctorDesc introduction={introduction} skills={skills}/>
+                        <div className={'doctor__interval'}/>
+                    </div>
                     <DoctorVisiting
                         {...this.props}
                         doctorInfo={this.props.location.state}
@@ -52,12 +54,23 @@ class DoctorContainer extends Component {
     }
 
     componentDidMount() {
-        this.initailData()
+        //顶部禁止滑动
+        document.getElementById('doctorDetailHeader').addEventListener("touchmove", (event) => {
+            event.preventDefault();
+        }, {
+            passive: false //  禁止 passive 效果
+        })
+        if (this.props.history.action === 'PUSH') {
+            this.initailData()
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.doctorActions.reset()
     }
 
 
     initailData() {
-        this.props.doctorActions.reset()
         const {hosId, id: doctId} = this.props.location.state
         this.props.doctorActions.loadClinicList(hosId, doctId)
     }

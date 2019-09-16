@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/5/26
  * Description:  tabs 选择器
- *
+ *  医院列表
  */
 import React, {Component} from 'react'
 import {ZHPX, SX_YYLX, SX_YYDJ} from '@assets/static/DictionaryConstant'
@@ -41,7 +41,7 @@ class Tabs extends Component {
                          onClick={() => this.tabSelc(1)}>
                         {this.state.tab1focused_title}
                     </div>
-                    <div className={this.state.tab2focused ? 'searchItem2Seled ' : 'searchItem2'}
+                    <div className={this.state.tab2focused ? 'searchItem2Seled' : 'searchItem2'}
                          onClick={() => this.tabSelc(2)}>
                         {this.state.tab2focused_title}
                         <div className={this.state.tab2focused ? 'searchItemSeledLine' : ''}/>

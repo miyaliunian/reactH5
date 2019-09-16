@@ -45,6 +45,7 @@ export const actions = {
     loadClinicList: (hosId, doctid) => {
         return (dispatch, getstate) => {
             const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
+            dispatch(fetchRequest())
             return post(target).then(
                 data => {
                     data.data.map((item, index) => {
@@ -72,7 +73,7 @@ export const actions = {
             if (isPage) {
                 pageNu = getstate().doctor.page
             }
-            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid,  pageNu)
+            const target = URL.API_DOCTOR_VISITING_LIST(hosId, deptId, doctid, pageNu)
             return dispatch(loadReservationList(target))
         }
     },
@@ -128,6 +129,9 @@ export const actions = {
     })
 }
 
+const fetchRequest = () => ({
+    type: actionTypes.FETCH_DOCTOR_REQUEST
+})
 
 const loadClinicListSuccess = (data) => ({
     type: actionTypes.FETCH_DOCTOR_CLINICS_SUCCESS,

@@ -40,11 +40,11 @@ const RouteModule = function (props) {
 };
 
 
-const theme = createMuiTheme({
+const cusTheme = createMuiTheme({
     palette: {
         primary: {
             light: '#757ce8',
-            main: '#0084ff',
+            main: '#0094ff',
             dark: '#002884',
             contrastText: '#fff',
         },
@@ -65,7 +65,7 @@ class AppContainer extends Component {
         return (
             <div>
                 {/*<CssBaseline/>*/}
-                    <ThemeProvider theme={theme}>
+                    <ThemeProvider theme={cusTheme}>
                         <BrowserRouter>
                             <Routes/>
                         </BrowserRouter>

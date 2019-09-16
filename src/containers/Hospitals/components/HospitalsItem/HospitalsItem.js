@@ -10,8 +10,6 @@ import {Link} from 'react-router-dom'
 import Bscroll from 'better-scroll'
 import './style.less'
 import {withRouter} from 'react-router-dom'
-import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
-import RefreshHeader from "@components/Refresh/Header/RefreshHeader";
 //图标
 import icon_sj from '@images/Home/三甲图标IOS.png';
 import icon_bg from '@images/Home/报告图标IOS.png';

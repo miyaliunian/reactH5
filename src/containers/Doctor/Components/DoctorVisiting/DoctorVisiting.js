@@ -52,24 +52,22 @@ class DoctorVisiting extends Component {
                 <div className={'doctorVisiting__title border-bottom'}>
                     <div>出诊时间</div>
                     <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick(clinicData)}>
-                        <div>{this.defSelClinic}</div>
+                        <div >{this.defSelClinic}</div>
                         <Icon type={'left'}/>
                     </div>
                 </div>
-                {isVisible ? <Paper className="clinic__box border">
+                <Box className={"clinic__box border"} pose={isVisible ? 'visible' : 'hidden'} ref={'clinic__box'}>
                     <div>
                         <ul>
                             {clinicData.map(item => {
                                 return (
-                                    <li>
-                                        <span key={item.id} className={'box__item border-bottom'}
-                                              onClick={() => this.itemClick(item)}>{item.name}</span>
-                                    </li>
+                                    <span key={item.id} className={'box__item border-bottom'}
+                                          onClick={() => this.itemClick(item)}>{item.name}</span>
                                 )
                             })}
                         </ul>
                     </div>
-                </Paper> : null}
+                </Box>
                 <div className={'doctorVisiting__list'}
                      ref={'doctorVisitingList'}
                 >
@@ -143,13 +141,13 @@ class DoctorVisiting extends Component {
         this.scroll.on('pullingUp', this.props.pullingUpHandler);
 
 
-        //诊室滚动列表
-        // this.clinicScroll = new Bscroll(this.refs.clinic__box, {
-        //     mouseWheel: true,
-        //     click: true,
-        //     tap: true,
-        //     useTransition: false
-        // })
+        // 诊室滚动列表
+        this.clinicScroll = new Bscroll(this.refs.clinic__box, {
+            mouseWheel: true,
+            click: true,
+            tap: true,
+            useTransition: false
+        })
 
     }
 

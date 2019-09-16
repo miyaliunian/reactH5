@@ -190,15 +190,16 @@ const ThirdPayContainer = (props) => {
 };
 
 
-//支付结果
-const SimpleSnackBar = lazy(() => import ("@components/SlideDownSnackBar/SlideDownSnackBar"))
-const SimpleSnackBarContainer = (props) => {
+//支付成功倒计时
+const PayCountdownComponent = lazy(() => import("@components/Pay/Countdown/PayCountdown"));
+const PayCountdown = (props) => {
     return (
         <Suspense fallback={null}>
-            <SimpleSnackBar {...props}></SimpleSnackBar>
+            <PayCountdownComponent {...props}></PayCountdownComponent>
         </Suspense>
     )
-}
+};
+
 
 const routerMap = [
     {
@@ -295,11 +296,13 @@ const routerMap = [
         path: '/thirdPayContainer',
         name: 'thirdPayContainer',
         component: ThirdPayContainer
-    }, {
-        path: '/simpleSnackBarContainer',
-        name: 'simpleSnackBarContainer',
-        component: SimpleSnackBarContainer
+    },
+    {
+        path: '/payCountdown',
+        name: 'payCountdown',
+        component: PayCountdown
     }
+
 ]
 
 export default routerMap

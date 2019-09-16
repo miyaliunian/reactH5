@@ -40,6 +40,10 @@ const dataSource = [
             name: "H5TNative",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
+        {
+            name: "支付成功倒计时",
+            src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
+        },
     ],
 ];
 export default class Category extends Component {

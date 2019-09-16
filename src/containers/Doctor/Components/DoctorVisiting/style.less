@@ -1,8 +1,10 @@
 @import "../../../../assets/less/varibles";
 
 .doctorVisiting {
+  //.container();
   position: relative;
   .doctorVisiting__title {
+    flex: 1;
     height: 40px;
     background: white;
     display: flex;
@@ -21,20 +23,22 @@
     }
   }
   .clinic__box {
+    display: flex;
     position: absolute;
-    right: 50px;
-    width: 100px;
-    height: 150px;
+    right: 40px;
+    width: 120px;
+    height: 200px;
     background: white;
     transform-origin: 50% 100%;
     overflow: hidden;
     z-index: 1;
     .box__item {
       display: block;
-      height: 30px;
-      line-height: 20px;
-      padding: 5px 5px 0;
-      font-size: 12px;
+      height: 40px;
+      width: 120px;
+      line-height: 40px;
+      padding-left: 10px;
+      font-size: 15px;
       color: rgb(130, 130, 130);
       box-sizing: border-box;
       text-overflow: ellipsis;
@@ -51,7 +55,7 @@
     background: white;
     overflow: hidden;
     .doctorVisiting__item {
-      height: 35px;
+      height: 40px;
       padding: 10px 20px;
       display: flex;
       box-sizing: border-box;
