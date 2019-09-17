@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
-import {actions as homeActions, getPageCountOfLikes, getDiscounts, getLists} from '@reduxs/modules/home'
+import {actions as homeActions} from '@reduxs/modules/home'
 import {connect} from 'react-redux'
 import Banner from './components/Banner'
 import Category from './components/Category'
@@ -75,9 +75,9 @@ class Home extends Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        likes: getLists(state),
-        discounts: getDiscounts(state),
-        pageCount: getPageCountOfLikes(state)
+        // likes: getLists(state),
+        // discounts: getDiscounts(state),
+        // pageCount: getPageCountOfLikes(state)
     }
 }
 

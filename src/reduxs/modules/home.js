@@ -151,19 +151,6 @@ const reducer = combineReducers({
 
 export default reducer
 
-// Selectors  选择器函数：从redux的state中读取部分数据,将读取到的数据给容器组件使用(使用component与redux的state层解耦)
-export const getLists = (state) => {
-    return state.home.likes
-}
-
-
-export const getPageCountOfLikes = (state) => {
-    return state.home.likes.pageCount
-}
-
-export const getDiscounts = (state) => {
-    return state.home.discounts
-}
 
 
 
