@@ -40,11 +40,11 @@ export function post(url, bodyParam = '') {
     return new Promise((resolve, reject) => {
         axios.post(url, JSON.stringify(bodyParam))
             .then(res => {
-                debugger
+
                 resolve(res);
             })
             .catch(err => {
-                debugger
+
                 if (err.code && err.code == 'ECONNABORTED') {//请求超时
                     return reject({message: '请求超时'})
                 } else if (err.message && err.message == 'Request failed with status code 403') {//403token过期
