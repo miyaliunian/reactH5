@@ -6,33 +6,36 @@
  *
  */
 
-
+import {Toast} from 'antd-mobile'
 
 const initialState = {
-    error: null,
+    error: '',
     token: null,
     fetStatus: false
 }
 
 
-export const types = {
+export const actionTypes = {
     CLEAR_ERROR: "APP/CLEAR_ERROR" //清除错误
 }
 
 //action creators
 export const actions = {
-    clearError: () => ({
-        type: types.CLEAR_ERROR,
-    })
+    clearError: () => {
+        return (dispatch, getstate) => {
+            dispatch({type: actionTypes.CLEAR_ERROR})
+        }
+    }
 }
 
 
 //reducer
 const reducer = (state = initialState, action) => {
     const {type, error} = action
-    if (type === types.CLEAR_ERROR) {
-        return {...state, error: null}
+    if (type === actionTypes.CLEAR_ERROR) {
+        return { error: ''}
     } else if (error) {
+        Toast.fail(error,2)
         return {...state, error: error}
     }
     return state

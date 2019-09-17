@@ -1,9 +1,5 @@
 import React, {Component, lazy, Suspense,} from 'react';
 import './style.less';
-import CssBaseline from '@material-ui/core/CssBaseline'
-import {ThemeProvider, createGenerateClassName, StylesProvider} from '@material-ui/styles'
-import {lightBlue, pink, orange} from '@material-ui/core/colors'
-import {createMuiTheme} from '@material-ui/core/styles'
 import {bindActionCreators} from 'redux'
 import {BrowserRouter, Route, Switch, withRouter, Redirect} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
@@ -40,39 +36,27 @@ const RouteModule = function (props) {
 };
 
 
-const cusTheme = createMuiTheme({
-    palette: {
-        primary: {
-            light: '#757ce8',
-            main: '#0094ff',
-            dark: '#002884',
-            contrastText: '#fff',
-        },
-        secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
-            contrastText: '#000',
-        }
-    },
-});
-
-
 class AppContainer extends Component {
+
+    state = {
+        showBar: true
+    }
+
     render() {
         const {error, appActions: {clearError}} = this.props;
         const Routes = withRouter(RouteModule);
         return (
             <div>
-                {/*<CssBaseline/>*/}
-                    <ThemeProvider theme={cusTheme}>
-                        <BrowserRouter>
-                            <Routes/>
-                        </BrowserRouter>
-                    </ThemeProvider>
-                    {error ? <ErrorToast msg={error} clearError={clearError}/> : null}
+                <BrowserRouter>
+                    <Routes/>
+                </BrowserRouter>
+                {/*<ErrorToast desc={error} show={this.state.showBar} />*/}
             </div>
         );
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
     }
 }
 

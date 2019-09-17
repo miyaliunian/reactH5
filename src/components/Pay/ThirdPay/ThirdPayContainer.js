@@ -21,6 +21,7 @@ import icon_wechat from '@images/Pay/logo_wechat(07-12-09-01-07).png';// 微信
 import icon_ylzf from '@images/Pay/logo_unionpay.png';// 银联
 import icon_gsyh from '@images/Pay/工商银行.png';// 工商银行
 import './style.less'
+import {actions as advanceSettlementActions} from "@reduxs/modules/advanceSettlement";
 
 
 class ThirdPayContainer extends Component {
@@ -129,6 +130,8 @@ class ThirdPayContainer extends Component {
     }
 
     handleBack = () => {
+        //返回上一个页面时 需要刷新预结算页面的订单支付状态
+
         this.props.history.goBack()
     }
 
@@ -160,9 +163,11 @@ class ThirdPayContainer extends Component {
 
 
     componentDidMount() {
+
         /**
          *   paymentMethod === 2   ?(纯自费) 直接获取支付方式 : (自费金额 ===  总金额  &&  paymentStatus === 0   空跑一遍医保支付)
          */
+
         if (this.props.history.action === 'PUSH') {
             const {ObjEntity, reservationCode, paymentMethod, orderPayment} = this.props.location.state
             if (paymentMethod === 1 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
@@ -190,7 +195,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        thirdPayActions: bindActionCreators(thirdPayActions, dispatch)
+        thirdPayActions: bindActionCreators(thirdPayActions, dispatch),
     }
 }
 

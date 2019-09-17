@@ -45,7 +45,7 @@ export const actions = {
         }
     },
 
-
+    //刷新订单支付状态
     setPaymentStatus: (value) => {
         return (dispatch, getstate) => {
             dispatch(setPaymentStatus(value))

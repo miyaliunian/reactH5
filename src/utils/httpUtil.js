@@ -4,67 +4,56 @@
  * Date: 2019-05-22
  * Description:  网络请求
  */
-/**
- *  GET 请求
- * @param url
- * @returns {Promise<Response>}
- */
-function get(url) {
-    let headers = new Headers({
-        'Content-Type': 'application/json;charset=UTF-8',
-    })
-    return fetch(url, {
-        method: 'GET',
-        headers: headers
-    }).then(response => {
-        return handelResponse(response, url)
-    }).catch(error => {
-        console.error(`Request failed. Url = ${url}. Message = ${error}`)
-        return Promise.reject({error: {message: "Request failed."}})
-    })
-}
 
+import axios from 'axios';
 
-/**
- * POST 请求
- * @param url
- * @param data
- * @returns {Promise<Response>}
- */
-function post(url, data = '') {
-    let headers = new Headers({
-        'Content-Type': 'application/json;charset=UTF-8',
+axios.defaults.timeout = 100;
+axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8', 'Connection': 'keep-alive'}
+// 请求拦截器
+axios.interceptors.request.use(async config => {
+        if (config.url.endsWith('.do')) {
+            let tid = JSON.parse(sessionStorage.getItem('token')).access_token
+            config.headers['tid'] = tid
+            return config
+        } else {
+            return config
+        }
+    },
+    error => {
+        return Promise.reject(error)
     })
-    if ( url.endsWith('.do')) {
-        let tid = JSON.parse(sessionStorage.getItem('token')).access_token
-        headers.append("tid", tid)
-    }
-    return fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(data)
-    }).then(response => {
-        return handelResponse(response, url)
-    }).catch(error => {
-        console.error(`Request failed. Url = ${url}. Message = ${error}`)
-        return Promise.reject({error: {message: "Request failed."}})
-    })
-}
 
-
-/**
- * 容错处理
- * @param resposne
- * @param url
- * @returns {*}
- */
-function handelResponse(resposne, url) {
-    if (resposne.status === 200) {
-        return resposne.json()
+//响应拦截
+axios.interceptors.response.use(response => {
+    if (response.status === 200) { //网络请求正常
+        return response.data
+    } else if (response.status === 403) { //token过期
+        console.log('token过期 重新登录')
     } else {
-        console.error(`Request failed. Url = ${url}`)
-        return Promise.reject({error: {message: "Request failed due to server error"}})
+        console.log('其它错误')
+        console.log(response)
+        return Promise.reject(response) //其它错误
     }
-}
+})
 
-export {get, post}
+export function post(url, bodyParam = '') {
+    return new Promise((resolve, reject) => {
+        axios.post(url, JSON.stringify(bodyParam))
+            .then(res => {
+                debugger
+                resolve(res);
+            })
+            .catch(err => {
+                debugger
+                if (err.code && err.code == 'ECONNABORTED') {//请求超时
+                    return reject({message: '请求超时'})
+                } else if (err.message && err.message == 'Request failed with status code 403') {//403token过期
+                    return reject(err.message)
+                } else if (err.message && err.message == 'Network Error') { // 网络出现连接失败
+                    return reject({message: '网络连接失败,请检查你的网络'})
+                } else {
+                    return reject(err.message)
+                }
+            })
+    });
+}
