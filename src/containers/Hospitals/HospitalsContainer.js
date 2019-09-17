@@ -32,7 +32,7 @@ class HospitalsContainer extends PureComponent {
                 onTouchMove={(e) => this.handleTouchMove(e)}
                 className={'hospitalsContainer'}
             >
-                <SafeAreaView showBar={true} title={'医院列表'} isRight={false}  handleBack={this.handleBack}>
+                <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
                     <Tabs
                         handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
                         handelTabItemSel={(item) => this.handelTabItemSel(item)}
@@ -83,7 +83,10 @@ class HospitalsContainer extends PureComponent {
         }, {
             passive: false //  禁止 passive 效果
         })
-        this.initailData()
+
+        if (this.props.history.action === 'PUSH') {
+            this.initailData()
+        }
     }
 
     initailData() {

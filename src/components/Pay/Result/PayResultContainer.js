@@ -49,6 +49,10 @@ class PayResultContainer extends Component {
         )
     }
 
+    componentDidMount(){
+        
+    }
+
 
     handleBack() {
         this.props.history.replace('/')

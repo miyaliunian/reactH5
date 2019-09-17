@@ -32,6 +32,8 @@ const actionTypes = {
     SET_SEEDATE: 'DOCTOR_LIST/SET_SEEDATE',
     //如果选中日历中的任何一个日期，则将服务器返回的日期信息选中状态，全部置为选中状态
     RESET_RESERVATION: 'DOCTOR_LIST/RESET_RESERVATION'
+    //退出页面时，清空已经加载的数据
+    CLEAR_ALL_ITEMS:'DOCTOR_LIST/CLEAR_ALL_ITEMS',
 
 }
 
@@ -61,6 +63,14 @@ export const actions = {
         return (dispatch, getstate) => {
             const targetURL = url.API_DOCTOR_RESERVATION_LIST(PlatformType.HospitalDepartments, id, 7)
             return dispatch(fetchReservationList(targetURL))
+        }
+    },
+
+
+    //退出页面时，重置数据状态
+    clearAllItems:()=>{
+        return (dispatch, getstate) => {
+            dispatch({type:actionTypes.CLEAR_ALL_ITEMS})
         }
     },
 

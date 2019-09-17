@@ -19,7 +19,8 @@ const initialState = {
     bindCardData: [],
     medicalTypeData: [],
     diagName: '', //疾病信息
-    switchInfo: {}
+    switchInfo: {},
+    btnDisable:true,
 }
 
 const actionTypes = {
@@ -52,6 +53,10 @@ const actionTypes = {
 
     //滑块组件是否显示，如果显示 是否为选中状态
     SET_SWITCH_INFO: 'RESERVATION/SET_SWITCH_INFO',
+
+    //按钮可以被点击
+    BTN_ABLE:'RESERVATION/BTN_ABLE',
+    BTN_DISABLE:'RESERVATION/BTN_DISABLE',
 
     //登录按钮
     BTN_SUBMIT_REQUEST: 'RESERVATION/BTN_SUBMIT_REQUEST',
@@ -138,6 +143,7 @@ export const actions = {
                                 data => {
                                     //使用家庭成员的SiTypeCode获取医疗类别
                                     dispatch(fetchMedicalTypeSuccess(data.data))
+                                    dispatch({type:actionTypes.BTN_ABLE})
                                 },
                                 error => {
 
@@ -147,7 +153,7 @@ export const actions = {
                     })
                 },
                 error => {
-                    console.log('出现错误')
+
                     dispatch(fetchFailure())
                 }
             )
@@ -463,6 +469,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isRefresh: action.status
             }
+
+        case actionTypes.BTN_ABLE:
+            return {
+                ...state,
+                btnDisable:false
+            }
         case actionTypes.BTN_SUBMIT_REQUEST:
             return {
                 ...state,
@@ -514,4 +526,8 @@ export const getMedicalType = (state) => {
 
 export const getSwitchInfo = (state) => {
     return state.reservation.switchInfo
+}
+
+export const getBtnDisable=(state)=>{
+    return state.reservation.btnDisable
 }

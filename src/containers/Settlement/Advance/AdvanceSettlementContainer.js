@@ -30,6 +30,7 @@ import {
     getFetchingStatus,
     getAdvanceSttle,
     getPerInfo,
+    getBtnDisable,
     actions as advanceSettlementActions
 } from "@reduxs/modules/advanceSettlement";
 import LoadingMask from "@components/Loading/LoadingMask";
@@ -78,10 +79,10 @@ class AdvanceSettlementContainer extends Component {
                 </SafeAreaView>
                 {fetchingStatus ? <LoadingMask/> : ''}
                 <SlideDownSnackBar desc={'医保账户或个人自费费用尚未完成支付，系统将在20分钟后自动进行退费'} show={this.state.showBar}
-                                handleClose={() => {
-                                    const {history} = this.props
-                                    history.replace('/');
-                                }}/>
+                                   handleClose={() => {
+                                       const {history} = this.props
+                                       history.replace('/');
+                                   }}/>
             </div>
         )
     }
@@ -187,7 +188,7 @@ class AdvanceSettlementContainer extends Component {
      * @returns {*}
      */
     renderBtnTitle() {
-        const {paymentStatus} = this.props
+        const {paymentStatus, btnDisable} = this.props
         const {siPayAmt, ownPayAmt, totalAmt} = this.props.advanceSettleInfo
         let titleStr = ''
         let targetUrl = ''
@@ -210,7 +211,7 @@ class AdvanceSettlementContainer extends Component {
         }
         return (
             <BtnContent height={20}>
-                <ButtonWrapper txt={titleStr} onSubmit={() => this.navPage(targetUrl)}/>
+                <ButtonWrapper txt={titleStr} onSubmit={() => this.navPage(targetUrl)} disabled={btnDisable}/>
             </BtnContent>
         )
     }
@@ -243,6 +244,12 @@ class AdvanceSettlementContainer extends Component {
         } else {
 
         }
+    }
+
+    componentWillUnmount() {
+        //重置登录按钮状态
+        this.props.advanceSettlementActions.resetBtnStatus()
+
     }
 
     handleBack() {
@@ -290,6 +297,7 @@ const
             fetchingStatus: getFetchingStatus(state),
             advanceSettleInfo: getAdvanceSttle(state),
             person: getPerInfo(state),
+            btnDisable: getBtnDisable(state)
         }
     }
 

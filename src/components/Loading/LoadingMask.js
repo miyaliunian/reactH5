@@ -18,6 +18,11 @@ export default class LoadingMask extends Component {
         }, {
             passive: false //  禁止 passive 效果
         })
+
+
+
+
+
     }
 
 

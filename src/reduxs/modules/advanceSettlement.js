@@ -15,7 +15,8 @@ const initialState = {
     isFetching: false,
     paymentStatus: '',
     personEntity: '',
-    settleEntity: ''
+    settleEntity: '',
+    btnDisable:true
 }
 
 const actionTypes = {
@@ -25,6 +26,8 @@ const actionTypes = {
     FETCH_PERSON_SUCCESS: 'ADVANCE_SETTLE/FETCH_PERSON_SUCCESS',
     FETCH_ADVANCE_SETTLE_SUCCESS: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_SUCCESS',
     FETCH_FAILURE: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_FAILURE',
+    BTN_ABLE:'ADVANCE_SETTLE/BTN_ABLE',
+    BTN_DISABLE:'ADVANCE_SETTLE/BTN_ABLE'
 }
 
 export const actions = {
@@ -34,6 +37,7 @@ export const actions = {
             Axios.all([loadPerson(URL.API_PERSON(patientId), dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid), dispatch)])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchSuccess())
+                    dispatch({type:actionTypes.BTN_ABLE})
                 }))
                 .catch(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchFailure())
@@ -45,6 +49,13 @@ export const actions = {
     setPaymentStatus: (value) => {
         return (dispatch, getstate) => {
             dispatch(setPaymentStatus(value))
+        }
+    },
+
+    //重置按钮状态
+    resetBtnStatus:()=>{
+        return (dispatch, getstate) => {
+            dispatch({type:actionTypes.BTN_DISABLE})
         }
     }
 }
@@ -148,6 +159,16 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false
             }
+        case actionTypes.BTN_ABLE:
+            return {
+                ...state,
+                btnDisable: false
+            }
+        case actionTypes.BTN_DISABLE:
+            return {
+                ...state,
+                btnDisable: true
+            }
         default:
             return state
     }
@@ -170,4 +191,8 @@ export const getPerInfo = (state) => {
 
 export const getAdvanceSttle = (state) => {
     return state.advanceSettlement.settleEntity
+}
+
+export const getBtnDisable=(state)=>{
+    return state.advanceSettlement.btnDisable
 }

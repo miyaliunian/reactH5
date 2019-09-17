@@ -6,7 +6,7 @@
  *   预约信息
  */
 import React, {Component} from 'react'
-import ButtonWrapper from "@baseUI/Button/PrimaryButton";
+import PrimaryButton from "@baseUI/Button/PrimaryButton";
 import ReservationHeader from "@containers/Reservation/Components/ReservationHeader/ReservationHeader";
 import ReservationForm from "@containers/Reservation/Components/ReservationForm/ReservationForm";
 import {connect} from "react-redux";
@@ -19,6 +19,7 @@ import {
     getDiagnosis,
     getMedicalType,
     getSwitchInfo,
+    getBtnDisable
 } from '@reduxs/modules/reservation'
 import './style.less'
 import LoadingMask from "@components/Loading/LoadingMask";
@@ -29,7 +30,7 @@ class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo, timeInterval} = this.props.location.state
-        const {diagnosis, fetchingStatus, payType, switchInfo, medicalType, bindCards, isRefresh} = this.props
+        const {diagnosis, fetchingStatus, payType, switchInfo, medicalType, bindCards, btnDisable} = this.props
         return (
             <div className={'reservation'}>
                 <SafeAreaView showBar={true} title={'预约信息'} isRight={false} handleBack={this.handleBack}>
@@ -46,7 +47,7 @@ class ReservationContainer extends Component {
                         refreshPage={() => this.setRefreshPage()}
                     />
                     <div className={'reservationForm__btn'}>
-                        <ButtonWrapper txt={'确认预约'} onSubmit={() => this.onBtnClick()}/>
+                        <PrimaryButton txt={'确认预约'} onSubmit={() => this.onBtnClick()} disabled={btnDisable}/>
                     </div>
                     {fetchingStatus ? <LoadingMask/> : null}
                 </SafeAreaView>
@@ -84,6 +85,7 @@ class ReservationContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         fetchingStatus: getFetchingStatus(state),
+        btnDisable: getBtnDisable(state),
         payType: getPayTypeData(state),
         bindCards: getBindCard(state),
         diagnosis: getDiagnosis(state),

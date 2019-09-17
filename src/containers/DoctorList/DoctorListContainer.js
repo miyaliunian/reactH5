@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019-06-17
  * Description:
- *    门诊：医生列表
+ *    首页->医院列表->科室选择->医生列表
  */
 import React, {Component, Fragment} from 'react';
 import Header from "@components/Header/NavBar";
@@ -91,11 +91,15 @@ class DoctorListContainer extends Component {
 
 
     componentDidMount() {
-        // 清空数据
-        this.resizeReservationsBox()
         const {id} = this.props.match.params
         this.props.doctorListActions.loadDoctorList(id)
         this.props.doctorListActions.loadReservationList(id)
+    }
+
+    componentWillUnmount(){
+        //:隐藏预约日期
+        this.resizeReservationsBox()
+
     }
 
 

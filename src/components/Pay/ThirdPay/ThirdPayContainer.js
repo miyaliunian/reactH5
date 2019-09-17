@@ -134,7 +134,6 @@ class ThirdPayContainer extends Component {
 
 
     Pay() {
-
         const {orderPayment, ObjEntity, reservationCode, reservationName} = this.props.location.state
         const {history} = this.props
         //H5支付调用
@@ -142,18 +141,17 @@ class ThirdPayContainer extends Component {
         })
         //H5支付回调
         window['J2C']['H5WXPayCallBack'] = function (response) {
-            debugger
             let resObj = JSON.parse(response)
             if (resObj.errCode === 0) {
                 let path = {
-                    pathname: '/payResultContainer',
+                    pathname: '/payCountdown',
                     state: {
                         sn: ObjEntity.sn,
                         reservationName: reservationName,
-                        price: orderPayment.siPayAmt + orderPayment.pubPayAmt
+                        price: orderPayment.ownPayAmt
                     }
                 }
-                history.push('/payCountdown')
+                history.push(path)
             } else {
                 Toast.fail(resObj.errMsg, 1)
             }

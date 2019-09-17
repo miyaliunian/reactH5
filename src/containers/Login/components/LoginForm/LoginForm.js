@@ -36,7 +36,7 @@ export default class LoginForm extends Component {
                     </div>
                 </div>
                 <div className="loginForm__btnContainer">
-                    <PrimaryButton txt={'登录'} onSubmit={onSubmit}/>
+                    <PrimaryButton txt={'登录'} onSubmit={onSubmit} disabled={false}/>
                 </div>
             </div>
         );
