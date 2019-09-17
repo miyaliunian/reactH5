@@ -23,9 +23,6 @@ export default store => next => action => {
         throw new Error('targetURL必须为字符串类型的URL')
     }
 
-    // if (!schema) {
-    //     throw new Error('必须指定业务实体的schema')
-    // }
 
     if (typeof schema === 'undefined') {
         schema = ''

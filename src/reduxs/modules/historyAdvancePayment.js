@@ -1,11 +1,3 @@
-import {cityID} from "@assets/static/DictionaryConstant";
-import url from "../../utils/httpUrl";
-import {FETCH_DATA} from "../middleware/api";
-import {Toast} from 'antd-mobile';
-import {post} from "@utils/httpUtil";
-import Axios from 'axios'
-import HistoryAdvancePayment from "@containers/HospitalizationManagement/Components/HistoryAdvancePayment/HistoryAdvancePaymentContainer";
-
 /**
  * Class:
  * Author: wufei
@@ -14,8 +6,8 @@ import HistoryAdvancePayment from "@containers/HospitalizationManagement/Compone
  *    住院管理 reduce
  *
  */
-
-
+import url from "../../utils/httpUrl";
+import {FETCH_DATA} from "../middleware/api";
 const initialState = {
     isFetching: false,
     data: []
