@@ -6,7 +6,6 @@
  *
  */
 import {combineReducers} from 'redux'
-import entities from './entities' //业务数据状态
 //################################# 页面对应的UI状态
 import app from './app'
 import login from './login'
@@ -34,7 +33,6 @@ import popUp from './popUp'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
-    entities,
     login,
     app,
     detail,
