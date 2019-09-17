@@ -33,7 +33,7 @@ const actionTypes = {
     //如果选中日历中的任何一个日期，则将服务器返回的日期信息选中状态，全部置为选中状态
     RESET_RESERVATION: 'DOCTOR_LIST/RESET_RESERVATION',
     //退出页面时，清空已经加载的数据
-    CLEAR_ALL_ITEMS:'DOCTOR_LIST/CLEAR_ALL_ITEMS',
+    CLEAR_ALL_ITEMS: 'DOCTOR_LIST/CLEAR_ALL_ITEMS',
 
 }
 
@@ -68,9 +68,9 @@ export const actions = {
 
 
     //退出页面时，重置数据状态
-    clearAllItems:()=>{
+    clearAllItems: () => {
         return (dispatch, getstate) => {
-            dispatch({type:actionTypes.CLEAR_ALL_ITEMS})
+            dispatch({type: actionTypes.CLEAR_ALL_ITEMS})
         }
     },
 
@@ -131,6 +131,8 @@ const reducer = (state = initialState, action) => {
             return {...state, isFetching: false}
         case actionTypes.SET_SEEDATE:
             return {...state, seeDate: action.value}
+        case actionTypes.CLEAR_ALL_ITEMS:
+            return {...state, data: [], dataReservation: []}
         default:
             return state
     }

@@ -99,7 +99,7 @@ class DoctorListContainer extends Component {
     componentWillUnmount(){
         //:隐藏预约日期
         this.resizeReservationsBox()
-
+        if (this.props.history.action === 'POP') this.props.doctorListActions.clearAllItems()
     }
 
 
