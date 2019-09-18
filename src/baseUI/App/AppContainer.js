@@ -55,9 +55,6 @@ class AppContainer extends Component {
         );
     }
 
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps)
-    }
 }
 
 const mapStateToProps = (state) => {

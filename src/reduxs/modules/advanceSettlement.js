@@ -16,7 +16,7 @@ const initialState = {
     paymentStatus: '',
     personEntity: '',
     settleEntity: '',
-    btnDisable:true
+    btnDisable: true
 }
 
 const actionTypes = {
@@ -26,8 +26,8 @@ const actionTypes = {
     FETCH_PERSON_SUCCESS: 'ADVANCE_SETTLE/FETCH_PERSON_SUCCESS',
     FETCH_ADVANCE_SETTLE_SUCCESS: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_SUCCESS',
     FETCH_FAILURE: 'ADVANCE_SETTLE/FETCH_ADVANCE_SETTLE_FAILURE',
-    BTN_ABLE:'ADVANCE_SETTLE/BTN_ABLE',
-    BTN_DISABLE:'ADVANCE_SETTLE/BTN_ABLE'
+    BTN_ABLE: 'ADVANCE_SETTLE/BTN_ABLE',
+    BTN_DISABLE: 'ADVANCE_SETTLE/BTN_ABLE'
 }
 
 export const actions = {
@@ -37,7 +37,7 @@ export const actions = {
             Axios.all([loadPerson(URL.API_PERSON(patientId), dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid), dispatch)])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchSuccess())
-                    dispatch({type:actionTypes.BTN_ABLE})
+                    dispatch({type: actionTypes.BTN_ABLE})
                 }))
                 .catch(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchFailure())
@@ -53,9 +53,9 @@ export const actions = {
     },
 
     //重置按钮状态
-    resetBtnStatus:()=>{
+    resetBtnStatus: () => {
         return (dispatch, getstate) => {
-            dispatch({type:actionTypes.BTN_DISABLE})
+            dispatch({type: actionTypes.BTN_DISABLE})
         }
     }
 }
@@ -70,6 +70,10 @@ function loadPerson(targetUrl, dispatch) {
                 } else {
                     Toast.fail(data.infomessage, 2);
                 }
+            },
+            error => {
+                dispatch(fetchFailure())
+                Toast.fail(error, 1)
             }
         )
         .catch(err => {
@@ -83,12 +87,16 @@ function loadAdvanceSettleInfo(targetUrl, dispatch) {
 
     return post(targetUrl)
         .then(data => {
-            if (data.infocode === 1) {
-                dispatch(fetchSettleSuccess(data.data))
-            } else {
-                Toast.fail(data.infomessage, 2);
+                if (data.infocode === 1) {
+                    dispatch(fetchSettleSuccess(data.data))
+                } else {
+                    Toast.fail(data.infomessage, 2);
+                }
+            }, error => {
+            dispatch(fetchFailure())
+                Toast.fail(error, 1)
             }
-        })
+        )
         .catch(err => {
             dispatch(fetchFailure())
         })
@@ -193,6 +201,6 @@ export const getAdvanceSttle = (state) => {
     return state.advanceSettlement.settleEntity
 }
 
-export const getBtnDisable=(state)=>{
+export const getBtnDisable = (state) => {
     return state.advanceSettlement.btnDisable
 }

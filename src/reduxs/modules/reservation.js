@@ -20,7 +20,7 @@ const initialState = {
     medicalTypeData: [],
     diagName: '', //疾病信息
     switchInfo: {},
-    btnDisable:true,
+    btnDisable: true,
 }
 
 const actionTypes = {
@@ -55,8 +55,8 @@ const actionTypes = {
     SET_SWITCH_INFO: 'RESERVATION/SET_SWITCH_INFO',
 
     //按钮可以被点击
-    BTN_ABLE:'RESERVATION/BTN_ABLE',
-    BTN_DISABLE:'RESERVATION/BTN_DISABLE',
+    BTN_ABLE: 'RESERVATION/BTN_ABLE',
+    BTN_DISABLE: 'RESERVATION/BTN_DISABLE',
 
     //登录按钮
     BTN_SUBMIT_REQUEST: 'RESERVATION/BTN_SUBMIT_REQUEST',
@@ -96,7 +96,9 @@ export const actions = {
                         }
                     },
                     error => {
-                        Toast.info('登录信息过期', 1)
+                        dispatch(fetchFailure())
+                        console.log(error)
+                        Toast.info(error.message, 1)
                     }
                 )
         }
@@ -143,7 +145,7 @@ export const actions = {
                                 data => {
                                     //使用家庭成员的SiTypeCode获取医疗类别
                                     dispatch(fetchMedicalTypeSuccess(data.data))
-                                    dispatch({type:actionTypes.BTN_ABLE})
+                                    dispatch({type: actionTypes.BTN_ABLE})
                                 },
                                 error => {
 
@@ -153,11 +155,11 @@ export const actions = {
                     })
                 },
                 error => {
-
                     dispatch(fetchFailure())
+                    console.log(error)
+                    Toast.info(error.message, 1)
                 }
             )
-
         }
     },
 
@@ -197,6 +199,9 @@ export const actions = {
                             dispatch(fetchMedicalTypeSuccess(data.data))
                         },
                         error => {
+                            dispatch(fetchFailure())
+                            console.log(error)
+                            Toast.fail(error, 1)
                         }
                     )
                 }
@@ -326,22 +331,26 @@ export const actions = {
             dispatch(submitBtn_request())
             return post(targetUrl, PARAM)
                 .then(data => {
-                    if (data.infocode === 1) {
-                        let path = {
-                            pathname: '/advanceSettlementContainer',
-                            state: {
-                                reservationName: OrderType[0].register,
-                                reservationCode: OrderType[0].status,
-                                reservationEntity: data.data,
-                                paymentMethod:PARAM.paymentMethod
+                        if (data.infocode === 1) {
+                            let path = {
+                                pathname: '/advanceSettlementContainer',
+                                state: {
+                                    reservationName: OrderType[0].register,
+                                    reservationCode: OrderType[0].status,
+                                    reservationEntity: data.data,
+                                    paymentMethod: PARAM.paymentMethod
+                                }
                             }
+                            route.push(path)
+                        } else {
+                            Toast.fail(data.infomessage, 2);
                         }
-                        route.push(path)
-                    } else {
-                        Toast.fail(data.infomessage, 2);
-                    }
-                    dispatch(submitBtn_success())
-                })
+                        dispatch(submitBtn_success())
+                    },
+                    error => {
+                        dispatch(fetchFailure())
+                        Toast.info(error.message, 1)
+                    })
                 .catch(err => {
                     dispatch(submitBtn_failure())
                 })
@@ -473,7 +482,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.BTN_ABLE:
             return {
                 ...state,
-                btnDisable:false
+                btnDisable: false
             }
         case actionTypes.BTN_SUBMIT_REQUEST:
             return {
@@ -528,6 +537,6 @@ export const getSwitchInfo = (state) => {
     return state.reservation.switchInfo
 }
 
-export const getBtnDisable=(state)=>{
+export const getBtnDisable = (state) => {
     return state.reservation.btnDisable
 }

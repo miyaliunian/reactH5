@@ -36,6 +36,7 @@ const reducer = (state = initialState, action) => {
         return { error: ''}
     } else if (error) {
         Toast.fail(error,2)
+        console.log(error)
         return {...state, error: error}
     }
     return state

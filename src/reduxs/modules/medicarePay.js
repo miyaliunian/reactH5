@@ -43,6 +43,10 @@ export const actions = {
                         } else {
                             Toast.fail(data.infomessage, 2);
                         }
+                    },
+                    error => {
+                        dispatch(fetchFailure())
+                        Toast.fail(error, 1)
                     }
                 )
                 .catch(err => {
@@ -69,6 +73,10 @@ export const actions = {
                         } else {
                             Toast.fail(data.infomessage, 2);
                         }
+                    },
+                    error => {
+                        dispatch(fetchFailure())
+                        Toast.fail(error, 1)
                     }
                 )
                 .catch(err => {
@@ -126,6 +134,10 @@ export const actions = {
                         } else {
                             Toast.fail(data.infomessage, 2);
                         }
+                    },
+                    error => {
+                        dispatch(fetchFailure())
+                        Toast.fail(error, 1)
                     }
                 )
                 .catch(err => {

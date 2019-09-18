@@ -7,7 +7,7 @@
 
 import axios from 'axios';
 
-axios.defaults.timeout = 100;
+axios.defaults.timeout = 2000;
 axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8', 'Connection': 'keep-alive'}
 // 请求拦截器
 axios.interceptors.request.use(async config => {
@@ -43,7 +43,9 @@ export function post(url, bodyParam = '') {
                 resolve(res);
             })
             .catch(err => {
+                debugger
                 if (err.code && err.code == 'ECONNABORTED') {//请求超时
+                    debugger
                     return reject({message: '请求超时'})
                 } else if (err.message && err.message == 'Request failed with status code 403') {//403token过期
                     return reject(err.message)

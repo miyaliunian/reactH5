@@ -6,15 +6,18 @@
  *  第三方支付
  */
 
+
 import URL from '@utils/httpUrl';
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";
 import {OrderType} from '@assets/static/DictionaryConstant'
 
+
 const initialState = {
     isFetching: false,
     PayMethodEntity: [],
 }
+
 
 const actionTypes = {
     FETCH_REQUEST: 'THIRD_PAY/FETCH_THIRD_PAY_REQUEST',
@@ -22,6 +25,7 @@ const actionTypes = {
     CLEAR_PAYTYPEITEMS_SUCCESS: 'THIRD_PAY/CLEAR_PAYTYPEITEMS_SUCCESS',
     FETCH_FAILURE: 'THIRD_PAY/FETCH_THIRD_PAY_FAILURE',
 }
+
 
 export const actions = {
     //获取支付方式列表
@@ -63,11 +67,18 @@ export const actions = {
                             let targetURL = orderType === OrderType[0].status ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId) : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
                             fetchPayTypeItems(targetURL, dispatch)
                         } else {
+                            debugger
                             Toast.fail(data.infomessage, 2);
                         }
+                    },
+                    error => {
+                    console.log(error)
+                        dispatch(fetchFailure())
+                        Toast.fail(error, 1)
                     }
                 )
                 .catch(err => {
+                    console.log(err)
                     dispatch(fetchFailure())
                 })
         }
@@ -83,6 +94,11 @@ function fetchPayTypeItems(targetUrl, dispatch) {
                 } else {
                     Toast.fail(data.infomessage, 2);
                 }
+            },
+            error => {
+                dispatch(fetchFailure())
+                Toast.fail(error, 1)
+
             }
         )
         .catch(err => {
