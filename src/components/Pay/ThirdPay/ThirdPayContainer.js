@@ -11,7 +11,7 @@ import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import LoadingMask from "@components/Loading/LoadingMask";
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {getFetchingStatus, getPayMethodEntity, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
+import {getPayMethodEntity, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
 import {OrderTypeWrapper, PayTypeList, ButtonWrapper} from './style'
 import {Toast} from 'antd-mobile'
 //图标
@@ -27,7 +27,7 @@ import {actions as advanceSettlementActions} from "@reduxs/modules/advanceSettle
 class ThirdPayContainer extends Component {
     render() {
         const {orderPayment, ObjEntity, reservationName} = this.props.location.state
-        const {fetchStatus, PayMethodEntityItems} = this.props
+        const {PayMethodEntityItems} = this.props
         return (
             <div className={'thirdPay'}>
                 <SafeAreaView showBar={true} title={'选择支付方式'} isRight={false} handleBack={this.handleBack}>
@@ -188,7 +188,6 @@ class ThirdPayContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        fetchStatus: getFetchingStatus(state),
         PayMethodEntityItems: getPayMethodEntity(state),
     }
 }

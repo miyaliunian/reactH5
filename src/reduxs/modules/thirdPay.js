@@ -157,9 +157,6 @@ export default reducer
 
 
 //selectors
-export const getFetchingStatus = (state) => {
-    return state.thirdPay.isFetching
-}
 
 export const getPayMethodEntity = (state) => {
     return state.thirdPay.PayMethodEntity

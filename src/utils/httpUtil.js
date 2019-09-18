@@ -7,7 +7,7 @@
 
 import Axios from 'axios';
 
-Axios.defaults.timeout = 2000;
+Axios.defaults.timeout = 30;
 Axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8'}
 let CancelToken = Axios.CancelToken
 
@@ -46,9 +46,9 @@ export function post(url, bodyParam = '') {
         Axios.post(url, JSON.stringify(bodyParam), {cancelToken: Axios.CancelToken.source.token})
             .then(res => {
                 resolve(res);
-                isShowLoading(false)
             })
             .catch(err => {
+                isShowLoading(false)
                 if (err.code && err.code == 'ECONNABORTED') {//请求超时
                     return reject({message: '请求超时'})
                 } else if (err.message && err.message == 'Request failed with status code 403') {//403token过期
