@@ -111,7 +111,7 @@ class ThirdPayContainer extends Component {
                         <span className={'payComponent_btn'} onClick={() => this.Pay()}>支  付</span>
                     </ButtonWrapper>
                 </SafeAreaView>
-                {fetchStatus ? <LoadingMask/> : ''}
+                <LoadingMask/>
             </div>
         )
     }

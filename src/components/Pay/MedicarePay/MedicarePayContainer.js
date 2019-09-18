@@ -68,7 +68,7 @@ class MedicarePayContainer extends Component {
                     </div>
                     <PopUP price={orderPayment} title={reservationName} callBack={(e) => this.handleInputValus(e)}/>
                 </SafeAreaView>
-                {fetchStatus ? <LoadingMask/> : ''}
+                <LoadingMask/>
             </div>
         )
     }

@@ -77,7 +77,7 @@ class AdvanceSettlementContainer extends Component {
                     {paymentStatus === 1 ? this.renderSettleInfo1() : this.renderSettleInfo0()}
                     {this.renderBtnTitle()}
                 </SafeAreaView>
-                {fetchingStatus ? <LoadingMask/> : ''}
+                <LoadingMask/>
                 <SlideDownSnackBar desc={'医保账户或个人自费费用尚未完成支付，系统将在20分钟后自动进行退费'} show={this.state.showBar}
                                    handleClose={() => {
                                        const {history} = this.props

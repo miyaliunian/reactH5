@@ -118,3 +118,5 @@ export const OrderType =
 
 
 export const payMethodId = '1'
+
+
