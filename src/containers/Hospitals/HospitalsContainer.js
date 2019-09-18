@@ -45,12 +45,7 @@ class HospitalsContainer extends PureComponent {
                         pullingUpHandler={() => this.pullingUpHandler()}
                     />
                     {fetchingStatus && <EntryLoader/>}
-                    {fetchingStatus
-                        ?
-                        <LoadingMask/>
-                        :
-                        null
-                    }
+                    <LoadingMask/>
                 </SafeAreaView>
             </div>
         )

@@ -5,15 +5,19 @@
  * Description:  网络请求
  */
 
-import axios from 'axios';
+import Axios from 'axios';
 
-axios.defaults.timeout = 2000;
-axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8', 'Connection': 'keep-alive'}
+Axios.defaults.timeout = 2000;
+Axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8'}
+let CancelToken = Axios.CancelToken
+
 // 请求拦截器
-axios.interceptors.request.use(async config => {
+Axios.interceptors.request.use(async config => {
+        isShowLoading(true)
         if (config.url.endsWith('.do')) {
             let tid = JSON.parse(sessionStorage.getItem('token')).access_token
             config.headers['tid'] = tid
+            // config.headers['Authorization'] = tid
             return config
         } else {
             return config
@@ -24,28 +28,28 @@ axios.interceptors.request.use(async config => {
     })
 
 //响应拦截
-axios.interceptors.response.use(response => {
+Axios.interceptors.response.use(response => {
+    setTimeout(() => {
+        isShowLoading(false)
+    }, 1000)
     if (response.status === 200) { //网络请求正常
         return response.data
     } else if (response.status === 403) { //token过期
-        console.log('token过期 重新登录')
+        return Promise.reject({message: 'token过期 重新登录'}) //其它错误
     } else {
-        console.log('其它错误')
-        console.log(response)
         return Promise.reject(response) //其它错误
     }
 })
 
 export function post(url, bodyParam = '') {
     return new Promise((resolve, reject) => {
-        axios.post(url, JSON.stringify(bodyParam))
+        Axios.post(url, JSON.stringify(bodyParam), {cancelToken: Axios.CancelToken.source.token})
             .then(res => {
                 resolve(res);
+                isShowLoading(false)
             })
             .catch(err => {
-                debugger
                 if (err.code && err.code == 'ECONNABORTED') {//请求超时
-                    debugger
                     return reject({message: '请求超时'})
                 } else if (err.message && err.message == 'Request failed with status code 403') {//403token过期
                     return reject(err.message)
@@ -56,4 +60,11 @@ export function post(url, bodyParam = '') {
                 }
             })
     });
+}
+
+//是否显示Loading框
+function isShowLoading(payload) {
+    const loading = document.getElementById('loadingMask');
+    payload ? loading.style.display = 'flex' : loading.style.display = 'none';
+
 }

@@ -141,3 +141,16 @@
 
 合并资源文件、减少HTTP请求
 压缩资源文件减少请求大小
+
+
+##### Axios同一请求发送两次
+````angular2html
+
+问题出现原因：Axios默认的Content-Type为application/json,属于非简单请求，所以客户端在发送请求时，会先发送预请求（OPTIONS），询问能否向后端发送请求。若能发送，则再发送真正的请求到后端。
+哪些请求属于简单请求？（只有同时满足以下两个条件时,才是简单请求,除此之外皆为非简单请求）
+
+* 请求方式:HEAD,GET,POST
+
+* 请求头信息: Accept Accept-Language Content-Language Last-Event-ID Content-Type 对应的值是以下三个中的任意一个 application/x-www-form-urlencoded multipart/form-data text/plain
+
+````

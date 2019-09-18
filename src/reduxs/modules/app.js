@@ -7,6 +7,10 @@
  */
 
 import {Toast} from 'antd-mobile'
+import Axios from 'axios'
+
+const CancelToken = Axios.CancelToken;
+const source = CancelToken.source();
 
 const initialState = {
     error: '',
@@ -35,8 +39,9 @@ const reducer = (state = initialState, action) => {
     if (type === actionTypes.CLEAR_ERROR) {
         return { error: ''}
     } else if (error) {
+        source.cancel('Operation canceled by the user.');
         Toast.fail(error,2)
-        console.log(error)
+
         return {...state, error: error}
     }
     return state
