@@ -83,7 +83,7 @@ class DoctorListContainer extends Component {
                                       }}/>
                         </div>
                     </Modal>
-                    {fetchingStatus ? <LoadingMask/> : null}
+                    <LoadingMask/>
                 </SafeAreaView>
             </ContentWrapper>
         )

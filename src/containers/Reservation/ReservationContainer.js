@@ -49,7 +49,7 @@ class ReservationContainer extends Component {
                     <div className={'reservationForm__btn'}>
                         <PrimaryButton txt={'确认预约'} onSubmit={() => this.onBtnClick()} disabled={btnDisable}/>
                     </div>
-                    {fetchingStatus ? <LoadingMask/> : null}
+                    <LoadingMask/>
                 </SafeAreaView>
             </div>
         )

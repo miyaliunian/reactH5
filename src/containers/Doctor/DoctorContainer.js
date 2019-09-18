@@ -47,7 +47,7 @@ class DoctorContainer extends Component {
                         pullingUpHandler={() => this.pullingUpHandler()}
                     />
                 </SafeAreaView>
-                {fetchingStatus ? <LoadingMask/> : null}
+                <LoadingMask/>
 
             </div>
         )

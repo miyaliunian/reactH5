@@ -43,7 +43,7 @@ class DailyListQueryPaymentContainer extends Component {
                 <SafeAreaView showBar={true} title={'一日清单'} isRight={false} handleBack={this.handleBack}>
                     <DynamicTabs queryTitle={this.state.queryStatus} pre={() => this.pre()} nex={() => this.nex()}/>
                     <ListOfContent list={details}/>
-                    {fetchingStatus ? <LoadingMask/> : null}
+                    <LoadingMask/>
                 </SafeAreaView>
             </div>
         );

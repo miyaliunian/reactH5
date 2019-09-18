@@ -74,7 +74,7 @@ class HistoryAdvancePaymentContainer extends Component {
                             })}
                         </div>
                     </div>
-                    {fetchingStatus ? <LoadingMask/> : null}
+                    <LoadingMask/>
                 </SafeAreaView>
             </div>
         );

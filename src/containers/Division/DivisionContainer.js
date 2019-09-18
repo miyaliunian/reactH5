@@ -65,12 +65,7 @@ class DivisionContainer extends Component {
                         </div>
                     </div>
                 </div>
-                {fetchingStatus
-                    ?
                     <LoadingMask/>
-                    :
-                    null
-                }
                 </SafeAreaView>
             </div>
         )
