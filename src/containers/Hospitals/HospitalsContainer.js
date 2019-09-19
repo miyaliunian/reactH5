@@ -20,7 +20,7 @@ import {
     getIsLastPage
 } from '../../reduxs/modules/hospital'
 import './style.less'
-import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
+
 
 
 class HospitalsContainer extends PureComponent {

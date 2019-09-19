@@ -13,6 +13,7 @@ import routerMap from '@routes/RouterConfig'
 import renderRoutes from '@utils/renderRoutes'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css'
+
 const PureToastContainer = PureWrapper(ToastContainer)
 
 
@@ -30,7 +31,9 @@ const RouteModule = function (props) {
                 timeout={500}
                 classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
             >
-                {renderRoutes(routerMap, isLogin())}
+                <ErrorBoundary>
+                    {renderRoutes(routerMap, isLogin())}
+                </ErrorBoundary>
             </CSSTransition>
         </TransitionGroup>
     );
@@ -60,9 +63,7 @@ class AppContainer extends Component {
                     pauseOnHover={false}
                 />
                 <BrowserRouter>
-                    <ErrorBoundary>
-                        <Routes/>
-                    </ErrorBoundary>
+                    <Routes/>
                 </BrowserRouter>
                 <ErrorToast desc={error} show={this.state.showBar}/>
             </div>

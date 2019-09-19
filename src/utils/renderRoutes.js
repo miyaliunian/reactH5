@@ -1,8 +1,8 @@
 import React from 'react'
 import {Route, Redirect, Switch} from 'react-router-dom'
-import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 
 const renderRoutes = (routes, authed, authPath = '/login', extraProps = {}, switchProps = {}) => routes ? (
+    <ErrorBoundary>
         <Switch {...switchProps}>
 
             {routes.map((route, i) => (
@@ -19,6 +19,8 @@ const renderRoutes = (routes, authed, authPath = '/login', extraProps = {}, swit
                     }}
                 />
             ))}
+
         </Switch>
+    </ErrorBoundary>
 ) : null
 export default renderRoutes
