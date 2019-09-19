@@ -39,7 +39,7 @@ const RouteModule = function (props) {
 class AppContainer extends Component {
 
     state = {
-        showBar: true
+        showBar: false
     }
 
     render() {
@@ -50,7 +50,7 @@ class AppContainer extends Component {
                 <BrowserRouter>
                     <Routes/>
                 </BrowserRouter>
-                {/*<ErrorToast desc={error} show={this.state.showBar} />*/}
+                <ErrorToast desc={error} show={this.state.showBar} />
             </div>
         );
     }

@@ -7,7 +7,7 @@
 
 import Axios from 'axios';
 
-Axios.defaults.timeout = 30;
+Axios.defaults.timeout = 300000;
 Axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8'}
 let CancelToken = Axios.CancelToken
 
@@ -17,7 +17,7 @@ Axios.interceptors.request.use(async config => {
         if (config.url.endsWith('.do')) {
             let tid = JSON.parse(sessionStorage.getItem('token')).access_token
             config.headers['tid'] = tid
-            // config.headers['Authorization'] = tid
+            // config.headers['Authorization'] = 'tid=' + tid
             return config
         } else {
             return config

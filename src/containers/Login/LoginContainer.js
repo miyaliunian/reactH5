@@ -13,6 +13,7 @@ import {Redirect} from 'react-router-dom'
 import {actions as loginActions, isLogin, getPassword, getUserName} from '../../reduxs/modules/login'
 import './style.less'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import LoadingMask from "@components/Loading/LoadingMask";
 
 class LoginContainer extends Component {
     render() {
@@ -32,6 +33,7 @@ class LoginContainer extends Component {
                         onSubmit={this.onSubmit}
                     />
                 </SafeAreaView>
+                <LoadingMask/>
             </div>
         )
     }

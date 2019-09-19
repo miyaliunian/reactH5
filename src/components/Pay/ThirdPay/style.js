@@ -32,12 +32,13 @@ export const ButtonWrapper = styled.div`
   position:fixed;
   bottom:0;
   width: 100%;
-  height: 45px;
-  line-height: 45px;
+  height: 55px;
+  line-height: 55px;
   display: flex;
   flex-direction: row;
   .payComponent_desc {
   padding-left: 10px;
+  font-size: 18px;
   width: 65%;
   color: white;
   background-color: rgb(59, 59, 59);
@@ -46,6 +47,7 @@ export const ButtonWrapper = styled.div`
   flex: 1;
   padding-right: 10px;
   color: white;
+  font-size: 18px;
   text-align: center;
   font-weight: bold;
   background-color: rgb(48, 135, 254);

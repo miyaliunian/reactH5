@@ -11,7 +11,7 @@
       line-height: 40px;
       background: white;
     }
-    .itemSelected{
+    .itemSelected {
       width: 33.33%;
       display: flex;
       flex-direction: column;
@@ -22,11 +22,12 @@
       font-size: 16px;
       color: @theme-font-color;
       align-items: center;
-      &::after{
+      &::after {
         width: 95%;
         height: 2px;
         margin-bottom: 1px;
         background: @theme-blue;
+        animation: fadeIn .2s
       }
     }
     .searchItem2 {
@@ -51,11 +52,12 @@
       border-left: @border-LightGrey;
       border-right: @border-LightGrey;
       align-items: center;
-      &::after{
+      &::after {
         width: 95%;
         height: 2px;
         margin-bottom: 1px;
         background: @theme-blue;
+        animation: fadeIn .2s
       }
     }
   }
@@ -154,6 +156,15 @@
       margin: 0px 10px 10px 0;
       color: #CCCCCC;
 
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      width: 0
+    }
+    100% {
+      width: 95%;
     }
   }
 }
