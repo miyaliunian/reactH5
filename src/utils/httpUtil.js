@@ -6,6 +6,7 @@
  */
 
 import Axios from 'axios';
+import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 
 Axios.defaults.timeout = 300000;
 Axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8'}
@@ -64,7 +65,11 @@ export function post(url, bodyParam = '') {
 
 //是否显示Loading框
 function isShowLoading(payload) {
-    const loading = document.getElementById('loadingMask');
-    payload ? loading.style.display = 'flex' : loading.style.display = 'none';
+    try {
+        const loading = document.getElementById('loadingMask');
+        payload ? loading.style.display = 'flex' : loading.style.display = 'none';
+    } catch (err) {
+
+    }
 
 }

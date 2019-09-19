@@ -25,7 +25,7 @@ import './style.less'
 class HospitalsContainer extends PureComponent {
 
     render() {
-        const {fetchingStatus, isLastPage} = this.props
+        const {fetchingStatus, hospitalList, isLastPage} = this.props
         return (
             <div
                 id='hospitalsContainer'
@@ -38,7 +38,7 @@ class HospitalsContainer extends PureComponent {
                         handelTabItemSel={(item) => this.handelTabItemSel(item)}
                     />
                     <HospitalsItem
-                        data={this.props.hospitalList}
+                        data={hospitalList}
                         fetchingStatus={fetchingStatus}
                         isLastPage={isLastPage}
                         pullingDownHandler={() => this.pullingDownHandler()}

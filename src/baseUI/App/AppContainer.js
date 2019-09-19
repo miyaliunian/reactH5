@@ -45,7 +45,9 @@ class AppContainer extends Component {
         return (
             <div>
                 <BrowserRouter>
-                    <Routes/>
+                    <ErrorBoundary>
+                        <Routes/>
+                    </ErrorBoundary>
                 </BrowserRouter>
                 <ErrorToast desc={error} show={this.state.showBar}/>
             </div>
