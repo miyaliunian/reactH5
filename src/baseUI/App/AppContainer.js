@@ -9,6 +9,7 @@ import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import routerMap from '@routes/RouterConfig'
 import renderRoutes from '@utils/renderRoutes'
+import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 
 
 const RouteModule = function (props) {
@@ -25,11 +26,7 @@ const RouteModule = function (props) {
                 timeout={500}
                 classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
             >
-                <div>
-                    <Switch location={props.location}>
-                        {renderRoutes(routerMap, isLogin())}
-                    </Switch>
-                </div>
+                {renderRoutes(routerMap, isLogin())}
             </CSSTransition>
         </TransitionGroup>
     );
@@ -50,7 +47,7 @@ class AppContainer extends Component {
                 <BrowserRouter>
                     <Routes/>
                 </BrowserRouter>
-                <ErrorToast desc={error} show={this.state.showBar} />
+                <ErrorToast desc={error} show={this.state.showBar}/>
             </div>
         );
     }

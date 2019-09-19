@@ -221,6 +221,7 @@ const routerMap = [
     },
     {
         path: '/hospitals',
+        exact: true,
         name: 'Hospitals',
         component: Hospitals
     },
@@ -232,6 +233,7 @@ const routerMap = [
     {
         path: '/register',
         name: 'Register',
+        exact: true,
         component: RegisterContainer
     },
     {
@@ -242,6 +244,7 @@ const routerMap = [
     {
         path: '/doctorList/:id/:name',
         name: 'DoctorList',
+        exact: true,
         component: DoctorList
     },
     {

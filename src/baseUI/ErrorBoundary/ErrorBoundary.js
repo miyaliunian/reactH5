@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './style.less'
 
@@ -20,12 +20,13 @@ export default class ErrorBoundary extends React.Component {
     render() {
         if (this.state.hasError) {
             return (
-                <div styleName="error-wrapper">
-                    <div styleName="error-title">页面出错了</div>
-                    <a styleName="error-link" href="/">回到首页</a>
+                <div className="error-wrapper">
+                    <div className="error-title">页面出错了</div>
+                    <a className="error-link" href="/">回到首页</a>
                 </div>
             )
         }
+
         return this.props.children
     }
 }
