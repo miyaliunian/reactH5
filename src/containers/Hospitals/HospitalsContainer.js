@@ -38,15 +38,13 @@ class HospitalsContainer extends PureComponent {
                         handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
                         handelTabItemSel={(item) => this.handelTabItemSel(item)}
                     />
-                    <ErrorBoundary>
-                        <HospitalsItem
-                            data={hospitalList}
-                            fetchingStatus={fetchingStatus}
-                            isLastPage={isLastPage}
-                            pullingDownHandler={() => this.pullingDownHandler()}
-                            pullingUpHandler={() => this.pullingUpHandler()}
-                        />
-                    </ErrorBoundary>
+                    <HospitalsItem
+                        data={hospitalList}
+                        fetchingStatus={fetchingStatus}
+                        isLastPage={isLastPage}
+                        pullingDownHandler={() => this.pullingDownHandler()}
+                        pullingUpHandler={() => this.pullingUpHandler()}
+                    />
                     {fetchingStatus && <EntryLoader/>}
                     <LoadingMask/>
                 </SafeAreaView>
