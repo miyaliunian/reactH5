@@ -39,18 +39,18 @@ class Tabs extends Component {
                 <ul className={'tabs__searchTOPWrapper border-bottom'}>
                     <li
                         className={this.state.tab1focused ? 'searchItem  itemSelected ' : 'searchItem'}
-                         onClick={() => this.tabSelc(1)}>
+                        onClick={() => this.tabSelc(1)}>
                         {this.state.tab1focused_title}
                     </li>
                     <li
                         className={this.state.tab2focused ? 'searchItem2Seled' : 'searchItem2'}
-                         onClick={() => this.tabSelc(2)}>
+                        onClick={() => this.tabSelc(2)}>
                         {this.state.tab2focused_title}
                         <div className={this.state.tab2focused ? 'searchItemSeledLine' : ''}/>
                     </li>
                     <li
                         className={this.state.tab3focused ? 'searchItem  itemSelected' : 'searchItem'}
-                         onClick={() => this.tabSelc(3)}>筛选
+                        onClick={() => this.tabSelc(3)}>筛选
                     </li>
                 </ul>
                 <div
@@ -63,7 +63,7 @@ class Tabs extends Component {
                     {this.state.tab1focused
                         ?
                         <div
-                            className={this.state.tab1focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}
+                            className={this.state.tab1focused ? 'tabs__BottomWrapper__tab animated fadeInDown faster' : 'tabs__BottomWrapper__tabSel '}
                         >
                             {areasList.map((item) => {
                                 return <div className={'tabs__Bottom__Item border-bottom'}
@@ -78,7 +78,7 @@ class Tabs extends Component {
                     {this.state.tab2focused
                         ?
                         <div
-                            className={this.state.tab2focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
+                            className={this.state.tab2focused ? 'tabs__BottomWrapper__tab animated fadeInDown faster' : 'tabs__BottomWrapper__tabSel'}>
 
                             {ZHPX.map((item) => {
                                 return <div className={'tabs__Bottom__Item border-bottom'}
@@ -92,7 +92,7 @@ class Tabs extends Component {
                     {this.state.tab3focused
                         ?
                         <div
-                            className={this.state.tab3focused ? 'tabs__BottomWrapper__tab' : 'tabs__BottomWrapper__tabSel'}>
+                            className={this.state.tab3focused ? 'tabs__BottomWrapper__tab animated fadeInDown faster' : 'tabs__BottomWrapper__tabSel'}>
                             <div className={'tabs__BottomWrapper__tab3__con'} onClick={(e) => {
                                 e.stopPropagation()
                             }}>
