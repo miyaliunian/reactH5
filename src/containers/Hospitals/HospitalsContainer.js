@@ -20,6 +20,7 @@ import {
     getIsLastPage
 } from '../../reduxs/modules/hospital'
 import './style.less'
+import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 
 
 class HospitalsContainer extends PureComponent {
@@ -37,13 +38,15 @@ class HospitalsContainer extends PureComponent {
                         handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
                         handelTabItemSel={(item) => this.handelTabItemSel(item)}
                     />
-                    <HospitalsItem
-                        data={hospitalList}
-                        fetchingStatus={fetchingStatus}
-                        isLastPage={isLastPage}
-                        pullingDownHandler={() => this.pullingDownHandler()}
-                        pullingUpHandler={() => this.pullingUpHandler()}
-                    />
+                    <ErrorBoundary>
+                        <HospitalsItem
+                            data={hospitalList}
+                            fetchingStatus={fetchingStatus}
+                            isLastPage={isLastPage}
+                            pullingDownHandler={() => this.pullingDownHandler()}
+                            pullingUpHandler={() => this.pullingUpHandler()}
+                        />
+                    </ErrorBoundary>
                     {fetchingStatus && <EntryLoader/>}
                     <LoadingMask/>
                 </SafeAreaView>
