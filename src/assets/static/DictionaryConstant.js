@@ -6,12 +6,14 @@
  *   字典常量
  */
 
-
-// export const cityID = '320600'
+//南通测试
+export const cityID = '320600'
 // export const BASE_URL = 'http://58.208.84.112:10086/t-core'
+//南通正式
+export const BASE_URL = 'http://www.ntyibao.com/t-core'
 
-export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
-export const cityID = '320400'
+// export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
+// export const cityID = '320400'
 
 //预约挂号-医院列表
 //

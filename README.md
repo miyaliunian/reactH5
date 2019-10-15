@@ -10,6 +10,15 @@
 * 2：在url出填写 'http://localhost:3000/'
 * 3：yarn start 启动项目
 * 4：点击虫子开启debug
+## 部署
+````$xslt
+替换 DictionaryConstant.js 中的 
+        export const cityID = '320600'
+        export const BASE_URL = 'http://58.208.84.112:10086/t-core'
+        
+替换 setupProxy.js 中的
+        const BASE_URL = 'http://58.208.84.112:10086/t-core'        
+````
 ##目录结构
 ````$xslt
     public：这个文件夹是静态文件 不会参与到打包

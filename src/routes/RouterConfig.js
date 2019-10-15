@@ -168,6 +168,16 @@ const AdvanceSettlementContainer = (props) => {
     )
 };
 
+//订单查询
+const OrderContainerComponent = lazy(() => import("@containers/Order/OrderContainer"));
+const OrderContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <OrderContainerComponent {...props}></OrderContainerComponent>
+        </Suspense>
+    )
+}
+
 
 //医保支付
 const MedicarePayComponent = lazy(() => import("@components/Pay/MedicarePay/MedicarePayContainer"));
@@ -301,6 +311,12 @@ const routerMap = [
         name: 'advanceSettlementContainer',
         component: AdvanceSettlementContainer
     },
+    {
+        path: '/orderContainer',
+        name: 'orderContainer',
+        component: OrderContainer
+    },
+
     {
         path: '/medicarePayContainer',
         name: 'medicarePayContainer',

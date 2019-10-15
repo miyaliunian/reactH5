@@ -19,12 +19,12 @@ class Home extends Component {
     render() {
         return (
             <div className={'home'}>
-                <Banner/>
+                {/*<Banner/>*/}
                 <Category category={(index) => {
                     this.categoryClick(index)
                 }}/>
-                <HeadLine/>
-                <Activity/>
+                {/*<HeadLine/>*/}
+                {/*<Activity/>*/}
             </div>
         )
     }
@@ -63,6 +63,9 @@ class Home extends Component {
                 break
             case 7:
                 this.props.history.push('/payCountdown')
+                break
+            case 8:
+                this.props.history.push('/orderContainer')
                 break
         }
     }
