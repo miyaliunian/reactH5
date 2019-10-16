@@ -30,6 +30,11 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        window.addEventListener('message', (e) => this.dataFromRN(e))
+    }
+
+    dataFromRN(e) {
+        alert(e.data)
     }
 
     categoryClick(index) {

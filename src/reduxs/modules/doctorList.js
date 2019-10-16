@@ -13,6 +13,7 @@ import {FETCH_DATA} from "@reduxs/middleware/api";
 
 
 const initialState = {
+    tabSel: 1,
     seeDate: null,
     doctorTitle: null,
     hosGrade: null,
@@ -28,6 +29,8 @@ const actionTypes = {
     FETCH_DOCTOR_LIST_FAILURE: 'DOCTOR_LIST/FETCH_DOCTOR_LIST_FAILURE',
     FETCH_RESERVATION_LIST_SUCCESS: 'DOCTOR_LIST/FETCH_RESERVATION_LIST_SUCCESS',
     FETCH_RESERVATION_LIST_FAILURE: 'DOCTOR_LIST/FETCH_RESERVATION_LIST_FAILURE',
+
+    TAB_SEL: 'DOCTOR_LIST/TAB_SEL',
 
     SET_SEEDATE: 'DOCTOR_LIST/SET_SEEDATE',
     //如果选中日历中的任何一个日期，则将服务器返回的日期信息选中状态，全部置为选中状态
@@ -66,11 +69,19 @@ export const actions = {
         }
     },
 
+    //标识选中的tab是哪个
+    changeTab: (tab) => {
+        return (dispatch, getstate) => {
+            dispatch({type: actionTypes.TAB_SEL, response: tab})
+        }
+    },
+
 
     //退出页面时，重置数据状态
-    clearAllItems: () => {
+    clearAllItems: (callBack) => {
         return (dispatch, getstate) => {
             dispatch({type: actionTypes.CLEAR_ALL_ITEMS})
+            callBack()
         }
     },
 
@@ -112,27 +123,53 @@ const fetchReservationList = (targetURL) => ({
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_DOCTOR_LIST_REQUEST:
-            return {...state, isFetching: true}
+            return {
+                ...state,
+                isFetching: true
+            }
         case actionTypes.FETCH_DOCTOR_LIST_SUCCESS:
+
             return {
                 ...state,
                 isFetching: false,
                 data: action.response.data.list
             }
         case actionTypes.FETCH_DOCTOR_LIST_FAILURE:
-            return {...state, isFetching: false}
+            return {
+                ...state,
+                isFetching: false
+            }
         case actionTypes.FETCH_RESERVATION_LIST_SUCCESS:
+
             return {
                 ...state,
                 isFetching: false,
                 dataReservation: action.response.data
             }
         case actionTypes.FETCH_RESERVATION_LIST_FAILURE:
-            return {...state, isFetching: false}
+            return {
+                ...state,
+                isFetching: false
+            }
+        case actionTypes.TAB_SEL:
+            return {
+                ...state,
+                tabSel: action.response
+            }
         case actionTypes.SET_SEEDATE:
             return {...state, seeDate: action.value}
         case actionTypes.CLEAR_ALL_ITEMS:
-            return {...state, data: [], dataReservation: []}
+            return {
+                ...state,
+                tabSel: 1,
+                seeDate: null,
+                doctorTitle: null,
+                hosGrade: null,
+                isFetching: false,
+                page: 1,
+                data: [], //医生列表
+                dataReservation: [],  //预约日历
+            }
         default:
             return state
     }
@@ -155,4 +192,9 @@ export const getDoctorList = (state) => {
 
 export const getReservationList = (state) => {
     return state.doctorList.dataReservation
+}
+
+
+export const getTabSelStatus = (state) => {
+    return state.doctorList.tabSel
 }

@@ -86,19 +86,6 @@ class DoctorItem extends Component {
         this.props.history.push(path)
     }
 
-
-    componentDidMount(){
-        // this.bscroll = new Bscroll(this.refs.doctorItems, {
-        //     mouseWheel: true,
-        //     probeType: 3,
-        //     click: true,
-        //     tap: true,
-        //     bounce: {
-        //         top: true,
-        //         bottom: true,
-        //     }
-        // })
-    }
 }
 
 export default withRouter(DoctorItem)
