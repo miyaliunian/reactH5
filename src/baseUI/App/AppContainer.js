@@ -10,7 +10,6 @@ import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import routerMap from '@routes/RouterConfig'
-import renderRoutes from '@utils/renderRoutes'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -31,9 +30,22 @@ const RouteModule = function (props) {
                 timeout={500}
                 classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
             >
-                <ErrorBoundary>
-                    {renderRoutes(routerMap, isLogin())}
-                </ErrorBoundary>
+                <div>
+                    <ErrorBoundary>
+                        <Switch location={props.location}>
+                            {routerMap.map((item, index) => {
+                                return <Route key={index} path={item.path} exact render={props =>
+                                    (!item.requiresAuth ? (<item.component {...props} />) : (isLogin() ?
+                                            <item.component {...props} /> :
+                                            <Redirect to={{
+                                                pathname: '/login',
+                                                state: {from: props.location}
+                                            }}/>)
+                                    )}/>
+                            })}
+                        </Switch>
+                    </ErrorBoundary>
+                </div>
             </CSSTransition>
         </TransitionGroup>
     );
