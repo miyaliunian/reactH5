@@ -179,7 +179,7 @@ const AdvanceSettlementContainer = (props) => {
 };
 
 //从订单查询-进入 预结算
-const OrderContainerComponent = lazy(() => import("@containers/Order/OrderPayContainer"));
+const OrderContainerComponent = lazy(() => import("@containers/Order/OrderPayAgainContainer"));
 const OrderContainer = (props) => {
     return (
         <Suspense fallback={null}>

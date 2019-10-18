@@ -23,6 +23,9 @@ import ButtonWrapper from "@baseUI/Button/PrimaryButton";
 import {PayStatusContent, PerContent, SettleInfoContent, InfoRow, Separation, PayInfoContent, BtnContent} from './style'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import SlideDownSnackBar from "@components/SlideDownSnackBar/SlideDownSnackBar";
+import LoadingMask from "@components/Loading/LoadingMask";
+//图标
+import icon_pay from '@images/Pay/radio_b.png';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {
@@ -33,7 +36,7 @@ import {
     getBtnDisable,
     actions as advanceSettlementActions
 } from "@reduxs/modules/advanceSettlement";
-import LoadingMask from "@components/Loading/LoadingMask";
+
 
 
 class AdvanceSettlementContainer extends Component {
@@ -49,6 +52,7 @@ class AdvanceSettlementContainer extends Component {
             <div id={'AdvanceSettlementContainer'} style={{height: '100vh', width: '100%', position: 'fixed'}}>
                 <SafeAreaView showBar={true} title={'订单预结算'} isRight={false} handleBack={() => this.handleBack()}>
                     <PayStatusContent show={paymentStatus === 1 ? true : false}>
+                        <img src={icon_pay} alt='' className={'hospitalsItem__middle__icon'}/>
                         <span>医保支付成功,请继续完成自费支付</span>
                     </PayStatusContent>
                     <PerContent>
@@ -93,12 +97,27 @@ class AdvanceSettlementContainer extends Component {
      */
     renderSettleInfo1() {
         const {pubPayAmt, siPayAmt, ownPayAmt, postPayBalance} = this.props.advanceSettleInfo
+        const {person, location} = this.props
+        /**
+         * //从我的订单进入，并且医保已经支付 账户余额 则用查询回来的值显示,如果是正常走流程进入则用postPayBalance显示账户余额
+         * @type {boolean}
+         */
+        let showPerAccount = false
+        if (location.state.from) {
+            if (person != '') {
+                showPerAccount = true
+                console.log(typeof parseInt(person.account))
+            }
+        }
+
+
+
         return (
             <PayInfoContent>
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>统筹支付</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(pubPayAmt) !== 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof (pubPayAmt) !== 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
                         <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span>
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -107,22 +126,31 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>账户支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(siPayAmt) !== 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof (siPayAmt) !== 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
                         <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span>
                     </div>
                     <div className={'infoRow_item_right'}>
                         <span style={{fontSize: '10px', color: '#737373'}}>账户余额:</span>
-                        <span style={{
-                            marginLeft: '10px',
-                            fontSize: '10px',
-                            color: '#737373'
-                        }}>{(typeof(postPayBalance) !== 'undefined' ? postPayBalance.toFixed(2) : '')}</span>
+                        {person ?
+                            //
+                            <span style={{
+                                marginLeft: '10px',
+                                fontSize: '10px',
+                                color: '#737373'
+                            }}>{(parseInt(person.account).toFixed(2): '')}</span>
+                            :
+                            <span style={{
+                                marginLeft: '10px',
+                                fontSize: '10px',
+                                color: '#737373'
+                            }}>{(typeof (postPayBalance) !== 'undefined' ? postPayBalance.toFixed(2) : '')}</span>
+                        }
                     </div>
                 </InfoRow>
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>自费支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(ownPayAmt) !== 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof (ownPayAmt) !== 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
                     </div>
                     <div className={'infoRow_item_right'}>
                     </div>
@@ -138,7 +166,7 @@ class AdvanceSettlementContainer extends Component {
     renderSettleInfo0() {
         const {pubPayAmt, siPayAmt, ownPayAmt, prePayBalance, totalAmt} = this.props.advanceSettleInfo
         let show = false
-        if (typeof(ownPayAmt) !== 'undefined' && typeof(totalAmt) !== 'undefined' && ownPayAmt === totalAmt) {
+        if (typeof (ownPayAmt) !== 'undefined' && typeof (totalAmt) !== 'undefined' && ownPayAmt === totalAmt) {
             show = true
         }
         return (
@@ -146,7 +174,7 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>统筹支付</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(pubPayAmt) !== 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof (pubPayAmt) !== 'undefined' ? pubPayAmt.toFixed(2) : ''}</span>
                         {show ? <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span> : null}
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -155,7 +183,7 @@ class AdvanceSettlementContainer extends Component {
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>账户支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(siPayAmt) !== 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof (siPayAmt) !== 'undefined' ? siPayAmt.toFixed(2) : ''}</span>
                         {show ? <span style={{marginLeft: '5px', color: '#0084ff'}}>[已支付]</span> : null}
                     </div>
                     <div className={'infoRow_item_right'}>
@@ -164,13 +192,13 @@ class AdvanceSettlementContainer extends Component {
                             marginLeft: '10px',
                             fontSize: '10px',
                             color: '#737373'
-                        }}>{(typeof(prePayBalance) !== 'undefined' ? prePayBalance.toFixed(2) : '')}</span>
+                        }}>{(typeof (prePayBalance) !== 'undefined' ? prePayBalance.toFixed(2) : '')}</span>
                     </div>
                 </InfoRow>
                 <InfoRow showBorder={true}>
                     <span className={'infoRow_item_title'}>自费支出</span>
                     <div className={'infoRow_item_middle'}>
-                        <span>￥{typeof(ownPayAmt) !== 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
+                        <span>￥{typeof (ownPayAmt) !== 'undefined' ? ownPayAmt.toFixed(2) : ''}</span>
                     </div>
                     <div className={'infoRow_item_right'}>
                     </div>
@@ -192,14 +220,14 @@ class AdvanceSettlementContainer extends Component {
         const {siPayAmt, ownPayAmt, totalAmt} = this.props.advanceSettleInfo
         let titleStr = ''
         let targetUrl = ''
-        if (typeof(totalAmt) !== 'undefined' && totalAmt === 0) {
+        if (typeof (totalAmt) !== 'undefined' && totalAmt === 0) {
             titleStr = `医保支付 ${totalAmt.toFixed(2)}元`
             targetUrl = '/medicarePayContainer'
         } else {
-            if (typeof(ownPayAmt) !== 'undefined' && typeof(totalAmt) !== 'undefined' && ownPayAmt === totalAmt) {
+            if (typeof (ownPayAmt) !== 'undefined' && typeof (totalAmt) !== 'undefined' && ownPayAmt === totalAmt) {
                 titleStr = `自费支付 ${totalAmt.toFixed(2)}元`
                 targetUrl = '/thirdPayContainer'
-            } else if (typeof(ownPayAmt) !== 'undefined' && typeof(totalAmt) !== 'undefined' && ownPayAmt !== totalAmt) {
+            } else if (typeof (ownPayAmt) !== 'undefined' && typeof (totalAmt) !== 'undefined' && ownPayAmt !== totalAmt) {
                 if (paymentStatus === 0) {
                     titleStr = `医保支付 ${siPayAmt.toFixed(2)}元`
                     targetUrl = '/medicarePayContainer'
@@ -233,16 +261,16 @@ class AdvanceSettlementContainer extends Component {
          ownPayf     = _hisRegister.ownCost;//自费
          totalPayf   = _hisRegister.regFee;//总金额
          */
-        const {history} = this.props
+        const {history, advanceSettlementActions: {loadPersonAndAdvanceSettleInfo, setAdvanceSettleInfoANdLoadPerson}} = this.props
         if (history.action === 'PUSH') {
             const {reservationEntity, reservationCode} = this.props.location.state
             if (reservationEntity.paymentStatus === 0) {
-                //预结算
-                this.props.advanceSettlementActions.loadPersonAndAdvanceSettleInfo(reservationCode, reservationEntity.unifiedOrderId, reservationEntity.patientId)
+                //预结算(混合支付)
+                loadPersonAndAdvanceSettleInfo(reservationCode, reservationEntity.unifiedOrderId, reservationEntity.patientId)
             } else {
+                //医保已经支付
+                setAdvanceSettleInfoANdLoadPerson(reservationEntity, reservationEntity.patientId)
             }
-        } else {
-
         }
     }
 

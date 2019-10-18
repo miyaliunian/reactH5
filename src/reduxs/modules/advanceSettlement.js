@@ -31,10 +31,38 @@ const actionTypes = {
 }
 
 export const actions = {
+    /**
+     * // 不查账户余额，正常顺序进来
+     * @param ordertype
+     * @param orderid
+     * @param patientId
+     * @returns {Function}
+     */
     loadPersonAndAdvanceSettleInfo: (ordertype, orderid, patientId) => {
         return (dispatch, getstate) => {
             dispatch(fetchRequest())
             Axios.all([loadPerson(URL.API_PERSON(patientId), dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid), dispatch)])
+                .then(Axios.spread((personResp, advanceSettleResp) => {
+                    dispatch(fetchSuccess())
+                    dispatch({type: actionTypes.BTN_ABLE})
+                }))
+                .catch(Axios.spread((personResp, advanceSettleResp) => {
+                    dispatch(fetchFailure())
+                }))
+        }
+    },
+
+    //线上预约->医保已经支付，自费还没有支付
+    /**
+     * 查账户余额，比如从订单管理列表进来，该订单为混合支付，医保已支付
+     * @param reservation
+     * @param patientId
+     * @returns {Function}
+     */
+    setAdvanceSettleInfoANdLoadPerson: (reservation, patientId) => {
+        return (dispatch, getstate) => {
+            dispatch(fetchRequest())
+            Axios.all([loadPerson(URL.API_PERSON_PAYED(patientId), dispatch), setAdvanceSettleInfo(reservation, dispatch)])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchSuccess())
                     dispatch({type: actionTypes.BTN_ABLE})
@@ -84,7 +112,6 @@ function loadPerson(targetUrl, dispatch) {
 
 //加载预结算信息
 function loadAdvanceSettleInfo(targetUrl, dispatch) {
-
     return post(targetUrl)
         .then(data => {
                 if (data.infocode === 1) {
@@ -93,13 +120,21 @@ function loadAdvanceSettleInfo(targetUrl, dispatch) {
                     Toast.fail(data.infomessage, 2);
                 }
             }, error => {
-            dispatch(fetchFailure())
+                dispatch(fetchFailure())
                 Toast.fail(error, 1)
             }
         )
         .catch(err => {
             dispatch(fetchFailure())
         })
+}
+
+
+//加载预结算信息
+function setAdvanceSettleInfo(param,dispatch) {
+    let advanceSettleInfo = JSON.stringify(param).replace(/payCost/g, "siPayAmt").replace(/pubCost/g, "pubPayAmt").replace(/ownCost/g, "ownPayAmt").replace(/regFee/g, "totalAmt")
+    console.log(JSON.parse(advanceSettleInfo))
+    dispatch(fetchSettleSuccess(JSON.parse(advanceSettleInfo)))
 }
 
 

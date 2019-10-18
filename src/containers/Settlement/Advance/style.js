@@ -33,7 +33,6 @@ export const InfoRow = styled.div`
     }    
 `
 export const PayStatusContent = styled.div`
-    line-height:50px;
     background-color:rgb(239,238,239);
     padding: 0 10px;
     display:flex;
@@ -41,7 +40,14 @@ export const PayStatusContent = styled.div`
     align-items: center;
     height: 50px;
     border-bottom: 1px solid #f1f1f1;
-    display:${props=>props.show ? 'block' : 'none'}
+    display:${props=>props.show ? 'flex' : 'none'}
+    .hospitalsItem__middle__icon {
+      width: 24px;
+      height: 24px;  
+      margin-right: 4px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
 `
 
 
