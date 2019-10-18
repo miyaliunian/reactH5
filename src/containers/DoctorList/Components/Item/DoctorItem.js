@@ -79,6 +79,8 @@ class DoctorItem extends Component {
      * @param data
      */
     handelPageNav(data) {
+        console.log(data)
+        return
         let path = {
             pathname: '/doctor',
             state: data

@@ -1,15 +1,15 @@
 /**
- * Class: OrderContainer
+ * Class: OrderPayContainer
  * Author: wufei
  * Date: 2019-10-15
  * Description:
- *  订单查询-进入 预结算
+ *  从订单查询-进入 预结算
  */
 import React, {Component} from 'react';
 import {OrderType} from "@assets/static/DictionaryConstant";
 import {withRouter} from 'react-router-dom'
 
-class OrderContainer extends Component {
+class OrderPayContainer extends Component {
 
 
     constructor(props) {
@@ -25,14 +25,14 @@ class OrderContainer extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount')
+
         window.addEventListener('message', (e) => this.dataFromRN(e))
     }
 
     dataFromRN(e) {
         let data = JSON.parse(e.data),
-            reservationEntity = data.Params
-        sessionStorage.setItem('token', JSON.stringify(data.Token))
+            reservationEntity = data.paramsObj
+        sessionStorage.setItem('token', JSON.stringify(data.tokenObj))
         let path = {
             pathname: '/advanceSettlementContainer',
             state: {
@@ -48,4 +48,4 @@ class OrderContainer extends Component {
 }
 
 
-export default withRouter(OrderContainer)
+export default withRouter(OrderPayContainer)

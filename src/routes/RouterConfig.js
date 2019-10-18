@@ -88,6 +88,16 @@ const Doctor = (props) => {
     )
 };
 
+//(再次预约)从订单查询-进入 医生详情
+const OrderReservationDoctorComponent = lazy(() => import("@containers/Doctor/OrderReservationDoctorContainer"));
+const OrderReservationDoctor = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <OrderReservationDoctorComponent {...props}></OrderReservationDoctorComponent>
+        </Suspense>
+    )
+};
+
 
 const ReservationContainerComponent = lazy(() => import("@containers/Reservation/ReservationContainer"));
 const ReservationContainer = (props) => {
@@ -168,8 +178,8 @@ const AdvanceSettlementContainer = (props) => {
     )
 };
 
-//订单查询
-const OrderContainerComponent = lazy(() => import("@containers/Order/OrderContainer"));
+//从订单查询-进入 预结算
+const OrderContainerComponent = lazy(() => import("@containers/Order/OrderPayContainer"));
 const OrderContainer = (props) => {
     return (
         <Suspense fallback={null}>
@@ -257,10 +267,15 @@ const routerMap = [
         exact: true,
         component: DoctorList
     },
-    {
+    {//线上预约->医生详情
         path: '/doctor',
         name: 'Doctor',
         component: Doctor
+    },
+    { // 从我的订单进入医生详情
+        path: '/orderReservationDoctor',
+        name: 'orderReservationDoctor',
+        component: OrderReservationDoctor
     },
     {
         path: '/reservation',
