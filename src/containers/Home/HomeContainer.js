@@ -29,13 +29,6 @@ class Home extends Component {
         )
     }
 
-    componentDidMount() {
-        window.addEventListener('message', (e) => this.dataFromRN(e))
-    }
-
-    dataFromRN(e) {
-        alert(e.data)
-    }
 
     categoryClick(index) {
         switch (index) {
@@ -58,13 +51,14 @@ class Home extends Component {
                 break
             case 6 :
                 alert('dfsdf')
-                window['J2C'].H5WXPay({body: {'orderType': 'reservationCode', 'orderId': 'unifiedOrderId'}},(e)=>{
-
-                })
-                window['J2C']['H5WXPayCallBack'] = function (response) {
-                    alert('-------H5WXPayCallBack')
-                    alert(response)
-                };
+                // window['J2C'].regAgain({body: {'orderType': 'reservationCode', 'orderId': 'unifiedOrderId'}},(e)=>{
+                //
+                // })
+                // window['J2C']['regAgainCallBack'] = function (response) {
+                //     alert('-------regAgainCallBack')
+                //     alert(response)
+                // };
+                this.props.history.push('/orderReservationDoctor')
                 break
             case 7:
                 this.props.history.push('/payCountdown')

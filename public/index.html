@@ -75,9 +75,38 @@
 
         }
 
+
+        function regAgain(i, e) {
+            regAgainCallBack = e;
+            if (window.iosdkqgqc) {
+                window.webkit.messageHandlers.regAgain.postMessage(i);
+            } else if (window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler(
+                    'Native.regAgain', {
+                        'param': '测试'
+                    },
+                    function (responseData) {
+                    }
+                );
+
+            } else {
+
+            }
+
+        }
+
+        function regAgainCallBack(e) {
+
+        }
+
+
         //*****************************把函数注册到命名空间中
         window['J2C']['H5WXPay'] = H5WXPay;
         window['J2C']['H5WXPayCallBack'] = H5WXPayCallBack;
+        //再次预约
+        window['J2C']['regAgain'] = regAgain;
+        window['J2C']['regAgainCallBack'] = regAgainCallBack;
+
     }
 </script>
 </body>

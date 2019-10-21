@@ -9,10 +9,10 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 
-class OrderReservationDoctorContainer extends Component{
+class OrderReservationDoctorContainer extends Component {
+
     constructor(props){
         super(props)
-        this.state={}
     }
 
     render() {
@@ -22,18 +22,51 @@ class OrderReservationDoctorContainer extends Component{
     }
 
     componentDidMount() {
-        window.addEventListener('message', (e) => this.orderReservationRN(e))
+        const {history} =this.props
+        this.timer = setTimeout(() => {
+            //H5调用取值
+            window['J2C'].regAgain("2123", function (e) {
+            })
+            //回传值给H5
+            window['J2C']['regAgainCallBack'] = function (response) {
+                let resObj = JSON.parse(response)
+                let token = {}
+                token.access_token = resObj.access_token
+                token.refresh_token = resObj.refresh_token
+                sessionStorage.setItem('token', JSON.stringify(token))
+                let path = {
+                    pathname: '/doctor',
+                    state: resObj.params
+                }
+                history.push(path)
+            }
+        }, 100)
     }
 
-    orderReservationRN(e){
-        let data = JSON.parse(e.data)
-        sessionStorage.setItem('token', JSON.stringify(data.tokenObj))
-        let path = {
-            pathname: '/doctor',
-            state: data.paramsObj
+    componentWillUnmount() {
+        this.timer && clearTimeout(this.timer);
+    }
+
+    //测试
+    getValue(){
+        const {history} =this.props
+        //H5调用取值
+        window['J2C'].regAgain("2123", function (e) {
+        })
+        //回传值给H5
+        window['J2C']['regAgainCallBack'] = function (response) {
+            let resObj = JSON.parse(response)
+            let token = {}
+            token.access_token = resObj.access_token
+            token.refresh_token = resObj.refresh_token
+            sessionStorage.setItem('token', JSON.stringify(token))
+            let path = {
+                pathname: '/doctor',
+                state: resObj.params
+            }
+            history.push(path)
         }
-        this.props.history.push(path)
     }
 }
 
-export  default withRouter(OrderReservationDoctorContainer)
+export default withRouter(OrderReservationDoctorContainer)
