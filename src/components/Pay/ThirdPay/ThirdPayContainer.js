@@ -9,25 +9,36 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import LoadingMask from "@components/Loading/LoadingMask";
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {getPayMethodEntity, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
+
 import {OrderTypeWrapper, PayTypeList, ButtonWrapper} from './style'
 import {Toast} from 'antd-mobile'
+import './style.less'
 //图标
 import icon_ybzf from '@images/Pay/ico_ybk_png.png'; //医保卡支付
 import icon_zfb from '@images/Pay/ico_zfb_png.png';// 支付宝
 import icon_wechat from '@images/Pay/logo_wechat(07-12-09-01-07).png';// 微信
 import icon_ylzf from '@images/Pay/logo_unionpay.png';// 银联
 import icon_gsyh from '@images/Pay/工商银行.png';// 工商银行
-import './style.less'
-import {actions as advanceSettlementActions} from "@reduxs/modules/advanceSettlement";
+import icon_pay_n from '@images/Pay/icon_pay_radio_n.png';// 支付方式 正常状态
+import icon_pay_radio_sel from '@images/Pay/icon_pay_radio_sel.png';// 支付方式 选中状态
+
+//redux
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {getPayMethodEntity, actions as thirdPayActions} from "@reduxs/modules/thirdPay";
 
 
 class ThirdPayContainer extends Component {
+
+    //选择哪种支付方式
+    state = {
+        selIndex: 0
+    }
+
     render() {
         const {orderPayment, ObjEntity, reservationName} = this.props.location.state
         const {PayMethodEntityItems} = this.props
+        console.log(PayMethodEntityItems)
         return (
             <div className={'thirdPay'}>
                 <SafeAreaView showBar={true} title={'选择支付方式'} isRight={false} handleBack={this.handleBack}>
@@ -83,9 +94,17 @@ class ThirdPayContainer extends Component {
                                             iconName = icon_wechat
                                             title = '微信支付'
                                             break
-                                        case 9: //江南银行支付宝
+                                        case 10: //招商银行H5支付
                                             iconName = icon_zfb
-                                            title = '支付宝'
+                                            title = '一网通银行卡支付'
+                                            break
+                                        case 12: //江南银行
+                                            iconName = icon_ylzf
+                                            title = 'e融支付'
+                                            break
+                                        case 13: //招商银行微信支付
+                                            iconName = icon_wechat
+                                            title = '微信支付'
                                             break
                                         case 14: //江南银行银联支付
                                             iconName = icon_ylzf
@@ -96,10 +115,14 @@ class ThirdPayContainer extends Component {
 
                                     }
                                     return (
-                                        <li className={'payComponent_payBtn_row border-top '} key={index}>
-                                            <img src={iconName}
-                                                 style={{width: '30px', height: '30px', paddingRight: '10px'}}/>
-                                            <span style={{fontSize: '17px'}}>{title}</span>
+                                        <li className={'payComponent_payBtn_row border-bottom '} key={index}>
+                                            <div onClick={()=>this.choosePayMethod(index)} className={'payComponent_payBtn_item'}>
+                                                <img src={iconName}
+                                                     style={{width: '30px', height: '30px', paddingRight: '10px'}}/>
+                                                <span style={{fontSize: '17px'}}>{title}</span>
+                                                <img src={index == this.state.selIndex ? icon_pay_radio_sel :icon_pay_n }
+                                                     className={'payComponent_payMethod'}/>
+                                            </div>
                                         </li>
                                     )
                                 })
@@ -129,14 +152,21 @@ class ThirdPayContainer extends Component {
         }
     }
 
+    choosePayMethod(index){
+        this.setState({selIndex:index})
+    }
+
     handleBack = () => {
         //返回上一个页面时 需要刷新预结算页面的订单支付状态
-
         this.props.history.goBack()
     }
 
 
     Pay() {
+        if (this.state.selIndex != 2) {
+            Toast.info('只能选择微信支付')
+            return
+        }
         const {orderPayment, ObjEntity, reservationCode, reservationName} = this.props.location.state
         const {history} = this.props
         //H5支付调用

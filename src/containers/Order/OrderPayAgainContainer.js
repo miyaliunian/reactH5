@@ -90,8 +90,8 @@ class OrderPayAgainContainer extends Component {
                 unifiedOrderId: "0819d1c8eb504491849785e4988ef03e",
             },
             token: {
-                access_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJmZmE3ZjVlODhiODM0ZmY0YWIzODUzOTc0MDVmMzgyYSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJnaXJkZXJfdXNlciI6ImZmYTdmNWU4OGI4MzRmZjRhYjM4NTM5NzQwNWYzODJhX1VTRVJfQUxMT1dFRCIsImV4cCI6MTU3MTQwMTIyNSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QRVJTT05fVVNFUiJdLCJqdGkiOiI5YTYyZjRhZS03M2JkLTQ5YjEtYmNiZi03MzlkMWY5Mjk1NGMiLCJjbGllbnRfaWQiOiJhY21lX21vYmlsZSJ9.Bw6CelkV9LYjVxGkyorzNmFRjc2-TS9qk9UnVowT_cdpatO4kiiLf40NLTtQ9ieCaWrUggP44a0Zk2aWDkQkM9U0j3BJW-TCfjAC5u6g2bIJPGbxQsefuR9tD6VJKFo2K9aTnleEUlvbTbBmdx_GYrpbEEKudR8MMu8gEgNS7c0IY-WfSIvbzAIM_mchZplBZh7doTs_57OyxVU7mIc9bFc5I2I2ylU5fmVE1Fi-lTvCaRBhGKgB8U6hxSu6KXKXxGTAbH--aGvXM9TnsBHdHbkgBdwdioA6yM1b5YazqJut_Jc8hEnjvWrnQ3_2jbtUTpIoLGkA0nzfscQXV6jjgA",
-                refresh_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJmZmE3ZjVlODhiODM0ZmY0YWIzODUzOTc0MDVmMzgyYSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJhdGkiOiI5YTYyZjRhZS03M2JkLTQ5YjEtYmNiZi03MzlkMWY5Mjk1NGMiLCJnaXJkZXJfdXNlciI6ImZmYTdmNWU4OGI4MzRmZjRhYjM4NTM5NzQwNWYzODJhX1VTRVJfQUxMT1dFRCIsImV4cCI6MTU3Mzk1MDAyNSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QRVJTT05fVVNFUiJdLCJqdGkiOiIzYmE1MzY3YS01YjM3LTRmYTctYWViMy00NGRlMjhhZmMxOTciLCJjbGllbnRfaWQiOiJhY21lX21vYmlsZSJ9.k4EQgsLQ-hGW05EdH8TKDQWIurvKt8iDWRfbzUogzeKxSMc0QrQtLyqlZoELlce-Kl5bV2-5cN_aR4rhO7Iw-dc0ja1pU0iacn-yaQOEbb2CoFF0yxf66xrnFzZEnwdkZamWkPEhdE2HO6BqxsJs_tNn418DPzl0P_Dgkvui0QoapYggUVfYjpMN8_Vb5NEh14EUQaJfTHgOoa6Q-jKp3lF4dU1UCGxpesbNX9lhCxKu4lnxEkio0KWk5ZC-ZNk1pG_yl2GrdlOo3FZcFRIW9G7HwvMqiq70oD4vQAaLU-d-zrO9mmLvqhdpJEgr_ZchH7ql9UN67tQGZs_JpHbfNA"
+                access_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJmZmE3ZjVlODhiODM0ZmY0YWIzODUzOTc0MDVmMzgyYSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJnaXJkZXJfdXNlciI6ImZmYTdmNWU4OGI4MzRmZjRhYjM4NTM5NzQwNWYzODJhX1VTRVJfQUxMT1dFRCIsImV4cCI6MTU3MTY2MTgzOSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QRVJTT05fVVNFUiJdLCJqdGkiOiJjZjBiOWIxNy02YzJiLTQ4NzktODI5ZC0wMjk1NjBhYTBmMjAiLCJjbGllbnRfaWQiOiJhY21lX21vYmlsZSJ9.Y3uFDxQRxcsAXaF74ZJOt8J8SXHA24R7uPJ0a-GwgysYxX00v_YvTNXLpxYOUSWBCjcMvrxhtlDpLak2da0sYAsQj7CNdYHhc6LzKLWnWIMBUK4T88OD6i7I8rxuKdTrGcPh5NDrhEKEuUl8EWTq7tZWJoQwtZxImR_1N9UQ9sVfSZiJ5fFT8my9ctD0G0FQhNiR4PGRzxwbry2Z_sYwxe3yzhqtopeIrMdkPUVowFu4UovNe_EMYn_tRIaQn1dleaVzrDVe_kShaErEd49-BgkyEdABL5dNyUAIxJLk56WwuPPGbPV9U-0ypvvJ6QzW5-k9qXLVQ08lZkzNh73aNA",
+                refresh_token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJmZmE3ZjVlODhiODM0ZmY0YWIzODUzOTc0MDVmMzgyYSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJhdGkiOiJjZjBiOWIxNy02YzJiLTQ4NzktODI5ZC0wMjk1NjBhYTBmMjAiLCJnaXJkZXJfdXNlciI6ImZmYTdmNWU4OGI4MzRmZjRhYjM4NTM5NzQwNWYzODJhX1VTRVJfQUxMT1dFRCIsImV4cCI6MTU3NDIxMDYzOSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9QRVJTT05fVVNFUiJdLCJqdGkiOiJmMDYzZWJlYS0yZjMzLTQzZjItODlkNS1mMTFhMWU1YzRlYWEiLCJjbGllbnRfaWQiOiJhY21lX21vYmlsZSJ9.XUMPV08ylkLWARPPfFGMNQF4KBqps2ZGmYzRlSHPDlFHWdi-SHjYJxNFdzK64-FGSo94PqN48bpQ-oi6qL74MFLT6ytoNpeDWC7sRz5RhmP-XpnGfKNJHiOyfV3fbb6VTarEMq0AfOx-_eGLgnZa-nWHF_V-VCZ2E4V_nl91QZTpaAA8viRje3JHZa3zJ09TV7I05M0Hn1VjT7xT6LqYlpfHDHRVOzmuA43HHce5JM0oi09I-Gn59xCzYlH9dZNoL1HIVCfBpd-hNQXy8ddwVXx31OmxiP_AKGlaewM00lbH9E1X76mJ8eCyANd8d36nfrEv4KpZReA6VtR1SD5bRQ"
             }
         }
     }
@@ -104,21 +104,20 @@ class OrderPayAgainContainer extends Component {
     }
 
     componentDidMount() {
-        //----
-        sessionStorage.setItem('token', JSON.stringify(this.state.token))
-        //----
-        let path = {
-            pathname: '/advanceSettlementContainer',
-            state: {
-                reservationName: OrderType[0].register,
-                reservationCode: OrderType[0].status,
-                reservationEntity: this.state.reservationEntity,
-                paymentMethod: this.state.reservationEntity.paymentMethod,
-                from:'order_Reg'//标识是走流程进入的预结算，还是从订单列表进入的预结算
-            }
-        }
-        this.props.history.push(path)
-        //----
+        //-- 调试
+        // sessionStorage.setItem('token', JSON.stringify(this.state.token))
+        // let path = {
+        //     pathname: '/advanceSettlementContainer',
+        //     state: {
+        //         reservationName: OrderType[0].register,
+        //         reservationCode: OrderType[0].status,
+        //         reservationEntity: this.state.reservationEntity,
+        //         paymentMethod: this.state.reservationEntity.paymentMethod,
+        //         from:'order_reg'
+        //     }
+        // }
+        // this.props.history.push(path)
+        //---- 正式
         window.addEventListener('message', (e) => this.dataFromRN(e))
     }
 
@@ -133,6 +132,7 @@ class OrderPayAgainContainer extends Component {
                 reservationCode: OrderType[0].status,
                 reservationEntity: reservationEntity,
                 paymentMethod: reservationEntity.paymentMethod,
+                from:data.target
             }
         }
         this.props.history.push(path)

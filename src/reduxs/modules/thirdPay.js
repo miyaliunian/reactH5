@@ -67,7 +67,6 @@ export const actions = {
                             let targetURL = orderType === OrderType[0].status ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId) : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
                             fetchPayTypeItems(targetURL, dispatch)
                         } else {
-                            debugger
                             Toast.fail(data.infomessage, 2);
                         }
                     },

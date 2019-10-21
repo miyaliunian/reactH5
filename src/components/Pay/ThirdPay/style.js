@@ -18,12 +18,20 @@ export const PayTypeList = styled.div`
     padding: 15px;
     box-sizing: border-box;
     .payComponent_payBtn_row {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      height: 40px;
-      line-height: 40px;
-      align-items: center;
+      height: 50px;
+      line-height: 50px;
+      .payComponent_payBtn_item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        .payComponent_payMethod {
+         width: 44px;
+         height: 40px;
+         position:absolute;
+         right:10px;   
+        }
+      }
     }
 `
 

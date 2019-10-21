@@ -106,12 +106,9 @@ class AdvanceSettlementContainer extends Component {
         if (location.state.from) {
             if (person != '') {
                 showPerAccount = true
-                console.log(typeof parseInt(person.account))
+
             }
         }
-
-
-
         return (
             <PayInfoContent>
                 <InfoRow showBorder={true}>
