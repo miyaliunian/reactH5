@@ -98,5 +98,7 @@ export default {
     API_PAY_METHOD_ATTRIBUTES: (cityId, siTypeCode, payMethodId) => `/baseURL/paymethod/v1.0/getPayMethodAttributes/${cityId}/${siTypeCode}/${payMethodId}.do`,
     API_SI_PAY: () => `/baseURL/wallet/v1.2/pay.do`, //医保支付
     API_THIRD_PAY_REGISTERED: (hosid) => `/baseURL/paymethod/v1.2/thirdList/${hosid}.do`, //第三方支付:当日挂号
-    API_THIRD_PAY_PURCHASE_MEDICINE: (storeCode) => `/baseURL/paymethod/v1.2/store/thirdList/${storeCode}.do` //第三方支付:扫码购药
+    API_THIRD_PAY_PURCHASE_MEDICINE: (storeCode) => `/baseURL/paymethod/v1.2/store/thirdList/${storeCode}.do`, //第三方支付:扫码购药
+
+    API_WX_PAY:()=>`/baseURL/cmbBank/getCMBWeChatPay/v1.0.do`//微信支付
 }

@@ -179,15 +179,24 @@ const AdvanceSettlementContainer = (props) => {
 };
 
 //从订单查询-进入 预结算
-const OrderContainerComponent = lazy(() => import("@containers/Order/OrderPayAgainContainer"));
-const OrderContainer = (props) => {
+const OrderMedicarePayContainerComponent = lazy(() => import("@containers/Order/orderMedicarePayContainer"));
+const OrderMedicarePayContainer = (props) => {
     return (
         <Suspense fallback={null}>
-            <OrderContainerComponent {...props}></OrderContainerComponent>
+            <OrderMedicarePayContainerComponent {...props}></OrderMedicarePayContainerComponent>
         </Suspense>
     )
 }
 
+//从订单进入-纯自费支付
+const OrderThirdPayContainerComponent = lazy(() => import("@containers/Order/orderThirdPayContainer"));
+const OrderThirdPayContainer = (props) => {
+    return (
+        <Suspense fallback={null}>
+            <OrderThirdPayContainerComponent {...props}></OrderThirdPayContainerComponent>
+        </Suspense>
+    )
+}
 
 //医保支付
 const MedicarePayComponent = lazy(() => import("@components/Pay/MedicarePay/MedicarePayContainer"));
@@ -327,9 +336,14 @@ const routerMap = [
         component: AdvanceSettlementContainer
     },
     {
-        path: '/orderContainer',
-        name: 'orderContainer',
-        component: OrderContainer
+        path: '/orderMedicarePayContainer',
+        name: 'orderMedicarePayContainer',
+        component: OrderMedicarePayContainer
+    },
+    {
+        path: '/orderThirdPayContainer',
+        name: 'orderThirdPayContainer',
+        component: OrderThirdPayContainer
     },
 
     {

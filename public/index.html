@@ -49,6 +49,31 @@
         }
 
 
+        //--------------
+        function H5WXPAyIP(i, e) {
+            H5WXPAyIPCallBack = e;
+            if (window.iosdkqgqc) {
+                window.webkit.messageHandlers.H5WXPAyIP.postMessage(i);
+            } else if (window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler(
+                    'Native.H5WXPAyIP', {
+                        'param': '测试'
+                    },
+                    function (responseData) {
+                    }
+                );
+
+            } else {
+
+            }
+
+        }
+
+        function H5WXPAyIPCallBack(e) {
+
+        }
+
+        //--------------
         //唤起微信支付
         function H5WXPay(i, e) {
             H5WXPayCallBack = e;
@@ -75,7 +100,7 @@
 
         }
 
-        //再次预约
+        //-----------------再次预约
         function regAgain(i, e) {
             regAgainCallBack = e;
             if (window.iosdkqgqc) {
@@ -99,7 +124,7 @@
 
         }
 
-        //去支付
+        //----------------------------去支付
         function payReg(i, e) {
             payRegCallBack = e;
             if (window.iosdkqgqc) {
@@ -125,6 +150,9 @@
 
 
         //*****************************把函数注册到命名空间中
+        // 调用微信支付前先要通过原生获取手机Ip
+        window['J2C']['H5WXPAyIP'] = H5WXPAyIP;
+        window['J2C']['H5WXPAyIPCallBack'] = H5WXPAyIPCallBack;
         window['J2C']['H5WXPay'] = H5WXPay;
         window['J2C']['H5WXPayCallBack'] = H5WXPayCallBack;
         //再次预约

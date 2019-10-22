@@ -28,6 +28,34 @@ const actionTypes = {
 
 
 export const actions = {
+    //微信支付
+    WXPay: (parmas,callBack) => {
+        return (dispatch, getstate) => {
+            const targetURL = URL.API_WX_PAY()
+            dispatch(fetchRequest())
+            return post(targetURL,parmas)
+                .then((data) => {
+                        if (data.infocode && data.infocode === 1) {
+                            callBack(data)
+                        } else {
+                            dispatch(fetchFailure())
+                            Toast.fail(data.infomessage, 3);
+                        }
+                    },
+                    error => {
+                        // console.log(error)
+                        dispatch(fetchFailure())
+                        Toast.fail(error, 1)
+                    }
+                )
+                .catch(err => {
+                    // console.log(err)
+                    dispatch(fetchFailure())
+                })
+        }
+    },
+
+
     //获取支付方式列表
     loadPayTypeItems: (payType, objEntity) => {
         return (dispatch, getstate) => {
@@ -71,7 +99,7 @@ export const actions = {
                         }
                     },
                     error => {
-                    console.log(error)
+                        console.log(error)
                         dispatch(fetchFailure())
                         Toast.fail(error, 1)
                     }

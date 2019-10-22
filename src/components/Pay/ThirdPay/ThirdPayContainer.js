@@ -36,9 +36,11 @@ class ThirdPayContainer extends Component {
     }
 
     render() {
-        const {orderPayment, ObjEntity, reservationName} = this.props.location.state
+        //from 用户标识 此页面是走正常流程进来的，还是通过我的订单进入的
+        const {orderPayment, ObjEntity, reservationName,from} = this.props.location.state
         const {PayMethodEntityItems} = this.props
-        console.log(PayMethodEntityItems)
+        // console.log(orderPayment)
+        // console.log(PayMethodEntityItems)
         return (
             <div className={'thirdPay'}>
                 <SafeAreaView showBar={true} title={'选择支付方式'} isRight={false} handleBack={this.handleBack}>
@@ -53,8 +55,15 @@ class ThirdPayContainer extends Component {
                         </div>
                         <div className={'payComponent_info_row'}>
                             <span>账户支出</span>
+                            {/*用户标识 此页面是走正常流程进来的，还是通过我的订单进入的  如果是存自费 ownPayAmt = totalPayAmt */}
+                            {!from ?
                             <span
                                 style={{color: 'orange'}}>￥{(orderPayment.ownPayAmt).toFixed(2)}</span>
+                                :
+                                <span
+                                    style={{color: 'orange'}}>￥{(orderPayment.totalPayAmt).toFixed(2)}</span>
+                            }
+
                         </div>
                     </OrderTypeWrapper>
                     <div style={{height: '15px', backgroundColor: 'rgb(230,230,230)'}}/>
@@ -130,7 +139,11 @@ class ThirdPayContainer extends Component {
                         </ul>
                     </PayTypeList>
                     <ButtonWrapper>
+                        {!from ?
                         <span className={'payComponent_desc'}>待支付：￥{(orderPayment.ownPayAmt).toFixed(2)}</span>
+                            :
+                            <span className={'payComponent_desc'}>待支付：￥{(orderPayment.totalPayAmt).toFixed(2)}</span>
+                        }
                         <span className={'payComponent_btn'} onClick={() => this.Pay()}>支  付</span>
                     </ButtonWrapper>
                 </SafeAreaView>
@@ -163,32 +176,71 @@ class ThirdPayContainer extends Component {
 
 
     Pay() {
+        const {history,thirdPayActions:{WXPay}} = this.props
         if (this.state.selIndex != 2) {
             Toast.info('只能选择微信支付')
             return
         }
-        const {orderPayment, ObjEntity, reservationCode, reservationName} = this.props.location.state
-        const {history} = this.props
-        //H5支付调用
-        window['J2C'].H5WXPay({body: {'orderType': reservationCode, 'orderId': ObjEntity.unifiedOrderId}}, (e) => {
+        const {orderPayment, ObjEntity, reservationCode, reservationName,from} = this.props.location.state
+        // //支付
+        //1. 调动原生获取手机IP
+        window['J2C'].H5WXPAyIP({type:'支付'}, (e) => {
         })
-        //H5支付回调
-        window['J2C']['H5WXPayCallBack'] = function (response) {
-            let resObj = JSON.parse(response)
-            if (resObj.errCode === 0) {
-                let path = {
-                    pathname: '/payCountdown',
-                    state: {
-                        sn: ObjEntity.sn,
-                        reservationName: reservationName,
-                        price: orderPayment.ownPayAmt
-                    }
-                }
-                history.push(path)
-            } else {
-                Toast.fail(resObj.errMsg, 1)
+        //1.1 调动原生获取手机IP 回调
+        window['J2C']['H5WXPAyIPCallBack'] = function (response) {
+            let reParams = {
+                'orderType': reservationCode,
+                'orderId': ObjEntity.unifiedOrderId,
+                ip:response
             }
-        };
+            //2.调用后台接口
+            WXPay(reParams,(e)=>{
+                console.log(e)
+                //2.1
+                window['J2C'].H5WXPay({wxReq:e.data}, (e) => {})
+                //2.2H5支付回调
+                window['J2C']['H5WXPayCallBack'] = function (response) {
+                    let resObj = JSON.parse(response)
+                    console.log(resObj)
+                    return
+                    if (resObj.errCode === 0) {
+                        let path = {
+                            pathname: '/payCountdown',
+                            state: {
+                                sn: ObjEntity.sn,
+                                reservationName: reservationName,
+                                price: !from ? orderPayment.ownPayAmt :orderPayment.totalPayAmt  //用户标识 此页面是走正常流程进来的，还是通过我的订单进入的
+                            }
+                        }
+                        history.push(path)
+                    } else {
+                        Toast.fail(resObj.errMsg, 1)
+                    }
+                };
+            })
+        }
+
+        // return
+        // //H5支付调用
+        // window['J2C'].H5WXPay({body: {'orderType': reservationCode, 'orderId': ObjEntity.unifiedOrderId}}, (e) => {
+        // })
+        // //H5支付回调
+        // window['J2C']['H5WXPayCallBack'] = function (response) {
+        //     let resObj = JSON.parse(response)
+        //     if (resObj.errCode === 0) {
+        //         let path = {
+        //             pathname: '/payCountdown',
+        //             state: {
+        //                 sn: ObjEntity.sn,
+        //                 reservationName: reservationName,
+        //                 price: !from ? orderPayment.ownPayAmt :orderPayment.totalPayAmt  //用户标识 此页面是走正常流程进来的，还是通过我的订单进入的
+        //             }
+        //         }
+        //         history.push(path)
+        //     } else {
+        //         Toast.fail(resObj.errMsg, 1)
+        //     }
+        // };
     }
 
 
@@ -197,14 +249,17 @@ class ThirdPayContainer extends Component {
         /**
          *   paymentMethod === 2   ?(纯自费) 直接获取支付方式 : (自费金额 ===  总金额  &&  paymentStatus === 0   空跑一遍医保支付)
          */
-
         if (this.props.history.action === 'PUSH') {
-            const {ObjEntity, reservationCode, paymentMethod, orderPayment} = this.props.location.state
-            if (paymentMethod === 1 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
-                //空跑一遍医保支付
-                this.props.thirdPayActions.reMedicarePayAndReLoadPayTypeItems(reservationCode, ObjEntity, orderPayment)
-            } else {
-                //存自费：获取支付方式
+            const {ObjEntity, reservationCode, paymentMethod, orderPayment,from} = this.props.location.state
+            if (!from) {  // 走正常流程进入纯自费支付
+                if (paymentMethod === 1 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
+                    //空跑一遍医保支付
+                    this.props.thirdPayActions.reMedicarePayAndReLoadPayTypeItems(reservationCode, ObjEntity, orderPayment)
+                } else {
+                    //存自费：获取支付方式
+                    this.props.thirdPayActions.loadPayTypeItems(reservationCode, ObjEntity)
+                }
+            }else { // 从我的订单进入纯自费支付
                 this.props.thirdPayActions.loadPayTypeItems(reservationCode, ObjEntity)
             }
         }

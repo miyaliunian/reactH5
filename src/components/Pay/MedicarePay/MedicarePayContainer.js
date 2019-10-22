@@ -12,17 +12,26 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import PopUP from "@components/PopUp/PopUpContainer";
+import './style.less'
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import LoadingMask from "@components/Loading/LoadingMask";
+//图标
+import icon_pay_n from '@images/Pay/icon_pay_radio_n.png';// 支付方式 正常状态
+import icon_ybzf from '@images/Pay/ico_ybk_png.png';
+import icon_pay_radio_sel from '@images/Pay/icon_pay_radio_sel.png';// 支付方式 选中状态
+//redux
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {actions as popUpActions, getPopupState} from "@reduxs/modules/popUp";
 import {actions as medicarePayActions, getFetchingStatus, getVerifyEntity} from "@reduxs/modules/medicarePay";
-import icon_ybzf from '@images/Pay/ico_ybk_png.png';
-import './style.less'
-import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
-import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class MedicarePayContainer extends Component {
+
+    //选择哪种支付方式
+    state = {
+        selIndex: 0
+    }
 
     render() {
         const {popUpActions, fetchStatus} = this.props
@@ -58,6 +67,8 @@ class MedicarePayContainer extends Component {
                                     marginTop: '2px'
                                 }}>账户金额：￥{(orderPayment.prePayBalance.toFixed(2))}</span>
                             </div>
+                            <img src={icon_pay_radio_sel}
+                                 className={'payComponent_payMethod'}/>
                         </div>
                     </div>
                     <div className={'payComponent_bottomBtn'}>

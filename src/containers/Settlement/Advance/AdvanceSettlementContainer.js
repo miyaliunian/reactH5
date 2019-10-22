@@ -243,9 +243,9 @@ class AdvanceSettlementContainer extends Component {
 
 
     componentWillMount() {
-        const {history} = this.props
+        const {history,location} = this.props
         if (history.action === 'PUSH') {
-            const {reservationEntity} = this.props.location.state
+            const {reservationEntity} = location.state
             this.props.advanceSettlementActions.setPaymentStatus(reservationEntity.paymentStatus)
         }
     }
