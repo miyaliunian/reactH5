@@ -75,7 +75,7 @@
 
         }
 
-
+        //再次预约
         function regAgain(i, e) {
             regAgainCallBack = e;
             if (window.iosdkqgqc) {
@@ -99,6 +99,30 @@
 
         }
 
+        //去支付
+        function payReg(i, e) {
+            payRegCallBack = e;
+            if (window.iosdkqgqc) {
+                window.webkit.messageHandlers.payReg.postMessage(i);
+            } else if (window.WebViewJavascriptBridge) {
+                window.WebViewJavascriptBridge.callHandler(
+                    'Native.payReg', {
+                        'param': '测试'
+                    },
+                    function (responseData) {
+                    }
+                );
+
+            } else {
+
+            }
+
+        }
+
+        function payRegCallBack(e) {
+
+        }
+
 
         //*****************************把函数注册到命名空间中
         window['J2C']['H5WXPay'] = H5WXPay;
@@ -106,6 +130,9 @@
         //再次预约
         window['J2C']['regAgain'] = regAgain;
         window['J2C']['regAgainCallBack'] = regAgainCallBack;
+        //预结算
+        window['J2C']['payReg'] = payReg;
+        window['J2C']['payRegCallBack'] = payRegCallBack;
 
     }
 </script>

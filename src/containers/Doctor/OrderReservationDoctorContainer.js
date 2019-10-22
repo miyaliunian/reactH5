@@ -7,6 +7,7 @@
  */
 
 import React, {Component} from 'react';
+import window from 'global/window'
 import {withRouter} from 'react-router-dom'
 
 class OrderReservationDoctorContainer extends Component {
@@ -40,7 +41,7 @@ class OrderReservationDoctorContainer extends Component {
                 }
                 history.push(path)
             }
-        }, 100)
+        }, 10)
     }
 
     componentWillUnmount() {

@@ -99,43 +99,42 @@ class OrderPayAgainContainer extends Component {
 
     render() {
         return (
-            <div/>
+            <div onClick={() => this.pay()}>
+                去支付
+            </div>
         );
     }
 
     componentDidMount() {
-        //-- 调试
-        // sessionStorage.setItem('token', JSON.stringify(this.state.token))
-        // let path = {
-        //     pathname: '/advanceSettlementContainer',
-        //     state: {
-        //         reservationName: OrderType[0].register,
-        //         reservationCode: OrderType[0].status,
-        //         reservationEntity: this.state.reservationEntity,
-        //         paymentMethod: this.state.reservationEntity.paymentMethod,
-        //         from:'order_reg'
-        //     }
-        // }
-        // this.props.history.push(path)
-        //---- 正式
-        window.addEventListener('message', (e) => this.dataFromRN(e))
+        //    J2C-WebView
+        const {history} = this.props
     }
 
-    dataFromRN(e) {
-        let data = JSON.parse(e.data),
-            reservationEntity = data.paramsObj
-        sessionStorage.setItem('token', JSON.stringify(data.tokenObj))
-        let path = {
-            pathname: '/advanceSettlementContainer',
-            state: {
+    componentWillUnmount() {
+        this.timer && clearTimeout(this.timer);
+    }
+
+    // 测试方式
+    pay() {
+        const {history} = this.props
+        window['J2C'].payReg("去支付", function (e) {
+        })
+
+        window['J2C']['payRegCallBack'] = function (response) {
+            let resObj = JSON.parse(response)
+            let token = {}
+            token.access_token = resObj.access_token
+            token.refresh_token = resObj.refresh_token
+            sessionStorage.setItem('token', JSON.stringify(token))
+            let path = {
                 reservationName: OrderType[0].register,
                 reservationCode: OrderType[0].status,
-                reservationEntity: reservationEntity,
-                paymentMethod: reservationEntity.paymentMethod,
-                from:data.target
+                reservationEntity: resObj.reservationEntity,
+                paymentMethod: resObj.reservationEntity.paymentMethod,
+                from: resObj.fromTarget
             }
+            history.push(path)
         }
-        this.props.history.push(path)
     }
 }
 
