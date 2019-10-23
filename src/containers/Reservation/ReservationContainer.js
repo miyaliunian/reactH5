@@ -61,8 +61,9 @@ class ReservationContainer extends Component {
 
     componentDidMount() {
         const {doctorInfo, reservationInfo} = this.props.location.state
-        this.props.reservationActions.loadPayType(doctorInfo.hosId, reservationInfo.id)
-        this.props.reservationActions.loadBindCardAndMedicalTypeList()
+        const {reservationActions:{loadPayType,loadBindCardAndMedicalTypeList}} = this.props
+        loadPayType(doctorInfo.hosId, reservationInfo.id)
+        loadBindCardAndMedicalTypeList()
     }
 
 

@@ -16,6 +16,7 @@ class ReservationForm extends Component {
 
     render() {
         const {payType, bindCards, diagnosis, switchInfo, diagName, medicalType} = this.props
+        console.log(switchInfo)
         return (
             <div className={'reservationForm'}>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
@@ -75,9 +76,9 @@ class ReservationForm extends Component {
                         ?
                         <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
                             <IOSSwitch
-                                checked={switchInfo.checked}
+                                // disabled = {true}
+                                checked={switchInfo.defChecked}
                                 onChange={() => this.handleIOSSwitch(switchInfo)}
-
                             />
                         </div>
                         :
@@ -125,11 +126,12 @@ class ReservationForm extends Component {
     }
 
     handleIOSSwitch(switchInfo) {
-        if (!switchInfo.defChecked) {
+        const {reservationActions:{setSwitchChecked}} = this.props
+        if (!switchInfo.canChecked) {
             return
         }
         let data = {showSwitch: switchInfo.showSwitch, defChecked: switchInfo.defChecked, checked: !switchInfo.checked}
-        this.props.reservationActions.setSwitchChecked(data)
+        setSwitchChecked(data)
     }
 }
 

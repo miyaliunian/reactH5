@@ -78,20 +78,22 @@ export const actions = {
             return post(targetURL)
                 .then(
                     data => {
+                        debugger
                         // 实际用的是列表的第0条数据。
-                        if (data.data[0].id === 1) {
+                        if (data.data[0].id <= 1) {
                             //不显示Switch组件
                             dispatch(fetchPayTypeSuccess({
-                                switchTxt: '去医院支付',
+                                switchTxt: '去医院支付',  //线下支付
                                 showSwitch: false,
-                                data: data.data[0]
+                                data: data.data[0],
                             }))
                         } else {
                             //显示Switch组件
                             dispatch(fetchPayTypeSuccess({
-                                switchTxt: '使用医保支付',
+                                switchTxt: '使用医保支付', // 线上支付(医保支付、自费支付)
                                 showSwitch: true,
-                                data: data.data[0]
+                                data: data.data[0],
+                                // switchCanSel: true
                             }))
                         }
                     },
@@ -104,7 +106,10 @@ export const actions = {
         }
     },
 
-
+    /**
+     *  既能医保支付又能用自费
+     * @returns {function(*=, *=): Promise<T | never>}
+     */
     loadBindCardAndMedicalTypeList: () => {
         return (dispatch, getstate) => {
             if (!getstate().reservation.isRefresh) {
@@ -116,27 +121,26 @@ export const actions = {
                     //家庭成员
                     dispatch(fetchBindCardSuccess(data.data))
                     data.data.map(item => {
-
                         if (item.def) {
                             if (getstate().reservation.payType.showSwitch) {
-                                if (item.sitype) {
+                                if (item.sitype && item.auth) {
                                     dispatch(setSwitchInfo({
                                         showSwitch: true,
                                         defChecked: true,
-                                        checked: true
+                                        canChecked: true
                                     }))
                                 } else {
                                     dispatch(setSwitchInfo({
                                         showSwitch: true,
                                         defChecked: false,
-                                        checked: false
+                                        canChecked: false
                                     }))
                                 }
                             } else {
                                 dispatch(setSwitchInfo({
                                     showSwitch: false,
                                     defChecked: false,
-                                    checked: false
+                                    canChecked: false
                                 }))
                             }
 
@@ -171,24 +175,24 @@ export const actions = {
             data.map((item) => {
                 if (item.def) {
                     if (getstate().reservation.payType.showSwitch) {
-                        if (item.sitype) {
+                        if (item.sitype && item.auth) {
                             dispatch(setSwitchInfo({
                                 showSwitch: true,
                                 defChecked: true,
-                                checked: true
+                                canChecked: true
                             }))
                         } else {
                             dispatch(setSwitchInfo({
                                 showSwitch: true,
                                 defChecked: false,
-                                checked: false
+                                canChecked: false
                             }))
                         }
                     } else {
                         dispatch(setSwitchInfo({
                             showSwitch: false,
                             defChecked: false,
-                            checked: false
+                            canChecked: false
                         }))
                     }
 
