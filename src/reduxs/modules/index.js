@@ -30,6 +30,7 @@ import medicarePay from './medicarePay'
 import thirdPay from './thirdPay'
 import payResult from './payResult'
 import popUp from './popUp'
+import orderPay from './orderPay'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
     historyAdvancePayment,
     categoryHospList,
     dailyListQueryPayment,
+    orderPay,
     advanceSettlement,
     medicarePay,
     thirdPay,

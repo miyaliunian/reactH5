@@ -12,6 +12,13 @@ import {withRouter} from 'react-router-dom'
 import icon_pay_result from '@images/Pay/ico_zfcg_png.png'
 import {ContentWrapper, ButtonWrapper,FormWrapper} from './style'
 import PrimaryButton from "@baseUI/Button/PrimaryButton";
+//Redux
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {
+    actions as orderPayActions,
+    getOrderType
+} from '../../../reduxs/modules/orderPay'
 
 class PayResultContainer extends Component {
     render() {
@@ -27,7 +34,7 @@ class PayResultContainer extends Component {
                         <img className={'img_attr'} src={icon_pay_result} alt={''}/>
                         <span className={'img_title'}>支付成功!</span>
                         <ButtonWrapper>
-                            <PrimaryButton txt={'完成'} onSubmit={() => this.props.history.replace('/')}/>
+                            <PrimaryButton txt={'完成'} onSubmit={() => this.btnCLick()}/>
                         </ButtonWrapper>
                         <FormWrapper>
                             <div className={'form_row'}>
@@ -50,7 +57,20 @@ class PayResultContainer extends Component {
     }
 
     componentDidMount(){
-        
+
+    }
+
+    btnCLick(){
+        const {fromStatus,orderPayActions:{cleanOrderPayType},history} =this.props
+        debugger
+        if (fromStatus) {
+            cleanOrderPayType(()=>{
+                window['J2C'].back2NativeVC("back2NativeVC", function (e) {
+                })
+            })
+        }else {
+            history.replace('/')
+        }
     }
 
 
@@ -59,5 +79,17 @@ class PayResultContainer extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        fromStatus:getOrderType(state)
+    }
+}
 
-export default withRouter(PayResultContainer)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        orderPayActions: bindActionCreators(orderPayActions, dispatch)
+    }
+}
+
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(PayResultContainer))
