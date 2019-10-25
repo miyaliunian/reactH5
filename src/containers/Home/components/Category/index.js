@@ -48,6 +48,10 @@ const dataSource = [
             name: "订单查询去支付",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
+        {
+            name: "actionSheet",
+            src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
+        },
     ],
 ];
 export default class Category extends Component {

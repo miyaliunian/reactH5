@@ -15,6 +15,18 @@ import HeadLine from './components/HeadLine'
 import Activity from "./components/Activity/Activity";
 import './style.less'
 
+
+// const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+// let wrapProps;
+// if (isIPhone) {
+//     wrapProps = {
+//         onTouchStart: e => e.preventDefault(),
+//     };
+// }
+
+import { Icon,ActionSheet} from 'antd-mobile';
+
+
 class Home extends Component {
     render() {
         return (
@@ -50,14 +62,6 @@ class Home extends Component {
                 this.props.history.push('/hospitalizationManagement')
                 break
             case 6 :
-                alert('dfsdf')
-                // window['J2C'].regAgain({body: {'orderType': 'reservationCode', 'orderId': 'unifiedOrderId'}},(e)=>{
-                //
-                // })
-                // window['J2C']['regAgainCallBack'] = function (response) {
-                //     alert('-------regAgainCallBack')
-                //     alert(response)
-                // };
                 this.props.history.push('/orderReservationDoctor')
                 break
             case 7:
@@ -66,12 +70,33 @@ class Home extends Component {
             case 8:
                 this.props.history.push('/orderContainer')
                 break
+            case 9:
+                this.showActionSheet()
+                break
         }
     }
 
     fetchMoreLikes = () => {
         this.props.homeActions.loadLikes()
     }
+
+
+    showActionSheet = () => {
+        const BUTTONS = ['Operation1', 'Operation2', 'Operation2', 'Delete', 'Cancel'];
+        ActionSheet.showActionSheetWithOptions({
+                options: BUTTONS,
+                cancelButtonIndex: BUTTONS.length - 1,
+                destructiveButtonIndex: BUTTONS.length - 2,
+
+                message: 'I am description, description, description',
+                maskClosable: true,
+            },
+            (buttonIndex) => {
+                this.setState({ clicked: BUTTONS[buttonIndex] });
+            });
+    }
+
+
 }
 
 

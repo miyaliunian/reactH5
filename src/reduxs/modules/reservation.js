@@ -78,7 +78,7 @@ export const actions = {
             return post(targetURL)
                 .then(
                     data => {
-                        debugger
+                        
                         // 实际用的是列表的第0条数据。
                         if (data.data[0].id <= 1) {
                             //不显示Switch组件

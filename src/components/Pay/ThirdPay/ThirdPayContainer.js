@@ -202,7 +202,6 @@ class ThirdPayContainer extends Component {
                 window['J2C']['H5WXPayCallBack'] = function (response) {
                     let resObj = JSON.parse(response)
                     console.log(resObj)
-                    return
                     if (resObj.errCode === 0) {
                         let path = {
                             pathname: '/payCountdown',
@@ -220,27 +219,6 @@ class ThirdPayContainer extends Component {
             })
         }
 
-        // return
-        // //H5支付调用
-        // window['J2C'].H5WXPay({body: {'orderType': reservationCode, 'orderId': ObjEntity.unifiedOrderId}}, (e) => {
-        // })
-        // //H5支付回调
-        // window['J2C']['H5WXPayCallBack'] = function (response) {
-        //     let resObj = JSON.parse(response)
-        //     if (resObj.errCode === 0) {
-        //         let path = {
-        //             pathname: '/payCountdown',
-        //             state: {
-        //                 sn: ObjEntity.sn,
-        //                 reservationName: reservationName,
-        //                 price: !from ? orderPayment.ownPayAmt :orderPayment.totalPayAmt  //用户标识 此页面是走正常流程进来的，还是通过我的订单进入的
-        //             }
-        //         }
-        //         history.push(path)
-        //     } else {
-        //         Toast.fail(resObj.errMsg, 1)
-        //     }
-        // };
     }
 
 
@@ -249,18 +227,19 @@ class ThirdPayContainer extends Component {
         /**
          *   paymentMethod === 2   ?(纯自费) 直接获取支付方式 : (自费金额 ===  总金额  &&  paymentStatus === 0   空跑一遍医保支付)
          */
+        const {thirdPayActions:{reMedicarePayAndReLoadPayTypeItems,loadPayTypeItems,}} =this.props
         if (this.props.history.action === 'PUSH') {
             const {ObjEntity, reservationCode, paymentMethod, orderPayment,from} = this.props.location.state
             if (!from) {  // 走正常流程进入纯自费支付
                 if (paymentMethod === 1 && orderPayment.ownPayAmt === orderPayment.totalAmt && ObjEntity.paymentStatus === 0) {
                     //空跑一遍医保支付
-                    this.props.thirdPayActions.reMedicarePayAndReLoadPayTypeItems(reservationCode, ObjEntity, orderPayment)
+                    reMedicarePayAndReLoadPayTypeItems(reservationCode, ObjEntity, orderPayment)
                 } else {
                     //存自费：获取支付方式
-                    this.props.thirdPayActions.loadPayTypeItems(reservationCode, ObjEntity)
+                    loadPayTypeItems(reservationCode, ObjEntity)
                 }
             }else { // 从我的订单进入纯自费支付
-                this.props.thirdPayActions.loadPayTypeItems(reservationCode, ObjEntity)
+                loadPayTypeItems(reservationCode, ObjEntity)
             }
         }
     }

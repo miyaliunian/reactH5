@@ -56,7 +56,7 @@ class BindCardItem extends Component {
         let path = {
             pathname: 'bindCardList',
             state: data,
-            callBack: (data) => this.callBack(data) //外部包裹容器
+            callBack: (data) => this.callBack(data)
         }
         this.props.history.push(path)
     }

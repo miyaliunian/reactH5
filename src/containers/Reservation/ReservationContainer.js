@@ -9,6 +9,9 @@ import React, {Component} from 'react'
 import PrimaryButton from "@baseUI/Button/PrimaryButton";
 import ReservationHeader from "@containers/Reservation/Components/ReservationHeader/ReservationHeader";
 import ReservationForm from "@containers/Reservation/Components/ReservationForm/ReservationForm";
+import LoadingMask from "@components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+//Redux
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {
@@ -21,10 +24,9 @@ import {
     getSwitchInfo,
     getBtnDisable
 } from '@reduxs/modules/reservation'
-import './style.less'
-import LoadingMask from "@components/Loading/LoadingMask";
-import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
+//Style
+import './style.less'
 
 class ReservationContainer extends Component {
 

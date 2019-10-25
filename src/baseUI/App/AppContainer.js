@@ -1,4 +1,4 @@
-import React, {Component, lazy, Suspense,} from 'react';
+import React, {Component, lazy, Suspense,Fragment} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
 import {ToastContainer, Flip} from 'react-toastify'
@@ -62,7 +62,7 @@ class AppContainer extends Component {
         const {error, appActions: {clearError}} = this.props;
         const Routes = withRouter(RouteModule);
         return (
-            <div>
+            <Fragment>
                 <PureToastContainer
                     position="top-center"
                     autoClose={2000}
@@ -74,11 +74,11 @@ class AppContainer extends Component {
                     draggable={false}
                     pauseOnHover={false}
                 />
-                <BrowserRouter>
+                <BrowserRouter forceRefresh={false}>
                     <Routes/>
                 </BrowserRouter>
                 <ErrorToast desc={error} show={this.state.showBar}/>
-            </div>
+            </Fragment>
         );
     }
 

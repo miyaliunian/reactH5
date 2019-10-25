@@ -58,7 +58,7 @@ class BindCardList extends Component {
     }
 
     handleItemClick(cliItem) {
-        const {state} = this.props.location
+        const {location:{state,callBack},history,reservationActions:{loadMedicalTypeByBindCard}} = this.props
         state.map((item) => {
             if (item.id === cliItem.id) {
                 item.def = true
@@ -66,10 +66,13 @@ class BindCardList extends Component {
                 item.def = false
             }
         })
-        //将选中的数据 返回给 住院管理页面
-        this.props.location.callBack(cliItem)
-        this.props.reservationActions.loadMedicalTypeByBindCard(state)
-        this.props.history.goBack()
+        if (callBack){
+            // 目前就是《住院管理页面》需要用此地方 将选中的数据 返回给 住院管理页面
+            this.props.location.callBack(cliItem)
+            loadMedicalTypeByBindCard(state)
+        }
+        // 切换家庭成员之后 回退到上一页
+        history.goBack()
     }
 }
 

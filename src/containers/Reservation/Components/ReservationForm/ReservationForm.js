@@ -6,10 +6,21 @@
  *  预约信息-下半部分-表格
  */
 import React, {Component} from 'react'
-import {Icon, ActionSheet} from 'antd-mobile'
+import { Icon,ActionSheet} from 'antd-mobile';
 import {IOSSwitch} from '@components/IOSSwitch/IOSSwitch'
 import './style.less'
 import {withRouter} from "react-router-dom";
+
+// fix touch to scroll background page on iOS
+const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+let wrapProps;
+if (isIPhone) {
+    wrapProps = {
+        onTouchStart: e => e.preventDefault(),
+    };
+}
+
+
 
 
 class ReservationForm extends Component {
@@ -90,14 +101,16 @@ class ReservationForm extends Component {
     }
 
     rowClick(target) {
+        const {refreshPage,history,reservationActions:{setDiagnosisName}} = this.props
         switch (target) {
-            case 0:
-                this.props.refreshPage()
+            case 0: //切换家庭成员
+                refreshPage()
                 let path = {
                     pathname: 'bindCardList',
-                    state: this.props.bindCards
+                    state: this.props.bindCards,
+                    callBack: (data) => this.callBack(data) //此回调目前没什么用
                 }
-                this.props.history.push(path)
+                history.push(path)
                 return
             case 1:
                 const BUTTONS = ['初诊', '复诊', '取消'];
@@ -109,7 +122,7 @@ class ReservationForm extends Component {
                         if (buttonIndex === -1) {
                             return
                         } else if (buttonIndex !== 2) {
-                            this.props.reservationActions.setDiagnosisName(BUTTONS[buttonIndex])
+                            setDiagnosisName(BUTTONS[buttonIndex])
                         }
                     });
 
@@ -122,7 +135,8 @@ class ReservationForm extends Component {
 
 
     diagNameOnChange(e) {
-        this.props.reservationActions.setDiagName(e.target.value)
+        const {reservationActions:{setDiagName}} = this.props
+        setDiagName(e.target.value)
     }
 
     handleIOSSwitch(switchInfo) {
@@ -132,6 +146,13 @@ class ReservationForm extends Component {
         }
         let data = {showSwitch: switchInfo.showSwitch, defChecked: switchInfo.defChecked, checked: !switchInfo.checked}
         setSwitchChecked(data)
+    }
+
+    /**
+     * 切换家庭成员之后，会调用此方法 目前没什么用
+     */
+    callBack(){
+
     }
 }
 
