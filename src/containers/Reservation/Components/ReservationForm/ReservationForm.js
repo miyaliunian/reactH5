@@ -11,19 +11,6 @@ import { Icon,ActionSheet} from 'antd-mobile';
 import {IOSSwitch} from '@components/IOSSwitch/IOSSwitch'
 import './style.less'
 import {withRouter} from "react-router-dom";
-
-// fix touch to scroll background page on iOS
-const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
-let wrapProps;
-if (isIPhone) {
-    wrapProps = {
-        onTouchStart: e => e.preventDefault(),
-    };
-}
-
-
-
-
 class ReservationForm extends Component {
 
     render() {
@@ -118,6 +105,7 @@ class ReservationForm extends Component {
                 ActionSheet.showActionSheetWithOptions({
                         options: BUTTONS,
                         maskClosable: true,
+                        // wrapProps,
                     },
                     (buttonIndex) => {
                         if (buttonIndex === -1) {

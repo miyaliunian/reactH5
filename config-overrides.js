@@ -11,7 +11,6 @@ const {
     fixBabelImports,
     addWebpackAlias,
     addLessLoader,
-    addDecoratorsLegacy,
 } = require('customize-cra');
 const addCustomize = () => config => {
     require('react-app-rewire-postcss')(config, {
@@ -19,7 +18,6 @@ const addCustomize = () => config => {
             require('postcss-flexbugs-fixes'),
             require('postcss-preset-env')({
                 autoprefixer: {
-                    autoprefixer: false,
                     flexbox: 'no-2009',
                 },
                 stage: 3,
@@ -52,7 +50,6 @@ const path = require('path')
 module.exports = override(
     addWebpackAlias({
         '@assets': path.resolve(__dirname, 'src/assets'),
-        '@baseUI': path.resolve(__dirname, 'src/baseUI'),
         '@components': path.resolve(__dirname, 'src/components'),
         '@containers': path.resolve(__dirname, 'src/containers'),
         '@images': path.resolve(__dirname, 'src/images'),
@@ -70,5 +67,4 @@ module.exports = override(
         modifyVars: theme
     }),
     addCustomize(),
-    addDecoratorsLegacy(),
 );
