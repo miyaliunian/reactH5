@@ -8,6 +8,7 @@
 import React, {Component} from 'react'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
+import 'antd-mobile/dist/antd-mobile.css';
 import {Icon, Modal, List, Radio} from 'antd-mobile'
 import Paper from '@material-ui/core/Paper'
 import posed from 'react-pose'

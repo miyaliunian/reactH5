@@ -7,7 +7,6 @@
  */
 
 import React, {Component} from 'react';
-import window from 'global/window'
 import {withRouter} from 'react-router-dom'
 
 class OrderReservationDoctorContainer extends Component {

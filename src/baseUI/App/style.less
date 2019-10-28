@@ -1,46 +1,47 @@
+.router-wrapper {
+  overflow: hidden;
+}
 
-/*push*/
-.app4-push-enter {
+.forward-enter {
   opacity: 0;
   transform: translateX(100%);
 }
 
-.app4-push-enter-active {
+.forward-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: all 500ms ease;
+  transition: all 500ms;
 }
 
-.app4-push-exit {
+.forward-exit {
   opacity: 1;
   transform: translateX(0);
 }
 
-.app4-push-exit-active {
+.forward-exit-active {
   opacity: 0;
   transform: translateX(-100%);
-  transition: all 500ms ease;
+  transition: all 500ms;
 }
 
-/*pop*/
-.app4-pop-enter {
+.back-enter {
   opacity: 0;
   transform: translateX(-100%);
 }
 
-.app4-pop-enter-active {
+.back-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: all 500ms ease;
+  transition: all 500ms;
 }
 
-.app4-pop-exit {
+.back-exit {
   opacity: 1;
   transform: translateX(0);
 }
 
-.app4-pop-exit-active {
+.back-exit-active {
   opacity: 0;
-  transform: translateX(100%);
-  transition: all 500ms ease;
+  transform: translate(100%);
+  transition: all 500ms;
 }

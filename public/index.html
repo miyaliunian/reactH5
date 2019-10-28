@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1,user-scalable=no"/>
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
@@ -19,7 +19,7 @@
     <script src="/js/jsencrypt.min.js"></script>
     <script src="/js/j2c_main_code.js"></script>
     <script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
-    <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+
     <title>智慧医保</title>
 </head>
 <body>
@@ -47,6 +47,7 @@
         window['J2C']['payRegCallBack'] = payRegCallBack;
         //返回根控制
         window['J2C']['back2NativeVC'] = back2NativeVC;
+        window['J2C']['back2NativeVCCallBack'] = back2NativeVCCallBack;
 
         //--------------
         function H5WXPAyIP(i, e) {
@@ -150,7 +151,8 @@
 
 
         //----------------------------返回原生控制
-        function back2NativeVC(i,) {
+        function back2NativeVC(i,e) {
+            back2NativeVCCallBack = e
             if (window.iosdkqgqc) {
                 setTimeout(()=>window.webkit.messageHandlers.back2NativeVC.postMessage(i),10)
             } else if (window.WebViewJavascriptBridge) {
@@ -167,6 +169,12 @@
             }
 
         }
+
+
+        function back2NativeVCCallBack(e) {
+
+        }
+
 
 
 
@@ -191,6 +199,9 @@
 
     }
 
+    if(!window.Promise) {
+        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+    }
 </script>
 </body>
 </html>

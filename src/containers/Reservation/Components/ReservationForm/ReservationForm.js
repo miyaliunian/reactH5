@@ -6,6 +6,7 @@
  *  预约信息-下半部分-表格
  */
 import React, {Component} from 'react'
+import 'antd-mobile/dist/antd-mobile.css';
 import { Icon,ActionSheet} from 'antd-mobile';
 import {IOSSwitch} from '@components/IOSSwitch/IOSSwitch'
 import './style.less'

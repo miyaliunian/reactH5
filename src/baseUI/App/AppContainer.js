@@ -1,4 +1,4 @@
-import React, {Component, lazy, Suspense,Fragment} from 'react';
+import React, {Component, lazy, Suspense,} from 'react';
 import './style.less';
 import {bindActionCreators} from 'redux'
 import {ToastContainer, Flip} from 'react-toastify'
@@ -16,40 +16,40 @@ import 'react-toastify/dist/ReactToastify.css'
 const PureToastContainer = PureWrapper(ToastContainer)
 
 
-const RouteModule = function (props) {
-    return (
-        <TransitionGroup
-            style={{position: 'relative'}}
-            childFactory={child => React.cloneElement(
-                child,
-                {classNames: props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
-            )}
+const ANIMATION_MAP = {
+    PUSH: 'forward',
+    POP: 'back'
+}
+
+const Routes = withRouter(({location, history}) => (
+    <TransitionGroup
+        className={'router-wrapper'}
+        childFactory={child => React.cloneElement(
+            child,
+            {classNames: ANIMATION_MAP[history.action]}
+        )}
+    >
+        <CSSTransition
+            timeout={500}
+            key={location.pathname}
         >
-            <CSSTransition
-                key={props.location.pathname}
-                timeout={500}
-                classNames={props.history.action === 'PUSH' ? 'app4-push' : 'app4-pop'}
-            >
-                <div>
-                    <ErrorBoundary>
-                        <Switch location={props.location}>
-                            {routerMap.map((item, index) => {
-                                return <Route key={index} path={item.path} exact render={props =>
-                                    (!item.requiresAuth ? (<item.component {...props} />) : (isLogin() ?
-                                            <item.component {...props} /> :
-                                            <Redirect to={{
-                                                pathname: '/login',
-                                                state: {from: props.location}
-                                            }}/>)
-                                    )}/>
-                            })}
-                        </Switch>
-                    </ErrorBoundary>
-                </div>
-            </CSSTransition>
-        </TransitionGroup>
-    );
-};
+            <ErrorBoundary>
+                <Switch location={location}>
+                    {routerMap.map((item, index) => {
+                        return <Route key={index} path={item.path} exact render={props =>
+                            (!item.requiresAuth ? (<item.component {...props} />) : (isLogin() ?
+                                    <item.component {...props} /> :
+                                    <Redirect to={{
+                                        pathname: '/login',
+                                        state: {from: props.location}
+                                    }}/>)
+                            )}/>
+                    })}
+                </Switch>
+            </ErrorBoundary>
+        </CSSTransition>
+    </TransitionGroup>
+));
 
 
 class AppContainer extends Component {
@@ -60,9 +60,8 @@ class AppContainer extends Component {
 
     render() {
         const {error, appActions: {clearError}} = this.props;
-        const Routes = withRouter(RouteModule);
         return (
-            <Fragment>
+            <div>
                 <PureToastContainer
                     position="top-center"
                     autoClose={2000}
@@ -74,11 +73,11 @@ class AppContainer extends Component {
                     draggable={false}
                     pauseOnHover={false}
                 />
-                <BrowserRouter forceRefresh={false}>
+                <BrowserRouter>
                     <Routes/>
                 </BrowserRouter>
                 <ErrorToast desc={error} show={this.state.showBar}/>
-            </Fragment>
+            </div>
         );
     }
 
