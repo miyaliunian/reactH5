@@ -63,7 +63,7 @@ class PayResultContainer extends Component {
     btnCLick(){
         const {fromStatus,orderPayActions:{cleanOrderPayType},history} =this.props
         debugger
-        if (fromStatus) {
+        if (fromStatus && (fromStatus === 'register' || fromStatus === 'recipe'|| fromStatus === 'medicineScan')) {
             cleanOrderPayType(()=>{
                 window['J2C'].back2NativeVC("back2NativeVC", function (e) {
                 })

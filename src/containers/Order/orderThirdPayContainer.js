@@ -8,6 +8,9 @@
 import React, {Component} from 'react';
 import {OrderType} from "@assets/static/DictionaryConstant";
 import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {actions as orderPayActions, getOrderType} from '../../reduxs/modules/orderPay'
 
 class orderThirdPayContainer extends Component {
 
@@ -18,14 +21,30 @@ class orderThirdPayContainer extends Component {
     }
 
     componentDidMount() {
-        const {history} = this.props
+        const {history,orderPayActions:{setOrderPayType}} = this.props
         setTimeout(()=>{
             //混合支付
             window['J2C'].payReg("去支付", function (e) {
             })
             window['J2C']['payRegCallBack'] = function (response) {
-                debugger
                 let resObj = JSON.parse(response)
+                //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
+                setOrderPayType(resObj.fromTarget)
+
+                let typeEntity={}
+                switch (resObj.fromTarget) {
+                    case "register":
+                        typeEntity={orderName:'线上挂号',orderCode:'register'}
+                        break
+                    case "recipe":
+                        typeEntity={orderName:'门诊缴费',orderCode:'recipe'}
+                        break
+                    case "medicineScan":
+                        typeEntity={orderName:'扫码购药',orderCode:'medicineScan'}
+                        break
+                }
+
+                //跳转页面
                 let token = {},
                     reservationEntity = resObj.reservationEntity
                 token.access_token = resObj.access_token
@@ -37,8 +56,8 @@ class orderThirdPayContainer extends Component {
                     pathname: '/thirdPayContainer',
                     state: {
                         orderPayment: orderPaymentEntity, //拼接订单信息
-                        reservationName: OrderType[0].register,
-                        reservationCode: OrderType[0].status,
+                        reservationName: typeEntity.orderName,
+                        reservationCode: typeEntity.orderCode,
                         ObjEntity: reservationEntity,
                         paymentMethod: reservationEntity.paymentMethod,
                         from: resObj.fromTarget
@@ -63,5 +82,17 @@ class orderThirdPayContainer extends Component {
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+        payType: getOrderType(state)
+    }
+}
 
-export default withRouter(orderThirdPayContainer)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        orderPayActions: bindActionCreators(orderPayActions, dispatch)
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(orderThirdPayContainer))

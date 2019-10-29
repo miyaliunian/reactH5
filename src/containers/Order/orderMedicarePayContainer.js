@@ -6,8 +6,10 @@
  *  从订单查询-进入 预结算
  */
 import React, {Component} from 'react';
-import {OrderType} from "@assets/static/DictionaryConstant";
 import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {actions as orderPayActions, getOrderType} from '../../reduxs/modules/orderPay'
 
 class OrderMedicarePayContainer extends Component {
 
@@ -18,8 +20,7 @@ class OrderMedicarePayContainer extends Component {
     }
 
     componentDidMount() {
-        //    J2C-WebView
-        const {history} = this.props
+        const {history,orderPayActions:{setOrderPayType}} = this.props
         this.timer = setTimeout(() => {
             //混合支付
             window['J2C'].payReg("去支付", function (e) {
@@ -27,6 +28,22 @@ class OrderMedicarePayContainer extends Component {
 
             window['J2C']['payRegCallBack'] = function (response) {
                 let resObj = JSON.parse(response)
+                //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
+                setOrderPayType(resObj.fromTarget)
+
+                let typeEntity={}
+                switch (resObj.fromTarget) {
+                    case "register":
+                        typeEntity={name:'线上挂号',status:'register'}
+                        break
+                    case "recipe":
+                        typeEntity={name:'门诊缴费',status:'recipe'}
+                        break
+                    case "medicineScan":
+                        typeEntity={name:'扫码购药',status:'medicineScan'}
+                        break
+                }
+                //跳转页面
                 let token = {},
                     reservationEntity = resObj.reservationEntity
                 token.access_token = resObj.access_token
@@ -35,8 +52,8 @@ class OrderMedicarePayContainer extends Component {
                 let path = {
                     pathname: '/advanceSettlementContainer',
                     state: {
-                        reservationName: OrderType[0].register,
-                        reservationCode: OrderType[0].status,
+                        reservationName: typeEntity.name,
+                        reservationCode: typeEntity.status,
                         reservationEntity: reservationEntity,
                         paymentMethod: reservationEntity.paymentMethod,
                         from: resObj.fromTarget
@@ -52,17 +69,63 @@ class OrderMedicarePayContainer extends Component {
     }
 
     //医保支付
-    medicarePay(){
-        const {history} = this.props
+    medicarePay() {
+        const {history,orderPayActions:{setOrderPayType}} = this.props
+        this.timer = setTimeout(() => {
+            //混合支付
+            window['J2C'].payReg("去支付", function (e) {
+            })
+
+            window['J2C']['payRegCallBack'] = function (response) {
+                let resObj = JSON.parse(response)
+                //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
+                setOrderPayType(resObj.fromTarget)
+
+                let typeEntity={}
+                switch (resObj.fromTarget) {
+                    case "register":
+                        typeEntity={name:'线上挂号',code:'register'}
+                        break
+                    case "recipe":
+                        typeEntity={name:'门诊缴费',code:'recipe'}
+                        break
+                    case "medicineScan":
+                        typeEntity={name:'扫码购药',code:'medicineScan'}
+                        break
+                }
+                //跳转页面
+                let token = {},
+                    reservationEntity = resObj.reservationEntity
+                token.access_token = resObj.access_token
+                token.refresh_token = resObj.refresh_token
+                sessionStorage.setItem('token', JSON.stringify(token))
+                let path = {
+                    pathname: '/advanceSettlementContainer',
+                    state: {
+                        reservationName: typeEntity.name,
+                        reservationCode: typeEntity.code,
+                        reservationEntity: reservationEntity,
+                        paymentMethod: reservationEntity.paymentMethod,
+                        from: resObj.fromTarget
+                    }
+                }
+                history.push(path)
+            }
+        }, 100)
     }
-
-    //第三方支付
-    thirdPay(){
-
-    }
-
-
 }
 
 
-export default withRouter(OrderMedicarePayContainer)
+const mapStateToProps = (state) => {
+    return {
+        payType: getOrderType(state)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        orderPayActions: bindActionCreators(orderPayActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderMedicarePayContainer))
