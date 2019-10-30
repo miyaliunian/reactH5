@@ -34,31 +34,33 @@ class DoctorVisiting extends Component {
             timeIntervalShow: false,
             timeIntervalValue: 0,
         }
-        this.defSelClinic = ''
+        //默认显示的科室
+        this.defSelClinic=''
         //选中的预约信息
         this.reservationInfoSel = {}
     }
 
 
     render() {
-        const {isLastPage, clinicData, reservationData, timeInterval} = this.props
+        const {isLastPage, clinicData, reservationData, timeInterval,location} = this.props
+        const {isVisible, timeIntervalValue} = this.state
         if (this.defSelClinic === '') {
             if (Array.isArray(clinicData) && clinicData.length > 0) {
                 this.defSelClinic = clinicData[0].name
             }
         }
-        const {isVisible, timeIntervalValue} = this.state
         return (
             <div className={'doctorVisiting'}>
                 <div className={'doctorVisiting__title border-bottom'}>
                     <div>出诊时间</div>
-                    <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick(clinicData)}>
+                    <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick()}>
                         <div >{this.defSelClinic}</div>
                         <Icon type={'left'}/>
                     </div>
                 </div>
-                <Box className={"clinic__box border"} pose={isVisible ? 'visible' : 'hidden'} ref={'clinic__box'}>
-                    <div>
+                {/*科室滚动*/}
+                <Box pose={isVisible ? 'visible' : 'hidden'} >
+                    <div className={'clinic__box border'} ref={'clinicWrapper'}>
                         <ul>
                             {clinicData.map(item => {
                                 return (
@@ -69,12 +71,12 @@ class DoctorVisiting extends Component {
                         </ul>
                     </div>
                 </Box>
+
                 <div className={'doctorVisiting__list'}
                      ref={'doctorVisitingList'}
                 >
                     <div>
                         {reservationData.map((item, index) => {
-                            // let regFee = item.regFee.toFixed(2)
                             return (
                                 <div className={'doctorVisiting__item border-bottom'} key={index}
                                      onClick={() => this.navPage(item)}
@@ -143,7 +145,7 @@ class DoctorVisiting extends Component {
 
 
         // 诊室滚动列表
-        this.clinicScroll = new Bscroll(this.refs.clinic__box, {
+        this.clinicScroll = new Bscroll(this.refs.clinicWrapper, {
             mouseWheel: true,
             click: true,
             tap: true,
@@ -221,8 +223,10 @@ class DoctorVisiting extends Component {
     onTimeIntervalClose(target) {
         const {doctorInfo, timeInterval} = this.props
         //只有点击确定按钮，才跳转页面
+
         switch (target) {
             case 2:
+                const deptInfo={name : this.defSelClinic}
                 let timeFilter = timeInterval.filter(item =>
                     item.id === this.state.timeIntervalValue
                 )
@@ -230,10 +234,11 @@ class DoctorVisiting extends Component {
                     pathname: '/reservation',
                     state: {
                         doctorInfo: doctorInfo,
-                        reservationInfo: this.reservationInfoSel,
+                        reservationInfo: {...this.reservationInfoSel,deptInfo},
                         timeInterval: timeFilter[0]
                     }
                 }
+                console.log(path)
                 this.props.history.push(path)
                 break
             default:

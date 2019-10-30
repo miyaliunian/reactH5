@@ -26,19 +26,21 @@ import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 class DoctorContainer extends Component {
     render() {
-        const {fetchingStatus, isLastPage, clinicData, reservationData, timeInterval} = this.props
-        const {introduction, skills} = this.props.location.state
+        const {isLastPage, clinicData, reservationData, timeInterval,location} = this.props
+        const {deptName} = location.state.deptInfo
+        const {introduction, skills} = location.state.doctorInfo
         return (
             <div className={'doctor'}>
                 <SafeAreaView showBar={true} title={'医生详情'} isRight={false} handleBack={this.handleBack}>
                     <div id={'doctorDetailHeader'}>
-                        <DoctorTitle data={this.props.location.state}/>
+                        <DoctorTitle data={location.state.doctorInfo}/>
                         <DoctorDesc introduction={introduction} skills={skills}/>
                         <div className={'doctor__interval'}/>
                     </div>
                     <DoctorVisiting
                         {...this.props}
-                        doctorInfo={this.props.location.state}
+                        doctorInfo={location.state.doctorInfo}
+                        defDeptName={deptName}
                         clinicData={clinicData}
                         reservationData={reservationData}
                         fetchReservationList={(item) => this.fetchReservationList(item)}
@@ -69,8 +71,10 @@ class DoctorContainer extends Component {
 
 
     initailData() {
-        const {hosId, id: doctId} = this.props.location.state
-        this.props.doctorActions.loadClinicList(hosId, doctId)
+        const {hosId, id: doctId} = this.props.location.state.doctorInfo
+        const {name} = this.props.location.state.deptInfo
+        const {doctorActions:{loadClinicList}} = this.props
+        loadClinicList(hosId, doctId,name)
     }
 
 
@@ -83,7 +87,7 @@ class DoctorContainer extends Component {
     }
 
     fetchReservationList(data) {
-        const {hosId, id: doctId} = this.props.location.state;
+        const {hosId, id: doctId} = this.props.location.state.doctorInfo;
         const {id: deptId} = data
         this.props.doctorActions.fetchReservationList(hosId, deptId, doctId, null)
     }

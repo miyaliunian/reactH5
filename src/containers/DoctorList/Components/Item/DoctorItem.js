@@ -12,7 +12,6 @@ import ico_doctor_status from '@images/Home/ico_doctor_status.png'
 import ico_doctor_status_h from '@images/Home/ico_doctor_status_h.png'
 import './style.less'
 
-//ref={'doctorItems'}
 
 class DoctorItem extends Component {
     render() {
@@ -79,11 +78,14 @@ class DoctorItem extends Component {
      * @param data
      */
     handelPageNav(data) {
-        console.log(data)
         let path = {
             pathname: '/doctor',
-            state: data
+            state: {
+                doctorInfo:data,
+                deptInfo:{...this.props.match.params}
+            }
         }
+        // console.log(path)
         this.props.history.push(path)
     }
 

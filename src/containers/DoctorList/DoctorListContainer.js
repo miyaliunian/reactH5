@@ -69,7 +69,7 @@ class DoctorListContainer extends Component {
                             null
                         }
                     </DateFilterBar>
-                    <DoctorItem data={doctors}/>
+                    <DoctorItem data={doctors} {...this.props.match.params}/>
                     <Modal
                         visible={this.state.isShow}
                         title=""

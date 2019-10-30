@@ -84,6 +84,12 @@ class DivisionContainer extends Component {
         this.props.divisionActions.loadDivisionList(id)
     }
 
+
+    componentWillUnmount() {
+        const {history,divisionActions:{reset}} = this.props
+        reset()
+    }
+
     leftItemClick(item) {
         this.props.divisionList.map(oldItem => {
             if (oldItem.id === item.id) {
@@ -99,6 +105,8 @@ class DivisionContainer extends Component {
     handleBack = () => {
         this.props.history.goBack()
     }
+
+
 
 }
 

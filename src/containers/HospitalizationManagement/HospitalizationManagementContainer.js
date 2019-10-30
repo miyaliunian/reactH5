@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/8/13
  * Description:
- *  住院服务
+ *  住院管理
  */
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
@@ -45,6 +45,7 @@ class HospitalizationManagementContainer extends Component {
 
     render() {
         const {fetchingStatus, bindCardList, hospitalizationSel, hospitalDetails} = this.props
+        console.log(hospitalDetails)
         return (
             <div className={'hospitalizationManagement'}>
                 <SafeAreaView showBar={true} title={'住院服务'} isRight={false} handleBack={this.handleBack}>
@@ -71,8 +72,9 @@ class HospitalizationManagementContainer extends Component {
                             onNavBack={() => this.handelModalHospitalization()}
                             callBack={(data) => this.refreshHospitalDetail(data)}/>
                     </Modal>
+
                     {/*是否显示住院信息*/}
-                    {hospitalDetails
+                    {hospitalDetails && hospitalDetails.totCost != 0
                         ?
                         <div className={'hospitalizationManagement_hospitalization_info'}>
                             <div className={'hospitalization__row'}>
@@ -106,7 +108,7 @@ class HospitalizationManagementContainer extends Component {
                     }
 
                     {/*是否显示：底部列表*/}
-                    {hospitalDetails
+                    {hospitalDetails && hospitalDetails.totCost != 0
                         ?
                         <div style={{marginTop: '10px'}}>
                             <Link className={'hospitalizationManagement_bottomListRow border-bottom'}
@@ -130,13 +132,7 @@ class HospitalizationManagementContainer extends Component {
 
                     }
 
-                    {/*是否显示LoadingMask*/}
-                    {fetchingStatus
-                        ?
-                        <LoadingMask/>
-                        :
-                        null
-                    }
+                    <LoadingMask/>
                 </SafeAreaView>
             </div>
         )
@@ -153,9 +149,9 @@ class HospitalizationManagementContainer extends Component {
 
 
     componentDidMount() {
-        const {history} = this.props
+        const {history,bindCardActions:{loadList}} = this.props
         if (history.action === 'PUSH') {
-            this.props.bindCardActions.loadList()
+            loadList()
         }
     }
 

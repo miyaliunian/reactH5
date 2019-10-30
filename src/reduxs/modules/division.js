@@ -38,7 +38,7 @@ const actionTypes = {
     FETCH_DEPARTMENT_REQUEST: 'DIVISION/FETCH_DEPARTMENT_REQUEST',
     FETCH_DEPARTMENT_SUCCESS: 'DIVISION/FETCH_DEPARTMENT_SUCCESS',
     FETCH_DEPARTMENT_FAILURE: 'DIVISION/FETCH_DEPARTMENT_FAILURE',
-
+    RESET:'DIVISION/RESET'
 }
 
 
@@ -79,6 +79,13 @@ export const actions = {
             return dispatch(fetchDepartmentList(targetURL))
         }
     },
+
+
+    reset:()=>{
+        return (dispatch, getstate) => {
+            dispatch({type:actionTypes.RESET})
+        }
+    }
 }
 
 
@@ -131,6 +138,16 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false
+            }
+        case actionTypes.RESET:
+            return  {
+                ...state,
+                hosid: '',//医院id
+                divisionid: '',//平台大科id
+                isFetching: false,
+                page: 1,//翻页
+                data: [], //列表数据
+                departmentData: [] //列表数据
             }
         default:
             return state

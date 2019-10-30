@@ -63,9 +63,16 @@ class ReservationContainer extends Component {
 
     componentDidMount() {
         const {doctorInfo, reservationInfo} = this.props.location.state
-        const {reservationActions:{loadPayType,loadBindCardAndMedicalTypeList}} = this.props
-        loadPayType(doctorInfo.hosId, reservationInfo.id)
-        loadBindCardAndMedicalTypeList()
+        const {history,reservationActions:{loadPayType,loadBindCardAndMedicalTypeList}} = this.props
+        if (history.action === 'PUSH'){
+            loadPayType(doctorInfo.hosId, reservationInfo.id)
+            loadBindCardAndMedicalTypeList()
+        }
+    }
+
+    componentWillUnmount() {
+        const {reservationActions:{reset}} =this.props
+        reset()
     }
 
 
@@ -84,7 +91,8 @@ class ReservationContainer extends Component {
 
 
     onBtnClick() {
-        this.props.reservationActions.onSubmit({...this.props.location.state}, {...this.props.history})
+        const {reservationActions:{onSubmit}} = this.props
+        onSubmit({...this.props.location.state}, {...this.props.history})
     }
 }
 

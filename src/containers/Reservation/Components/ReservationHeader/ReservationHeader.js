@@ -12,7 +12,7 @@ import './style.less'
 export default class ReservationHeader extends Component {
     render() {
         const {deptName, name, title, hosName} = this.props.doctorInfo
-        const {noon, regFee, reglevlName, seeDate} = this.props.reservationInfo
+        const {noon, regFee, reglevlName, seeDate,deptInfo} = this.props.reservationInfo
         const {beginTime, endTime} = this.props.timeInterval
         // let regFee = regFee.toFixed(2)
         return (
@@ -32,7 +32,7 @@ export default class ReservationHeader extends Component {
                     <div className={'reservationHeader__cell'}>
                         <span className={'reservationHeader__left_colu'}>就诊科室</span>
                         <div className={'reservationHeader__right_colu'}>
-                            <span className={'reservationHeader__right_colu__txt'}>{deptName}</span>
+                            <span className={'reservationHeader__right_colu__txt'}>{deptInfo.name}</span>
                         </div>
                     </div>
                     <div className={'reservationHeader__cell'}>

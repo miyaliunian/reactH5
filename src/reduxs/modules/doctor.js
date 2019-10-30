@@ -42,19 +42,21 @@ const actionTypes = {
 export const actions = {
 
     //获取科室
-    loadClinicList: (hosId, doctid) => {
+    loadClinicList: (hosId, doctid,deptName) => {
         return (dispatch, getstate) => {
             const target = URL.API_DOCTOR_CLINIC_LIST(doctid)
             dispatch(fetchRequest())
             return post(target).then(
                 data => {
-                    data.data.map((item, index) => {
-                        if (index === 0) {
-                            item.isSel = true
-                        } else {
-                            item.isSel = false
+                    if (data.data && data.data.length>=2){
+                        for (let i=0;i<data.data.length;i++){
+                              if (data.data[i].name == deptName) {
+                                 [ data.data[0],data.data[i]] =[data.data[i],data.data[0]]
+                                  break
+                              }
                         }
-                    })
+                    }
+
                     dispatch(loadClinicListSuccess(data.data))
                     const target = URL.API_DOCTOR_VISITING_LIST(hosId, data.data[0].id, doctid, getstate().doctor.page)
                     return dispatch(loadReservationList(target))
@@ -235,10 +237,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.RESET:
             return {
                 ...state,
+                isFetching: false,//标识请求是否进行中
                 page: 1,//翻页
                 isLastPage: false,//是否存在翻页
                 clinics: [],//门诊
-                reservations: []//可以预约的时间
+                reservations: [],//可以预约的数据
+                timeInterval: [],//可以预约的数据对应的时间段
             }
         default:
             return state

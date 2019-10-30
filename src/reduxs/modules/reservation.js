@@ -62,6 +62,9 @@ const actionTypes = {
     BTN_SUBMIT_REQUEST: 'RESERVATION/BTN_SUBMIT_REQUEST',
     BTN_SUBMIT_SUCCESS: 'RESERVATION/BTN_SUBMIT_SUCCESS',
     BTN_SUBMIT_FAILURE: 'RESERVATION/BTN_SUBMIT_FAILURE',
+
+
+    RESET:'RESERVATION/RESET'
 }
 
 
@@ -214,6 +217,13 @@ export const actions = {
     },
 
 
+    reset:()=>{
+        return (dispatch, getstate) => {
+            dispatch({type:actionTypes.RESET})
+        }
+    },
+
+
     /**
      * Switch 切换
      * @param checked
@@ -260,7 +270,7 @@ export const actions = {
              */
             let PARAM = {}
             PARAM.hosId = data.doctorInfo.hosId//医院id
-            PARAM.deptId = data.doctorInfo.deptId//科室id
+            PARAM.deptId = data.reservationInfo.deptId//科室id(依排版信息为准)
             PARAM.doctorId = data.doctorInfo.id//医生id
             PARAM.scheduleId = data.reservationInfo.id//会诊id
             PARAM.timeintervalId = data.timeInterval.id//会诊时间点id
@@ -508,6 +518,20 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false
             }
+        case actionTypes.RESET:{
+            return  {
+                ...state,
+                isFetching: false,
+                isRefresh: true, // 只有第一次进入页面为true  其它条件都为false
+                payType: {},
+                diagnosis: '初诊',//初诊、复诊、取消
+                bindCardData: [],
+                medicalTypeData: [],
+                diagName: '', //疾病信息
+                switchInfo: {},
+                btnDisable: true,
+            }
+        }
         default:
             return state
     }

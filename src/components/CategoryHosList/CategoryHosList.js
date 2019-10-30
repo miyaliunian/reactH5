@@ -24,6 +24,7 @@ import {
 } from "@reduxs/modules/categoryHospList";
 
 import './style.less'
+import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class CategoryHosList extends Component {
@@ -81,24 +82,26 @@ class CategoryHosList extends Component {
                         </ul>
                     </Scroll>
                 </div>
+                <LoadingMask/>
             </div>
         )
     }
 
 
     componentDidMount() {
-        const {bindCardList} = this.props
+        console.log('CategoryHosList')
+        const {bindCardList,chooseCategoryHospListActions:{initCategaryHospitalList}} = this.props
         let bindCardObj = bindCardList.filter(item => item.def)
-        this.props.chooseCategoryHospListActions.initCategaryHospitalList('inPrePay', bindCardObj[0], 1)
+        initCategaryHospitalList('inPrePay', bindCardObj[0], 1)
     }
 
 
     pullDownFreshAction = () => {
-        const {bindCardList, pullDowning} = this.props
+        const {bindCardList, pullDowning,chooseCategoryHospListActions:{pullDownRefresh,loadMoreAction}} = this.props
         let bindCardObj = bindCardList.filter(item => item.def)
 
         return new Promise((resolve, reject) => {
-            this.props.chooseCategoryHospListActions.pullDownRefresh('inPrePay', bindCardObj[0])
+            pullDownRefresh('inPrePay', bindCardObj[0])
                 .then(status => {
                     if (status && status === 'success') {
                         console.log('下拉刷新状态')
@@ -109,8 +112,9 @@ class CategoryHosList extends Component {
     }
 
     loadMoreData = () => {
+        const {chooseCategoryHospListActions:{loadMoreAction}} = this.props
         return new Promise(resolve => {
-            this.props.chooseCategoryHospListActions.loadMoreAction('inPrePay')
+            loadMoreAction('inPrePay')
                 .then(status => {
                     if (status && status === 'success') {
                         console.log('上拉刷新状态')
