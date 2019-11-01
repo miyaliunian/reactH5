@@ -20,6 +20,8 @@ import doctorList from './doctorList'
 import doctor from './doctor'
 import reservation from './reservation'
 import register from './register'
+import report from './report'
+import reportDetail from './reportDetail'
 import intelligentWaiting from './intelligentWaiting'
 import hospitalizationManagement from './hospitalizationManagement'
 import historyAdvancePayment from './historyAdvancePayment'
@@ -47,6 +49,8 @@ const rootReducer = combineReducers({
     doctor,
     reservation,
     register,
+    report,
+    reportDetail,
     intelligentWaiting,
     hospitalizationManagement,
     historyAdvancePayment,

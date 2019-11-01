@@ -59,7 +59,7 @@ class Home extends Component {
                 this.props.history.push('/orderContainer')
                 break
             case 9:
-
+                this.props.history.push('/report')
                 break
         }
     }

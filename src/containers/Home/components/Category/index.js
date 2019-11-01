@@ -49,6 +49,10 @@ const dataSource = [
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },
         {
+            name: "报告查询",
+            src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
+        },
+        {
             name: "actionSheet",
             src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
         },

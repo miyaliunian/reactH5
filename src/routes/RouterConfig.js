@@ -139,6 +139,16 @@ const HospitalizationManagementContainer = (props) => {
 };
 
 
+const ReportContainerComponent = lazy(() => import("@containers/Report/ReportContainer"));
+const ReportContainer = (props) => {
+    return (
+        <Suspense fallback={<LoadingMask/>}>
+            <ReportContainerComponent {...props}></ReportContainerComponent>
+        </Suspense>
+    )
+};
+
+
 const MakeUpAdvancePaymentComponent = lazy(() => import("@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePaymentContainer"));
 const MakeUpAdvancePayment = (props) => {
     return (
