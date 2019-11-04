@@ -48,6 +48,10 @@ const addCustomize = () => config => {
 const theme = require('./package.json').theme
 const path = require('path')
 module.exports = override(
+    fixBabelImports('import', {
+        libraryName: 'antd-mobile',
+        style: true
+    }),
     addWebpackAlias({
         '@assets': path.resolve(__dirname, 'src/assets'),
         '@baseUI': path.resolve(__dirname, 'src/baseUI'),
@@ -58,10 +62,6 @@ module.exports = override(
         '@routes': path.resolve(__dirname, 'src/routes'),
         '@utils': path.resolve(__dirname, 'src/utils'),
 
-    }),
-    fixBabelImports('import', {
-        libraryName: 'antd-mobile',
-        style: true
     }),
     addLessLoader({
         javascriptEnabled: true,

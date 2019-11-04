@@ -4,21 +4,18 @@ import {Link} from 'react-router-dom'
 import './style.less'
 
 export default class ErrorBoundary extends React.Component {
-    static propTypes = {
-        children: PropTypes.element.isRequired
+    constructor(props) {
+        super(props);
+        this.state = {error: null};
     }
 
-    state = {
-        hasError: false
-    }
-
-    static getDerivedStateFromError(error) {
-        // Update state so the next render will show the fallback UI.
-        return { hasError: true };
+    componentDidCatch(error, errorInfo) {
+        this.setState({error});
     }
 
     render() {
         if (this.state.hasError) {
+            //render fallback UI
             return (
                 <div className="not-match-wrapper">
                     <div className="img-wrapper">
@@ -33,8 +30,11 @@ export default class ErrorBoundary extends React.Component {
                     </div>
                 </div>
             )
+        } else {
+            //when there's not an error, render children untouched
+            return this.props.children;
         }
 
-        return this.props.children
+
     }
 }

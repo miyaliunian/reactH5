@@ -68,6 +68,7 @@ class AdvanceSettlementContainer extends Component {
                             <span style={{color: '#737373', fontSize: '17px'}}>商品名称</span>
                             <span>{reservationName}</span>
                         </InfoRow>
+                        {/*线上预约:regFree、门诊缴费:totCost*/}
                         <InfoRow showBorder={false}>
                             <span style={{color: '#737373', fontSize: '17px'}}>总金额</span>
                             <span style={{

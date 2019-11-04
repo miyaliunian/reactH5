@@ -14,14 +14,12 @@ const actionTypes = {
 export const actions = {
     setOrderPayType: (i) => {
         return (dispatch, getstate) => {
-            debugger
             dispatch({type: actionTypes.ORDER_PAY_TYPE, response: i})
         }
     },
 
     cleanOrderPayType: (i) => {
         return (dispatch, getstate) => {
-            debugger
             dispatch({type: actionTypes.ORDER_PAY_CLEAN, response: ''})
             i()
         }

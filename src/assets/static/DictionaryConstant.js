@@ -6,14 +6,18 @@
  *   字典常量
  */
 
-//南通测试
-export const cityID = '320600'
+
+//    洛阳 行政区域代码
+// export const cityID = '410300'
 // export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 //南通正式
 export const BASE_URL = 'http://www.ntyibao.com/t-core'
-
+//南通测试
+export const cityID = '320600'
+//洛阳
+// export const BASE_URL = 'http://ykt.haly12333.org.cn:80/t-core'
 // export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
-// export const cityID = '320400'
+
 
 //预约挂号-医院列表
 //

@@ -11,6 +11,7 @@ import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import routerMap from '@routes/RouterConfig'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
+import { CssBaseline } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css'
 
 const PureToastContainer = PureWrapper(ToastContainer)
@@ -62,6 +63,7 @@ class AppContainer extends Component {
         const {error, appActions: {clearError}} = this.props;
         return (
             <div>
+                <CssBaseline/>
                 <PureToastContainer
                     position="top-center"
                     autoClose={2000}

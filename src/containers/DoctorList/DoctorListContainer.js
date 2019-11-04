@@ -59,7 +59,7 @@ class DoctorListContainer extends Component {
                 <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
                     <DoctorTabs tabSel={(target) => this.tabSel(target)} iniTabSel={tabSel}/>
                     <DateFilterBar ref={'reservations'}>
-                        {tabSel == 2 ?
+                        {tabSel == 2 && reservations ?
                             <Reservaes reservations={reservations}
                                        fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
                                        filterConditions={this.filterConditions}

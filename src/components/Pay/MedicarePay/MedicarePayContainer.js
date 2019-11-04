@@ -102,10 +102,10 @@ class MedicarePayContainer extends Component {
     }
 
     componentDidMount() {
-        const {history} = this.props
+        const {history,location,medicarePayActions:{loadVerifyInfo}} = this.props
         if (history.action === 'PUSH') {
-            const {person} = this.props.location.state
-            this.props.medicarePayActions.loadVerifyInfo(person)
+            const {person} = location.state
+            loadVerifyInfo(person)
         }
     }
 

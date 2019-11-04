@@ -15,11 +15,14 @@ class OrderMedicarePayContainer extends Component {
 
     render() {
         return (
-            <div/>
+            <div onClick={()=>this.medicarePay()}>
+                去支付
+            </div>
         );
     }
 
     componentDidMount() {
+        return
         const {history,orderPayActions:{setOrderPayType}} = this.props
         this.timer = setTimeout(() => {
             //混合支付
@@ -77,25 +80,28 @@ class OrderMedicarePayContainer extends Component {
             })
 
             window['J2C']['payRegCallBack'] = function (response) {
+                debugger
                 let resObj = JSON.parse(response)
                 //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
                 setOrderPayType(resObj.fromTarget)
-
+                //跳转页面
+                let token = {}
+                let reservationEntity={}
                 let typeEntity={}
                 switch (resObj.fromTarget) {
                     case "register":
                         typeEntity={name:'线上挂号',code:'register'}
+                        reservationEntity = resObj.reservationEntity
                         break
                     case "recipe":
                         typeEntity={name:'门诊缴费',code:'recipe'}
+                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totCost/g, "regFee"));
                         break
                     case "medicineScan":
                         typeEntity={name:'扫码购药',code:'medicineScan'}
                         break
                 }
-                //跳转页面
-                let token = {},
-                    reservationEntity = resObj.reservationEntity
+
                 token.access_token = resObj.access_token
                 token.refresh_token = resObj.refresh_token
                 sessionStorage.setItem('token', JSON.stringify(token))
