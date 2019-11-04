@@ -100,5 +100,14 @@ export default {
     API_THIRD_PAY_REGISTERED: (hosid) => `/baseURL/paymethod/v1.2/thirdList/${hosid}.do`, //第三方支付:当日挂号
     API_THIRD_PAY_PURCHASE_MEDICINE: (storeCode) => `/baseURL/paymethod/v1.2/store/thirdList/${storeCode}.do`, //第三方支付:扫码购药
 
+
+    /* 12:--------------------------------------------报告查询-----*/
+    API_QUERY_REPORT_LIST: (hosId, perId, begindate, enddate) => `/baseURL/checkresult/v1.2/list/${hosId}/${perId}/${begindate}/${enddate}.do`,
+    API_QUERY_REPORT_DETAIL: (hosId, lisno, applyno, perId) => `/baseURL/checkresult/v1.2/get/${hosId}/${lisno}/${applyno}/${perId}.do`,
+    API_QUERY_REPORT_EXAMINE: (hosId, reportId) => `/baseURL/inPrePay/v1.0/getExamineResult/${hosId}/${reportId}.do`,
+    API_QUERY_EXAMINE_PIC: (hosId, reportId) => `/baseURL//inPrePay/v1.0/getChectPic/${hosId}/${reportId}.do`,
+
+    API_THIRD_PAY_PURCHASE_MEDICINE: (storeCode) => `/baseURL/paymethod/v1.2/store/thirdList/${storeCode}.do`, //第三方支付:扫码购药
+
     API_WX_PAY:()=>`/baseURL/cmbBank/getCMBWeChatPay/v1.0.do`//微信支付
 }
