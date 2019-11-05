@@ -143,6 +143,7 @@ export default class CalendarMain extends Component {
      * @param data  点击的日期
      */
     handleDatePick(e, day) {
+        console.log(day)
         if (!Array.isArray(day.day)) {
             let previousEl = null
             previousEl = e.target

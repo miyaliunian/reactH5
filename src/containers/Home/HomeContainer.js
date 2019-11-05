@@ -9,22 +9,17 @@ import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import {actions as homeActions} from '@reduxs/modules/home'
 import {connect} from 'react-redux'
-import Banner from './components/Banner'
+
 import Category from './components/Category'
-import HeadLine from './components/HeadLine'
-import Activity from "./components/Activity/Activity";
 import './style.less'
 
 class Home extends Component {
     render() {
         return (
             <div className={'home'}>
-                {/*<Banner/>*/}
                 <Category category={(index) => {
                     this.categoryClick(index)
                 }}/>
-                {/*<HeadLine/>*/}
-                {/*<Activity/>*/}
             </div>
         )
     }
@@ -61,6 +56,9 @@ class Home extends Component {
             case 9:
                 this.props.history.push('/report')
                 break
+            case 10:
+                this.showActionSheet()
+                break
         }
     }
 
@@ -72,9 +70,7 @@ class Home extends Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        // likes: getLists(state),
-        // discounts: getDiscounts(state),
-        // pageCount: getPageCountOfLikes(state)
+
     }
 }
 

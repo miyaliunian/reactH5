@@ -32,6 +32,7 @@ class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo, timeInterval} = this.props.location.state
+        console.log(doctorInfo)
         const {diagnosis, fetchingStatus, payType, switchInfo, medicalType, bindCards, btnDisable} = this.props
         return (
             <div className={'reservation'}>

@@ -3,6 +3,7 @@
  * 注册表单
  */
 import React, {Component} from 'react'
+// import 'antd-mobile/dist/antd-mobile.css'
 import {Icon, ActionSheet} from 'antd-mobile'
 import './style.less'
 import {Modal} from 'antd-mobile';

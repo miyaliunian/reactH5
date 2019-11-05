@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react'
-import Header from "@components/Header/NavBar"
+import Header from "@components/NavBar/NavBar"
 import IntelligentWaitingItem from "./components/IntelligentWaitingItem/IntelligentWaitingItem"
 import './style.less';
 import {connect} from 'react-redux'

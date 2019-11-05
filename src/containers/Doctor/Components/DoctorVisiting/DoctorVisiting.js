@@ -8,9 +8,8 @@
 import React, {Component} from 'react'
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from 'better-scroll'
-import 'antd-mobile/dist/antd-mobile.css';
+// import 'antd-mobile/dist/antd-mobile.css'
 import {Icon, Modal, List, Radio} from 'antd-mobile'
-import Paper from '@material-ui/core/Paper'
 import posed from 'react-pose'
 import {getDate} from '@utils/dayutils'
 import {Link, withRouter} from 'react-router-dom'
@@ -223,7 +222,6 @@ class DoctorVisiting extends Component {
     onTimeIntervalClose(target) {
         const {doctorInfo, timeInterval} = this.props
         //只有点击确定按钮，才跳转页面
-
         switch (target) {
             case 2:
                 const deptInfo={name : this.defSelClinic}

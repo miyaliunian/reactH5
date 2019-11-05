@@ -6,7 +6,7 @@
  * 一日清单
  */
 import React, {Component} from 'react';
-import Header from "@components/Header/NavBar";
+import Header from "@components/NavBar/NavBar";
 import DynamicTabs
     from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/Components/DynamicTabs/DynamicTabs";
 import ListOfContent

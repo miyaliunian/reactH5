@@ -35,8 +35,8 @@ class Tabs extends Component {
     render() {
         const {areasList} = this.props
         return (
-            <div className={'tabs'}>
-                <ul className={'tabs__searchTOPWrapper border-bottom'}>
+            <div className={'tabs border-bottom'}>
+                <ul className={'tabs__searchTOPWrapper'}>
                     <li
                         className={this.state.tab1focused ? 'searchItem  itemSelected ' : 'searchItem'}
                         onClick={() => this.tabSelc(1)}>

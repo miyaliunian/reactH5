@@ -6,7 +6,7 @@
  *    首页->医院列表->科室选择
  */
 import React, {Component} from 'react'
-import Header from '@components/Header/NavBar'
+import Header from '@components/NavBar/NavBar'
 import {Link} from 'react-router-dom'
 import LoadingMask from "@components/Loading/LoadingMask";
 import {Icon} from 'antd-mobile';

@@ -3,7 +3,7 @@
  * 注册
  */
 import React, {Component} from 'react'
-import Header from "@components/Header/NavBar";
+import Header from "@components/NavBar/NavBar";
 import RegisterForm from "@containers/Register/Components/RegisterForm";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";

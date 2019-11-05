@@ -6,7 +6,7 @@
  *    首页->医院列表->科室选择->医生列表
  */
 import React, {Component, Fragment} from 'react';
-import Header from "@components/Header/NavBar";
+import Header from "@components/NavBar/NavBar";
 import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
 import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
 import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";

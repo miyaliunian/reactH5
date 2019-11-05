@@ -6,7 +6,7 @@
  * 选择医院
  */
 import React, {Component} from 'react'
-import Header from "@components/Header/NavBar";
+import Header from "@components/NavBar/NavBar";
 import PropTypes from 'prop-types'
 // import Scroll from 'react-bscroll'
 // import 'react-bscroll/lib/react-scroll.css'

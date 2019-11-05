@@ -3,12 +3,13 @@ import './style.less';
 import {bindActionCreators} from 'redux'
 import {ToastContainer, Flip} from 'react-toastify'
 import PureWrapper from '@baseUI/PureWrapper'
-import {BrowserRouter, Route, Switch, withRouter, Redirect} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from "react-router-dom"
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {connect} from "react-redux";
 import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
+import 'antd-mobile/lib/action-sheet/style';
 import routerMap from '@routes/RouterConfig'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 import { CssBaseline } from '@material-ui/core';
@@ -63,7 +64,7 @@ class AppContainer extends Component {
         const {error, appActions: {clearError}} = this.props;
         return (
             <div>
-                <CssBaseline/>
+                {/*<CssBaseline/>*/}
                 <PureToastContainer
                     position="top-center"
                     autoClose={2000}
@@ -75,9 +76,9 @@ class AppContainer extends Component {
                     draggable={false}
                     pauseOnHover={false}
                 />
-                <BrowserRouter>
+                <Router>
                     <Routes/>
-                </BrowserRouter>
+                </Router>
                 <ErrorToast desc={error} show={this.state.showBar}/>
             </div>
         );
