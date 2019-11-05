@@ -8,6 +8,7 @@
 
 import React, {lazy, Suspense} from 'react'
 import LoadingMask from "@components/Loading/LoadingMask";
+import {Report} from "@material-ui/icons";
 
 
 const HomeComponent = lazy(() => import("@containers/Home/HomeContainer"));
@@ -142,7 +143,7 @@ const HospitalizationManagementContainer = (props) => {
 const ReportContainerComponent = lazy(() => import("@containers/Report/ReportContainer"));
 const ReportContainer = (props) => {
     return (
-        <Suspense fallback={<LoadingMask/>}>
+        <Suspense fallback={null}>
             <ReportContainerComponent {...props}></ReportContainerComponent>
         </Suspense>
     )
@@ -324,6 +325,12 @@ const routerMap = [
         name: 'hospitalizationManagement',
         requiresAuth: true,
         component: HospitalizationManagementContainer
+    },
+    {
+        path: '/report',
+        name: 'report',
+        requiresAuth: true,
+        component: ReportContainer
     },
     {
         path: '/makeUpAdvancePayment/:inName/:inHosNo',

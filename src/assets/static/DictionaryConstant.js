@@ -12,6 +12,8 @@
 // export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 //南通正式
 export const BASE_URL = 'http://www.ntyibao.com/t-core'
+//常州正式
+//export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
 //南通测试
 export const cityID = '320600'
 //洛阳

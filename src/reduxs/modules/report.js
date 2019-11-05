@@ -6,7 +6,7 @@ import {post} from "@utils/httpUtil";
 const initialState = {
     isFetching: false,
     hospitalizationSel: '', //选中的医院
-    reportList: '' //报告列表
+    reportList: [] //报告列表
 }
 
 

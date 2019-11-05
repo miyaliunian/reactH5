@@ -12,6 +12,8 @@
 // const BASE_URL = 'http://58.208.84.112:10086/t-core'
 //南通正式
 const BASE_URL = 'http://www.ntyibao.com/t-core'
+//常州正式
+//const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
 //    洛阳
 // const BASE_URL = 'http://ykt.haly12333.org.cn:80/t-core'
 

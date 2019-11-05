@@ -67,7 +67,7 @@ class ReportContainer extends Component {
                             callBack={(data) => this.refreshReportList(data)}/>
                     </Modal>
                     {/*是否显示报告信息*/}
-                    {reportList
+                    {reportList.length != 0
                         ?
                         <ReportItem
                             data={reportList}
