@@ -61,7 +61,7 @@ class ReportItem extends Component {
     renderRow(item) {
         return (
             <div className={'reportItem'}>
-                <div>
+                <ul>
                     <li
                         key={item.id}
                         className={'reportItem__item border-bottom'}
@@ -72,16 +72,16 @@ class ReportItem extends Component {
                                 <span className={'row_info_title'}>{item.licName}</span>
                             </div>
                             <div className={'item__info__row'}>
-                                <span className={'row_info_title'}>{item.appliyDept + "  |  " + item.sampleFlag}</span>
-                                <Icon className={'clinic__bar__icon'} type={'right'}/>
+                                <span className={'row_info_title'}>{item.appliyDept + (item.sampleFlag !='' ? "  |  " + item.sampleFlag : "")}</span>
+                                <Icon className={'clinic__bar__icon'} style={{position:"absolute",right:5}} type={'right'}/>
                             </div>
                             <div className={'item__info__row'}>
-                                <span className={'row_info_title'}>{item.sampleDate}</span>
-                                <span className={'row_info_detail'}>{item.lisState.equals("已出") ? "(报告已出)" : "(报告未出)"}</span>
+                                <span className={'row_info_title'}>{item.sampleDate != '' ? item.sampleDate : ""}</span>
+                                <span className={'row_info_detail'}>{item.lisState === "已出" ? "(报告已出)" : "(报告未出)"}</span>
                             </div>
                         </div>
                     </li>
-                </div>
+                </ul>
             </div>
         )
     };

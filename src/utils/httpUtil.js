@@ -8,7 +8,7 @@
 import Axios from 'axios';
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 
-Axios.defaults.timeout = 5000;
+Axios.defaults.timeout = 30000;
 Axios.defaults.headers = {'Content-Type': 'application/json;charset=UTF-8'}
 let CancelToken = Axios.CancelToken
 
@@ -33,7 +33,6 @@ Axios.interceptors.response.use(response => {
     setTimeout(() => {
         isShowLoading(false)
     }, 1000)
-    debugger
     if (response.status === 200) { //网络请求正常
         return response.data
     } else if (response.status === 403) { //token过期
