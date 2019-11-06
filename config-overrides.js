@@ -12,6 +12,9 @@ const {
   addWebpackAlias,
   addLessLoader,
 } = require('customize-cra');
+const theme = require('./package.json').theme
+const path = require('path')
+
 const addCustomize = () => config => {
   require('react-app-rewire-postcss')(config, {
     plugins: loader => [
@@ -47,8 +50,7 @@ const addCustomize = () => config => {
   });
   return config;
 }
-const theme = require('./package.json').theme
-const path = require('path')
+
 module.exports = override(
   addWebpackAlias({
     '@assets': path.resolve(__dirname, 'src/assets'),

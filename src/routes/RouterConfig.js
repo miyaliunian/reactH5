@@ -90,7 +90,7 @@ const Doctor = (props) => {
 };
 
 //(再次预约)从订单查询-进入 医生详情
-const OrderReservationDoctorComponent = lazy(() => import("@containers/Order/OrderReservationDoctorContainer"));
+const OrderReservationDoctorComponent = lazy(() => import("@containers/Order/orderReservationDoctorContainer"));
 const OrderReservationDoctor = (props) => {
     return (
         <Suspense fallback={null}>
