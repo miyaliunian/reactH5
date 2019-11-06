@@ -75,7 +75,7 @@ class MedicarePayContainer extends Component {
                         <span
                             className={'payComponent_desc'}
                         >待支付：￥{(orderPayment.siPayAmt + orderPayment.pubPayAmt).toFixed(2)}</span>
-                        <span className={'payComponent_btn'} onClick={() => popUpActions.showPopup()}>支  付</span>
+                        <span className={'payComponent_btn'} onClick={() => this.isLocalOrSiPay()}>支  付</span>
                     </div>
                     <PopUP price={orderPayment} title={reservationName} callBack={(e) => this.handleInputValus(e)}/>
                 </SafeAreaView>
@@ -84,9 +84,28 @@ class MedicarePayContainer extends Component {
         )
     }
 
+
+
+    /*
+    支付：判断是本地社保卡 或者 是部里社保卡
+     */
+    isLocalOrSiPay(){
+        const {medicarePayActions:{loadSignable},popUpActions, location} = this.props
+        const {ObjEntity,person} = location.state
+        console.log('签发渠道：本地-部里')
+        console.log(ObjEntity)
+        console.log(person)
+        //获取渠道支付信息(是本地社保卡 还是部签发社保卡)
+        loadSignable(person)
+    }
+
+
+
     handleBack = () => {
         this.props.history.goBack()
     }
+
+
 
     handleInputValus(e) {
         const {reservationCode: orderType, ObjEntity, reservationName, orderPayment} = this.props.location.state

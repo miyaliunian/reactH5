@@ -80,7 +80,6 @@ class OrderMedicarePayContainer extends Component {
             })
 
             window['J2C']['payRegCallBack'] = function (response) {
-                debugger
                 let resObj = JSON.parse(response)
                 //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
                 setOrderPayType(resObj.fromTarget)
