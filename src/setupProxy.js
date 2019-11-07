@@ -15,7 +15,7 @@
 //常州正式
 //const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
 // //    洛阳
-const BASE_URL = 'http://ykt.haly12333.org.cn:80/t-core'
+const BASE_URL = 'http://ykt.haly12333.org.cn/t-core'
 
 const proxy = require('http-proxy-middleware');
 

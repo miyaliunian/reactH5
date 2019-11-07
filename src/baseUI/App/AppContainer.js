@@ -10,7 +10,7 @@ import ErrorToast from '@components/ErrorToast'
 import {actions as appActions, getError} from "@reduxs/modules/app";
 import {isLogin} from '@utils/token'
 import 'antd-mobile/lib/action-sheet/style';
-import routerMap from '@routes/RouterConfig'
+import routerMap from '@routes/index'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 import { CssBaseline } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css'

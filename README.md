@@ -52,7 +52,7 @@
                                  |---------------- middeleware                          * 中间件 
                                  |---------------- modules                              * 业务模块redux
        |-----------------------routes                                               路由模块化配置
-                                 |---------------- RouterConfig.js                         * 具体的路由配置
+                                 |---------------- index.js                         * 具体的路由配置
        |----------------------utils                                                 工具类    
                                  |---------------- httpUrl.js                           * 网络请求url 统一管理
                                  |---------------- dayutils.js                          * 日期工具类
@@ -66,7 +66,7 @@
     * 容器样式 style.less
 #####  新增需要跳转的页面
 * /routes 
-    * RouterConfig.js 
+    * index.js 
     ```angular2
     有三个参数:
               path: 跳转的路由 (必传)
@@ -88,7 +88,7 @@
 ## 关键点
 * 登录权限控制,框架会自动处理登录逻辑跳转
 ```angularjs
-          只需要在 /routers/RouterConfig.js 按照如下定义路由规则
+          只需要在 /routers/index.js 按照如下定义路由规则
             {
                 path: '/bindCard',
                 name: 'BindCard',
