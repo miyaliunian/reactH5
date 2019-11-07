@@ -10,7 +10,7 @@
 import URL from '@utils/httpUrl';
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";
-import {OrderType} from '@assets/static/DictionaryConstant'
+import {OrderType} from '@assets/static/Constant'
 
 
 const initialState = {

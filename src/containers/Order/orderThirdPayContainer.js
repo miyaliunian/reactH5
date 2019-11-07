@@ -6,7 +6,7 @@
  *  从订单查询-进入 纯自费
  */
 import React, {Component} from 'react';
-import {OrderType} from "@assets/static/DictionaryConstant";
+import {OrderType} from "@assets/static/Constant";
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'

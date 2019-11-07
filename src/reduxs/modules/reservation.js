@@ -6,7 +6,7 @@
  *  预约信息
  */
 import URL from '@utils/httpUrl'
-import {OrderType} from '@assets/static/DictionaryConstant'
+import {OrderType} from '@assets/static/Constant'
 import {post} from "@utils/httpUtil";
 import {Toast} from 'antd-mobile';
 import {FETCH_DATA} from "@reduxs/middleware/api";

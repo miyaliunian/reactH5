@@ -1,5 +1,5 @@
 import url from "@utils/httpUrl";
-import {cityID} from "@assets/static/DictionaryConstant";
+import {cityID} from "@assets/static/Constant";
 import {FETCH_DATA} from "@reduxs/middleware/api";
 
 const initialState = {

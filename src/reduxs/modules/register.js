@@ -6,7 +6,7 @@ import {Toast} from 'antd-mobile';
 import url from "@utils/httpUrl";
 import {FETCH_DATA} from "@reduxs/middleware/api";
 import {PUBLIC_LEY} from "@assets/static";
-import {cityID} from '@assets/static/DictionaryConstant'
+import {cityID} from '@assets/static/Constant'
 import {post} from "@utils/httpUtil";
 
 const initialState = {

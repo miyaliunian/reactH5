@@ -6,7 +6,7 @@
  */
 
 
-import {BASE_URL} from '@assets/static/DictionaryConstant'
+import {BASE_URL} from '@assets/static/Constant'
 
 /**
  * 业务请求URL

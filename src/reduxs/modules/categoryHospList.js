@@ -1,4 +1,4 @@
-import {cityID} from "@assets/static/DictionaryConstant";
+import {cityID} from "@assets/static/Constant";
 import url from "../../utils/httpUrl";
 import {Toast} from 'antd-mobile';
 import {post} from "@utils/httpUtil";

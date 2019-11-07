@@ -12,7 +12,7 @@
 * 4：点击虫子开启debug
 ## 部署
 ````$xslt
-替换 DictionaryConstant.js 中的 
+替换 Constant.js 中的 
         export const cityID = '320600'
         export const BASE_URL = 'http://58.208.84.112:10086/t-core'
         
@@ -27,7 +27,7 @@
                                  |---------------- less                             公共样式文件夹
                                                      |--varible.css                    * 公共全局样式         
                                  |---------------- static                           静态资源
-                                                     |--DictionaryConstant.js          * 字典常量
+                                                     |--Constant.js          * 字典常量
                                                      |--index.js                       * 登录密码加密公钥                                          
        |-----------------------components:                                          公共组件
                                  |---------------- BindCard                            * 家庭成员列表
