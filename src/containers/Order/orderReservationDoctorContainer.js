@@ -17,7 +17,7 @@ class OrderReservationDoctorContainer extends Component {
 
     render() {
         return (
-            <div/>
+          <div/>
         )
     }
 
@@ -36,7 +36,9 @@ class OrderReservationDoctorContainer extends Component {
                 sessionStorage.setItem('token', JSON.stringify(token))
                 let path = {
                     pathname: '/doctor',
-                    state: resObj.params
+                    state: {
+                        doctorInfo :resObj.params
+                    }
                 }
                 history.push(path)
             }
@@ -55,15 +57,21 @@ class OrderReservationDoctorContainer extends Component {
         })
         //回传值给H5
         window['J2C']['regAgainCallBack'] = function (response) {
+
             let resObj = JSON.parse(response)
             let token = {}
+            resObj.params.introduction =''
+            resObj.params.skills =''
             token.access_token = resObj.access_token
             token.refresh_token = resObj.refresh_token
             sessionStorage.setItem('token', JSON.stringify(token))
             let path = {
                 pathname: '/doctor',
-                state: resObj.params
+                state: {
+                    doctorInfo :resObj.params
+                }
             }
+            debugger
             history.push(path)
         }
     }

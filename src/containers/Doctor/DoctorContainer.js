@@ -27,7 +27,6 @@ import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 class DoctorContainer extends Component {
     render() {
         const {isLastPage, clinicData, reservationData, timeInterval,location} = this.props
-        const {deptName} = location.state.deptInfo
         const {introduction, skills} = location.state.doctorInfo
         return (
             <div className={'doctor'}>
@@ -40,7 +39,6 @@ class DoctorContainer extends Component {
                     <DoctorVisiting
                         {...this.props}
                         doctorInfo={location.state.doctorInfo}
-                        defDeptName={deptName}
                         clinicData={clinicData}
                         reservationData={reservationData}
                         fetchReservationList={(item) => this.fetchReservationList(item)}
@@ -71,10 +69,10 @@ class DoctorContainer extends Component {
 
 
     initailData() {
-        const {hosId, id: doctId} = this.props.location.state.doctorInfo
-        const {name} = this.props.location.state.deptInfo
+        const {location} = this.props
+        const {hosId, id: doctId,deptName} = location.state.doctorInfo
         const {doctorActions:{loadClinicList}} = this.props
-        loadClinicList(hosId, doctId,name)
+        loadClinicList(hosId, doctId,deptName)
     }
 
 
