@@ -92,7 +92,6 @@ class MedicarePayContainer extends Component {
     isLocalOrSiPay(){
         const {medicarePayActions:{loadSignable},popUpActions, location} = this.props
         const {ObjEntity,person} = location.state
-        console.log('签发渠道：本地-部里')
         console.log(ObjEntity)
         console.log(person)
         //获取渠道支付信息(是本地社保卡 还是部签发社保卡)

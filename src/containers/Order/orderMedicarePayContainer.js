@@ -15,14 +15,11 @@ class OrderMedicarePayContainer extends Component {
 
     render() {
         return (
-            <div onClick={()=>this.medicarePay()}>
-                去支付
-            </div>
+            <div/>
         );
     }
 
     componentDidMount() {
-        return
         const {history,orderPayActions:{setOrderPayType}} = this.props
         this.timer = setTimeout(() => {
             //混合支付

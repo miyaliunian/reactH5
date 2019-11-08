@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport" content=" width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1,user-scalable=no"/>
+    <meta name="viewport"
+          content=" width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1,user-scalable=no"/>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
     <link rel="stylesheet" type="text/css" charset="UTF-8"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"/>
@@ -24,179 +25,204 @@
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
 <script>
-    window.onload = function () {
+  window.onload = function() {
 
 
-        //*****************************注册J2C
-        if (undefined == window['J2C']) {
-            window['J2C'] = {};
-        }
-        //*****************************把函数注册到命名空间中
-        // 调用微信支付前先要通过原生获取手机Ip
-        window['J2C']['H5WXPAyIP'] = H5WXPAyIP;
-        window['J2C']['H5WXPAyIPCallBack'] = H5WXPAyIPCallBack;
-        window['J2C']['H5WXPay'] = H5WXPay;
-        window['J2C']['H5WXPayCallBack'] = H5WXPayCallBack;
-        //再次预约
-        window['J2C']['regAgain'] = regAgain;
-        window['J2C']['regAgainCallBack'] = regAgainCallBack;
-        //预结算
-        window['J2C']['payReg'] = payReg;
-        window['J2C']['payRegCallBack'] = payRegCallBack;
-        //返回根控制
-        window['J2C']['back2NativeVC'] = back2NativeVC;
-        window['J2C']['back2NativeVCCallBack'] = back2NativeVCCallBack;
-
-        //--------------
-        function H5WXPAyIP(i, e) {
-            H5WXPAyIPCallBack = e;
-            if (window.iosdkqgqc) {
-                setTimeout(()=>window.webkit.messageHandlers.H5WXPAyIP.postMessage(i),10)
-            } else if (window.WebViewJavascriptBridge) {
-                window.WebViewJavascriptBridge.callHandler(
-                    'Native.H5WXPAyIP', {
-                        'param': '测试'
-                    },
-                    function (responseData) {
-                    }
-                );
-
-            } else {
-
-            }
-
-        }
-
-        function H5WXPAyIPCallBack(e) {
-
-        }
-
-        //--------------
-        //唤起微信支付
-        function H5WXPay(i, e) {
-            H5WXPayCallBack = e;
-            if (window.iosdkqgqc) {
-                setTimeout(()=>window.webkit.messageHandlers.H5WXPay.postMessage(i),10)
-            } else if (window.WebViewJavascriptBridge) {
-                window.WebViewJavascriptBridge.callHandler(
-                    'Native.H5WXPay', {
-                        'param': '测试'
-                    },
-                    function (responseData) {
-                    }
-                );
-
-            } else {
-
-            }
-
-        }
-
-
-        //唤起微信支付->回调
-        function H5WXPayCallBack(e) {
-
-        }
-
-        //-----------------再次预约
-        function regAgain(i, e) {
-            regAgainCallBack = e;
-            if (window.iosdkqgqc) {
-                setTimeout(()=>window.webkit.messageHandlers.regAgain.postMessage(i),10)
-            } else if (window.WebViewJavascriptBridge) {
-                window.WebViewJavascriptBridge.callHandler(
-                    'Native.regAgain', {
-                        'param': '测试'
-                    },
-                    function (responseData) {
-                    }
-                );
-
-            } else {
-
-            }
-
-        }
-
-        function regAgainCallBack(e) {
-
-        }
-
-        //----------------------------去支付
-        function payReg(i, e) {
-            payRegCallBack = e;
-            if (window.iosdkqgqc) {
-                // window.webkit.messageHandlers.payReg.postMessage(i);
-                setTimeout(()=>window.webkit.messageHandlers.payReg.postMessage(i),10)
-            } else if (window.WebViewJavascriptBridge) {
-                window.WebViewJavascriptBridge.callHandler(
-                    'Native.payReg', {
-                        'param': '测试'
-                    },
-                    function (responseData) {
-                    }
-                );
-
-            } else {
-
-            }
-
-        }
-
-        function payRegCallBack(e) {
-
-        }
-
-
-        //----------------------------返回原生控制
-        function back2NativeVC(i,e) {
-            back2NativeVCCallBack = e
-            if (window.iosdkqgqc) {
-                setTimeout(()=>window.webkit.messageHandlers.back2NativeVC.postMessage(i),10)
-            } else if (window.WebViewJavascriptBridge) {
-                window.WebViewJavascriptBridge.callHandler(
-                    'Native.back2NativeVC', {
-                        'param': '测试'
-                    },
-                    function (responseData) {
-                    }
-                );
-
-            } else {
-
-            }
-
-        }
-
-
-        function back2NativeVCCallBack(e) {
-
-        }
-
-
-
-
-
-        //加入viewport-units-buggyfill配置兼容低配机型
-        window.viewportUnitsBuggyfill.init({
-            hacks: window.viewportUnitsBuggyfillHacks
-        });
-
-
-        document.addEventListener('touchstart', function (event) {
-            if (event.touches.length > 1) {
-                event.preventDefault()
-            }
-        })
-
-
-        document.addEventListener('gesturestart', function (event) {
-            event.preventDefault()
-        })
+    //*****************************注册J2C
+    if (undefined == window["J2C"]) {
+      window["J2C"] = {};
     }
-    if(!window.Promise) {
-        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+    //*****************************把函数注册到命名空间中
+    // 调用微信支付前先要通过原生获取手机Ip
+    window["J2C"]["H5WXPAyIP"] = H5WXPAyIP;
+    window["J2C"]["H5WXPAyIPCallBack"] = H5WXPAyIPCallBack;
+    window["J2C"]["H5WXPay"] = H5WXPay;
+    window["J2C"]["H5WXPayCallBack"] = H5WXPayCallBack;
+    //再次预约
+    window["J2C"]["regAgain"] = regAgain;
+    window["J2C"]["regAgainCallBack"] = regAgainCallBack;
+    //预结算
+    window["J2C"]["payReg"] = payReg;
+    window["J2C"]["payRegCallBack"] = payRegCallBack;
+    //返回根控制
+    window["J2C"]["back2NativeVC"] = back2NativeVC;
+    window["J2C"]["back2NativeVCCallBack"] = back2NativeVCCallBack;
+    //调用电子社保卡
+    window["J2C"]["requestESSC"] = requestESSC;
+    window["J2C"]["requestESSCCallBack"] = requestESSCCallBack;
+
+    //--------------
+    function H5WXPAyIP(i, e) {
+      H5WXPAyIPCallBack = e;
+      if (window.iosdkqgqc) {
+        setTimeout(() => window.webkit.messageHandlers.H5WXPAyIP.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.H5WXPAyIP", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
+
     }
+
+    function H5WXPAyIPCallBack(e) {
+
+    }
+
+    //--------------
+    //唤起微信支付
+    function H5WXPay(i, e) {
+      H5WXPayCallBack = e;
+      if (window.iosdkqgqc) {
+        setTimeout(() => window.webkit.messageHandlers.H5WXPay.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.H5WXPay", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
+
+    }
+
+
+    //唤起微信支付->回调
+    function H5WXPayCallBack(e) {
+
+    }
+
+    //-----------------再次预约
+    function regAgain(i, e) {
+      regAgainCallBack = e;
+      if (window.iosdkqgqc) {
+        setTimeout(() => window.webkit.messageHandlers.regAgain.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.regAgain", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
+
+    }
+
+    function regAgainCallBack(e) {
+
+    }
+
+    //----------------------------去支付
+    function payReg(i, e) {
+      payRegCallBack = e;
+      if (window.iosdkqgqc) {
+        // window.webkit.messageHandlers.payReg.postMessage(i);
+        setTimeout(() => window.webkit.messageHandlers.payReg.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.payReg", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
+
+    }
+
+    function payRegCallBack(e) {
+
+    }
+
+
+    //----------------------------返回原生控制
+    function back2NativeVC(i, e) {
+      back2NativeVCCallBack = e;
+      if (window.iosdkqgqc) {
+        setTimeout(() => window.webkit.messageHandlers.back2NativeVC.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.back2NativeVC", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
+
+    }
+
+
+    function back2NativeVCCallBack(e) {
+
+    }
+
+    //----------------------------调用电子社保卡
+    function requestESSC(i, e) {
+      back2NativeVCCallBack = e;
+      if (window.iosdkqgqc) {
+        setTimeout(() => window.webkit.messageHandlers.requestESSC.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.requestESSC", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
+
+    }
+
+
+    function requestESSCCallBack(e) {
+
+    }
+
+
+    //加入viewport-units-buggyfill配置兼容低配机型---------------------OTHER
+    window.viewportUnitsBuggyfill.init({
+      hacks: window.viewportUnitsBuggyfillHacks
+    });
+
+
+    document.addEventListener("touchstart", function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    });
+
+
+    document.addEventListener("gesturestart", function(event) {
+      event.preventDefault();
+    });
+  };
+  if (!window.Promise) {
+    document.writeln("<script src=\"https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js\"" + ">" + "<" + "/" + "script>");
+  }
 </script>
 </body>
 </html>

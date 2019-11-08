@@ -12,7 +12,6 @@ import {isLogin} from '@utils/token'
 import 'antd-mobile/lib/action-sheet/style';
 import routerMap from '@routes/index'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
-import { CssBaseline } from '@material-ui/core';
 import 'react-toastify/dist/ReactToastify.css'
 
 const PureToastContainer = PureWrapper(ToastContainer)
