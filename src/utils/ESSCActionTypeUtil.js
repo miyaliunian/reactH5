@@ -25,9 +25,12 @@ actionType: 111   关闭SDK
 actionType: 112   自定义的scheme协议回调
 *
 * */
-
+/**
+ *  部平台SDK返回参数验证
+ * @param actionType
+ * @returns {boolean}
+ */
 export function esscActionUtil(actionType) {
-  debugger
   let resStr = false;
   switch (actionType) {
     case "001"://电子社保卡申领完成

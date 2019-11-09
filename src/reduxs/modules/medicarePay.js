@@ -31,9 +31,10 @@ export const actions = {
   //获取渠道支付信息
   /*
   *
-  * true为部里电子社保卡，调用下面第二个接口调起部SDK，false为本地电子社保卡
+  * true为部里电子社保卡，调用下面第二个接口调起部SDK，false为本地电子社保卡i
+  * callback 返回0:本地社保卡、1:部平台
   * */
-  loadSignable: (per,callback) => {
+  loadSignable: (per, callback) => {
     return (dispatch, getstate) => {
       const targetURL = URL.API_IS_SIGNABLE();
       dispatch(fetchRequest());
@@ -45,11 +46,13 @@ export const actions = {
         .then((data) => {
             if (data.infocode && data.infocode === 1) {
               if (data.data.signable) {
-                console.log('部里电子社保卡')
-                signabled(dispatch, per)
+                console.log("部里电子社保卡");
+                signabled(dispatch, per,callback)
+                  .done()
               } else {
-                console.log('本地签发')
-                callback()
+                console.log("本地签发");
+                //
+                callback({status:0});
               }
             } else {
               Toast.fail(data.infomessage, 2);
@@ -160,11 +163,18 @@ export const actions = {
 
 
 /*
------------------------查询是否可以签发部里电子社保卡
+*****部平台签发：------------查询是否可以签发部里电子社保卡
 signType ： 1 申领  2 卡信息页面  3 修改密码  4 重置密码 5 支付  6 二级签发，开通缴费 7 密码登录
 isIndep：是否为独立服务，传1：为独立服务，独立服务下必传 ;不传：为申领流程
  */
-function signabled(dispatch, per) {
+/**
+ * 部平台签发：------------查询是否可以签发部里电子社保卡
+ * @param dispatch  redux
+ * @param per 人员信息
+ * @param e  回调方法
+ * @returns {Promise<T | never>}
+ */
+function signabled(dispatch, per,e) {
   let signTYpe = "5";
   let isIndep = "1";
   const targetURL = URL.API_SIGN(signTYpe, isIndep);
@@ -179,34 +189,30 @@ function signabled(dispatch, per) {
   return post(targetURL, Params)
     .then(data => {
       //调用原生电子社保卡并传递参数
-      let param ={
-        sign:data.data,
-        isIndep:isIndep
+      let param = {
+        sign: data.data,
+        isIndep: isIndep
+      };
+      if (isIndep === 1) {
+        param.serviceType = "1";
       }
-      if (isIndep == 1) {
-        param.serviceType = "1"
-      }
-      window['J2C'].requestESSC(param, function (e) {
-      })
+      window["J2C"].requestESSC(param, function(e) {
+      });
       //回传值给H5
-      window['J2C']['requestESSCCallBack'] = function (response) {
-        let resObj = JSON.parse(response)
-        if (esscActionUtil(resObj.actionType)){
-          console.log('用户手动退出')
+      window["J2C"]["requestESSCCallBack"] = function(response) {
+        let resObj = JSON.parse(response);
+        //用户手动退出
+        if (esscActionUtil(resObj.actionType)) {
+          console.log("用户手动退出");
           return;
         }
-        let token = {}
-        token.access_token = resObj.access_token
-        token.refresh_token = resObj.refresh_token
-        sessionStorage.setItem('token', JSON.stringify(token))
-      }
+        //部平台返回密码
+        // resObj.actionType 部平台返回的结果
+        e({status:1,eccsRes:resObj.actionType})
+      };
     }, err => {
-      debugger;
-      console.log(err);
     })
     .catch(err => {
-      debugger;
-      console.log(err);
     });
 }
 
