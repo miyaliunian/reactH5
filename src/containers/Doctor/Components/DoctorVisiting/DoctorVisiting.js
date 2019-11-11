@@ -49,7 +49,7 @@ class DoctorVisiting extends Component {
             }
         }
         return (
-            <div className={'doctorVisiting'}>
+            <div className={'doctorVisiting'}  id={'doctorVisitingTitle'}>
                 <div className={'doctorVisiting__title border-bottom'}>
                     <div>出诊时间</div>
                     <div className={'doctorVisiting__title__right'} onClick={() => this.arrowClick()}>
@@ -150,7 +150,12 @@ class DoctorVisiting extends Component {
             tap: true,
             useTransition: false
         })
-
+        // 出诊时间 标题栏->   禁止掉 滑动手势
+        document.getElementById('doctorVisitingTitle').addEventListener("touchmove", (event) => {
+            event.preventDefault();
+        }, {
+            passive: false //  禁止 passive 效果
+        })
     }
 
 
