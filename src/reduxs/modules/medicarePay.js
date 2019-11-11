@@ -101,7 +101,7 @@ export const actions = {
 
 
   //支付
-  pay: (pass, orderType, objEntity, reservationName, orderPayment, route, callBack) => {
+  pay: (pass,busiSeq='', orderType, objEntity, reservationName, orderPayment, route, callBack) => {
     /**
      * @property (nonatomic, copy) NSString *orderType;//1 register 挂号；2 recipe 诊间支付
      @property (nonatomic, copy) NSString *orderId;

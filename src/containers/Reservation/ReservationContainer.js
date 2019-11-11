@@ -32,7 +32,6 @@ class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo, timeInterval} = this.props.location.state
-        console.log(doctorInfo)
         const {diagnosis, fetchingStatus, payType, switchInfo, medicalType, bindCards, btnDisable} = this.props
         return (
             <div className={'reservation'}>
@@ -72,8 +71,11 @@ class ReservationContainer extends Component {
     }
 
     componentWillUnmount() {
-        const {reservationActions:{reset}} =this.props
-        reset()
+        const {history,reservationActions:{reset}} =this.props
+        console.log(history.action)
+        if (history.action === 'POP'){
+            reset()
+        }
     }
 
 

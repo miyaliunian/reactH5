@@ -6,9 +6,9 @@
  */
 
 import Axios from "axios";
-import {Component} from 'react'
-Component.prototype.$axios=Axios //将axios挂载到Component上，以供全局使用
+import { Component } from "react";
 
+Component.prototype.$axios = Axios; //将axios挂载到Component上，以供全局使用
 
 
 Axios.defaults.timeout = 30000;
@@ -59,11 +59,11 @@ export function post(url, bodyParam = "") {
         console.log(err);
         isShowLoading(false);
         if (err.code && err.code == "ECONNABORTED") {//请求超时
-          return reject({ message: "请求超时" });
+          return reject({ url: url, message: "请求超时" });
         } else if (err.message && err.message == "Request failed with status code 403") {//403token过期
           return reject(err.message);
         } else if (err.message && err.message == "Network Error") { // 网络出现连接失败
-          return reject({ message: "网络连接失败,请检查你的网络" });
+          return reject({ url: url, message: "网络连接失败,请检查你的网络" });
         } else {
           return reject(err.message);
         }

@@ -122,7 +122,7 @@ class MedicarePayContainer extends Component {
     const { reservationCode: orderType, ObjEntity, reservationName, orderPayment } = this.props.location.state;
     if (tag) {  // 部平台
       console.log('部平台')
-
+      pay(e,orderType, ObjEntity, reservationName, orderPayment, { ...this.props.history }, (data) => this.popGoBack(data));
     }  else {  //本地
       console.log('调用本地方法')
       pay(e, orderType, ObjEntity, reservationName, orderPayment, { ...this.props.history }, (data) => this.popGoBack(data));

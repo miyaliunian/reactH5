@@ -15,11 +15,14 @@ class OrderMedicarePayContainer extends Component {
 
     render() {
         return (
-          <div/>
+          <div onClick={()=>this.medicarePay()}>
+              去支付
+          </div>
         );
     }
 
     componentDidMount() {
+        return
         const {history,orderPayActions:{setOrderPayType}} = this.props
         this.timer = setTimeout(() => {
             //混合支付
@@ -80,6 +83,7 @@ class OrderMedicarePayContainer extends Component {
 
             window['J2C']['payRegCallBack'] = function (response) {
                 let resObj = JSON.parse(response)
+                debugger
                 //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
                 setOrderPayType(resObj.fromTarget)
                 //跳转页面

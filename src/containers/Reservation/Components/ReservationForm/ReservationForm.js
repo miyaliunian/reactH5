@@ -14,7 +14,6 @@ class ReservationForm extends Component {
 
     render() {
         const {payType, bindCards, diagnosis, switchInfo, diagName, medicalType} = this.props
-        console.log(switchInfo)
         return (
             <div className={'reservationForm'}>
                 <div className={'reservationForm__cell border-bottom'} onClick={() => this.rowClick(0)}>
