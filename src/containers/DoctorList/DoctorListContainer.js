@@ -5,7 +5,7 @@
  * Description:
  *    首页->医院列表->科室选择->医生列表
  */
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import Header from "@components/NavBar/NavBar";
 import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
 import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
@@ -59,7 +59,7 @@ class DoctorListContainer extends Component {
                 <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
                     <DoctorTabs tabSel={(target) => this.tabSel(target)} iniTabSel={tabSel}/>
                     <DateFilterBar ref={'reservations'}>
-                        {tabSel == 2 && reservations ?
+                        {tabSel === 2 && reservations ?
                             <Reservaes reservations={reservations}
                                        fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
                                        filterConditions={this.filterConditions}
@@ -170,7 +170,6 @@ class DoctorListContainer extends Component {
         this.setState({isShow: false})
     }
 
-
     componentDidMount() {
         const {id} = this.props.match.params
         const {doctorListActions: {loadDoctorList, loadReservationList}} = this.props
@@ -179,6 +178,13 @@ class DoctorListContainer extends Component {
     }
 
     componentWillUnmount() {
+
+
+        // step1: 跳转页面时 自动滚动到 顶部
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
+
+
         const {history} = this.props
         if (history.action === 'POP') {
             const {doctorListActions: {clearAllItems}} = this.props

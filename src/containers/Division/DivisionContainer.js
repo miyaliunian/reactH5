@@ -84,7 +84,6 @@ class DivisionContainer extends Component {
         this.props.divisionActions.loadDivisionList(id)
     }
 
-
     componentWillUnmount() {
         const {history,divisionActions:{reset}} = this.props
         reset()

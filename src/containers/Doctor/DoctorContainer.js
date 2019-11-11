@@ -25,13 +25,14 @@ import './style.less'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 class DoctorContainer extends Component {
+
     render() {
         const {isLastPage, clinicData, reservationData, timeInterval,location} = this.props
         const {introduction, skills} = location.state.doctorInfo
         return (
             <div className={'doctor'}>
-                <SafeAreaView showBar={true} title={'医生详情'} isRight={false} handleBack={this.handleBack}>
-                    <div id={'doctorDetailHeader'}>
+                <SafeAreaView showBar={true} title={'医生详情'}  isRight={false} handleBack={this.handleBack} ref={'doctor'}>
+                    <div id={'doctorDetailHeader'} >
                         <DoctorTitle data={location.state.doctorInfo}/>
                         <DoctorDesc introduction={introduction} skills={skills}/>
                         <div className={'doctor__interval'}/>
@@ -52,6 +53,8 @@ class DoctorContainer extends Component {
             </div>
         )
     }
+
+
 
     componentDidMount() {
         //顶部禁止滑动
