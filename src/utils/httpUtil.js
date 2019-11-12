@@ -21,7 +21,7 @@ Axios.defaults.headers = { "Content-Type": "application/json;charset=UTF-8" };
 Axios.interceptors.request.use(async config => {
     isShowLoading(true);
     if (config.url.endsWith(".do")) {
-      let tid = JSON.parse(sessionStorage.getItem("token")).access_token;
+      let tid = JSON.parse(sessionStorage.getItem('token')).access_token;
       config.headers["tid"] = tid;
 
       return config;

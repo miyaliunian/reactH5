@@ -77,7 +77,7 @@ class MedicarePayContainer extends Component {
             <span className={"payComponent_btn"} onClick={() => this.isLocalOrSiPay()}>支  付</span>
           </div>
           {/*本地电子社保卡 输入密码*/}
-          <PopUP price={orderPayment} title={reservationName} callBack={(e) => this.handleInputValues(e)}/>
+          <PopUP price={orderPayment} title={reservationName} callBack={(e) => this.handleInputValues(e,false)}/>
         </SafeAreaView>
         <LoadingMask/>
       </div>
@@ -92,15 +92,15 @@ class MedicarePayContainer extends Component {
     //原来的本地
     // popUpActions.showPopup()
     //新增的部里SDK
-    const { popUpActions: { showPopup }, medicarePayActions: { loadSignable },  location } = this.props;
-    const {  person } = location.state;
+    const { popUpActions: { showPopup }, medicarePayActions: { loadSignable }, location } = this.props;
+    const { person } = location.state;
     // console.log(person)
     //获取渠道支付信息(是本地社保卡 还是部签发社保卡) status: 0 本地社保卡、status: 1 部平台
     loadSignable(person, (i) => {
       if (i.status === 0) {//调用本地电子社保卡
         showPopup();
       } else {
-        this.handleInputValues('',i.status, i.eccsRes);
+        this.handleInputValues("", true, i.eccsRes);
       }
     });
   }
@@ -118,14 +118,17 @@ class MedicarePayContainer extends Component {
    */
   handleInputValues(e = "", tag = "", tagData = "") {
     debugger
-    const {medicarePayActions:{pay}} =this.props
+    const { medicarePayActions: { pay } } = this.props;
     const { reservationCode: orderType, ObjEntity, reservationName, orderPayment } = this.props.location.state;
     if (tag) {  // 部平台
-      console.log('部平台')
-      pay(e,orderType, ObjEntity, reservationName, orderPayment, { ...this.props.history }, (data) => this.popGoBack(data));
-    }  else {  //本地
-      console.log('调用本地方法')
-      pay(e, orderType, ObjEntity, reservationName, orderPayment, { ...this.props.history }, (data) => this.popGoBack(data));
+      console.log("部平台");
+      //密码认证成功，如果是医保支付验证密码，需要拿到busiSeq，传给后台去验证
+      if (tagData.actionType === "009") {
+        pay("",tag,tagData.busiSeq, orderType, ObjEntity, reservationName, orderPayment, { ...this.props.history }, (data) => this.popGoBack(data));
+      }
+    } else {  //本地
+      console.log("调用本地方法");
+      pay(e,tag,"",orderType, ObjEntity, reservationName, orderPayment, { ...this.props.history }, (data) => this.popGoBack(data));
     }
   }
 

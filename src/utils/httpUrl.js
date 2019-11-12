@@ -95,9 +95,11 @@ export default {
     API_PERSON_BALANCE: (personId) => `/baseURL/bindCard/v1.0/getById/${personId}.do`, // 人员信息(已支付)
     API_ADVANCE_SETTLE: (ordertype, orderid) => `/baseURL/wallet/v1.2/presettle/${ordertype}/${orderid}.do`,  // 预结算
     API_IS_SIGNABLE: () => `/baseURL/bindecard/v1.0/isSignable.action`,//获取渠道支付信息
-    API_SIGN: (signType,isIndep) => `/baseURL/bindecard/v2.0/bu/getSign/${signType}/${isIndep}.do`,//签名接口--对应部平台2.0.2版本
+    // API_SIGN: (signType,isIndep) => `/baseURL/bindecard/v2.0/bu/getSign/${signType}/${isIndep}.do`,//签名接口--对应部平台2.0.2版本
+    API_SIGN: (signType,isIndep) => `/baseURL/bindecardHeNan/v2.0/bu/getSign/${signType}/${isIndep}.do`,//签名接口--对应部平台2.0.2版本
     API_PAY_METHOD_ATTRIBUTES: (cityId, siTypeCode, payMethodId) => `/baseURL/paymethod/v1.0/getPayMethodAttributes/${cityId}/${siTypeCode}/${payMethodId}.do`,
-    API_SI_PAY: () => `/baseURL/wallet/v1.2/pay.do`, //医保支付
+    API_SI_PAY: () => `/baseURL/wallet/v1.2/pay.do`, //医保支付-本地
+    API_BU_SI_PAY: () => `/baseURL/wallet/v3.0/pay.do`, //医保支付-部平台
     API_THIRD_PAY_REGISTERED: (hosid) => `/baseURL/paymethod/v1.2/thirdList/${hosid}.do`, //第三方支付:当日挂号
     API_THIRD_PAY_PURCHASE_MEDICINE: (storeCode) => `/baseURL/paymethod/v1.2/store/thirdList/${storeCode}.do`, //第三方支付:扫码购药
 
