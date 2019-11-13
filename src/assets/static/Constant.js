@@ -8,17 +8,18 @@
 
 
 //洛阳 行政区域代码
-export const cityID = "410300";
-export const BASE_URL = "http://ykt.haly12333.org.cn/t-core";
+// export const cityID = "410300";
+// export const BASE_URL = "http://ykt.haly12333.org.cn/t-core";
 
 // //export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 // //南通正式
 // export const cityID = '320600'
 // export const BASE_URL = 'http://www.ntyibao.com/t-core'
 //常州正式
-//export const cityID = '320600'
-//export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
-
+export const cityID = '320400'
+export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
+//常州测试账号
+//321182198304262213 qwe123
 
 //预约挂号-医院列表
 //

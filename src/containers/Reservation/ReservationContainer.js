@@ -94,7 +94,6 @@ class ReservationContainer extends Component {
 
 
     onSubmit() {
-        debugger
         const {reservationActions:{onSubmit}} = this.props
         onSubmit({...this.props.location.state}, {...this.props.history})
     }

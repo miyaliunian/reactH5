@@ -133,9 +133,7 @@ class ReservationForm extends Component {
     if (!switchInfo.canChecked) {
       return;
     }
-
     let data = { showSwitch: switchInfo.showSwitch, checked: !switchInfo.checked, canChecked: switchInfo.canChecked };
-
     setSwitchChecked(data);
   }
 

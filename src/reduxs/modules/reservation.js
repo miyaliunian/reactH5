@@ -270,6 +270,7 @@ export const actions = {
        * @type {{}}
        */
       let PARAM = {};
+      let pathname =''
       PARAM.hosId = data.doctorInfo.hosId;//医院id
       PARAM.deptId = data.reservationInfo.deptId;//科室id(依排版信息为准)
       PARAM.doctorId = data.doctorInfo.id;//医生id
@@ -333,9 +334,11 @@ export const actions = {
           if (getstate().reservation.switchInfo.checked) {
             PARAM.paymentMethod = 1; //混合支付
             PARAM.paymentMethodName = "在线支付";
+            pathname = "/advanceSettlementContainer"
           } else {
             PARAM.paymentMethod = 2; // 存自费
             PARAM.paymentMethodName = "在线支付";
+            pathname = "/thirdPayContainer"
           }
         } else {
           PARAM.paymentMethod = 2;
@@ -345,18 +348,35 @@ export const actions = {
       const targetUrl = URL.API_REGISTER_UNION();
       dispatch(submitBtn_request());
       return post(targetUrl, PARAM)
-        .then(data => {
-            if (data.infocode === 1) {
-              let path = {
-                pathname: "/advanceSettlementContainer",
-                state: {
-                  reservationName: OrderType[0].register,
-                  reservationCode: OrderType[0].status,
-                  reservationEntity: data.data,
-                  paymentMethod: PARAM.paymentMethod
-                }
-              };
-              route.push(path);
+        .then(res => {
+              if (res.infocode === 1) {
+              if (switchObj.checked){
+                //纯医保
+                let path = {
+                  pathname: pathname,
+                  state: {
+                    reservationName: OrderType[0].register,
+                    reservationCode: OrderType[0].status,
+                    reservationEntity: res.data,//订单实体
+                    paymentMethod: PARAM.paymentMethod
+                  }
+                };
+                route.push(path);
+              }else {
+                //手动选择纯自费
+
+                let path = {
+                  pathname: pathname,
+                  state: {
+                    reservationName: OrderType[0].register,
+                    reservationCode: OrderType[0].status,
+                    ObjEntity: res.data,
+                    orderPayment:{"ownPayAmt":data.reservationInfo.regFee},//挂号实体
+                    paymentMethod: PARAM.paymentMethod
+                  }
+                };
+                route.push(path);
+              }
             } else {
               Toast.fail(data.infomessage, 2);
             }
@@ -478,7 +498,6 @@ const reducer = (state = initialState, action) => {
         switchInfo: action.data
       };
     case actionTypes.SET_SWITCH_CHECKED:
-      debugger
       return {
         ...state,
         switchInfo: action.data
