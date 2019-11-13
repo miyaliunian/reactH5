@@ -49,7 +49,7 @@ class ReservationContainer extends Component {
                         refreshPage={() => this.setRefreshPage()}
                     />
                     <div className={'reservationForm__btn'}>
-                        <PrimaryButton txt={'确认预约'} onSubmit={() => this.onBtnClick()} disabled={btnDisable}/>
+                        <PrimaryButton txt={'确认预约'} onSubmit={() => this.onSubmit()} disabled={btnDisable}/>
                     </div>
                     <div className={'reservationForm_ps'}>
                         <span style={{color:'#CCCCCC'}}>确认预约代表您已阅读并接受<span style={{color:'#0084ff'}}>预约须知</span></span>
@@ -93,7 +93,8 @@ class ReservationContainer extends Component {
     }
 
 
-    onBtnClick() {
+    onSubmit() {
+        debugger
         const {reservationActions:{onSubmit}} = this.props
         onSubmit({...this.props.location.state}, {...this.props.history})
     }

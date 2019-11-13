@@ -88,7 +88,7 @@ export const actions = {
               //不显示Switch组件
               dispatch(fetchPayTypeSuccess({
                 switchTxt: "去医院支付",  //线下支付
-                showSwitch: false,
+                showSwitch: false, //是否显示switch组件
                 data: data.data[0]
               }));
             } else {
@@ -130,21 +130,21 @@ export const actions = {
                 if (item.sitype && item.auth) {
                   dispatch(setSwitchInfo({
                     showSwitch: true,
-                    defChecked: true,
-                    canChecked: true
+                    checked: true,//switch是否为选中状态
+                    canChecked: true// switch组件能不能被滑动
                   }));
                 } else {
                   dispatch(setSwitchInfo({
                     showSwitch: true,
-                    defChecked: false,
-                    canChecked: false
+                    checked: false,//switch是否为选中状态
+                    canChecked: false // switch组件能不能被滑动
                   }));
                 }
               } else {
                 dispatch(setSwitchInfo({
                   showSwitch: false,
-                  defChecked: false,
-                  canChecked: false
+                  checked: false, // switch组件能不能被滑动
+                  canChecked: false// switch组件能不能被滑动
                 }));
               }
 
@@ -182,20 +182,20 @@ export const actions = {
             if (item.sitype && item.auth) {
               dispatch(setSwitchInfo({
                 showSwitch: true,
-                defChecked: true,
+                checked: true,
                 canChecked: true
               }));
             } else {
               dispatch(setSwitchInfo({
                 showSwitch: true,
-                defChecked: false,
+                checked: true,
                 canChecked: false
               }));
             }
           } else {
             dispatch(setSwitchInfo({
               showSwitch: false,
-              defChecked: false,
+              checked: true,
               canChecked: false
             }));
           }
@@ -478,6 +478,7 @@ const reducer = (state = initialState, action) => {
         switchInfo: action.data
       };
     case actionTypes.SET_SWITCH_CHECKED:
+      debugger
       return {
         ...state,
         switchInfo: action.data
