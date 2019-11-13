@@ -148,17 +148,21 @@ export const actions = {
       } else { //本地
         targetURL = URL.API_SI_PAY();
       }
-      debugger
+      console.log(Params)
+      console.log(targetURL)
       dispatch(fetchRequest());
       return post(targetURL, Params)
         .then((data) => {
             dispatch(fetchSuccess());
             if (data.infocode && data.infocode === 1) {
+              debugger
+              window["J2C"].exitESSCSDK('关闭部SDK');
               let orderPaymentEntity = data.data;
               if (orderPaymentEntity.ownPayAmt > 0) {
                 //回退到预结算(修改支付状态：将未医保支付 改成已经医保支付)
                 callBack({ paymentStatus: 1 });
               } else {
+                debugger
                 //跳转到支付完成
                 let path = {
                   pathname: "/payResultContainer",

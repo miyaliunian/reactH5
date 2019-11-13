@@ -50,7 +50,7 @@
     //调用电子社保卡
     window["J2C"]["requestESSC"] = requestESSC;
     window["J2C"]["requestESSCCallBack"] = requestESSCCallBack;
-
+    window["J2C"]["exitESSCSDK"] = exitESSCSDK;
     //--------------
     function H5WXPAyIP(i, e) {
       H5WXPAyIPCallBack = e;
@@ -178,6 +178,7 @@
     }
 
     //----------------------------调用电子社保卡
+    //唤起
     function requestESSC(i, e) {
       back2NativeVCCallBack = e;
       if (window.iosdkqgqc) {
@@ -197,8 +198,26 @@
 
     }
 
-
+    //回调传值
     function requestESSCCallBack(e) {
+    }
+
+    //退出
+    function exitESSCSDK(i) {
+      if (window.iosdkqgqc) {
+        setTimeout(() => window.webkit.messageHandlers.exitESSCSDK.postMessage(i), 10);
+      } else if (window.WebViewJavascriptBridge) {
+        window.WebViewJavascriptBridge.callHandler(
+          "Native.exitESSCSDK", {
+            "param": "测试"
+          },
+          function(responseData) {
+          }
+        );
+
+      } else {
+
+      }
 
     }
 
