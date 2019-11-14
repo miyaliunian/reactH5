@@ -24,6 +24,11 @@ export const BASE_URL = "http://ykt.haly12333.org.cn/t-core";
 //常州测试账号
 //321182198304262213 qwe123
 
+//本溪
+// export const cityID = "210500";
+// export const BASE_URL='https://ncp.neuqsoft.com:11061/t-core'
+// //210502198806292141  qwer1234
+
 //预约挂号-医院列表
 //
 

@@ -13,9 +13,9 @@ import ico_wman from '@images/Home/ico_wman.png'
 import avatar_wman from '@images/Home/pic_wman.png'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {actions as bindCardActions} from "@reduxs/modules/bindCard";
-import {actions as reservationActions} from "@reduxs/modules/reservation";
+import {actions as bindCardActions,getBindCardList} from "@reduxs/modules/bindCard";
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import LoadingMask from "@components/Loading/LoadingMask";
 
 
 class BindCardList extends Component {
@@ -24,11 +24,11 @@ class BindCardList extends Component {
     }
 
     render() {
-        const {state} = this.props.location
+        const {bindCardList} = this.props
         return (
             <div className={'bindCardList'} >
                 <SafeAreaView showBar={true} title={'成员信息'} isRight={false} handleBack={this.handleBack}>
-                    {state.map(item => {
+                    {bindCardList.map(item => {
                         return (
 
                             <div className={'bindCardList__con'} key={item.id} onClick={() => this.handleItemClick(item)}>
@@ -52,38 +52,39 @@ class BindCardList extends Component {
                             </div>
                         )
                     })}
+                    <LoadingMask/>
                 </SafeAreaView>
             </div>
         )
     }
 
+
+    componentDidMount() {
+        const {bindCardActions:{loadList}} = this.props
+        loadList()
+    }
+
     handleItemClick(cliItem) {
-        const {location:{state,callBack},history,reservationActions:{loadMedicalTypeByBindCard}} = this.props
-        state.map((item) => {
-            if (item.id === cliItem.id) {
-                item.def = true
-            } else {
-                item.def = false
-            }
-        })
+        const {location:{callBack},history} = this.props
         if (callBack){
-            // 目前就是《住院管理页面》需要用此地方 将选中的数据 返回给 住院管理页面
+            //1：将选中的家庭成员 通过回调函数 传回给调用方
             this.props.location.callBack(cliItem)
-            loadMedicalTypeByBindCard(state)
+            //2：切换家庭成员之后 回退到上一页
+            history.goBack()
         }
-        // 切换家庭成员之后 回退到上一页
-        history.goBack()
+
     }
 }
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        bindCardList:getBindCardList(state)
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         bindCardActions: bindActionCreators(bindCardActions, dispatch),
-        reservationActions: bindActionCreators(reservationActions, dispatch)
     }
 }
 

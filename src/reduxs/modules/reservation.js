@@ -23,6 +23,7 @@ const initialState = {
 };
 
 const actionTypes = {
+    //网络请求标识
     FETCH_REQUEST: "RESERVATION/FETCH_REQUEST",
     FETCH_FAILURE: "RESERVATION/FETCH_FAILURE",
 
@@ -72,17 +73,15 @@ const actionTypes = {
 export const actions = {
 
 
-    loadPayType: (hosid, scheduleid) => {
+    loadPayType: (hosid, scheduleid, cb) => {
         return (dispatch, getstate) => {
             const targetURL = URL.API_REGISTER_PAY_TYPE(hosid, scheduleid);
             if (!getstate().reservation.isRefresh) {
                 return;
             }
-            dispatch({type: actionTypes.FETCH_REQUEST});
             return post(targetURL)
                 .then(
                     data => {
-
                         // 实际用的是列表的第0条数据。
                         if (data.data[0].id <= 1) {
                             //不显示Switch组件
@@ -91,6 +90,7 @@ export const actions = {
                                 showSwitch: false, //是否显示switch组件
                                 data: data.data[0]
                             }));
+                            cb()
                         } else {
                             //显示Switch组件
                             dispatch(fetchPayTypeSuccess({
@@ -98,6 +98,7 @@ export const actions = {
                                 showSwitch: true,
                                 data: data.data[0]
                             }));
+                            cb()
                         }
                     },
                     error => {
@@ -119,13 +120,13 @@ export const actions = {
                 return;
             }
             const targetURL = URL.API__BIND_CARD_LIST();
-            dispatch({type: actionTypes.FETCH_REQUEST});
             return post(targetURL).then(
                 data => {
-                    //家庭成员
-                    dispatch(fetchBindCardSuccess(data.data));
                     data.data.map(item => {
                         if (item.def) {
+                            //家庭成员
+                            dispatch(fetchBindCardSuccess(item));
+                            //Switch组件 是否选中 是否可以切换状态
                             if (getstate().reservation.payType.showSwitch) {
                                 if (item.sitype && item.auth) {
                                     dispatch(setSwitchInfo({
@@ -172,49 +173,52 @@ export const actions = {
     },
 
 
-    loadMedicalTypeByBindCard: (data) => {
+    /**
+     * 切换家庭成员之后 重新请求switch组件状态
+     * @param data  家庭成员
+     * @returns {Function}
+     */
+    loadMedicalTypeByBindCard: (item) => {
         return (dispatch, getstate) => {
             //修改家庭成员选中的数据
-            dispatch(setBindCard(data));
-            data.map((item) => {
-                if (item.def) {
-                    if (getstate().reservation.payType.showSwitch) {
-                        if (item.sitype && item.auth) {
-                            dispatch(setSwitchInfo({
-                                showSwitch: true,
-                                checked: true,
-                                canChecked: true
-                            }));
-                        } else {
-                            dispatch(setSwitchInfo({
-                                showSwitch: true,
-                                checked: true,
-                                canChecked: false
-                            }));
-                        }
-                    } else {
-                        dispatch(setSwitchInfo({
-                            showSwitch: false,
-                            checked: true,
-                            canChecked: false
-                        }));
-                    }
+            dispatch(reSetBindCard(item));
 
-                    const targetURL = URL.API_REGISTER_MEDICAL_TYPE(item.siTypeCode);
-                    return post(targetURL).then(
-                        data => {
-                            //使用家庭成员的SiTypeCode获取医疗类别
-                            dispatch(fetchMedicalTypeSuccess(data.data));
-                        },
-                        error => {
-                            dispatch(fetchFailure());
-                            console.log(error);
-                            Toast.fail(error, 1);
-                        }
-                    );
+            if (getstate().reservation.payType.showSwitch) {
+                if (item.sitype && item.auth) {
+                    dispatch(setSwitchInfo({
+                        showSwitch: true,
+                        checked: true,
+                        canChecked: true
+                    }));
+                } else {
+                    dispatch(setSwitchInfo({
+                        showSwitch: true,
+                        checked: true,
+                        canChecked: false
+                    }));
                 }
-            });
-        };
+            } else {
+                dispatch(setSwitchInfo({
+                    showSwitch: false,
+                    checked: true,
+                    canChecked: false
+                }));
+            }
+            const targetURL = URL.API_REGISTER_MEDICAL_TYPE(item.siTypeCode);
+            return post(targetURL).then(
+                data => {
+                    //使用家庭成员的SiTypeCode获取医疗类别
+                    dispatch(fetchMedicalTypeSuccess(data.data));
+                },
+                error => {
+                    dispatch(fetchFailure());
+                    console.log(error);
+                    Toast.fail(error, 1);
+                }
+            );
+
+
+        }
     },
 
 
@@ -282,15 +286,14 @@ export const actions = {
              * 家庭成员对象
              * @type {T[]}
              */
-            let bindCardObj = getstate().reservation.bindCardData.filter(i =>
-                i.def === true
-            );
+
+            let bindCardObj = getstate().reservation.bindCardData
 
             if (bindCardObj) {
                 //家庭成员id
-                PARAM.personId = bindCardObj[0].id;
+                PARAM.personId = bindCardObj.id;
                 //家庭成员mgwid
-                PARAM.cardId = bindCardObj[0].mgwId;
+                PARAM.cardId = bindCardObj.mgwId;
             }
 
             /**
@@ -330,7 +333,7 @@ export const actions = {
                 PARAM.paymentMethod = 0;
                 PARAM.paymentMethodName = "去医院支付";
             } else if (payObj.id === 2) {
-                if (bindCardObj[0].auth) {
+                if (bindCardObj.auth) {
                     if (getstate().reservation.switchInfo.checked) {
                         PARAM.paymentMethod = 1; //混合支付
                         PARAM.paymentMethodName = "在线支付";
@@ -425,7 +428,7 @@ const fetchMedicalTypeSuccess = (data) => ({
 });
 
 
-const setBindCard = (data) => ({
+const reSetBindCard = (data) => ({
     type: actionTypes.SET_BINDCARD_ITEM,
     data
 });

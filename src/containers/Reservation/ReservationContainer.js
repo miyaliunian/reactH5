@@ -32,7 +32,7 @@ class ReservationContainer extends Component {
 
     render() {
         const {doctorInfo, reservationInfo, timeInterval} = this.props.location.state
-        const {diagnosis, fetchingStatus, payType, switchInfo, medicalType, bindCards, btnDisable} = this.props
+        const {diagnosis, payType, switchInfo, medicalType, bindCardItem, btnDisable} = this.props
         return (
             <div className={'reservation'}>
                 <SafeAreaView showBar={true} title={'预约信息'} isRight={false} handleBack={this.handleBack}>
@@ -41,18 +41,19 @@ class ReservationContainer extends Component {
                     <div className={'reservation__interval'}/>
                     <ReservationForm
                         {...this.props}
-                        bindCards={bindCards}
+                        bindCardItem={bindCardItem}
                         diagnosis={diagnosis}
                         medicalType={medicalType}
                         payType={payType}
                         switchInfo={switchInfo}
-                        refreshPage={() => this.setRefreshPage()}
+                        refreshPage={(newBindCard) => this.refreshPage(newBindCard)}
                     />
                     <div className={'reservationForm__btn'}>
                         <PrimaryButton txt={'确认预约'} onSubmit={() => this.onSubmit()} disabled={btnDisable}/>
                     </div>
                     <div className={'reservationForm_ps'}>
-                        <span style={{color:'#CCCCCC'}}>确认预约代表您已阅读并接受<span style={{color:'#0084ff'}}>预约须知</span></span>
+                        <span style={{color: '#CCCCCC'}}>确认预约代表您已阅读并接受<span
+                            style={{color: '#0084ff'}}>预约须知</span></span>
                     </div>
                     <LoadingMask/>
                 </SafeAreaView>
@@ -63,27 +64,29 @@ class ReservationContainer extends Component {
 
     componentDidMount() {
         const {doctorInfo, reservationInfo} = this.props.location.state
-        const {history,reservationActions:{loadPayType,loadBindCardAndMedicalTypeList}} = this.props
-        if (history.action === 'PUSH'){
-            loadPayType(doctorInfo.hosId, reservationInfo.id)
-            loadBindCardAndMedicalTypeList()
+        const {history, reservationActions: {loadPayType, loadBindCardAndMedicalTypeList}} = this.props
+        if (history.action === 'PUSH') {
+            loadPayType(doctorInfo.hosId, reservationInfo.id, () => {
+                loadBindCardAndMedicalTypeList()
+            })
+
         }
     }
 
     componentWillUnmount() {
-        const {history,reservationActions:{reset}} =this.props
+        const {history, reservationActions: {reset}} = this.props
         console.log(history.action)
-        if (history.action === 'POP'){
+        if (history.action === 'POP') {
             reset()
         }
     }
 
 
-    /**
-     * 标识当前页面是否刷新：
-     */
-    setRefreshPage() {
-        this.props.reservationActions.setIsRefresh(false)
+    //切换家庭成员之后，重新请求 switch组件的状态
+    refreshPage(newBindCard) {
+        const {reservationActions:{loadMedicalTypeByBindCard}} = this.props
+        console.log(newBindCard)
+        loadMedicalTypeByBindCard(newBindCard)
     }
 
 
@@ -94,7 +97,7 @@ class ReservationContainer extends Component {
 
 
     onSubmit() {
-        const {reservationActions:{onSubmit}} = this.props
+        const {reservationActions: {onSubmit}} = this.props
         onSubmit({...this.props.location.state}, {...this.props.history})
     }
 }
@@ -104,7 +107,7 @@ const mapStateToProps = (state) => {
         fetchingStatus: getFetchingStatus(state),
         btnDisable: getBtnDisable(state),
         payType: getPayTypeData(state),
-        bindCards: getBindCard(state),
+        bindCardItem: getBindCard(state),
         diagnosis: getDiagnosis(state),
         medicalType: getMedicalType(state),
         switchInfo: getSwitchInfo(state),
