@@ -31,7 +31,7 @@ export default class ReservationHeader extends Component {
                     <div className={'reservationHeader__cell'}>
                         <span className={'reservationHeader__left_colu'}>就诊科室</span>
                         <div className={'reservationHeader__right_colu'}>
-                            <span className={'reservationHeader__right_colu__txt'}>{name}</span>
+                            <span className={'reservationHeader__right_colu__txt'}>{deptName}</span>
                         </div>
                     </div>
                     <div className={'reservationHeader__cell'}>
