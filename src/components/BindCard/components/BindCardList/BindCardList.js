@@ -67,10 +67,12 @@ class BindCardList extends Component {
     handleItemClick(cliItem) {
         const {location:{callBack},history} = this.props
         if (callBack){
-            //1：将选中的家庭成员 通过回调函数 传回给调用方
-            this.props.location.callBack(cliItem)
-            //2：切换家庭成员之后 回退到上一页
-            history.goBack()
+            setTimeout(()=>{
+                //1：将选中的家庭成员 通过回调函数 传回给调用方
+                this.props.location.callBack(cliItem)
+                //2：切换家庭成员之后 回退到上一页
+                history.goBack()
+            },10)
         }
 
     }

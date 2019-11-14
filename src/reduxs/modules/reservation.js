@@ -261,8 +261,8 @@ export const actions = {
              * @type {{}}
              */
             const {doctorInfo, reservationInfo, timeInterval} = data
+            const {push} =route
             let PARAM = {};
-            let pathname = ''
             PARAM.hosId = doctorInfo.hosId;//医院id
             PARAM.deptId = reservationInfo.deptId;//科室id(依排版信息为准)
             PARAM.doctorId = doctorInfo.id;//医生id
@@ -324,11 +324,9 @@ export const actions = {
                     if (getstate().reservation.switchInfo.checked) {
                         PARAM.paymentMethod = 1; //混合支付
                         PARAM.paymentMethodName = "在线支付";
-                        pathname = "/advanceSettlementContainer"
                     } else {
                         PARAM.paymentMethod = 2; // 存自费
                         PARAM.paymentMethodName = "在线支付";
-                        pathname = "/thirdPayContainer"
                     }
                 } else {
                     PARAM.paymentMethod = 2;
@@ -346,7 +344,7 @@ export const actions = {
                         if (switchObj.checked) {
                             //纯医保
                             let path = {
-                                pathname: pathname,
+                                pathname: "/advanceSettlementContainer",
                                 state: {
                                     reservationName: OrderType[0].register,
                                     reservationCode: OrderType[0].status,
@@ -354,11 +352,11 @@ export const actions = {
                                     paymentMethod: PARAM.paymentMethod
                                 }
                             };
-                            route.push(path);
+                            push(path);
                         } else {
                             //手动选择纯自费
                             let path = {
-                                pathname: pathname,
+                                pathname: "/thirdPayContainer",
                                 state: {
                                     reservationName: OrderType[0].register,
                                     reservationCode: OrderType[0].status,
@@ -367,7 +365,7 @@ export const actions = {
                                     paymentMethod: PARAM.paymentMethod
                                 }
                             };
-                            route.push(path);
+                            push(path);
                         }
                     } else {
                         Toast.fail(res.infomessage, 2);

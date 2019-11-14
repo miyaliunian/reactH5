@@ -63,7 +63,6 @@ class ReservationContainer extends Component {
 
 
     componentDidMount() {
-        console.log('componentDidMount')
         const {history, location,reservationActions: {loadPayType, loadBindCardAndMedicalTypeList}} = this.props
         const {doctorInfo, reservationInfo} = location.state
         if (history.action === 'PUSH') {
@@ -74,8 +73,9 @@ class ReservationContainer extends Component {
     }
 
     componentWillUnmount() {
+        console.log('componentWillUnmount')
         const {history, reservationActions: {reset}} = this.props
-        console.log(history.action)
+        console.log(`componentWillUnmount:${history.action}`)
         if (history.action === 'POP') {
             reset()
         }
