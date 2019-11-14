@@ -65,12 +65,9 @@ class ReservationContainer extends Component {
     componentDidMount() {
         const {doctorInfo, reservationInfo} = this.props.location.state
         const {history, reservationActions: {loadPayType, loadBindCardAndMedicalTypeList}} = this.props
-        if (history.action === 'PUSH') {
-            loadPayType(doctorInfo.hosId, reservationInfo.id, () => {
-                loadBindCardAndMedicalTypeList()
-            })
-
-        }
+        loadPayType(doctorInfo.hosId, reservationInfo.id, () => {
+            loadBindCardAndMedicalTypeList()
+        })
     }
 
     componentWillUnmount() {
