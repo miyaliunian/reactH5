@@ -23,14 +23,8 @@ const initialState = {
 };
 
 const actionTypes = {
-    //网络请求标识
-    FETCH_REQUEST: "RESERVATION/FETCH_REQUEST",
-    FETCH_FAILURE: "RESERVATION/FETCH_FAILURE",
-
-
     //支付方式：（支付方式，当日挂号或预约挂号）
     FETCH_PAY_TYPE_SUCCESS: "RESERVATION/FETCH_PAY_TYPE_SUCCESS",
-
 
     //家庭成员列表
     FETCH_RESERVATION_BIND_CARD_SUCCESS: "RESERVATION/FETCH_RESERVATION_BIND_CARD_SUCCESS",
@@ -46,9 +40,6 @@ const actionTypes = {
 
     //填写疾病信息
     SET_DIAGNAME_VALUE: "RESERVATION/SET_DIAGNAME_VALUE",
-
-    //componentDidMount 才会刷新页面,history.goBack()不会刷新页面
-    SET_REFRESH_PAGE: "RESERVATION/SET_REFRESH_PAGE",
 
     //Switch 选中
     SET_SWITCH_CHECKED: "RESERVATION/SWITCH_CHECKED",
@@ -102,7 +93,6 @@ export const actions = {
                         }
                     },
                     error => {
-                        dispatch(fetchFailure());
                         console.log(error);
                         Toast.info(error.message, 1);
                     }
@@ -164,7 +154,6 @@ export const actions = {
                     });
                 },
                 error => {
-                    dispatch(fetchFailure());
                     console.log(error);
                     Toast.info(error.message, 1);
                 }
@@ -182,7 +171,6 @@ export const actions = {
         return (dispatch, getstate) => {
             //修改家庭成员选中的数据
             dispatch(reSetBindCard(item));
-
             if (getstate().reservation.payType.showSwitch) {
                 if (item.sitype && item.auth) {
                     dispatch(setSwitchInfo({
@@ -211,7 +199,6 @@ export const actions = {
                     dispatch(fetchMedicalTypeSuccess(data.data));
                 },
                 error => {
-                    dispatch(fetchFailure());
                     console.log(error);
                     Toast.fail(error, 1);
                 }
@@ -273,14 +260,14 @@ export const actions = {
              * 请求的Body
              * @type {{}}
              */
+            const {doctorInfo, reservationInfo, timeInterval} = data
             let PARAM = {};
             let pathname = ''
-            PARAM.hosId = data.doctorInfo.hosId;//医院id
-            PARAM.deptId = data.reservationInfo.deptId;//科室id(依排版信息为准)
-            PARAM.doctorId = data.doctorInfo.id;//医生id
-            PARAM.scheduleId = data.reservationInfo.id;//会诊id
-            PARAM.timeintervalId = data.timeInterval.id;//会诊时间点id
-
+            PARAM.hosId = doctorInfo.hosId;//医院id
+            PARAM.deptId = reservationInfo.deptId;//科室id(依排版信息为准)
+            PARAM.doctorId = doctorInfo.id;//医生id
+            PARAM.scheduleId = reservationInfo.id;//会诊id
+            PARAM.timeintervalId = timeInterval.id;//会诊时间点id
 
             /**
              * 家庭成员对象
@@ -349,62 +336,49 @@ export const actions = {
                 }
             }
             const targetUrl = URL.API_REGISTER_UNION();
-            dispatch(submitBtn_request());
             return post(targetUrl, PARAM)
                 .then(res => {
-                        console.log(res)
-                        if (res.infocode === 1) {
-                            if (switchObj.checked) {
-                                //纯医保
-                                let path = {
-                                    pathname: pathname,
-                                    state: {
-                                        reservationName: OrderType[0].register,
-                                        reservationCode: OrderType[0].status,
-                                        reservationEntity: res.data,//订单实体
-                                        paymentMethod: PARAM.paymentMethod
-                                    }
-                                };
-                                route.push(path);
-                            } else {
-                                //手动选择纯自费
-                                let path = {
-                                    pathname: pathname,
-                                    state: {
-                                        reservationName: OrderType[0].register,
-                                        reservationCode: OrderType[0].status,
-                                        ObjEntity: res.data,
-                                        orderPayment: {"ownPayAmt": data.reservationInfo.regFee},//挂号实体
-                                        paymentMethod: PARAM.paymentMethod
-                                    }
-                                };
-                                route.push(path);
-                            }
+                    console.log('线上挂号')
+                    console.log('请求成功')
+                    console.log('请求成功的数据')
+                    console.log(res)
+                    if (res.infocode === 1) {
+                        if (switchObj.checked) {
+                            //纯医保
+                            let path = {
+                                pathname: pathname,
+                                state: {
+                                    reservationName: OrderType[0].register,
+                                    reservationCode: OrderType[0].status,
+                                    reservationEntity: res.data,//订单实体
+                                    paymentMethod: PARAM.paymentMethod
+                                }
+                            };
+                            route.push(path);
                         } else {
-                            Toast.fail(res.infomessage, 2);
+                            //手动选择纯自费
+                            let path = {
+                                pathname: pathname,
+                                state: {
+                                    reservationName: OrderType[0].register,
+                                    reservationCode: OrderType[0].status,
+                                    ObjEntity: res.data,
+                                    orderPayment: {"ownPayAmt": reservationInfo.regFee},//挂号实体
+                                    paymentMethod: PARAM.paymentMethod
+                                }
+                            };
+                            route.push(path);
                         }
-                        dispatch(submitBtn_success());
-                    },
-                    error => {
-                        dispatch(fetchFailure());
-                        Toast.info(error.message, 1);
-                    })
+                    } else {
+                        Toast.fail(res.infomessage, 2);
+                    }
+                })
                 .catch(err => {
-                    dispatch(submitBtn_failure());
+                    console.log('请求失败')
+                    Toast.info(err.message, 1);
                 });
         };
     },
-
-    /**
-     * 刷新页面标识
-     * @param status
-     * @returns {{type: string, status: *}}
-     */
-    setIsRefresh: (status) => ({
-        type: actionTypes.SET_REFRESH_PAGE,
-        status
-    })
-
 
 };
 
@@ -413,9 +387,6 @@ const fetchPayTypeSuccess = (data) => ({
     data
 });
 
-const fetchFailure = () => ({
-    type: actionTypes.FETCH_FAILURE
-});
 
 const fetchBindCardSuccess = (data) => ({
     type: actionTypes.FETCH_RESERVATION_BIND_CARD_SUCCESS,
@@ -438,26 +409,8 @@ const setSwitchInfo = (data) => ({
     data
 });
 
-
-const submitBtn_request = () => ({
-    type: actionTypes.BTN_SUBMIT_REQUEST
-});
-
-const submitBtn_success = () => ({
-    type: actionTypes.BTN_SUBMIT_SUCCESS
-});
-
-const submitBtn_failure = () => ({
-    type: actionTypes.BTN_SUBMIT_FAILURE
-});
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_REQUEST:
-            return {
-                ...state,
-                isFetching: true
-            };
         case actionTypes.FETCH_PAY_TYPE_SUCCESS:
             return {
                 ...state,
@@ -473,11 +426,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: false,
                 medicalTypeData: action.data
-            };
-        case actionTypes.FETCH_FAILURE:
-            return {
-                ...state,
-                isFetching: false
             };
 
         case actionTypes.SET_BINDCARD_ITEM:
@@ -505,31 +453,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 switchInfo: action.data
             };
-        case actionTypes.SET_REFRESH_PAGE://componentDidMount 才会刷新页面,history.goBack()不会刷新页面
-            return {
-                ...state,
-                isRefresh: action.status
-            };
 
         case actionTypes.BTN_ABLE:
             return {
                 ...state,
                 btnDisable: false
-            };
-        case actionTypes.BTN_SUBMIT_REQUEST:
-            return {
-                ...state,
-                isFetching: true
-            };
-        case actionTypes.BTN_SUBMIT_SUCCESS:
-            return {
-                ...state,
-                isFetching: false
-            };
-        case actionTypes.BTN_SUBMIT_FAILURE:
-            return {
-                ...state,
-                isFetching: false
             };
 
         case actionTypes.RESET: {

@@ -63,11 +63,14 @@ class ReservationContainer extends Component {
 
 
     componentDidMount() {
-        const {doctorInfo, reservationInfo} = this.props.location.state
-        const {history, reservationActions: {loadPayType, loadBindCardAndMedicalTypeList}} = this.props
-        loadPayType(doctorInfo.hosId, reservationInfo.id, () => {
-            loadBindCardAndMedicalTypeList()
-        })
+        console.log('componentDidMount')
+        const {history, location,reservationActions: {loadPayType, loadBindCardAndMedicalTypeList}} = this.props
+        const {doctorInfo, reservationInfo} = location.state
+        if (history.action === 'PUSH') {
+            loadPayType(doctorInfo.hosId, reservationInfo.id, () => {
+                loadBindCardAndMedicalTypeList()
+            })
+        }
     }
 
     componentWillUnmount() {
@@ -82,20 +85,18 @@ class ReservationContainer extends Component {
     //切换家庭成员之后，重新请求 switch组件的状态
     refreshPage(newBindCard) {
         const {reservationActions:{loadMedicalTypeByBindCard}} = this.props
-        console.log(newBindCard)
         loadMedicalTypeByBindCard(newBindCard)
     }
 
 
     handleBack = () => {
-        this.props.reservationActions.setIsRefresh(true)
         this.props.history.goBack()
     }
 
 
     onSubmit() {
-        const {reservationActions: {onSubmit}} = this.props
-        onSubmit({...this.props.location.state}, {...this.props.history})
+        const {reservationActions: {onSubmit},location,history} = this.props
+        onSubmit({...location.state}, {...history})
     }
 }
 
