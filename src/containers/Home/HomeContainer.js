@@ -29,33 +29,33 @@ class Home extends Component {
         switch (index) {
             case 0 :
                 this.props.history.push('/login')
+            // case 1 :
+            //     this.props.history.push('/register')
+            //     break
             case 1 :
-                this.props.history.push('/register')
-                break
-            case 2 :
                 this.props.history.push('/hospitals')
                 break
-            case 3 :
-                this.props.history.push('/bindCard')
-                break
-            case 4 :
+            // case 3 :
+            //     this.props.history.push('/bindCard')
+            //     break
+            case 2 :
                 this.props.history.push('/intelligentWaiting')
                 break
-            case 5 :
+            case 3 :
                 this.props.history.push('/hospitalizationManagement')
                 break
-            case 6 :
-                this.props.history.push('/orderReservationDoctor')
-                break
-            case 7:
-                this.props.history.push('/payCountdown')
-                break
-            case 8:
-                this.props.history.push('/orderContainer')
-                break
-            case 9:
-                this.props.history.push('/report')
-                break
+            // case 6 :
+            //     this.props.history.push('/orderReservationDoctor')
+            //     break
+            // case 7:
+            //     this.props.history.push('/payCountdown')
+            //     break
+            // case 8:
+            //     this.props.history.push('/orderContainer')
+            //     break
+            // case 9:
+            //     this.props.history.push('/report')
+            //     break
             case 10:
                 this.showActionSheet()
                 break

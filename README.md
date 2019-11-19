@@ -163,3 +163,9 @@
 * 请求头信息: Accept Accept-Language Content-Language Last-Event-ID Content-Type 对应的值是以下三个中的任意一个 application/x-www-form-urlencoded multipart/form-data text/plain
 
 ````
+
+##### 错误边界无法捕获如下错误
+* 事件处理
+* 异步代码(例如 setTimeOut 或 requestAnimationFrame 回调函数)
+* 服务端渲染
+* 错误边界本身抛出来的错误(而不是其子组件)

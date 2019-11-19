@@ -11,9 +11,7 @@ import {post} from "@utils/httpUtil";
 import {Toast} from "antd-mobile";
 
 const initialState = {
-    isFetching: false,
-    isRefresh: true, // 只有第一次进入页面为true  其它条件都为false
-    payType: {},
+    payType: {},//包含是否显示滑块，滑块状态能不能切换
     diagnosis: "初诊",//初诊、复诊、取消
     bindCardData: [],
     medicalTypeData: [],
@@ -67,9 +65,6 @@ export const actions = {
     loadPayType: (hosid, scheduleid, cb) => {
         return (dispatch, getstate) => {
             const targetURL = URL.API_REGISTER_PAY_TYPE(hosid, scheduleid);
-            if (!getstate().reservation.isRefresh) {
-                return;
-            }
             return post(targetURL)
                 .then(
                     data => {
@@ -106,9 +101,6 @@ export const actions = {
      */
     loadBindCardAndMedicalTypeList: () => {
         return (dispatch, getstate) => {
-            if (!getstate().reservation.isRefresh) {
-                return;
-            }
             const targetURL = URL.API__BIND_CARD_LIST();
             return post(targetURL).then(
                 data => {

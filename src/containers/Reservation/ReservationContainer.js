@@ -73,9 +73,7 @@ class ReservationContainer extends Component {
     }
 
     componentWillUnmount() {
-        console.log('componentWillUnmount')
         const {history, reservationActions: {reset}} = this.props
-        console.log(`componentWillUnmount:${history.action}`)
         if (history.action === 'POP') {
             reset()
         }

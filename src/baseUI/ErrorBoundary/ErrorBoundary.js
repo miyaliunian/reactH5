@@ -1,23 +1,42 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import './style.less'
+import {NoMatchWrapper} from './style'
 
 export default class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {error: null};
+        this.state = {hasError: false};
     }
 
-    componentDidCatch(error, errorInfo) {
-        this.setState({error});
+    /**
+     *  当捕捉到错误时，使得在更新视图之前有机会更新 state
+     * @param error  error 具体的 JavaScript 异常
+     * @returns {{hasError: boolean}}
+     */
+    static getDerivedStateFromError(error) {
+        // 当捕捉到错误的时候，返回跟新 this.state
+        return {hasError: true};
+    }
+
+
+    /**
+     *  错误被捕捉完成
+     * @param error  具体的 JavaScript 异常
+     * @param info  一个记录着错误信息是从哪个组件里抛出来的对象。里面包含一些关键的信息。
+     */
+    componentDidCatch(error, info) {
+        // 可以在这里记录组件的错误信息
+        console.log('**********ErrorBoundary:error')
+        console.log(error)
+        console.log('**********ErrorBoundary:info')
+        console.log(info)
     }
 
     render() {
         if (this.state.hasError) {
-            //render fallback UI
+            //当错误发生时 显示这部分内容
             return (
-                <div className="not-match-wrapper">
+                <NoMatchWrapper>
                     <div className="img-wrapper">
                         <img className="bg" src="https://b-gold-cdn.xitu.io/v3/static/img/bg.1f516b3.png" alt=""/>
                         <img className="panfish" src="https://b-gold-cdn.xitu.io/v3/static/img/panfish.9be67f5.png"
@@ -28,7 +47,7 @@ export default class ErrorBoundary extends React.Component {
                     <div className="link-wrapper">
                         <Link to="/" className="link">回到首页</Link>
                     </div>
-                </div>
+                </NoMatchWrapper>
             )
         } else {
             //when there's not an error, render children untouched

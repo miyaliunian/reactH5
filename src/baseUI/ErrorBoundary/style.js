@@ -1,11 +1,23 @@
-.not-match-wrapper {
+import styled, {keyframes} from 'styled-components'
+
+const move = keyframes`
+    0% {
+        transform: translate(-50%, -5px);
+}
+    100% {
+        transform: translate(-50%, 0);
+}
+`
+
+
+export const NoMatchWrapper = styled.div`
   position: fixed;
   top: 60px;
-  bottom: 0;
+  bottom: 0px;
   background-color: #ffffff;
   padding-top: 1.767rem;
   width: 100%;
-  .img-wrapper {
+   .img-wrapper {
     width: 70%;
     margin: 0 auto;
     position: relative;
@@ -23,7 +35,7 @@
       left: 50%;
       top: 46%;
       transform: translate(-50%, 0);
-      animation: move 2s ease-in-out infinite alternate;
+      animation: ${move} 2s ease-in-out infinite alternate;
     }
     .sea {
       width: 99.199%;
@@ -42,7 +54,7 @@
       transform: translateX(-50%);
     }
   }
-  .link-wrapper {
+    .link-wrapper {
     margin-top: 2rem;
     text-align: center;
     .link {
@@ -54,13 +66,6 @@
       font-size: 1.5rem;
     }
   }
-}
+`
 
-@keyframes move {
-  0% {
-    transform: translate(-50%, -5px);
-  }
-  100% {
-    transform: translate(-50%, 0);
-  }
-}
+
