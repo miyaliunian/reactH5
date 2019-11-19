@@ -15,7 +15,7 @@ const SuspenseComponent = Component => props => {
     )
 }
 
-const HomeComponent = lazy(() => import("@containers/Home/HomeContainer"));
+const HomeComponent = lazy(() => import("@containers/Home/HomeContainer.tsx"));
 const HospitalsComponent = lazy(() => import("@containers/Hospitals/HospitalsContainer"));
 const LoginComponent = lazy(() => import("@containers/Login/LoginContainer"));
 const DivisionComponent = lazy(() => import("@containers/Division/DivisionContainer"));
