@@ -135,7 +135,7 @@ class AdvanceSettlementContainer extends Component {
                                 marginLeft: '10px',
                                 fontSize: '10px',
                                 color: '#737373'
-                            }}>{(parseInt(person.account).toFixed(2): '')}</span>
+                            }}>{parseInt(person.account).toFixed(2)}</span>
                             :
                             <span style={{
                                 marginLeft: '10px',
