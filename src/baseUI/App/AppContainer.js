@@ -60,7 +60,6 @@ class AppContainer extends Component {
     }
 
     render() {
-        console.log(ANIMATION["PUSH"])
         const {error, appActions: {clearError}} = this.props;
         return (
             <div>
