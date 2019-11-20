@@ -7,7 +7,8 @@
  */
 import React, {Component} from 'react'
 import PropTypes from "prop-types";
-import './style.less'
+import {BtnWrapper} from './style'
+
 
 export default class PrimaryButton extends Component {
 
@@ -20,9 +21,9 @@ export default class PrimaryButton extends Component {
     render() {
         const {txt, onSubmit,disabled} = this.props
         return (
-            <div className={'form__btnContainer'}>
+            <BtnWrapper  disabled={disabled}>
                 <button className={'form__btn'} onClick={onSubmit} disabled={disabled}>{txt}</button>
-            </div>
+            </BtnWrapper>
         )
     }
 }
