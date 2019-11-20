@@ -275,7 +275,6 @@ class AdvanceSettlementContainer extends Component {
     componentWillUnmount() {
         //重置登录按钮状态
         this.props.advanceSettlementActions.resetBtnStatus()
-
     }
 
     handleBack() {

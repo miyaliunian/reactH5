@@ -49,7 +49,6 @@ class DoctorContainer extends Component {
                     />
                 </SafeAreaView>
                 <LoadingMask/>
-
             </div>
         )
     }

@@ -41,10 +41,31 @@ export const actions = {
     loadPersonAndAdvanceSettleInfo: (ordertype, orderid, patientId) => {
         return (dispatch, getstate) => {
             dispatch(fetchRequest())
-            Axios.all([loadPerson(URL.API_PERSON(patientId), dispatch), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid), dispatch)])
+            Axios.all([loadPerson(URL.API_PERSON(patientId)), loadAdvanceSettleInfo(URL.API_ADVANCE_SETTLE(ordertype, orderid))])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
-                    dispatch(fetchSuccess())
-                    dispatch({type: actionTypes.BTN_ABLE})
+                    let per = false
+                    let ad = false
+                    //家庭成员
+                    if (personResp.infocode === 1) {
+                        per = true
+                        dispatch(fetchPersonSuccess(personResp.data))
+                    } else {
+                        Toast.fail(personResp.infomessage, 2);
+                        return Promise.reject({message: personResp.infomessage})
+                    }
+                    //预约信息
+                    if (advanceSettleResp.infocode === 1) {
+                        ad = true
+                        dispatch(fetchSettleSuccess(advanceSettleResp.data))
+                    } else {
+                        Toast.fail(advanceSettleResp.infomessage, 2);
+                        return Promise.reject({message: advanceSettleResp.infomessage})
+                    }
+
+                    if (per && ad) {
+                        dispatch({type: actionTypes.BTN_ABLE})
+                    }
+
                 }))
                 .catch(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchFailure())
@@ -62,10 +83,24 @@ export const actions = {
     setAdvanceSettleInfoANdLoadPerson: (reservation, patientId) => {
         return (dispatch, getstate) => {
             dispatch(fetchRequest())
-            Axios.all([loadPerson(URL.API_PERSON_PAYED(patientId), dispatch), setAdvanceSettleInfo(reservation, dispatch)])
+            Axios.all([loadPerson(URL.API_PERSON_PAYED(patientId)), setAdvanceSettleInfo(reservation)])
                 .then(Axios.spread((personResp, advanceSettleResp) => {
-                    dispatch(fetchSuccess())
-                    dispatch({type: actionTypes.BTN_ABLE})
+                    let per = false
+                    //家庭成员
+                    if (personResp.infocode === 1) {
+                        per = true
+                        dispatch(fetchPersonSuccess(personResp.data))
+                    } else {
+                        Toast.fail(personResp.infomessage, 2);
+                        return Promise.reject({message: personResp.infomessage})
+                    }
+
+                    //预约信息 字段处理
+                    dispatch(fetchSettleSuccess(JSON.parse(advanceSettleResp)))
+
+                    if (per) {
+                        dispatch({type: actionTypes.BTN_ABLE})
+                    }
                 }))
                 .catch(Axios.spread((personResp, advanceSettleResp) => {
                     dispatch(fetchFailure())
@@ -90,51 +125,23 @@ export const actions = {
 
 
 //加载人员信息
-function loadPerson(targetUrl, dispatch) {
+function loadPerson(targetUrl) {
     return post(targetUrl)
-        .then((data) => {
-                if (data.infocode && data.infocode === 1) {
-                    dispatch(fetchPersonSuccess(data.data))
-                } else {
-                    Toast.fail(data.infomessage, 2);
-                }
-            },
-            error => {
-                dispatch(fetchFailure())
-                Toast.fail(error, 1)
-            }
-        )
-        .catch(err => {
-            dispatch(fetchFailure())
-        })
+        .then((data) => data)
 }
 
 
 //加载预结算信息
-function loadAdvanceSettleInfo(targetUrl, dispatch) {
+function loadAdvanceSettleInfo(targetUrl) {
     return post(targetUrl)
-        .then(data => {
-                if (data.infocode === 1) {
-                    dispatch(fetchSettleSuccess(data.data))
-                } else {
-                    Toast.fail(data.infomessage, 2);
-                }
-            }, error => {
-                dispatch(fetchFailure())
-                Toast.fail(error, 1)
-            }
-        )
-        .catch(err => {
-            dispatch(fetchFailure())
-        })
+        .then(data => data)
 }
 
 
-//加载预结算信息
-function setAdvanceSettleInfo(param,dispatch) {
+//加载预结算信息:字段处理
+function setAdvanceSettleInfo(param) {
     let advanceSettleInfo = JSON.stringify(param).replace(/payCost/g, "siPayAmt").replace(/pubCost/g, "pubPayAmt").replace(/ownCost/g, "ownPayAmt").replace(/regFee/g, "totalAmt")
-    console.log(JSON.parse(advanceSettleInfo))
-    dispatch(fetchSettleSuccess(JSON.parse(advanceSettleInfo)))
+    return Promise.resolve(advanceSettleInfo)
 }
 
 
