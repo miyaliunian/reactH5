@@ -31,7 +31,6 @@ class OrderMedicarePayContainer extends Component {
 
             window['J2C']['payRegCallBack'] = function (response) {
                 let resObj = JSON.parse(response)
-                debugger
                 //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
                 setOrderPayType(resObj.fromTarget)
                 //跳转页面
@@ -49,7 +48,7 @@ class OrderMedicarePayContainer extends Component {
                         break
                     case "medicineScan":
                         typeEntity={name:'扫码购药',code:'medicineScan'}
-                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee"));
+                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee").replace(/personId/g, "patientId"));
                         break
                 }
 
@@ -103,7 +102,7 @@ class OrderMedicarePayContainer extends Component {
                         break
                     case "medicineScan":
                         typeEntity={name:'扫码购药',code:'medicineScan'}
-                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee"));
+                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee").replace(/personId/g, "patientId"));
                         break
                 }
 
