@@ -13,11 +13,11 @@ import 'antd-mobile/lib/action-sheet/style';
 import routerMap from '@routes/index'
 import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css'
-
 const PureToastContainer = PureWrapper(ToastContainer)
 
 
-const ANIMATION_MAP = {
+
+const ANIMATION = {
     PUSH: 'forward',
     POP: 'back'
 }
@@ -27,7 +27,7 @@ const Routes = withRouter(({location, history}) => (
         className={'router-wrapper'}
         childFactory={child => React.cloneElement(
             child,
-            {classNames: ANIMATION_MAP[history.action]}
+            {classNames: ANIMATION[history.action]}
         )}
     >
         <CSSTransition
@@ -60,6 +60,7 @@ class AppContainer extends Component {
     }
 
     render() {
+        console.log(ANIMATION["PUSH"])
         const {error, appActions: {clearError}} = this.props;
         return (
             <div>

@@ -15,11 +15,14 @@ class OrderMedicarePayContainer extends Component {
 
     render() {
         return (
-          <div/>
+            <div onClick={()=>this.medicarePay()}>
+                 去支付
+            </div>
         );
     }
 
     componentDidMount() {
+        return
         const {history,orderPayActions:{setOrderPayType}} = this.props
         this.timer = setTimeout(() => {
             //混合支付
@@ -99,6 +102,7 @@ class OrderMedicarePayContainer extends Component {
                         break
                     case "medicineScan":
                         typeEntity={name:'扫码购药',code:'medicineScan'}
+                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee"));
                         break
                 }
 
@@ -108,10 +112,10 @@ class OrderMedicarePayContainer extends Component {
                 let path = {
                     pathname: '/advanceSettlementContainer',
                     state: {
-                        reservationName: typeEntity.name,
-                        reservationCode: typeEntity.code,
-                        reservationEntity: reservationEntity,
-                        paymentMethod: reservationEntity.paymentMethod,
+                        reservationName: typeEntity.name, //确认预约
+                        reservationCode: typeEntity.code, //确认预约
+                        reservationEntity: reservationEntity, //预约实体
+                        paymentMethod: reservationEntity.paymentMethod, //支付方式
                         from: resObj.fromTarget
                     }
                 }
