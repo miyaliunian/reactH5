@@ -5,42 +5,40 @@
  * Description:  登录页面表单
  *
  */
-import React, {Component} from 'react'
+import React, { Component } from "react";
 import PrimaryButton from "@baseUI/Button/PrimaryButton";
-import './style.less'
-
-
+import "./style.less";
 
 export default class LoginForm extends Component {
-    render() {
-        const {username, password, onChange, onSubmit} = this.props
-        return (
-            <div className="loginForm">
-                <div className="loginForm__inputContainer">
-                    <div className="loginForm__row">
-                        <label className="loginForm__mobileLabel">用户名</label>
-                        <input className="loginForm__input"
-                               name="username"
-                               value={username}
-                               onChange={onChange}
-                        />
-                    </div>
-                    <div className="loginForm__row">
-                        <label className="loginForm__passwordLabel">密码</label>
-                        <input className="loginForm__input"
-                               name="password"
-                               type="password"
-                               value={password}
-                               onChange={onChange}
-                        />
-                    </div>
-                </div>
-                <div className="loginForm__btnContainer">
-                    <PrimaryButton txt={'登录'} onSubmit={onSubmit} disabled={false}/>
-                </div>
-            </div>
-        );
-    }
+  render() {
+    const { username, password, onChange, onSubmit } = this.props;
+    return (
+      <div className="loginForm">
+        <div className="loginForm__inputContainer">
+          <div className="loginForm__row">
+            <label className="loginForm__mobileLabel">用户名</label>
+            <input
+              className="loginForm__input"
+              name="username"
+              value={username}
+              onChange={onChange}
+            />
+          </div>
+          <div className="loginForm__row">
+            <label className="loginForm__passwordLabel">密码</label>
+            <input
+              className="loginForm__input"
+              name="password"
+              type="password"
+              value={password}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+        <div className="loginForm__btnContainer">
+          <PrimaryButton txt={"登录"} onSubmit={onSubmit} disabled={false} />
+        </div>
+      </div>
+    );
+  }
 }
-
-

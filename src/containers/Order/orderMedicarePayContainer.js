@@ -5,137 +5,159 @@
  * Description:
  *  从订单查询-进入 预结算
  */
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {actions as orderPayActions, getOrderType} from '../../reduxs/modules/orderPay'
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  actions as orderPayActions,
+  getOrderType
+} from "../../reduxs/modules/orderPay";
 
 class OrderMedicarePayContainer extends Component {
+  render() {
+    return <div onClick={() => this.medicarePay()}>去支付</div>;
+  }
 
-    render() {
-        return (
-            <div onClick={()=>this.medicarePay()}>
-                 去支付
-            </div>
-        );
-    }
+  componentDidMount() {
+    return;
+    const {
+      history,
+      orderPayActions: { setOrderPayType }
+    } = this.props;
+    this.timer = setTimeout(() => {
+      //混合支付
+      window["J2C"].payReg("去支付", function(e) {});
 
-    componentDidMount() {
-        return
-        const {history,orderPayActions:{setOrderPayType}} = this.props
-        this.timer = setTimeout(() => {
-            //混合支付
-            window['J2C'].payReg("去支付", function (e) {
-            })
+      window["J2C"]["payRegCallBack"] = function(response) {
+        let resObj = JSON.parse(response);
+        //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
+        setOrderPayType(resObj.fromTarget);
+        //跳转页面
+        let token = {};
+        let reservationEntity = {};
+        let typeEntity = {};
+        switch (resObj.fromTarget) {
+          case "register":
+            typeEntity = { name: "线上挂号", code: "register" };
+            reservationEntity = resObj.reservationEntity;
+            break;
+          case "recipe":
+            typeEntity = { name: "门诊缴费", code: "recipe" };
+            reservationEntity = JSON.parse(
+              JSON.stringify(resObj.reservationEntity).replace(
+                /totCost/g,
+                "regFee"
+              )
+            );
+            break;
+          case "medicineScan":
+            typeEntity = { name: "扫码购药", code: "medicineScan" };
+            reservationEntity = JSON.parse(
+              JSON.stringify(resObj.reservationEntity)
+                .replace(/totalFee/g, "regFee")
+                .replace(/personId/g, "patientId")
+            );
+            break;
+        }
 
-            window['J2C']['payRegCallBack'] = function (response) {
-                let resObj = JSON.parse(response)
-                //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
-                setOrderPayType(resObj.fromTarget)
-                //跳转页面
-                let token = {}
-                let reservationEntity={}
-                let typeEntity={}
-                switch (resObj.fromTarget) {
-                    case "register":
-                        typeEntity={name:'线上挂号',code:'register'}
-                        reservationEntity = resObj.reservationEntity
-                        break
-                    case "recipe":
-                        typeEntity={name:'门诊缴费',code:'recipe'}
-                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totCost/g, "regFee"));
-                        break
-                    case "medicineScan":
-                        typeEntity={name:'扫码购药',code:'medicineScan'}
-                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee").replace(/personId/g, "patientId"));
-                        break
-                }
+        token.access_token = resObj.access_token;
+        token.refresh_token = resObj.refresh_token;
+        sessionStorage.setItem("token", JSON.stringify(token));
+        let path = {
+          pathname: "/advanceSettlementContainer",
+          state: {
+            reservationName: typeEntity.name, //确认预约
+            reservationCode: typeEntity.code, //确认预约
+            reservationEntity: reservationEntity, //预约实体
+            paymentMethod: reservationEntity.paymentMethod, //支付方式
+            from: resObj.fromTarget
+          }
+        };
+        history.push(path);
+      };
+    }, 100);
+  }
 
-                token.access_token = resObj.access_token
-                token.refresh_token = resObj.refresh_token
-                sessionStorage.setItem('token', JSON.stringify(token))
-                let path = {
-                    pathname: '/advanceSettlementContainer',
-                    state: {
-                        reservationName: typeEntity.name, //确认预约
-                        reservationCode: typeEntity.code, //确认预约
-                        reservationEntity: reservationEntity, //预约实体
-                        paymentMethod: reservationEntity.paymentMethod, //支付方式
-                        from: resObj.fromTarget
-                    }
-                }
-                history.push(path)
-            }
-        }, 100)
-    }
+  componentWillUnmount() {
+    this.timer && clearTimeout(this.timer);
+  }
 
-    componentWillUnmount() {
-        this.timer && clearTimeout(this.timer);
-    }
+  //医保支付
+  medicarePay() {
+    const {
+      history,
+      orderPayActions: { setOrderPayType }
+    } = this.props;
+    this.timer = setTimeout(() => {
+      //混合支付
+      window["J2C"].payReg("去支付", function(e) {});
 
-    //医保支付
-    medicarePay() {
-        const {history,orderPayActions:{setOrderPayType}} = this.props
-        this.timer = setTimeout(() => {
-            //混合支付
-            window['J2C'].payReg("去支付", function (e) {
-            })
+      window["J2C"]["payRegCallBack"] = function(response) {
+        let resObj = JSON.parse(response);
+        debugger;
+        //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
+        setOrderPayType(resObj.fromTarget);
+        //跳转页面
+        let token = {};
+        let reservationEntity = {};
+        let typeEntity = {};
+        switch (resObj.fromTarget) {
+          case "register":
+            typeEntity = { name: "线上挂号", code: "register" };
+            reservationEntity = resObj.reservationEntity;
+            break;
+          case "recipe":
+            typeEntity = { name: "门诊缴费", code: "recipe" };
+            reservationEntity = JSON.parse(
+              JSON.stringify(resObj.reservationEntity).replace(
+                /totCost/g,
+                "regFee"
+              )
+            );
+            break;
+          case "medicineScan":
+            typeEntity = { name: "扫码购药", code: "medicineScan" };
+            reservationEntity = JSON.parse(
+              JSON.stringify(resObj.reservationEntity)
+                .replace(/totalFee/g, "regFee")
+                .replace(/personId/g, "patientId")
+            );
+            break;
+        }
 
-            window['J2C']['payRegCallBack'] = function (response) {
-                let resObj = JSON.parse(response)
-                debugger
-                //从哪个页面进入(预约挂号、门诊缴费、扫描购药)
-                setOrderPayType(resObj.fromTarget)
-                //跳转页面
-                let token = {}
-                let reservationEntity={}
-                let typeEntity={}
-                switch (resObj.fromTarget) {
-                    case "register":
-                        typeEntity={name:'线上挂号',code:'register'}
-                        reservationEntity = resObj.reservationEntity
-                        break
-                    case "recipe":
-                        typeEntity={name:'门诊缴费',code:'recipe'}
-                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totCost/g, "regFee"));
-                        break
-                    case "medicineScan":
-                        typeEntity={name:'扫码购药',code:'medicineScan'}
-                        reservationEntity = JSON.parse(JSON.stringify(resObj.reservationEntity).replace(/totalFee/g, "regFee").replace(/personId/g, "patientId"));
-                        break
-                }
-
-                token.access_token = resObj.access_token
-                token.refresh_token = resObj.refresh_token
-                sessionStorage.setItem('token', JSON.stringify(token))
-                let path = {
-                    pathname: '/advanceSettlementContainer',
-                    state: {
-                        reservationName: typeEntity.name, //确认预约
-                        reservationCode: typeEntity.code, //确认预约
-                        reservationEntity: reservationEntity, //预约实体
-                        paymentMethod: reservationEntity.paymentMethod, //支付方式
-                        from: resObj.fromTarget
-                    }
-                }
-                history.push(path)
-            }
-        }, 100)
-    }
+        token.access_token = resObj.access_token;
+        token.refresh_token = resObj.refresh_token;
+        sessionStorage.setItem("token", JSON.stringify(token));
+        let path = {
+          pathname: "/advanceSettlementContainer",
+          state: {
+            reservationName: typeEntity.name, //确认预约
+            reservationCode: typeEntity.code, //确认预约
+            reservationEntity: reservationEntity, //预约实体
+            paymentMethod: reservationEntity.paymentMethod, //支付方式
+            from: resObj.fromTarget
+          }
+        };
+        history.push(path);
+      };
+    }, 100);
+  }
 }
 
+const mapStateToProps = state => {
+  return {
+    payType: getOrderType(state)
+  };
+};
 
-const mapStateToProps = (state) => {
-    return {
-        payType: getOrderType(state)
-    }
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    orderPayActions: bindActionCreators(orderPayActions, dispatch)
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        orderPayActions: bindActionCreators(orderPayActions, dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderMedicarePayContainer))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(OrderMedicarePayContainer));

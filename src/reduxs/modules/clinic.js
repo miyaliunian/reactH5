@@ -7,6 +7,4 @@
  *
  */
 
-const initialState={
-
-}
+const initialState = {};

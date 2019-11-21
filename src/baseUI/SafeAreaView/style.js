@@ -1,5 +1,3 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const StyledComponent = styled.div`
-  
-`
+export const StyledComponent = styled.div``;

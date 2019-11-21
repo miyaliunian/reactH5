@@ -1,3 +1,1 @@
-function formateDate() {
-
-}
+function formateDate() {}

@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport"
-          content=" width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1,user-scalable=no"/>
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
-    <link rel="stylesheet" type="text/css" charset="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content=" width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1,user-scalable=no"
+    />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      charset="UTF-8"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+    />
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
@@ -16,232 +25,221 @@
     <script src="/js/jsencrypt.min.js"></script>
     <script src="/js/j2c_main_code.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/eruda@1.5.8/eruda.min.js"></script>
-    <script>eruda.init();</script>
+    <script>
+      eruda.init();
+    </script>
     <script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
 
     <title>智慧医保</title>
-</head>
-<body>
-<noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="root"></div>
-<script>
-  window.onload = function() {
-
-
-    //*****************************注册J2C
-    if (undefined == window["J2C"]) {
-      window["J2C"] = {};
-    }
-    //*****************************把函数注册到命名空间中
-    // 调用微信支付前先要通过原生获取手机Ip
-    window["J2C"]["H5WXPAyIP"] = H5WXPAyIP;
-    window["J2C"]["H5WXPAyIPCallBack"] = H5WXPAyIPCallBack;
-    window["J2C"]["H5WXPay"] = H5WXPay;
-    window["J2C"]["H5WXPayCallBack"] = H5WXPayCallBack;
-    //再次预约
-    window["J2C"]["regAgain"] = regAgain;
-    window["J2C"]["regAgainCallBack"] = regAgainCallBack;
-    //预结算
-    window["J2C"]["payReg"] = payReg;
-    window["J2C"]["payRegCallBack"] = payRegCallBack;
-    //返回根控制
-    window["J2C"]["back2NativeVC"] = back2NativeVC;
-    window["J2C"]["back2NativeVCCallBack"] = back2NativeVCCallBack;
-    //调用电子社保卡
-    window["J2C"]["requestESSC"] = requestESSC;
-    window["J2C"]["requestESSCCallBack"] = requestESSCCallBack;
-    window["J2C"]["exitESSCSDK"] = exitESSCSDK;
-    //--------------
-    function H5WXPAyIP(i, e) {
-      H5WXPAyIPCallBack = e;
-      if (window.iosdkqgqc) {
-        setTimeout(() => window.webkit.messageHandlers.H5WXPAyIP.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.H5WXPAyIP", {
-            "param": "测试"
-          },
-          function(responseData) {
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script>
+      window.onload = function() {
+        //*****************************注册J2C
+        if (undefined == window["J2C"]) {
+          window["J2C"] = {};
+        }
+        //*****************************把函数注册到命名空间中
+        // 调用微信支付前先要通过原生获取手机Ip
+        window["J2C"]["H5WXPAyIP"] = H5WXPAyIP;
+        window["J2C"]["H5WXPAyIPCallBack"] = H5WXPAyIPCallBack;
+        window["J2C"]["H5WXPay"] = H5WXPay;
+        window["J2C"]["H5WXPayCallBack"] = H5WXPayCallBack;
+        //再次预约
+        window["J2C"]["regAgain"] = regAgain;
+        window["J2C"]["regAgainCallBack"] = regAgainCallBack;
+        //预结算
+        window["J2C"]["payReg"] = payReg;
+        window["J2C"]["payRegCallBack"] = payRegCallBack;
+        //返回根控制
+        window["J2C"]["back2NativeVC"] = back2NativeVC;
+        window["J2C"]["back2NativeVCCallBack"] = back2NativeVCCallBack;
+        //调用电子社保卡
+        window["J2C"]["requestESSC"] = requestESSC;
+        window["J2C"]["requestESSCCallBack"] = requestESSCCallBack;
+        window["J2C"]["exitESSCSDK"] = exitESSCSDK;
+        //--------------
+        function H5WXPAyIP(i, e) {
+          H5WXPAyIPCallBack = e;
+          if (window.iosdkqgqc) {
+            setTimeout(
+              () => window.webkit.messageHandlers.H5WXPAyIP.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.H5WXPAyIP",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
-        );
+        }
 
-      } else {
+        function H5WXPAyIPCallBack(e) {}
 
-      }
-
-    }
-
-    function H5WXPAyIPCallBack(e) {
-
-    }
-
-    //--------------
-    //唤起微信支付
-    function H5WXPay(i, e) {
-      H5WXPayCallBack = e;
-      if (window.iosdkqgqc) {
-        setTimeout(() => window.webkit.messageHandlers.H5WXPay.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.H5WXPay", {
-            "param": "测试"
-          },
-          function(responseData) {
+        //--------------
+        //唤起微信支付
+        function H5WXPay(i, e) {
+          H5WXPayCallBack = e;
+          if (window.iosdkqgqc) {
+            setTimeout(
+              () => window.webkit.messageHandlers.H5WXPay.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.H5WXPay",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
-        );
+        }
 
-      } else {
+        //唤起微信支付->回调
+        function H5WXPayCallBack(e) {}
 
-      }
-
-    }
-
-
-    //唤起微信支付->回调
-    function H5WXPayCallBack(e) {
-
-    }
-
-    //-----------------再次预约
-    function regAgain(i, e) {
-      regAgainCallBack = e;
-      if (window.iosdkqgqc) {
-        setTimeout(() => window.webkit.messageHandlers.regAgain.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.regAgain", {
-            "param": "测试"
-          },
-          function(responseData) {
+        //-----------------再次预约
+        function regAgain(i, e) {
+          regAgainCallBack = e;
+          if (window.iosdkqgqc) {
+            setTimeout(
+              () => window.webkit.messageHandlers.regAgain.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.regAgain",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
-        );
+        }
 
-      } else {
+        function regAgainCallBack(e) {}
 
-      }
-
-    }
-
-    function regAgainCallBack(e) {
-
-    }
-
-    //----------------------------去支付
-    function payReg(i, e) {
-      payRegCallBack = e;
-      if (window.iosdkqgqc) {
-        // window.webkit.messageHandlers.payReg.postMessage(i);
-        setTimeout(() => window.webkit.messageHandlers.payReg.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.payReg", {
-            "param": "测试"
-          },
-          function(responseData) {
+        //----------------------------去支付
+        function payReg(i, e) {
+          payRegCallBack = e;
+          if (window.iosdkqgqc) {
+            // window.webkit.messageHandlers.payReg.postMessage(i);
+            setTimeout(
+              () => window.webkit.messageHandlers.payReg.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.payReg",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
-        );
+        }
 
-      } else {
+        function payRegCallBack(e) {}
 
-      }
-
-    }
-
-    function payRegCallBack(e) {
-
-    }
-
-
-    //----------------------------返回原生控制
-    function back2NativeVC(i, e) {
-      back2NativeVCCallBack = e;
-      if (window.iosdkqgqc) {
-        setTimeout(() => window.webkit.messageHandlers.back2NativeVC.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.back2NativeVC", {
-            "param": "测试"
-          },
-          function(responseData) {
+        //----------------------------返回原生控制
+        function back2NativeVC(i, e) {
+          back2NativeVCCallBack = e;
+          if (window.iosdkqgqc) {
+            setTimeout(
+              () => window.webkit.messageHandlers.back2NativeVC.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.back2NativeVC",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
-        );
+        }
 
-      } else {
+        function back2NativeVCCallBack(e) {}
 
-      }
-
-    }
-
-
-    function back2NativeVCCallBack(e) {
-
-    }
-
-    //----------------------------调用电子社保卡
-    //唤起
-    function requestESSC(i, e) {
-      back2NativeVCCallBack = e;
-      if (window.iosdkqgqc) {
-        setTimeout(() => window.webkit.messageHandlers.requestESSC.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.requestESSC", {
-            "param": "测试"
-          },
-          function(responseData) {
+        //----------------------------调用电子社保卡
+        //唤起
+        function requestESSC(i, e) {
+          back2NativeVCCallBack = e;
+          if (window.iosdkqgqc) {
+            setTimeout(
+              () => window.webkit.messageHandlers.requestESSC.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.requestESSC",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
-        );
+        }
 
-      } else {
+        //回调传值
+        function requestESSCCallBack(e) {}
 
-      }
-
-    }
-
-    //回调传值
-    function requestESSCCallBack(e) {
-    }
-
-    //退出
-    function exitESSCSDK(i) {
-      if (window.iosdkqgqc) {
-        setTimeout(() => window.webkit.messageHandlers.exitESSCSDK.postMessage(i), 10);
-      } else if (window.WebViewJavascriptBridge) {
-        window.WebViewJavascriptBridge.callHandler(
-          "Native.exitESSCSDK", {
-            "param": "测试"
-          },
-          function(responseData) {
+        //退出
+        function exitESSCSDK(i) {
+          if (window.iosdkqgqc) {
+            setTimeout(
+              () => window.webkit.messageHandlers.exitESSCSDK.postMessage(i),
+              10
+            );
+          } else if (window.WebViewJavascriptBridge) {
+            window.WebViewJavascriptBridge.callHandler(
+              "Native.exitESSCSDK",
+              {
+                param: "测试"
+              },
+              function(responseData) {}
+            );
+          } else {
           }
+        }
+
+        //加入viewport-units-buggyfill配置兼容低配机型---------------------OTHER
+        window.viewportUnitsBuggyfill.init({
+          hacks: window.viewportUnitsBuggyfillHacks
+        });
+
+        document.addEventListener("touchstart", function(event) {
+          if (event.touches.length > 1) {
+            event.preventDefault();
+          }
+        });
+
+        document.addEventListener("gesturestart", function(event) {
+          event.preventDefault();
+        });
+      };
+      if (!window.Promise) {
+        document.writeln(
+          '<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+            ">" +
+            "<" +
+            "/" +
+            "script>"
         );
-
-      } else {
-
       }
-
-    }
-
-
-    //加入viewport-units-buggyfill配置兼容低配机型---------------------OTHER
-    window.viewportUnitsBuggyfill.init({
-      hacks: window.viewportUnitsBuggyfillHacks
-    });
-
-
-    document.addEventListener("touchstart", function(event) {
-      if (event.touches.length > 1) {
-        event.preventDefault();
-      }
-    });
-
-
-    document.addEventListener("gesturestart", function(event) {
-      event.preventDefault();
-    });
-  };
-  if (!window.Promise) {
-    document.writeln("<script src=\"https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js\"" + ">" + "<" + "/" + "script>");
-  }
-</script>
-</body>
+    </script>
+  </body>
 </html>

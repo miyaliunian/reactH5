@@ -7,15 +7,15 @@
  */
 
 export const schema = {
-    name: 'loginData',
-    id: 'id',
-}
+  name: "loginData",
+  id: "id"
+};
 
 const reducer = (state = {}, action) => {
-    if (action.response && action.response.products) {
-        return {...state, ...action.response.products}
-    }
-    return state;
-}
+  if (action.response && action.response.products) {
+    return { ...state, ...action.response.products };
+  }
+  return state;
+};
 
 export default reducer;

@@ -6,7 +6,6 @@
  *   字典常量
  */
 
-
 //洛阳 行政区域代码
 // export const cityID = "410300";
 // export const BASE_URL = "https://ykt.haly12333.org.cn/t-core";
@@ -14,9 +13,9 @@
 
 // //export const BASE_URL = 'http://58.208.84.112:10086/t-core'
 // //南通正式
-export const cityID = '320600'
-export const BASE_URL = 'http://www.ntyibao.com/t-core'
- //  530101198001010051  Aa123456
+export const cityID = "320600";
+export const BASE_URL = "http://www.ntyibao.com/t-core";
+//  530101198001010051  Aa123456
 
 //常州正式
 // export const cityID = '320400'
@@ -37,7 +36,6 @@ export const ZHPX = [
   { title: "综合排序", value: "register" },
   { title: "医院等级", value: "grade" }
 ];
-
 
 //筛选->医院类型
 export const SX_YYLX = {
@@ -123,18 +121,11 @@ export const HosGradeAppType = {
   othersGrade: "othersGrade"
 };
 
-
-export const OrderType =
-  [
-    { register: "线上挂号", status: "register" },
-    { recipe: "门诊缴费", status: "recipe" },
-    { medicineScan: "扫码购药", status: "medicineScan" },
-    { inPrePay: "住院押金", status: "inPrePay" }
-  ];
-
-
-
+export const OrderType = [
+  { register: "线上挂号", status: "register" },
+  { recipe: "门诊缴费", status: "recipe" },
+  { medicineScan: "扫码购药", status: "medicineScan" },
+  { inPrePay: "住院押金", status: "inPrePay" }
+];
 
 export const payMethodId = "1";
-
-

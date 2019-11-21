@@ -29,10 +29,9 @@ import "./style.less";
 import LoadingMask from "@components/Loading/LoadingMask";
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
-
-const getMonths = (data) => {
+const getMonths = data => {
   let months = [];
-  data.map((item) => {
+  data.map(item => {
     let { oDay, oweekDay } = getDate(item);
     let Obj = { oDay, oweekDay };
     months.push(getDate(item));
@@ -41,7 +40,6 @@ const getMonths = (data) => {
 };
 
 class DoctorListContainer extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -56,40 +54,47 @@ class DoctorListContainer extends Component {
     const { doctors, reservations, tabSel } = this.props;
     return (
       <ContentWrapper>
-        <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
-          <DoctorTabs tabSel={(target) => this.tabSel(target)} iniTabSel={tabSel}/>
+        <SafeAreaView
+          showBar={true}
+          title={name}
+          isRight={false}
+          handleBack={this.handleBack}
+        >
+          <DoctorTabs
+            tabSel={target => this.tabSel(target)}
+            iniTabSel={tabSel}
+          />
           <DateFilterBar ref={"reservations"}>
-            {tabSel === 2 && reservations ?
-              <Reservaes reservations={reservations}
-                         fetchDoctors={(dayObj) => this.fetchDoctors(dayObj)}
-                         filterConditions={this.filterConditions}
-                         showModal={() => this.showModal()}
+            {tabSel === 2 && reservations ? (
+              <Reservaes
+                reservations={reservations}
+                fetchDoctors={dayObj => this.fetchDoctors(dayObj)}
+                filterConditions={this.filterConditions}
+                showModal={() => this.showModal()}
               />
-              :
-              null
-            }
+            ) : null}
           </DateFilterBar>
-          <DoctorItem data={doctors} {...this.props.match.params}/>
-          <Modal
-            visible={this.state.isShow}
-            title=""
-            afterClose={() => {
-            }}
-          >
+          <DoctorItem data={doctors} {...this.props.match.params} />
+          <Modal visible={this.state.isShow} title="" afterClose={() => {}}>
             <div className={"calendar_box"}>
-              <Header title={"选择出诊日期"} isRight={false} onBack={() => this.closeModal()}/>
-              <Calendar reservations={reservations}
-                        markSelDate={(date) => {
-                          this.markSelDate(date);
-                        }}/>
+              <Header
+                title={"选择出诊日期"}
+                isRight={false}
+                onBack={() => this.closeModal()}
+              />
+              <Calendar
+                reservations={reservations}
+                markSelDate={date => {
+                  this.markSelDate(date);
+                }}
+              />
             </div>
           </Modal>
-          <LoadingMask/>
+          <LoadingMask />
         </SafeAreaView>
       </ContentWrapper>
     );
   }
-
 
   /**
    * 按专家、日期预约 条件筛选 数据
@@ -97,7 +102,9 @@ class DoctorListContainer extends Component {
    */
   tabSel(target) {
     const { id } = this.props.match.params;
-    const { doctorListActions: { loadDoctorList, changeTab } } = this.props;
+    const {
+      doctorListActions: { loadDoctorList, changeTab }
+    } = this.props;
     //切换选中的tab
     changeTab(target);
     if (target === 1) {
@@ -115,7 +122,6 @@ class DoctorListContainer extends Component {
       loadDoctorList(id, date);
     }
   }
-
 
   /**
    * MODAL日历:选择某天，然后关闭
@@ -148,7 +154,6 @@ class DoctorListContainer extends Component {
     this.props.doctorListActions.loadDoctorList(id, date);
   }
 
-
   handleBack = () => {
     this.props.history.goBack();
   };
@@ -162,7 +167,6 @@ class DoctorListContainer extends Component {
     });
   }
 
-
   /**
    * 日历Modal:隐藏
    */
@@ -171,7 +175,10 @@ class DoctorListContainer extends Component {
   }
 
   componentDidMount() {
-    const { history, doctorListActions: { loadDoctorList, loadReservationList } } = this.props;
+    const {
+      history,
+      doctorListActions: { loadDoctorList, loadReservationList }
+    } = this.props;
     const { id } = this.props.match.params;
     if (history.action === "PUSH") {
       loadDoctorList(id);
@@ -180,16 +187,15 @@ class DoctorListContainer extends Component {
   }
 
   componentWillUnmount() {
-
-
     // step1: 跳转页面时 自动滚动到 顶部
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 
-
     const { history } = this.props;
     if (history.action === "POP") {
-      const { doctorListActions: { clearAllItems } } = this.props;
+      const {
+        doctorListActions: { clearAllItems }
+      } = this.props;
       clearAllItems(() => {
         this.resizeReservationsBox();
       });
@@ -202,7 +208,7 @@ class DoctorListContainer extends Component {
  * @param state
  * @returns {{fetchingStatus: *, doctors: *, reservations: *, seeDate: *}}
  */
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     fetchingStatus: getFetchStatus(state),
     doctors: getDoctorList(state),
@@ -212,16 +218,18 @@ const mapStateToProps = (state) => {
   };
 };
 
-
 /**
  * store.dispatch
  * @param dispatch
  * @returns {{doctorListActions: {loadDoctorList: function(*=), loadReservationList: function(*=)}|ActionCreator<any>|ActionCreatorsMapObject<any>}}
  */
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     doctorListActions: bindActionCreators(doctorListActions, dispatch)
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoctorListContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DoctorListContainer);

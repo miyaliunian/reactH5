@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components'
+import styled, { keyframes } from "styled-components";
 
 const move = keyframes`
     0% {
@@ -7,8 +7,7 @@ const move = keyframes`
     100% {
         transform: translate(-50%, 0);
 }
-`
-
+`;
 
 export const NoMatchWrapper = styled.div`
   position: fixed;
@@ -17,7 +16,7 @@ export const NoMatchWrapper = styled.div`
   background-color: #ffffff;
   padding-top: 1.767rem;
   width: 100%;
-   .img-wrapper {
+  .img-wrapper {
     width: 70%;
     margin: 0 auto;
     position: relative;
@@ -54,7 +53,7 @@ export const NoMatchWrapper = styled.div`
       transform: translateX(-50%);
     }
   }
-    .link-wrapper {
+  .link-wrapper {
     margin-top: 2rem;
     text-align: center;
     .link {
@@ -62,10 +61,8 @@ export const NoMatchWrapper = styled.div`
       color: #ffffff;
       border-radius: 5px;
       display: inline-block;
-      padding: .625rem 4rem;
+      padding: 0.625rem 4rem;
       font-size: 1.5rem;
     }
   }
-`
-
-
+`;

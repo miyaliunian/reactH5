@@ -90,6 +90,7 @@
     "postcss-url": "^8.0.0",
     "postcss-viewport-units": "^0.1.6",
     "postcss-write-svg": "^3.0.1",
+    "prettier": "^1.19.1",
     "react-app-rewire-postcss": "^3.0.2"
   },
   "theme": {

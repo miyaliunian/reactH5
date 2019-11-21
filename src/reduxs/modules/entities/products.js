@@ -6,5 +6,3 @@
  *   可以通过action.type 判断 也可用通过 action是否包含某个值 处理 reducer
  *
  */
-
-

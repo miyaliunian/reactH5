@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import "./style.less";
 import { getDate } from "@utils/dayutils";
 
-const getMonths = (data) => {
+const getMonths = data => {
   let months = [];
   data.map((item, index) => {
     let { oDay, oweekDay } = getDate(item);
@@ -25,15 +25,12 @@ const getMonths = (data) => {
 };
 
 export default class Reservaes extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       days: []
     };
-
   }
-
 
   render() {
     const { filterConditions } = this.props;
@@ -41,27 +38,37 @@ export default class Reservaes extends Component {
       <div className={"reservaes border-bottom"}>
         {this.state.days.map((day, index) => {
           return (
-            <div key={index} className={day.isSel ? "reservaes__box boxSel" : "reservaes__box border"}
-                 onClick={() => this.boxClick(day, index)}>
+            <div
+              key={index}
+              className={
+                day.isSel ? "reservaes__box boxSel" : "reservaes__box border"
+              }
+              onClick={() => this.boxClick(day, index)}
+            >
               <div className={"reservaes__top"}>{day.oweekDay}</div>
               <div className={"reservaes__bottom"}>{day.oDay}</div>
             </div>
           );
         })}
-        {filterConditions.length > 0
-          ?
-          <div className={"reservaes__more"} onClick={this.props.showModal}>{filterConditions}</div>
-          :
-          <div className={"reservaes__more"} onClick={this.props.showModal}>更多 >></div>
-        }
-
+        {filterConditions.length > 0 ? (
+          <div className={"reservaes__more"} onClick={this.props.showModal}>
+            {filterConditions}
+          </div>
+        ) : (
+          <div className={"reservaes__more"} onClick={this.props.showModal}>
+            更多 >>
+          </div>
+        )}
       </div>
     );
   }
 
-
   componentWillReceiveProps(nextPros) {
-    if (nextPros.reservations && nextPros.reservations.length > 0 && this.state.days.length === 0) {
+    if (
+      nextPros.reservations &&
+      nextPros.reservations.length > 0 &&
+      this.state.days.length === 0
+    ) {
       let days = getMonths(nextPros.reservations);
       this.setState({
         days: days
@@ -80,7 +87,7 @@ export default class Reservaes extends Component {
   boxClick(dayObj, index) {
     const { reservations } = this.props;
     let days = getMonths(reservations);
-    days.map((item) => {
+    days.map(item => {
       if (item.oDay === dayObj.oDay) {
         item.isSel = true;
       } else {
@@ -93,7 +100,4 @@ export default class Reservaes extends Component {
     });
     this.props.fetchDoctors(reservations[index]);
   }
-}    
-
-
-
+}
