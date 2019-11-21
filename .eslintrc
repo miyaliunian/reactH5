@@ -10,6 +10,5 @@
     "sourceType": "module"
   },
   "extends": "arbnb",
-  "rules": {
-  }
+  "rules": {}
 }
