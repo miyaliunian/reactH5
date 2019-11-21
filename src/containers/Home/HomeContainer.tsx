@@ -32,22 +32,33 @@ class Home extends Component {
     switch (index) {
       case 0:
         history.push("/login");
-      // case 1 :
-      //     history.push('/register')
-      //     break
       case 1:
+        history.push("/register");
+        break;
+      case 2:
         history.push("/hospitals");
         break;
-      // case 3 :
-      //     history.push('/bindCard')
-      //     break
-      case 2:
+      case 3:
+        history.push("/bindCard");
+        break;
+      case 4:
         history.push("/intelligentWaiting");
         break;
-      case 3:
+      case 5:
         history.push("/hospitalizationManagement");
         break;
-
+      // case 6:
+      //   history.push("/orderReservationDoctor");
+      //   break;
+      // case 7:
+      //   history.push("/payCountdown");
+      //   break;
+      // case 8:
+      //   history.push("/orderContainer");
+      //   break;
+      case 6:
+        history.push("/report");
+        break;
       case 10:
         break;
     }

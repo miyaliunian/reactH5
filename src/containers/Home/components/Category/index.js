@@ -16,18 +16,18 @@ const dataSource = [
       src:
         "https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png"
     },
-    // {
-    //     name: "注册",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203337jiudian.png"
-    // },
+    {
+      name: "注册",
+      src: "https://www.dpfile.com/sc/eleconfig/20160126203337jiudian.png"
+    },
     {
       name: "线上预约",
       src: "https://www.dpfile.com/sc/eleconfig/20160126202841xiuxianyule.png"
     },
-    // {
-    //     name: "家庭成员",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203251waimai.png"
-    // },
+    {
+      name: "家庭成员",
+      src: "https://www.dpfile.com/sc/eleconfig/20160126203251waimai.png"
+    },
     {
       name: "智能候诊",
       src: "https://www.dpfile.com/sc/eleconfig/20160204172927huoguo.png"
@@ -35,27 +35,11 @@ const dataSource = [
     {
       name: "住院管理",
       src: "https://www.dpfile.com/sc/eleconfig/20160126202946liren.png"
+    },
+    {
+      name: "报告查询",
+      src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
     }
-    // {
-    //     name: "H5TNative",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
-    // },
-    // {
-    //     name: "支付成功倒计时",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
-    // },
-    // {
-    //     name: "订单查询去支付",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
-    // },
-    // {
-    //     name: "报告查询",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
-    // },
-    // {
-    //     name: "actionSheet",
-    //     src: "https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png"
-    // },
   ]
 ];
 export default class Category extends Component {

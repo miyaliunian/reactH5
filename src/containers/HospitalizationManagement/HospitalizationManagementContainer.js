@@ -39,8 +39,13 @@ class HospitalizationManagementContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("nextProps");
+    console.log(nextProps.bindCardList);
+    console.log("this.props");
+    console.log(this.props.bindCardList);
     if (nextProps.bindCardList !== this.props.bindCardList) {
       let perObj = nextProps.bindCardList.filter(item => item.isSel);
+      console.log("componentWillReceiveProps");
       this.props.hospitalizationManagementActions.getRegedListByOpenType(
         "inPrePay",
         perObj[0]
@@ -209,7 +214,6 @@ class HospitalizationManagementContainer extends Component {
 
   //重新选择家庭成员后重新刷新数据
   refreshCallBack(data) {
-    debugger;
     const {
       hospitalizationManagementActions: { refreshRegedListByOpenType },
       hospitalizationSel
