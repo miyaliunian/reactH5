@@ -37,7 +37,7 @@ class BindCardItem extends Component {
             >
               <img src={ico_user} className={"bindCard__icon"} />
               {data.map(item => {
-                if (item.def) {
+                if (item.isSel) {
                   return <div key={item.id}>{item.name}</div>;
                 }
               })}
@@ -67,7 +67,6 @@ class BindCardItem extends Component {
   navPage(data) {
     let path = {
       pathname: "bindCardList",
-      state: data,
       callBack: data => this.callBack(data)
     };
     this.props.history.push(path);

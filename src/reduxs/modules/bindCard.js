@@ -87,7 +87,8 @@ const loadBindCardList = targetURL => ({
       actionTypes.FETCH_BIND_CARD_SUCCESS,
       actionTypes.FETCH_BIND_CARD_FAILURE
     ],
-    targetURL
+    targetURL,
+    schema: { name: "bindCard" }
   }
 });
 

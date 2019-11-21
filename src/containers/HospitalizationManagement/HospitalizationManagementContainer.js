@@ -11,6 +11,12 @@ import CategoryHosList from "@components/CategoryHosList/CategoryHosList";
 import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
 import { Icon } from "antd-mobile";
 import Modal from "@material-ui/core/Modal";
+
+import "./style.less";
+import LoadingMask from "@components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+
+// Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
@@ -24,10 +30,6 @@ import {
   actions as hospitalizationManagementActions
 } from "@reduxs/modules/hospitalizationManagement";
 
-import "./style.less";
-import LoadingMask from "@components/Loading/LoadingMask";
-import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
-
 class HospitalizationManagementContainer extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +40,7 @@ class HospitalizationManagementContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.bindCardList !== this.props.bindCardList) {
-      let perObj = nextProps.bindCardList.filter(item => item.def);
+      let perObj = nextProps.bindCardList.filter(item => item.isSel);
       this.props.hospitalizationManagementActions.getRegedListByOpenType(
         "inPrePay",
         perObj[0]
@@ -47,13 +49,7 @@ class HospitalizationManagementContainer extends Component {
   }
 
   render() {
-    const {
-      fetchingStatus,
-      bindCardList,
-      hospitalizationSel,
-      hospitalDetails
-    } = this.props;
-    console.log(hospitalDetails);
+    const { bindCardList, hospitalizationSel, hospitalDetails } = this.props;
     return (
       <div className={"hospitalizationManagement"}>
         <SafeAreaView
@@ -202,34 +198,33 @@ class HospitalizationManagementContainer extends Component {
   }
 
   componentWillUnmount() {
-    const { history } = this.props;
+    const {
+      history,
+      hospitalizationManagementActions: { setHospNUll }
+    } = this.props;
     if (history.action !== "PUSH") {
-      setTimeout(
-        () => this.props.hospitalizationManagementActions.setHospNUll(),
-        200
-      );
+      setTimeout(() => setHospNUll(), 200);
     }
   }
 
   //重新选择家庭成员后重新刷新数据
   refreshCallBack(data) {
-    const { hospitalizationSel } = this.props;
-    this.props.hospitalizationManagementActions.refreshRegedListByOpenType(
-      "inPrePay",
-      hospitalizationSel,
-      data
-    );
+    debugger;
+    const {
+      hospitalizationManagementActions: { refreshRegedListByOpenType },
+      hospitalizationSel
+    } = this.props;
+    refreshRegedListByOpenType("inPrePay", hospitalizationSel, data);
   }
 
   //重新选择医院后重新刷新数据
   refreshHospitalDetail(data) {
-    const { bindCardList } = this.props;
+    const {
+      hospitalizationManagementActions: { refreshRegedListByOpenType },
+      bindCardList
+    } = this.props;
     let bindCardObj = bindCardList.filter(item => item.def);
-    this.props.hospitalizationManagementActions.refreshRegedListByOpenType(
-      "inPrePay",
-      data,
-      bindCardObj[0]
-    );
+    refreshRegedListByOpenType("inPrePay", data, bindCardObj[0]);
     this.setState({
       openModalHospitalization: false
     });

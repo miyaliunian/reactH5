@@ -81,6 +81,15 @@ const normalizeData = (data, schema) => {
           }
         });
         return data;
+      case "bindCard":
+        data.data.map((item, index) => {
+          if (index === 0) {
+            item.isSel = true;
+          } else {
+            item.isSel = false;
+          }
+        });
+        return data;
       default:
         return;
     }

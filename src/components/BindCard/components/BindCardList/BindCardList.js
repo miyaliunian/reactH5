@@ -79,9 +79,18 @@ class BindCardList extends Component {
 
   handleItemClick(cliItem) {
     const {
+      bindCardList,
       location: { callBack },
       history
     } = this.props;
+    //处理选中的家庭成员
+    bindCardList.map(i => {
+      if (i.id == cliItem.id) {
+        i.isSel = true;
+      } else {
+        i.isSel = !i.isSel;
+      }
+    });
     if (callBack) {
       setTimeout(() => {
         //1：将选中的家庭成员 通过回调函数 传回给调用方
