@@ -106,8 +106,7 @@ class CategoryHosList extends Component {
   pullDownFreshAction = () => {
     const {
       bindCardList,
-      pullDowning,
-      chooseCategoryHospListActions: { pullDownRefresh, loadMoreAction }
+      chooseCategoryHospListActions: { pullDownRefresh}
     } = this.props;
     let bindCardObj = bindCardList.filter(item => item.def);
 

@@ -1,7 +1,7 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component} from "react";
 import "./style.less";
 import { bindActionCreators } from "redux";
-import { ToastContainer, Flip } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import PureWrapper from "@baseUI/PureWrapper";
 import {
   BrowserRouter as Router,
@@ -12,7 +12,6 @@ import {
 } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
-import ErrorToast from "@components/ErrorToast";
 import { actions as appActions, getError } from "@reduxs/modules/app";
 import { isLogin } from "@utils/token";
 import "antd-mobile/lib/action-sheet/style";
@@ -71,13 +70,9 @@ class AppContainer extends Component {
   };
 
   render() {
-    const {
-      error,
-      appActions: { clearError }
-    } = this.props;
+
     return (
       <div>
-        {/*<CssBaseline/>*/}
         <PureToastContainer
           position="top-center"
           autoClose={2000}
@@ -92,7 +87,6 @@ class AppContainer extends Component {
         <Router>
           <Routes />
         </Router>
-        <ErrorToast desc={error} show={this.state.showBar} />
       </div>
     );
   }

@@ -165,10 +165,6 @@ const fetchRequest = () => ({
   type: actionTypes.FETCH_REQUEST
 });
 
-const fetchSuccess = () => ({
-  type: actionTypes.FETCH_SUCCESS
-});
-
 const fetchPersonSuccess = data => ({
   type: actionTypes.FETCH_PERSON_SUCCESS,
   response: data

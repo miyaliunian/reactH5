@@ -8,7 +8,7 @@ import url from "@utils/httpUrl";
  *   医生列表
  */
 
-import { PlatformType, DoctorOrderType, cityID } from "@assets/static/Constant";
+import { PlatformType, DoctorOrderType} from "@assets/static/Constant";
 import { FETCH_DATA } from "@reduxs/middleware/api";
 
 const initialState = {

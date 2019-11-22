@@ -8,11 +8,10 @@
 import React, { Component } from "react";
 import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
 import Bscroll from "better-scroll";
-// import 'antd-mobile/dist/antd-mobile.css'
 import { Icon, Modal, List, Radio } from "antd-mobile";
 import posed from "react-pose";
 import { getDate } from "@utils/dayutils";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./style.less";
 
 /**
@@ -44,7 +43,6 @@ class DoctorVisiting extends Component {
       clinicData,
       reservationData,
       timeInterval,
-      location
     } = this.props;
     const { isVisible, timeIntervalValue } = this.state;
     if (this.defSelClinic === "") {
