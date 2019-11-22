@@ -20,6 +20,7 @@ import {
 } from "@reduxs/modules/bindCard";
 import BindCardItem from "@components/BindCard/components/BindCardItem/BindCardItem";
 import LoadingMask from "../../components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 const IntelligentWaitingRefreshTime = {
   time: 60000 // 刷新时间一分钟，单位为毫秒
@@ -30,6 +31,12 @@ class IntelligentWaitingContainer extends Component {
     super(props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.bindCardList !== this.props.bindCardList) {
+      let perObj = nextProps.bindCardList.filter(item => item.isSel);
+      this.props.bindCardActions.loadingWaitingListByPersonId(perObj[0].id);
+    }
+  }
   handleBack = () => {
     this.props.bindCardActions.resetBindCard();
     this.props.bindCardActions.resetWaitingList();
@@ -37,7 +44,7 @@ class IntelligentWaitingContainer extends Component {
   };
 
   render() {
-    const { list, waitingList, fetchingStatus } = this.props;
+    const { bindCardList, waitingList, fetchingStatus } = this.props;
     return (
       <div
         id="intelligentWaitingContainer"
@@ -60,10 +67,11 @@ class IntelligentWaitingContainer extends Component {
             onBack={this.handleBack}
             isRight={false}
           />
+          {/*-------------------------选择成员信息*/}
           <BindCardItem
-            id="intelligentWaitingContainer__bindCardItem"
-            data={list}
-            isRefresh={false}
+            data={bindCardList}
+            isRefresh={this.refresh}
+            callBack={data => this.refreshCallBack(data)}
           />
         </div>
         <IntelligentWaitingItem
@@ -76,8 +84,22 @@ class IntelligentWaitingContainer extends Component {
     );
   }
 
+  // componentDidMount() {
+  //   this.props.bindCardActions.loadWaitingList();
+  //   // 定时器，可以修改IntelligentWaitingRefreshTime.time为自己想要的时间
+  //   this.timer = setInterval(
+  //     () => this.timeToRefresh(),
+  //     IntelligentWaitingRefreshTime.time
+  //   );
+  // }
   componentDidMount() {
-    this.props.bindCardActions.loadWaitingList();
+    const {
+      history,
+      bindCardActions: { loadList }
+    } = this.props;
+    if (history.action === "PUSH") {
+      loadList();
+    }
     // 定时器，可以修改IntelligentWaitingRefreshTime.time为自己想要的时间
     this.timer = setInterval(
       () => this.timeToRefresh(),
@@ -100,11 +122,19 @@ class IntelligentWaitingContainer extends Component {
     this.getWaitingListByPersonid();
   }
 
+  //重新选择家庭成员后重新刷新数据
+  refreshCallBack(data) {
+    const {
+      bindCardActions: { loadingWaitingListByPersonId }
+    } = this.props;
+    loadingWaitingListByPersonId(data.id);
+  }
+
   getWaitingListByPersonid() {
     this.props.bindCardActions.resetWaitingList();
-    const { list } = this.props;
-    list.map(item => {
-      if (item.def) {
+    const { bindCardList } = this.props;
+    bindCardList.map(item => {
+      if (item.isSel) {
         this.props.bindCardActions.loadingWaitingListByPersonId(item.id);
       }
     });
@@ -116,7 +146,7 @@ class IntelligentWaitingContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    list: getBindCardList(state),
+    bindCardList: getBindCardList(state),
     waitingList: getIntelligentWaitingList(state),
     fetchingStatus: getFetchingStatus(state)
   };
