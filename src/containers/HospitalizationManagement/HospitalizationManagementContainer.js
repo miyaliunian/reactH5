@@ -39,13 +39,8 @@ class HospitalizationManagementContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps");
-    console.log(nextProps.bindCardList);
-    console.log("this.props");
-    console.log(this.props.bindCardList);
     if (nextProps.bindCardList !== this.props.bindCardList) {
       let perObj = nextProps.bindCardList.filter(item => item.isSel);
-      console.log("componentWillReceiveProps");
       this.props.hospitalizationManagementActions.getRegedListByOpenType(
         "inPrePay",
         perObj[0]
@@ -55,6 +50,7 @@ class HospitalizationManagementContainer extends Component {
 
   render() {
     const { bindCardList, hospitalizationSel, hospitalDetails } = this.props;
+    console.log(hospitalDetails)
     return (
       <div className={"hospitalizationManagement"}>
         <SafeAreaView
@@ -104,7 +100,7 @@ class HospitalizationManagementContainer extends Component {
           </Modal>
 
           {/*是否显示住院信息*/}
-          {hospitalDetails && hospitalDetails.totCost !== 0 ? (
+          {hospitalDetails && (hospitalDetails.totCost !== 0  && hospitalDetails.totCost !== '') ? (
             <div className={"hospitalizationManagement_hospitalization_info"}>
               <div className={"hospitalization__row"}>
                 <span className={"row_info_title"}>住院号</span>
@@ -146,7 +142,7 @@ class HospitalizationManagementContainer extends Component {
           ) : null}
 
           {/*是否显示：底部列表*/}
-          {hospitalDetails && hospitalDetails.totCost !== 0 ? (
+          {hospitalDetails &&   (hospitalDetails.totCost !== 0  && hospitalDetails.totCost !== '') ? (
             <div style={{ marginTop: "10px" }}>
               <Link
                 className={
