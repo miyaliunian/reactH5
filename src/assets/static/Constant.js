@@ -6,15 +6,19 @@
  *   字典常量
  */
 
-//洛阳 行政区域代码
-export const cityID = "410300";
-export const BASE_URL = "http://ykt.haly12333.org.cn:80/t-core";
+// //洛阳 行政区域代码
+// export const cityID = "410300";
+// export const BASE_URL = "http://ykt.haly12333.org.cn:80/t-core";
 //410305198201053012 qiaobin823
 
-// //export const BASE_URL = 'http://58.208.84.112:10086/t-core'
-// //南通正式
+//南通测试
 // export const cityID = "320600";
-// export const BASE_URL = "http://www.ntyibao.com/t-core";
+// export const BASE_URL = "http://58.208.84.112:10086/t-core";
+// 310101196310114532 123456nt
+
+//南通正式
+export const cityID = "320600";
+export const BASE_URL = "http://www.ntyibao.com/t-core";
 //  530101198001010051  Aa123456
 
 //常州正式
