@@ -14,7 +14,6 @@ import { OrderTypeWrapper, PayTypeList, ButtonWrapper } from "./style";
 import { Toast } from "antd-mobile";
 import "./style.less";
 //图标
-import icon_ybzf from "@images/Pay/ico_ybk_png.png"; //医保卡支付
 import icon_zfb from "@images/Pay/ico_zfb_png.png"; // 支付宝
 import icon_wechat from "@images/Pay/logo_wechat(07-12-09-01-07).png"; // 微信
 import icon_ylzf from "@images/Pay/logo_unionpay.png"; // 银联
@@ -160,7 +159,7 @@ class ThirdPayContainer extends Component {
                       <span style={{ fontSize: "17px" }}>{title}</span>
                       <img
                         src={
-                          index == this.state.selIndex
+                          index === this.state.selIndex
                             ? icon_pay_radio_sel
                             : icon_pay_n
                         }
@@ -218,7 +217,7 @@ class ThirdPayContainer extends Component {
       history,
       thirdPayActions: { WXPay }
     } = this.props;
-    if (this.state.selIndex != 2) {
+    if (this.state.selIndex !== 2) {
       Toast.info("只能选择微信支付");
       return;
     }

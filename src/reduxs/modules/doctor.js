@@ -46,7 +46,7 @@ export const actions = {
         data => {
           if (data.data && data.data.length >= 2) {
             for (let i = 0; i < data.data.length; i++) {
-              if (data.data[i].name == deptName) {
+              if (data.data[i].name === deptName) {
                 [data.data[0], data.data[i]] = [data.data[i], data.data[0]];
                 break;
               }
