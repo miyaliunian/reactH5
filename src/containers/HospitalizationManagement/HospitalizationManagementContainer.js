@@ -104,7 +104,7 @@ class HospitalizationManagementContainer extends Component {
           </Modal>
 
           {/*是否显示住院信息*/}
-          {hospitalDetails && hospitalDetails.totCost != 0 ? (
+          {hospitalDetails && hospitalDetails.totCost !== 0 ? (
             <div className={"hospitalizationManagement_hospitalization_info"}>
               <div className={"hospitalization__row"}>
                 <span className={"row_info_title"}>住院号</span>
@@ -146,7 +146,7 @@ class HospitalizationManagementContainer extends Component {
           ) : null}
 
           {/*是否显示：底部列表*/}
-          {hospitalDetails && hospitalDetails.totCost != 0 ? (
+          {hospitalDetails && hospitalDetails.totCost !== 0 ? (
             <div style={{ marginTop: "10px" }}>
               <Link
                 className={

@@ -6,7 +6,6 @@
  * 一日清单
  */
 import React, { Component } from "react";
-import Header from "@components/NavBar/NavBar";
 import DynamicTabs from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/Components/DynamicTabs/DynamicTabs";
 import ListOfContent from "@containers/HospitalizationManagement/Components/DailyListQueryPayment/Components/ListOfContent/ListOfContent";
 
@@ -15,9 +14,6 @@ import { bindActionCreators } from "redux";
 import {
   getStartDate,
   getCurrentMMddWed,
-  getPrevDate,
-  getNexDate,
-  getcurrentDate
 } from "@utils/dayutils";
 import {
   getFetchingStatus,

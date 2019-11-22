@@ -6,7 +6,6 @@
  *  从订单查询-进入 纯自费
  */
 import React, { Component } from "react";
-import { OrderType } from "@assets/static/Constant";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -44,6 +43,8 @@ class orderThirdPayContainer extends Component {
           case "medicineScan":
             typeEntity = { orderName: "扫码购药", orderCode: "medicineScan" };
             break;
+          default:
+            break
         }
 
         //跳转页面
@@ -78,10 +79,7 @@ class orderThirdPayContainer extends Component {
     this.timer && clearTimeout(this.timer);
   }
 
-  //第三方支付
-  thirdPay() {
-    const { history } = this.props;
-  }
+
 }
 
 const mapStateToProps = state => {

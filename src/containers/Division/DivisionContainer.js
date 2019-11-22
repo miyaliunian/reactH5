@@ -6,7 +6,6 @@
  *    首页->医院列表->科室选择
  */
 import React, { Component } from "react";
-import Header from "@components/NavBar/NavBar";
 import { Link } from "react-router-dom";
 import LoadingMask from "@components/Loading/LoadingMask";
 import { Icon } from "antd-mobile";
@@ -31,7 +30,7 @@ class DivisionContainer extends Component {
 
   render() {
     const { name } = this.props.match.params;
-    const { fetchingStatus, divisionList, departmentList } = this.props;
+    const {divisionList, departmentList } = this.props;
     return (
       <div className={"clinic"}>
         <SafeAreaView
@@ -102,7 +101,6 @@ class DivisionContainer extends Component {
 
   componentWillUnmount() {
     const {
-      history,
       divisionActions: { reset }
     } = this.props;
     reset();

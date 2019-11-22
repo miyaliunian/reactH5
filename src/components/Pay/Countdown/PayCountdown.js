@@ -8,7 +8,6 @@
 import React, { Component } from "react";
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import { withRouter } from "react-router-dom";
-import ReactLoading from "react-loading";
 import { Container, CountDownWrapper } from "./style";
 
 class PayCountdown extends Component {
