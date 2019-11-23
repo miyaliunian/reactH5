@@ -51,6 +51,10 @@ const addCustomize = () => config => {
   return config;
 }
 
+// 关闭 sourcemap
+process.env.GENERATE_SOURCEMAP = "false";
+
+
 module.exports = override(
   addWebpackAlias({
     '@assets': path.resolve(__dirname, 'src/assets'),
@@ -72,4 +76,5 @@ module.exports = override(
     modifyVars: theme
   }),
   addCustomize(),
+
 );
