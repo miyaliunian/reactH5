@@ -52,7 +52,6 @@ export const actions = {
               }
             }
           }
-
           dispatch(loadClinicListSuccess(data.data));
           const target = URL.API_DOCTOR_VISITING_LIST(
             hosId,

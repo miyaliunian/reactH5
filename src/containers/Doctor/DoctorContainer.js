@@ -84,7 +84,8 @@ class DoctorContainer extends Component {
 
   initailData() {
     const { location } = this.props;
-    const { hosId, id: doctId, deptName } = location.state.doctorInfo;
+    const { hosId, id: doctId} = location.state.doctorInfo;
+    const { name:deptName } = location.state.deptInfo;
     const {
       doctorActions: { loadClinicList }
     } = this.props;

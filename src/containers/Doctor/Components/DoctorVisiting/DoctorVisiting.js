@@ -115,6 +115,7 @@ class DoctorVisiting extends Component {
             <RefreshFooter refreshStatus={isLastPage} />
           </div>
         </div>
+
         <Modal
           popup
           visible={this.state.timeIntervalShow}
@@ -172,16 +173,7 @@ class DoctorVisiting extends Component {
       tap: true,
       useTransition: false
     });
-    // 出诊时间 标题栏->   禁止掉 滑动手势
-    document.getElementById("doctorVisitingTitle").addEventListener(
-      "touchmove",
-      event => {
-        event.preventDefault();
-      },
-      {
-        passive: false //  禁止 passive 效果
-      }
-    );
+
   }
 
   /**
