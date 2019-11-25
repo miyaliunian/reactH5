@@ -52,7 +52,7 @@ class DoctorVisiting extends Component {
     }
     return (
       <div className={"doctorVisiting"} id={"doctorVisitingTitle"}>
-        <div className={"doctorVisiting__title border-bottom"}>
+        <div className={"doctorVisiting__title border-bottom"} id={"doctorVisiting__title"}>
           <div>出诊时间</div>
           <div
             className={"doctorVisiting__title__right"}
@@ -173,6 +173,17 @@ class DoctorVisiting extends Component {
       tap: true,
       useTransition: false
     });
+
+    //顶部禁止滑动
+    document.getElementById("doctorVisiting__title").addEventListener(
+      "touchmove",
+      event => {
+        event.preventDefault();
+      },
+      {
+        passive: false //  禁止 passive 效果
+      }
+    );
 
   }
 
