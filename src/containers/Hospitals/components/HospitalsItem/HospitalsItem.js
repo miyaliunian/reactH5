@@ -12,10 +12,10 @@ import Bscroll from 'better-scroll'
 import './style.less'
 import { withRouter } from 'react-router-dom'
 //图标
-import icon_sj from '@images/Home/三甲图标IOS.png'
-import icon_bg from '@images/Home/报告图标IOS.png'
-import icon_zh from '@images/Home/综合图标IOS.png'
-import icon_yy from '@images/Home/预约图标IOS.png'
+import icon_sj from '@assets/images/Home/三甲图标IOS.png'
+import icon_bg from '@assets/images/Home/报告图标IOS.png'
+import icon_zh from '@assets/images/Home/综合图标IOS.png'
+import icon_yy from '@assets/images/Home/预约图标IOS.png'
 import EntryLoader from '@components/entryLoader'
 
 class HospitalsItem extends Component {

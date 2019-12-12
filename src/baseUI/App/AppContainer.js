@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch, withRouter, Redirect } from 'react-router
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { connect } from 'react-redux'
 import { actions as appActions, getError } from '@reduxs/modules/app'
-import { isLogin } from '@utils/token'
+import { isLogin } from '@api/token'
 import 'antd-mobile/lib/action-sheet/style'
 import routerMap from '@routes/index'
 import ErrorBoundary from '@baseUI/ErrorBoundary/ErrorBoundary'

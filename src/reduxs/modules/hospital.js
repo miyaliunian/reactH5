@@ -1,7 +1,6 @@
-import { cityID } from '@assets/../../api/Constant'
-import url from '../../utils/httpUrl'
+import { cityID } from '@api/Constant'
+import url from '@api/httpUrl'
 import { FETCH_DATA } from '../middleware/api'
-import ErrorBoundary from '@baseUI/ErrorBoundary/ErrorBoundary'
 import React, { Component } from 'react'
 
 /**

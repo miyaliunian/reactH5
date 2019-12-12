@@ -6,8 +6,8 @@
  *  next 代表了当前中间件到下一个中间件所提供的方法
  *
  */
-import { post } from '../../utils/httpUtil'
-import { dataConversionDic } from '../../assets/static'
+import { post } from '@api/httpUtil'
+import { dataConversionDic } from '@assets/static'
 
 export const FETCH_DATA = 'FETCH DATA'
 export default store => next => action => {

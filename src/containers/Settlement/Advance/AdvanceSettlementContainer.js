@@ -18,7 +18,6 @@
  *
  */
 import React, { Component } from 'react'
-import ico_user from '@images/Home/ico_user.png'
 import ButtonWrapper from '@baseUI/Button/PrimaryButton'
 import {
   PayStatusContent,
@@ -33,7 +32,8 @@ import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 import SlideDownSnackBar from '@components/SlideDownSnackBar/SlideDownSnackBar'
 import LoadingMask from '@components/Loading/LoadingMask'
 //图标
-import icon_pay from '@images/Pay/radio_b.png'
+import icon_pay from '@assets/images/Pay/radio_b.png'
+import ico_user from '@assets/images/Home/ico_user.png'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

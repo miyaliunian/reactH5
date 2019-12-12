@@ -1,5 +1,3 @@
-import url from '@utils/httpUrl'
-
 /**
  * Class: doctorList
  * Author: wufei
@@ -8,7 +6,8 @@ import url from '@utils/httpUrl'
  *   医生列表
  */
 
-import { PlatformType, DoctorOrderType } from '@assets/../../api/Constant'
+import { PlatformType, DoctorOrderType } from '@api/Constant'
+import url from '@api/httpUrl'
 import { FETCH_DATA } from '@reduxs/middleware/api'
 
 const initialState = {

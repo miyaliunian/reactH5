@@ -1,7 +1,7 @@
-import { cityID } from '@assets/../../api/Constant'
-import url from '../../utils/httpUrl'
+import { cityID } from '@api/Constant'
+import url from '@api/httpUrl'
 import { Toast } from 'antd-mobile'
-import { post } from '@utils/httpUtil'
+import { post } from '@api/httpUtil'
 import Axios from 'axios'
 
 /**

@@ -5,9 +5,9 @@
  * Description:
  *  预约信息
  */
-import URL from '@utils/httpUrl'
-import { OrderType } from '@assets/../../api/Constant'
-import { post } from '@utils/httpUtil'
+import URL from '@api/httpUrl'
+import { OrderType } from '@api/Constant'
+import { post } from '@api/httpUtil'
 import { Toast } from 'antd-mobile'
 
 const initialState = {

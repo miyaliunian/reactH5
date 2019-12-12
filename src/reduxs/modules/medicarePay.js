@@ -6,12 +6,12 @@
  *  医保支付
  */
 
-import URL from '@utils/httpUrl'
+import URL from '@api/httpUrl'
 import { Toast } from 'antd-mobile'
-import { post } from '@utils/httpUtil'
+import { post } from '@api/httpUtil'
 import { esscActionUtil } from '@utils/ESSCActionTypeUtil'
 import { PUBLIC_LEY } from '@assets/static'
-import { cityID, payMethodId } from '@assets/../../api/Constant'
+import { cityID, payMethodId } from '@api/Constant'
 
 const initialState = {
   isFetching: false,

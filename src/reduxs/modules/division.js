@@ -6,10 +6,10 @@
  *     医院列表->平台大科列表
  */
 
-import url from '../../utils/httpUrl'
+import url from '@api/httpUrl'
 import { FETCH_DATA } from '../middleware/api'
 import { dataConversionDic } from '../../assets/static'
-import { post } from '@utils/httpUtil'
+import { post } from '@api/httpUtil'
 
 export const schema = {
   name: dataConversionDic.divisionList

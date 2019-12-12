@@ -6,10 +6,10 @@
  *  第三方支付
  */
 
-import URL from '@utils/httpUrl'
+import URL from '@api/httpUrl'
 import { Toast } from 'antd-mobile'
-import { post } from '@utils/httpUtil'
-import { OrderType } from '@assets/../../api/Constant'
+import { post } from '@api/httpUtil'
+import { OrderType } from '@api/Constant'
 
 const initialState = {
   isFetching: false,

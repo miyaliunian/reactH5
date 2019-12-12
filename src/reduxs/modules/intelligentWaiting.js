@@ -1,4 +1,4 @@
-import url from '../../utils/httpUrl'
+import url from '@api/httpUrl'
 import { FETCH_DATA } from '../middleware/api'
 
 /**

@@ -5,59 +5,45 @@
  * Description:
  *  医生列表->每一个单元格
  */
-import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-import Bscroll from "better-scroll";
-import ico_doctor_status from "@images/Home/ico_doctor_status.png";
-import ico_doctor_status_h from "@images/Home/ico_doctor_status_h.png";
-import "./style.less";
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import Bscroll from 'better-scroll'
+import ico_doctor_status from '@assets/images/Home/ico_doctor_status.png'
+import ico_doctor_status_h from '@assets/images/Home/ico_doctor_status_h.png'
+import './style.less'
 
 class DoctorItem extends Component {
   render() {
-    const { data } = this.props;
+    const { data } = this.props
     return (
-      <ul className={"doctorItem"}>
+      <ul className={'doctorItem'}>
         <div>
           {data.map(item => {
             return (
-              <li
-                key={item.id}
-                className={"doctorItem__item border-bottom"}
-                onClick={() => this.handelPageNav(item)}
-              >
-                <div className={"doctorItem__avator"}>
-                  {this.drawReact(item.name)}
-                </div>
-                <div className={"doctorItem__info"}>
-                  <div className={"doctorItem__name_title"}>
-                    <div className={"doctorItem__name"}>{item.name}</div>
-                    <div className={"doctorItem__title"}>{item.title}</div>
+              <li key={item.id} className={'doctorItem__item border-bottom'} onClick={() => this.handelPageNav(item)}>
+                <div className={'doctorItem__avator'}>{this.drawReact(item.name)}</div>
+                <div className={'doctorItem__info'}>
+                  <div className={'doctorItem__name_title'}>
+                    <div className={'doctorItem__name'}>{item.name}</div>
+                    <div className={'doctorItem__title'}>{item.title}</div>
                   </div>
-                  <div className={"doctorItem__skills"}>
-                    擅长: {item.skills ? item.skills : "暂无"}
-                  </div>
+                  <div className={'doctorItem__skills'}>擅长: {item.skills ? item.skills : '暂无'}</div>
                 </div>
                 {item.appoint ? (
-                  <div className={"doctorItem__right__icon"}>
-                    <img
-                      className={"doctorItem__icon"}
-                      src={ico_doctor_status_h}
-                    />
+                  <div className={'doctorItem__right__icon'}>
+                    <img className={'doctorItem__icon'} src={ico_doctor_status_h} />
                   </div>
                 ) : (
-                  <div className={"doctorItem__right__icon"}>
-                    <img
-                      className={"doctorItem__icon"}
-                      src={ico_doctor_status}
-                    />
+                  <div className={'doctorItem__right__icon'}>
+                    <img className={'doctorItem__icon'} src={ico_doctor_status} />
                   </div>
                 )}
               </li>
-            );
+            )
           })}
         </div>
       </ul>
-    );
+    )
   }
 
   /**
@@ -66,8 +52,8 @@ class DoctorItem extends Component {
    * @returns {*}
    */
   drawReact(data) {
-    let str = data[data.length - 1];
-    return <div className={"avatar_txt"}>{str}</div>;
+    let str = data[data.length - 1]
+    return <div className={'avatar_txt'}>{str}</div>
   }
 
   /**
@@ -76,15 +62,15 @@ class DoctorItem extends Component {
    */
   handelPageNav(data) {
     let path = {
-      pathname: "/doctor",
+      pathname: '/doctor',
       state: {
         doctorInfo: data,
         deptInfo: { ...this.props.match.params }
       }
-    };
+    }
     // console.log(path)
-    this.props.history.push(path);
+    this.props.history.push(path)
   }
 }
 
-export default withRouter(DoctorItem);
+export default withRouter(DoctorItem)

@@ -6,7 +6,7 @@
  *  医院列表
  */
 import React, { Component } from 'react'
-import { ZHPX, SX_YYLX, SX_YYDJ } from '@assets/../../../../api/Constant'
+import { ZHPX, SX_YYLX, SX_YYDJ } from '@api/Constant'
 import './style.less'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

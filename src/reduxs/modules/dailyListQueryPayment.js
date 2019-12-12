@@ -1,5 +1,5 @@
-import url from '@utils/httpUrl'
-import { cityID } from '@assets/../../api/Constant'
+import url from '@api/httpUrl'
+import { cityID } from '@api/Constant'
 import { FETCH_DATA } from '@reduxs/middleware/api'
 
 const initialState = {

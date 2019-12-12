@@ -6,7 +6,7 @@
  *   webpack 按需加载
  */
 
-const { override, fixBabelImports, addWebpackAlias, addLessLoader,disableChunk} = require('customize-cra')
+const { override, fixBabelImports, addWebpackAlias, addLessLoader, disableChunk } = require('customize-cra')
 const theme = require('./package.json').theme
 const path = require('path')
 
@@ -46,7 +46,7 @@ const addCustomize = () => config => {
 }
 
 // 关闭 sourcemap
-process.env.GENERATE_SOURCEMAP = "false";
+process.env.GENERATE_SOURCEMAP = 'false'
 
 module.exports = override(
   addWebpackAlias({
@@ -54,10 +54,10 @@ module.exports = override(
     '@baseUI': path.resolve(__dirname, 'src/baseUI'),
     '@components': path.resolve(__dirname, 'src/components'),
     '@containers': path.resolve(__dirname, 'src/containers'),
-    '@images': path.resolve(__dirname, 'src/images'),
     '@reduxs': path.resolve(__dirname, 'src/reduxs'),
     '@routes': path.resolve(__dirname, 'src/routes'),
-    '@utils': path.resolve(__dirname, 'src/utils')
+    '@utils': path.resolve(__dirname, 'src/utils'),
+    '@api': path.resolve(__dirname, 'src/api')
   }),
   fixBabelImports('import', {
     libraryName: 'antd-mobile',
@@ -68,5 +68,5 @@ module.exports = override(
     modifyVars: theme
   }),
   addCustomize(),
-  disableChunk(),
+  disableChunk()
 )

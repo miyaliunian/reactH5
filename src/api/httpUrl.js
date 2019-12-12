@@ -5,7 +5,7 @@
  * Description:  网络请求url 常量
  */
 
-import { BASE_URL } from '@assets/Constant'
+import { BASE_URL } from '@api/Constant'
 
 /**
  * 业务请求URL

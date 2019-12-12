@@ -3,11 +3,11 @@
  * 用户注册
  */
 import { Toast } from 'antd-mobile'
-import url from '@utils/httpUrl'
+import url from '@api/httpUrl'
 import { FETCH_DATA } from '@reduxs/middleware/api'
 import { PUBLIC_LEY } from '@assets/static'
-import { cityID } from '@assets/../../api/Constant'
-import { post } from '@utils/httpUtil'
+import { cityID } from '@api/Constant'
+import { post } from '@api/httpUtil'
 
 const initialState = {
   r_userName: '',

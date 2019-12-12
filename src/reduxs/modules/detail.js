@@ -5,7 +5,7 @@
  * Description:  详情页UI状态
  *
  */
-import url from '../../utils/httpUrl'
+import url from '@api/httpUrl'
 import { FETCH_DATA } from '../middleware/api'
 import { combineReducers } from 'redux'
 import { schema as shopSchema, getShopById } from './entities/shops'
