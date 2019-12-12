@@ -94,6 +94,5 @@ const normalizeData = (data, schema) => {
         return
     }
   }
-  f
   // return data
 }
