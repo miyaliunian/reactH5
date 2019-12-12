@@ -28,6 +28,11 @@
 
 替换 setupProxy.js 中的
         const BASE_URL = 'http://58.208.84.112:10086/t-core'
+
+     * 修改package.json 中的homepage 为项目部署的二级目录  "homepage": "/h5",
+     * 修改AppContainer中的 basename 为项目部署的二级目录  basename={'/h5'}
+     * 配置nginx的反向代理
+
 ```
 
 ##目录结构

@@ -6,26 +6,26 @@
  *  医保支付
  */
 
-import URL from "@utils/httpUrl";
-import { Toast } from "antd-mobile";
-import { post } from "@utils/httpUtil";
-import { esscActionUtil } from "@utils/ESSCActionTypeUtil";
-import { PUBLIC_LEY } from "@assets/static";
-import { cityID, payMethodId } from "@assets/static/Constant";
+import URL from '@utils/httpUrl'
+import { Toast } from 'antd-mobile'
+import { post } from '@utils/httpUtil'
+import { esscActionUtil } from '@utils/ESSCActionTypeUtil'
+import { PUBLIC_LEY } from '@assets/static'
+import { cityID, payMethodId } from '@assets/../../api/Constant'
 
 const initialState = {
   isFetching: false,
-  isSignableEntity: "",
-  verify: "2"
-};
+  isSignableEntity: '',
+  verify: '2'
+}
 
 const actionTypes = {
-  FETCH_REQUEST: "MEDICARE_PAY/FETCH_MEDICARE_PAY_REQUEST",
-  FETCH_SUCCESS: "MEDICARE_PAY/FETCH_SUCCESS",
-  FETCH_SIGNABLE_SUCCESS: "MEDICARE_PAY/FETCH_SIGNABLE_SUCCESS",
-  FETCH_PAY_METHOD_ATTRI_SUCCESS: "MEDICARE_PAY/FETCH_PAY_METHOD_ATTRI_SUCCESS",
-  FETCH_FAILURE: "MEDICARE_PAY/FETCH_MEDICARE_PAY_FAILURE"
-};
+  FETCH_REQUEST: 'MEDICARE_PAY/FETCH_MEDICARE_PAY_REQUEST',
+  FETCH_SUCCESS: 'MEDICARE_PAY/FETCH_SUCCESS',
+  FETCH_SIGNABLE_SUCCESS: 'MEDICARE_PAY/FETCH_SIGNABLE_SUCCESS',
+  FETCH_PAY_METHOD_ATTRI_SUCCESS: 'MEDICARE_PAY/FETCH_PAY_METHOD_ATTRI_SUCCESS',
+  FETCH_FAILURE: 'MEDICARE_PAY/FETCH_MEDICARE_PAY_FAILURE'
+}
 
 export const actions = {
   //获取渠道支付信息
@@ -36,68 +36,64 @@ export const actions = {
    * */
   loadSignable: (per, callback) => {
     return (dispatch, getstate) => {
-      const targetURL = URL.API_IS_SIGNABLE();
-      dispatch(fetchRequest());
+      const targetURL = URL.API_IS_SIGNABLE()
+      dispatch(fetchRequest())
       let param = {
         idNumber: per.idCardNo,
         name: per.name
-      };
+      }
       return post(targetURL, param)
         .then(
           data => {
             if (data.infocode && data.infocode === 1) {
               if (data.data.signable) {
-                signabled(dispatch, per, callback).done();
+                signabled(dispatch, per, callback).done()
               } else {
-                callback({ status: 0 });
+                callback({ status: 0 })
               }
             } else {
-              Toast.fail(data.infomessage, 2);
+              Toast.fail(data.infomessage, 2)
             }
           },
           error => {
-            dispatch(fetchFailure());
-            Toast.fail(error, 1);
+            dispatch(fetchFailure())
+            Toast.fail(error, 1)
           }
         )
         .catch(err => {
-          dispatch(fetchFailure());
-        });
-    };
+          dispatch(fetchFailure())
+        })
+    }
   },
 
   // 获取密码验证方式
   loadVerifyInfo: per => {
     return (dispatch, getstate) => {
-      const targetUrl = URL.API_PAY_METHOD_ATTRIBUTES(
-        cityID,
-        per.siTypeCode,
-        payMethodId
-      );
-      dispatch(fetchRequest());
+      const targetUrl = URL.API_PAY_METHOD_ATTRIBUTES(cityID, per.siTypeCode, payMethodId)
+      dispatch(fetchRequest())
       return post(targetUrl)
         .then(
           data => {
             if (data.infocode && data.infocode === 1) {
               if (data.data.length > 0) {
-                let obj = data.data[0];
-                dispatch(fetchPayMethodAttriSuccess(obj.id === 1 ? "1" : "2"));
+                let obj = data.data[0]
+                dispatch(fetchPayMethodAttriSuccess(obj.id === 1 ? '1' : '2'))
               } else {
-                dispatch(fetchPayMethodAttriSuccess("2"));
+                dispatch(fetchPayMethodAttriSuccess('2'))
               }
             } else {
-              Toast.fail(data.infomessage, 2);
+              Toast.fail(data.infomessage, 2)
             }
           },
           error => {
-            dispatch(fetchFailure());
-            Toast.fail(error, 1);
+            dispatch(fetchFailure())
+            Toast.fail(error, 1)
           }
         )
         .catch(err => {
-          dispatch(fetchFailure());
-        });
-    };
+          dispatch(fetchFailure())
+        })
+    }
   },
 
   //支付
@@ -114,17 +110,7 @@ export const actions = {
    * @param callBack
    * @returns {function(*, *): Promise<T | never>}
    */
-  pay: (
-    pass,
-    isBu,
-    busiSeq = "",
-    orderType,
-    objEntity,
-    reservationName,
-    orderPayment,
-    route,
-    callBack
-  ) => {
+  pay: (pass, isBu, busiSeq = '', orderType, objEntity, reservationName, orderPayment, route, callBack) => {
     /**
      * @property (nonatomic, copy) NSString *orderType;//1 register 挂号；2 recipe 诊间支付
      @property (nonatomic, copy) NSString *orderId;
@@ -135,9 +121,9 @@ export const actions = {
      */
     return (dispatch, getstate) => {
       //RAS:处理加密
-      let encrypt = new window.JSEncrypt();
-      encrypt.setPublicKey(PUBLIC_LEY);
-      let pwdencry = encrypt.encrypt(pass);
+      let encrypt = new window.JSEncrypt()
+      encrypt.setPublicKey(PUBLIC_LEY)
+      let pwdencry = encrypt.encrypt(pass)
 
       // let Params = orderType === "medicineScan" ? {
       //   orderType: orderType,
@@ -149,7 +135,7 @@ export const actions = {
 
       //判断是否为扫描购药(medicineScan） 再判断是不是部平台，如果是部平台 则ValidRequest
       let Params =
-        orderType === "medicineScan"
+        orderType === 'medicineScan'
           ? {
               orderType: orderType,
               orderId: objEntity.unifiedOrderId,
@@ -169,57 +155,57 @@ export const actions = {
               orderId: objEntity.unifiedOrderId,
               phone: orderPayment.phone,
               password: pwdencry
-            };
-      let targetURL = "";
+            }
+      let targetURL = ''
       if (isBu) {
         //部平台
-        targetURL = URL.API_BU_SI_PAY();
+        targetURL = URL.API_BU_SI_PAY()
       } else {
         //本地
-        targetURL = URL.API_SI_PAY();
+        targetURL = URL.API_SI_PAY()
       }
-      console.log(Params);
-      console.log(targetURL);
-      dispatch(fetchRequest());
+      console.log(Params)
+      console.log(targetURL)
+      dispatch(fetchRequest())
       return post(targetURL, Params)
         .then(
           data => {
-            dispatch(fetchSuccess());
+            dispatch(fetchSuccess())
             if (data.infocode && data.infocode === 1) {
-              debugger;
-              window["J2C"].exitESSCSDK("关闭部SDK");
-              let orderPaymentEntity = data.data;
+              debugger
+              window['J2C'].exitESSCSDK('关闭部SDK')
+              let orderPaymentEntity = data.data
               if (orderPaymentEntity.ownPayAmt > 0) {
                 //回退到预结算(修改支付状态：将未医保支付 改成已经医保支付)
-                callBack({ paymentStatus: 1 });
+                callBack({ paymentStatus: 1 })
               } else {
-                debugger;
+                debugger
                 //跳转到支付完成
                 let path = {
-                  pathname: "/payResultContainer",
+                  pathname: '/payResultContainer',
                   state: {
                     sn: objEntity.sn,
                     reservationName: reservationName,
                     price: orderPayment.siPayAmt + orderPayment.pubPayAmt
                   }
-                };
-                route.push(path);
+                }
+                route.push(path)
               }
             } else {
-              Toast.fail(data.infomessage, 2);
+              Toast.fail(data.infomessage, 2)
             }
           },
           error => {
-            dispatch(fetchFailure());
-            Toast.fail(error, 1);
+            dispatch(fetchFailure())
+            Toast.fail(error, 1)
           }
         )
         .catch(err => {
-          dispatch(fetchFailure());
-        });
-    };
+          dispatch(fetchFailure())
+        })
+    }
   }
-};
+}
 
 /*
 *****部平台签发：------------查询是否可以签发部里电子社保卡
@@ -234,16 +220,16 @@ isIndep：是否为独立服务，传1：为独立服务，独立服务下必传
  * @returns {Promise<T | never>}
  */
 function signabled(dispatch, per, e) {
-  let signTYpe = "5";
-  let isIndep = "1";
-  const targetURL = URL.API_SIGN(signTYpe, isIndep);
+  let signTYpe = '5'
+  let isIndep = '1'
+  const targetURL = URL.API_SIGN(signTYpe, isIndep)
   let Params = {
     cityId: cityID,
     idNo: per.idCardNo,
     name: per.name
-  };
+  }
   if (per.auth) {
-    Params.signNo = per.mgwId;
+    Params.signNo = per.mgwId
   }
 
   return post(targetURL, Params)
@@ -253,51 +239,51 @@ function signabled(dispatch, per, e) {
         let param = {
           sign: data.data,
           isIndep: isIndep
-        };
-        if (isIndep === "1") {
-          param.serviceType = "1";
+        }
+        if (isIndep === '1') {
+          param.serviceType = '1'
         }
 
-        window["J2C"].requestESSC(param, function(e) {});
+        window['J2C'].requestESSC(param, function(e) {})
         //回传值给H5
-        window["J2C"]["requestESSCCallBack"] = function(response) {
-          let resObj = JSON.parse(response);
+        window['J2C']['requestESSCCallBack'] = function(response) {
+          let resObj = JSON.parse(response)
           //用户手动退出
           if (esscActionUtil(resObj.actionType)) {
-            console.log("用户手动退出");
-            return;
+            console.log('用户手动退出')
+            return
           }
           //部平台返回密码
           // resObj 部平台返回的结果
-          e({ status: 1, eccsRes: resObj });
-        };
+          e({ status: 1, eccsRes: resObj })
+        }
       },
       err => {}
     )
-    .catch(err => {});
+    .catch(err => {})
 }
 
 const fetchRequest = () => ({
   type: actionTypes.FETCH_REQUEST
-});
+})
 
 const fetchSuccess = () => ({
   type: actionTypes.FETCH_REQUEST
-});
+})
 
 const fetchSignableSuccess = data => ({
   type: actionTypes.FETCH_SIGNABLE_SUCCESS,
   response: data
-});
+})
 
 const fetchPayMethodAttriSuccess = data => ({
   type: actionTypes.FETCH_PAY_METHOD_ATTRI_SUCCESS,
   response: data
-});
+})
 
 const fetchFailure = () => ({
   type: actionTypes.FETCH_FAILURE
-});
+})
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -305,44 +291,44 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true
-      };
+      }
     case actionTypes.FETCH_SUCCESS:
       return {
         ...state,
         isFetching: false
-      };
+      }
     case actionTypes.FETCH_SIGNABLE_SUCCESS:
       return {
         ...state,
         isFetching: false,
         isSignableEntity: action.response
-      };
+      }
     case actionTypes.FETCH_PAY_METHOD_ATTRI_SUCCESS:
       return {
         ...state,
         isFetching: false,
         verify: action.response
-      };
+      }
     case actionTypes.FETCH_FAILURE:
       return {
         ...state,
         isFetching: false
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer
 
 //selectors
 export const getFetchingStatus = state => {
-  return state.medicarePay.isFetching;
-};
+  return state.medicarePay.isFetching
+}
 
 export const getIsSignableEntity = state => {
-  return state.medicarePay.isSignableEntity;
-};
+  return state.medicarePay.isSignableEntity
+}
 
 export const getVerifyEntity = state => {
-  return state.medicarePay.verify;
-};
+  return state.medicarePay.verify
+}

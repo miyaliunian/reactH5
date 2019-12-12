@@ -6,12 +6,7 @@
  *   webpack 按需加载
  */
 
-const {
-  override,
-  fixBabelImports,
-  addWebpackAlias,
-  addLessLoader,
-} = require('customize-cra');
+const { override, fixBabelImports, addWebpackAlias, addLessLoader,disableChunk} = require('customize-cra')
 const theme = require('./package.json').theme
 const path = require('path')
 
@@ -21,9 +16,9 @@ const addCustomize = () => config => {
       require('postcss-flexbugs-fixes'),
       require('postcss-preset-env')({
         autoprefixer: {
-          flexbox: 'no-2009',
+          flexbox: 'no-2009'
         },
-        stage: 3,
+        stage: 3
       }),
       require('postcss-aspect-ratio-mini')({}),
       require('postcss-px-to-viewport')({
@@ -40,20 +35,18 @@ const addCustomize = () => config => {
       }),
       require('postcss-viewport-units')({}),
       require('cssnano')(
-        require("cssnano-preset-advanced")({
+        require('cssnano-preset-advanced')({
           zindex: false,
-          autoprefixer: false,
-          }
-        )
+          autoprefixer: false
+        })
       )
     ]
-  });
-  return config;
+  })
+  return config
 }
 
 // 关闭 sourcemap
 process.env.GENERATE_SOURCEMAP = "false";
-
 
 module.exports = override(
   addWebpackAlias({
@@ -64,8 +57,7 @@ module.exports = override(
     '@images': path.resolve(__dirname, 'src/images'),
     '@reduxs': path.resolve(__dirname, 'src/reduxs'),
     '@routes': path.resolve(__dirname, 'src/routes'),
-    '@utils': path.resolve(__dirname, 'src/utils'),
-
+    '@utils': path.resolve(__dirname, 'src/utils')
   }),
   fixBabelImports('import', {
     libraryName: 'antd-mobile',
@@ -76,5 +68,5 @@ module.exports = override(
     modifyVars: theme
   }),
   addCustomize(),
-
-);
+  disableChunk(),
+)

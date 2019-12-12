@@ -6,42 +6,42 @@
  *  next 代表了当前中间件到下一个中间件所提供的方法
  *
  */
-import { post } from "../../utils/httpUtil";
-import { dataConversionDic } from "../../assets/static";
+import { post } from '../../utils/httpUtil'
+import { dataConversionDic } from '../../assets/static'
 
-export const FETCH_DATA = "FETCH DATA";
+export const FETCH_DATA = 'FETCH DATA'
 export default store => next => action => {
-  let callAPI = action[FETCH_DATA];
-  if (typeof callAPI === "undefined") {
-    return next(action);
+  let callAPI = action[FETCH_DATA]
+  if (typeof callAPI === 'undefined') {
+    return next(action)
   }
 
-  let { targetURL, schema, types } = callAPI;
+  let { targetURL, schema, types } = callAPI
 
-  if (typeof targetURL !== "string") {
-    throw new Error("targetURL必须为字符串类型的URL");
+  if (typeof targetURL !== 'string') {
+    throw new Error('targetURL必须为字符串类型的URL')
   }
 
-  if (typeof schema === "undefined") {
-    schema = "";
+  if (typeof schema === 'undefined') {
+    schema = ''
   }
 
   if (!Array.isArray(types) && types.length !== 3) {
-    throw new Error("需要指定一个包含了3个action.type的数组");
+    throw new Error('需要指定一个包含了3个action.type的数组')
   }
 
-  if (!types.every(type => typeof type === "string")) {
-    throw new Error("action.type必须为字符串类型");
+  if (!types.every(type => typeof type === 'string')) {
+    throw new Error('action.type必须为字符串类型')
   }
 
   const actionWith = data => {
-    const finalAction = { ...action, ...data };
-    delete finalAction[FETCH_DATA];
-    return finalAction;
-  };
+    const finalAction = { ...action, ...data }
+    delete finalAction[FETCH_DATA]
+    return finalAction
+  }
 
-  const [requestType, successType, failureType] = types;
-  next(actionWith({ type: requestType }));
+  const [requestType, successType, failureType] = types
+  next(actionWith({ type: requestType }))
   return fetchData(targetURL, action.param, schema).then(
     response =>
       next(
@@ -54,45 +54,46 @@ export default store => next => action => {
       next(
         actionWith({
           type: failureType,
-          error: error.message || "获取数据失败"
+          error: error.message || '获取数据失败'
         })
       )
-  );
-};
+  )
+}
 
 const fetchData = (targetURL, param, schema) => {
   return post(targetURL, param).then(data => {
-    return normalizeData(data, schema);
-  });
-};
+    return normalizeData(data, schema)
+  })
+}
 
 const normalizeData = (data, schema) => {
-  if (schema === "") {
-    return data;
+  if (schema === '') {
+    return data
   } else {
-    const { name } = schema;
+    const { name } = schema
     switch (name) {
       case dataConversionDic.divisionList:
         data.data.map((item, index) => {
           if (index === 0) {
-            item.isSel = true;
+            item.isSel = true
           } else {
-            item.isSel = false;
+            item.isSel = false
           }
-        });
-        return data;
-      case "bindCard":
+        })
+        return data
+      case 'bindCard':
         data.data.map((item, index) => {
           if (index === 0) {
-            item.isSel = true;
+            item.isSel = true
           } else {
-            item.isSel = false;
+            item.isSel = false
           }
-        });
-        return data;
+        })
+        return data
       default:
-        return;
+        return
     }
   }
+  f
   // return data
-};
+}

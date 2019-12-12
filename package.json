@@ -2,6 +2,7 @@
   "name": "web-app-zhyb",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/h5",
   "dependencies": {
     "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^4.0.0",
@@ -54,7 +55,6 @@
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
-
   "browserslist": {
     "production": [
       ">0.2%",

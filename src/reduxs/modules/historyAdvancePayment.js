@@ -6,32 +6,29 @@
  *    住院管理 reduce
  *
  */
-import url from "../../utils/httpUrl";
-import { FETCH_DATA } from "../middleware/api";
+import url from '../../utils/httpUrl'
+import { FETCH_DATA } from '../middleware/api'
 const initialState = {
   isFetching: false,
   data: []
-};
+}
 
 // action types
 const actionTypes = {
-  FETCH_HISTORYADVANCEPAYMENT_REQUEST:
-    "HISTORYADVANCEPAYMENT/FETCH_HISTORYADVANCEPAYMENT_REQUEST",
-  FETCH_HISTORYADVANCEPAYMENT_SUCCESS:
-    "HISTORYADVANCEPAYMENT/FETCH_HISTORYADVANCEPAYMENT_SUCCESS",
-  FETCH_HISTORYADVANCEPAYMENT_FAILURE:
-    "HISTORYADVANCEPAYMENT/FETCH_HISTORYADVANCEPAYMENT_FAILURE"
-};
+  FETCH_HISTORYADVANCEPAYMENT_REQUEST: 'HISTORYADVANCEPAYMENT/FETCH_HISTORYADVANCEPAYMENT_REQUEST',
+  FETCH_HISTORYADVANCEPAYMENT_SUCCESS: 'HISTORYADVANCEPAYMENT/FETCH_HISTORYADVANCEPAYMENT_SUCCESS',
+  FETCH_HISTORYADVANCEPAYMENT_FAILURE: 'HISTORYADVANCEPAYMENT/FETCH_HISTORYADVANCEPAYMENT_FAILURE'
+}
 
 // action creators
 export const actions = {
   loadData: (type, hosId, inHosNo) => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_QUERY_IN_PAY_LIST(type, hosId, inHosNo);
-      return dispatch(fetchHistoryItems(targetURL));
-    };
+      const targetURL = url.API_QUERY_IN_PAY_LIST(type, hosId, inHosNo)
+      return dispatch(fetchHistoryItems(targetURL))
+    }
   }
-};
+}
 
 const fetchHistoryItems = targetURL => ({
   [FETCH_DATA]: {
@@ -42,7 +39,7 @@ const fetchHistoryItems = targetURL => ({
     ],
     targetURL
   }
-});
+})
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -50,30 +47,30 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true
-      };
+      }
     case actionTypes.FETCH_HISTORYADVANCEPAYMENT_SUCCESS:
       return {
         ...state,
         isFetching: false,
         data: action.response
-      };
+      }
     case actionTypes.FETCH_HISTORYADVANCEPAYMENT_FAILURE:
       return {
         ...state,
         isFetching: false
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer
 
 //selectors
 export const getFetchingStatus = state => {
-  return state.historyAdvancePayment.isFetching;
-};
+  return state.historyAdvancePayment.isFetching
+}
 
 export const getHistoryList = state => {
-  return state.historyAdvancePayment.data;
-};
+  return state.historyAdvancePayment.data
+}

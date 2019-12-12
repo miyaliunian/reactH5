@@ -1,37 +1,29 @@
-import React, { Component} from "react";
-import "./style.less";
-import { bindActionCreators } from "redux";
-import { ToastContainer} from "react-toastify";
-import PureWrapper from "@baseUI/PureWrapper";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  withRouter,
-  Redirect
-} from "react-router-dom";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { connect } from "react-redux";
-import { actions as appActions, getError } from "@reduxs/modules/app";
-import { isLogin } from "@utils/token";
-import "antd-mobile/lib/action-sheet/style";
-import routerMap from "@routes/index";
-import ErrorBoundary from "@baseUI/ErrorBoundary/ErrorBoundary";
-import "react-toastify/dist/ReactToastify.css";
-const PureToastContainer = PureWrapper(ToastContainer);
+import React, { Component } from 'react'
+import './style.less'
+import { bindActionCreators } from 'redux'
+import { ToastContainer } from 'react-toastify'
+import PureWrapper from '@baseUI/PureWrapper'
+import { BrowserRouter, Route, Switch, withRouter, Redirect } from 'react-router-dom'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { connect } from 'react-redux'
+import { actions as appActions, getError } from '@reduxs/modules/app'
+import { isLogin } from '@utils/token'
+import 'antd-mobile/lib/action-sheet/style'
+import routerMap from '@routes/index'
+import ErrorBoundary from '@baseUI/ErrorBoundary/ErrorBoundary'
+import 'react-toastify/dist/ReactToastify.css'
+
+const PureToastContainer = PureWrapper(ToastContainer)
 
 const ANIMATION = {
-  PUSH: "forward",
-  POP: "back"
-};
+  PUSH: 'forward',
+  POP: 'back'
+}
 
 const Routes = withRouter(({ location, history }) => (
   <TransitionGroup
-    className={"router-wrapper"}
-    childFactory={child =>
-      React.cloneElement(child, { classNames: ANIMATION[history.action] })
-    }
-  >
+    className={'router-wrapper'}
+    childFactory={child => React.cloneElement(child, { classNames: ANIMATION[history.action] })}>
     <CSSTransition timeout={500} key={location.pathname}>
       <ErrorBoundary>
         <Switch location={location}>
@@ -49,28 +41,27 @@ const Routes = withRouter(({ location, history }) => (
                   ) : (
                     <Redirect
                       to={{
-                        pathname: "/login",
+                        pathname: '/login',
                         state: { from: props.location }
                       }}
                     />
                   )
                 }
               />
-            );
+            )
           })}
         </Switch>
       </ErrorBoundary>
     </CSSTransition>
   </TransitionGroup>
-));
+))
 
 class AppContainer extends Component {
   state = {
     showBar: false
-  };
+  }
 
   render() {
-
     return (
       <div>
         <PureToastContainer
@@ -84,24 +75,24 @@ class AppContainer extends Component {
           draggable={false}
           pauseOnHover={false}
         />
-        <Router>
+        <BrowserRouter basename={'/h5'}>
           <Routes />
-        </Router>
+        </BrowserRouter>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     error: getError(state)
-  };
-};
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
     appActions: bindActionCreators(appActions, dispatch)
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)

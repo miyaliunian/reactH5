@@ -6,50 +6,50 @@
  *  第三方支付
  */
 
-import URL from "@utils/httpUrl";
-import { Toast } from "antd-mobile";
-import { post } from "@utils/httpUtil";
-import { OrderType } from "@assets/static/Constant";
+import URL from '@utils/httpUrl'
+import { Toast } from 'antd-mobile'
+import { post } from '@utils/httpUtil'
+import { OrderType } from '@assets/../../api/Constant'
 
 const initialState = {
   isFetching: false,
   PayMethodEntity: []
-};
+}
 
 const actionTypes = {
-  FETCH_REQUEST: "THIRD_PAY/FETCH_THIRD_PAY_REQUEST",
-  FETCH_PAY_SUCCESS: "THIRD_PAY/FETCH_PAY_SUCCESS",
-  CLEAR_PAYTYPEITEMS_SUCCESS: "THIRD_PAY/CLEAR_PAYTYPEITEMS_SUCCESS",
-  FETCH_FAILURE: "THIRD_PAY/FETCH_THIRD_PAY_FAILURE"
-};
+  FETCH_REQUEST: 'THIRD_PAY/FETCH_THIRD_PAY_REQUEST',
+  FETCH_PAY_SUCCESS: 'THIRD_PAY/FETCH_PAY_SUCCESS',
+  CLEAR_PAYTYPEITEMS_SUCCESS: 'THIRD_PAY/CLEAR_PAYTYPEITEMS_SUCCESS',
+  FETCH_FAILURE: 'THIRD_PAY/FETCH_THIRD_PAY_FAILURE'
+}
 
 export const actions = {
   //微信支付
   WXPay: (parmas, callBack) => {
     return (dispatch, getstate) => {
-      const targetURL = URL.API_WX_PAY();
-      dispatch(fetchRequest());
+      const targetURL = URL.API_WX_PAY()
+      dispatch(fetchRequest())
       return post(targetURL, parmas)
         .then(
           data => {
             if (data.infocode && data.infocode === 1) {
-              callBack(data);
+              callBack(data)
             } else {
-              dispatch(fetchFailure());
-              Toast.fail(data.infomessage, 3);
+              dispatch(fetchFailure())
+              Toast.fail(data.infomessage, 3)
             }
           },
           error => {
             // console.log(error)
-            dispatch(fetchFailure());
-            Toast.fail(error, 1);
+            dispatch(fetchFailure())
+            Toast.fail(error, 1)
           }
         )
         .catch(err => {
           // console.log(err)
-          dispatch(fetchFailure());
-        });
-    };
+          dispatch(fetchFailure())
+        })
+    }
   },
 
   //获取支付方式列表
@@ -59,17 +59,17 @@ export const actions = {
       const targetURL =
         payType === OrderType[0].status
           ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId)
-          : URL.API_THIRD_PAY_PURCHASE_MEDICINE("sdfsdfs");
-      dispatch(fetchRequest());
-      fetchPayTypeItems(targetURL, dispatch);
-    };
+          : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
+      dispatch(fetchRequest())
+      fetchPayTypeItems(targetURL, dispatch)
+    }
   },
 
   //清空支付类型
   clearPayTypeItems: () => {
     return (dispatch, getstate) => {
-      dispatch(clearPayTypeItems());
-    };
+      dispatch(clearPayTypeItems())
+    }
   },
   /**
    *   空跑一遍医保支付
@@ -80,7 +80,7 @@ export const actions = {
   reMedicarePayAndReLoadPayTypeItems(orderType, objEntity, orderPayment) {
     return (dispatch, getstate) => {
       let Params =
-        orderType === "medicineScan"
+        orderType === 'medicineScan'
           ? {
               orderType: orderType,
               orderId: objEntity.unifiedOrderId,
@@ -91,9 +91,9 @@ export const actions = {
               orderType: orderType,
               orderId: objEntity.unifiedOrderId,
               phone: orderPayment.phone
-            };
-      const targetURL = URL.API_SI_PAY();
-      dispatch(fetchRequest());
+            }
+      const targetURL = URL.API_SI_PAY()
+      dispatch(fetchRequest())
       return post(targetURL, Params)
         .then(
           data => {
@@ -101,25 +101,25 @@ export const actions = {
               let targetURL =
                 orderType === OrderType[0].status
                   ? URL.API_THIRD_PAY_REGISTERED(objEntity.hosId)
-                  : URL.API_THIRD_PAY_PURCHASE_MEDICINE("sdfsdfs");
-              fetchPayTypeItems(targetURL, dispatch);
+                  : URL.API_THIRD_PAY_PURCHASE_MEDICINE('sdfsdfs')
+              fetchPayTypeItems(targetURL, dispatch)
             } else {
-              Toast.fail(data.infomessage, 2);
+              Toast.fail(data.infomessage, 2)
             }
           },
           error => {
-            console.log(error);
-            dispatch(fetchFailure());
-            Toast.fail(error, 1);
+            console.log(error)
+            dispatch(fetchFailure())
+            Toast.fail(error, 1)
           }
         )
         .catch(err => {
-          console.log(err);
-          dispatch(fetchFailure());
-        });
-    };
+          console.log(err)
+          dispatch(fetchFailure())
+        })
+    }
   }
-};
+}
 
 //获取支付方式列表
 function fetchPayTypeItems(targetUrl, dispatch) {
@@ -127,37 +127,37 @@ function fetchPayTypeItems(targetUrl, dispatch) {
     .then(
       data => {
         if (data.infocode && data.infocode === 1) {
-          dispatch(fetchPayTypeItemSuccess(data.data));
+          dispatch(fetchPayTypeItemSuccess(data.data))
         } else {
-          Toast.fail(data.infomessage, 2);
+          Toast.fail(data.infomessage, 2)
         }
       },
       error => {
-        dispatch(fetchFailure());
-        Toast.fail(error, 1);
+        dispatch(fetchFailure())
+        Toast.fail(error, 1)
       }
     )
     .catch(err => {
-      dispatch(fetchFailure());
-    });
+      dispatch(fetchFailure())
+    })
 }
 
 const fetchRequest = () => ({
   type: actionTypes.FETCH_REQUEST
-});
+})
 
 const fetchPayTypeItemSuccess = data => ({
   type: actionTypes.FETCH_PAY_SUCCESS,
   response: data
-});
+})
 
 const clearPayTypeItems = () => ({
   type: actionTypes.CLEAR_PAYTYPEITEMS_SUCCESS
-});
+})
 
 const fetchFailure = () => ({
   type: actionTypes.FETCH_FAILURE
-});
+})
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -165,31 +165,31 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true
-      };
+      }
     case actionTypes.FETCH_PAY_SUCCESS:
       return {
         ...state,
         isFetching: false,
         PayMethodEntity: action.response
-      };
+      }
     case actionTypes.CLEAR_PAYTYPEITEMS_SUCCESS:
       return {
         ...state,
         PayMethodEntity: []
-      };
+      }
     case actionTypes.FETCH_FAILURE:
       return {
         ...state,
         isFetching: false
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer
 
 //selectors
 
 export const getPayMethodEntity = state => {
-  return state.thirdPay.PayMethodEntity;
-};
+  return state.thirdPay.PayMethodEntity
+}

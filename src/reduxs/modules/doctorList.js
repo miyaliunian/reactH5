@@ -1,4 +1,4 @@
-import url from "@utils/httpUrl";
+import url from '@utils/httpUrl'
 
 /**
  * Class: doctorList
@@ -8,8 +8,8 @@ import url from "@utils/httpUrl";
  *   医生列表
  */
 
-import { PlatformType, DoctorOrderType} from "@assets/static/Constant";
-import { FETCH_DATA } from "@reduxs/middleware/api";
+import { PlatformType, DoctorOrderType } from '@assets/../../api/Constant'
+import { FETCH_DATA } from '@reduxs/middleware/api'
 
 const initialState = {
   tabSel: 1,
@@ -20,73 +20,69 @@ const initialState = {
   page: 1,
   data: [], //医生列表
   dataReservation: [] //预约日历
-};
+}
 
 const actionTypes = {
-  FETCH_DOCTOR_LIST_REQUEST: "DOCTOR_LIST/FETCH_DOCTOR_LIST_REQUEST",
-  FETCH_DOCTOR_LIST_SUCCESS: "DOCTOR_LIST/FETCH_DOCTOR_LIST_SUCCESS",
-  FETCH_DOCTOR_LIST_FAILURE: "DOCTOR_LIST/FETCH_DOCTOR_LIST_FAILURE",
-  FETCH_RESERVATION_LIST_SUCCESS: "DOCTOR_LIST/FETCH_RESERVATION_LIST_SUCCESS",
-  FETCH_RESERVATION_LIST_FAILURE: "DOCTOR_LIST/FETCH_RESERVATION_LIST_FAILURE",
+  FETCH_DOCTOR_LIST_REQUEST: 'DOCTOR_LIST/FETCH_DOCTOR_LIST_REQUEST',
+  FETCH_DOCTOR_LIST_SUCCESS: 'DOCTOR_LIST/FETCH_DOCTOR_LIST_SUCCESS',
+  FETCH_DOCTOR_LIST_FAILURE: 'DOCTOR_LIST/FETCH_DOCTOR_LIST_FAILURE',
+  FETCH_RESERVATION_LIST_SUCCESS: 'DOCTOR_LIST/FETCH_RESERVATION_LIST_SUCCESS',
+  FETCH_RESERVATION_LIST_FAILURE: 'DOCTOR_LIST/FETCH_RESERVATION_LIST_FAILURE',
 
-  TAB_SEL: "DOCTOR_LIST/TAB_SEL",
+  TAB_SEL: 'DOCTOR_LIST/TAB_SEL',
 
-  SET_SEEDATE: "DOCTOR_LIST/SET_SEEDATE",
+  SET_SEEDATE: 'DOCTOR_LIST/SET_SEEDATE',
   //如果选中日历中的任何一个日期，则将服务器返回的日期信息选中状态，全部置为选中状态
-  RESET_RESERVATION: "DOCTOR_LIST/RESET_RESERVATION",
+  RESET_RESERVATION: 'DOCTOR_LIST/RESET_RESERVATION',
   //退出页面时，清空已经加载的数据
-  CLEAR_ALL_ITEMS: "DOCTOR_LIST/CLEAR_ALL_ITEMS"
-};
+  CLEAR_ALL_ITEMS: 'DOCTOR_LIST/CLEAR_ALL_ITEMS'
+}
 
 /**
  * 医生列表、可预约日历列表
  * @type {{loadDoctorList: function(*=), loadReservationList: function(*=)}}
  */
 export const actions = {
-  loadDoctorList: (id, seeDate = "") => {
+  loadDoctorList: (id, seeDate = '') => {
     return (dispatch, getstate) => {
       let param = {
         doctorTitle: null,
         hosGrade: null,
         seeDate: null
-      };
-      if (seeDate !== "") {
-        param.seeDate = seeDate;
+      }
+      if (seeDate !== '') {
+        param.seeDate = seeDate
       }
       const targetURL = url.API_DOCTOR_LIST(
         PlatformType.HospitalDepartments,
         id,
         DoctorOrderType.title,
         getstate().doctorList.page
-      );
-      return dispatch(fetchDoctorList(targetURL, param));
-    };
+      )
+      return dispatch(fetchDoctorList(targetURL, param))
+    }
   },
 
   loadReservationList: id => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_DOCTOR_RESERVATION_LIST(
-        PlatformType.HospitalDepartments,
-        id,
-        7
-      );
-      return dispatch(fetchReservationList(targetURL));
-    };
+      const targetURL = url.API_DOCTOR_RESERVATION_LIST(PlatformType.HospitalDepartments, id, 7)
+      return dispatch(fetchReservationList(targetURL))
+    }
   },
 
   //标识选中的tab是哪个
   changeTab: tab => {
     return (dispatch, getstate) => {
-      dispatch({ type: actionTypes.TAB_SEL, response: tab });
-    };
+      dispatch({ type: actionTypes.TAB_SEL, response: tab })
+    }
   },
 
   //退出页面时，重置数据状态
   clearAllItems: callBack => {
     return (dispatch, getstate) => {
-      dispatch({ type: actionTypes.CLEAR_ALL_ITEMS });
-      callBack();
-    };
+      dispatch({ type: actionTypes.CLEAR_ALL_ITEMS })
+      callBack()
+    }
   },
 
   //选中的日期过滤条件
@@ -94,7 +90,7 @@ export const actions = {
     type: actionTypes.SET_SEEDATE,
     value
   })
-};
+}
 
 const fetchDoctorList = (targetURL, param) => ({
   [FETCH_DATA]: {
@@ -106,7 +102,7 @@ const fetchDoctorList = (targetURL, param) => ({
     targetURL
   },
   param
-});
+})
 
 const fetchReservationList = targetURL => ({
   [FETCH_DATA]: {
@@ -117,7 +113,7 @@ const fetchReservationList = targetURL => ({
     ],
     targetURL
   }
-});
+})
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -125,36 +121,36 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true
-      };
+      }
     case actionTypes.FETCH_DOCTOR_LIST_SUCCESS:
       return {
         ...state,
         isFetching: false,
         data: action.response.data.list
-      };
+      }
     case actionTypes.FETCH_DOCTOR_LIST_FAILURE:
       return {
         ...state,
         isFetching: false
-      };
+      }
     case actionTypes.FETCH_RESERVATION_LIST_SUCCESS:
       return {
         ...state,
         isFetching: false,
         dataReservation: action.response.data
-      };
+      }
     case actionTypes.FETCH_RESERVATION_LIST_FAILURE:
       return {
         ...state,
         isFetching: false
-      };
+      }
     case actionTypes.TAB_SEL:
       return {
         ...state,
         tabSel: action.response
-      };
+      }
     case actionTypes.SET_SEEDATE:
-      return { ...state, seeDate: action.value };
+      return { ...state, seeDate: action.value }
     case actionTypes.CLEAR_ALL_ITEMS:
       return {
         ...state,
@@ -166,30 +162,30 @@ const reducer = (state = initialState, action) => {
         page: 1,
         data: [], //医生列表
         dataReservation: [] //预约日历
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer
 
 //Selectors
 export const getFetchStatus = state => {
-  return state.doctorList.isFetching;
-};
+  return state.doctorList.isFetching
+}
 
 export const getSeeDate = state => {
-  return state.doctorList.seeDate;
-};
+  return state.doctorList.seeDate
+}
 
 export const getDoctorList = state => {
-  return state.doctorList.data;
-};
+  return state.doctorList.data
+}
 
 export const getReservationList = state => {
-  return state.doctorList.dataReservation;
-};
+  return state.doctorList.dataReservation
+}
 
 export const getTabSelStatus = state => {
-  return state.doctorList.tabSel;
-};
+  return state.doctorList.tabSel
+}

@@ -9,6 +9,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 //没封装之前
 import Bscroll from 'better-scroll'
+//封装的
+import Scroll from '@components/Scroll/scroll'
+
 import './style.less'
 import { withRouter } from 'react-router-dom'
 //图标
