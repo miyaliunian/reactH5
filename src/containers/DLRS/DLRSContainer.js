@@ -13,25 +13,25 @@ class DLRSContainer extends Component {
     const { history } = this.props
     console.log(this.props)
     // console.log(this.props.location.search)
-    let param1 = this.getParam('param1')
-    console.log('param1: ' + param1)
-    let param2 = this.getParam('param2')
-    console.log('param2: ' + param2)
-    let param3 = this.getParam('param3')
-    console.log('param3: ' + param3)
-    let param4 = this.getParam('param4')
-    console.log('param4: ' + param4)
+    let access_token = this.getParam('access_token')
+    console.log('access_token: ' + access_token)
+    let username = this.getParam('username')
+    console.log('username: ' + username)
+    let phone = this.getParam('phone')
+    console.log('phone: ' + phone)
+    let idNumber = this.getParam('idNumber')
+    console.log('idNumber: ' + idNumber)
     if (this.props.location.pathname) {
       let url = this.props.location.pathname + '?'
-      url += 'param1='
-      url += param1
-      url += '&param2='
-      url += 'param2'
-      url += '&param3='
-      url += 'param3'
-      url += '&param4='
-      url += 'param5'
-      console.log('目标地址： ' + url)
+      url += 'access_token='
+      url += access_token
+      url += '&username='
+      url += username
+      url += '&phone='
+      url += phone
+      url += '&idNumber='
+      url += idNumber
+      console.log('转发目标地址： ' + url)
     }
   }
 
