@@ -59,6 +59,8 @@ const PayCountdownComponent = lazy(() => import('@components/Pay/Countdown/PayCo
 //支付成功
 const PayResultContainerComponent = lazy(() => import('@components/Pay/Result/PayResultContainer'))
 
+const DLRSComponent = lazy(() => import('@containers/DLRS/DLRSContainer'))
+
 const routerMap = [
   {
     path: '/',
@@ -192,6 +194,11 @@ const routerMap = [
     path: '/payResultContainer',
     name: 'payResultContainer',
     component: SuspenseComponent(PayResultContainerComponent)
+  },
+  {
+    path: '/dlrs',
+    name: 'dlrs',
+    component: SuspenseComponent(DLRSComponent)
   }
 ]
 

@@ -59,6 +59,9 @@ class Home extends Component {
       case 6:
         history.push('/report')
         break
+      case 7:
+        history.push('/dlrs')
+        break
       case 10:
         break
     }
