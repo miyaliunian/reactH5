@@ -26,11 +26,11 @@ class DLRSContainer extends Component {
       url += 'param1='
       url += param1
       url += '&param2='
-      url += 'param2'
+      url += param2
       url += '&param3='
-      url += 'param3'
+      url += param3
       url += '&param4='
-      url += 'param5'
+      url += param4
       console.log('目标地址： ' + url)
     }
   }
