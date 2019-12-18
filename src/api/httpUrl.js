@@ -11,6 +11,8 @@ import { BASE_URL } from '@api/Constant'
  * 业务请求URL
  */
 export default {
+  /* -1:--------------------------------------------首页-----*/
+  API_HOME_SCROLL_BANNER: cityId => `${BASE_URL}/page/v1.0/home/${cityId}.action`,
   /* 0:-------------------------------------------Demo---*/
   getProductList: (path, rowIndex, pageSize) => `/mock/products/${path}.json?rowIndex=${rowIndex}&pageSize=${pageSize}`,
   getProductDetail: id => `/mock/product_detail/${id}.json`,

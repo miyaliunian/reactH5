@@ -62,6 +62,9 @@ class Home extends Component {
       case 7:
         history.push('/dlrs')
         break
+      case 8:
+        history.push('/siDynamicInfo')
+        break
       case 10:
         break
     }
