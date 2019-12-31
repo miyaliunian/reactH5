@@ -10,6 +10,10 @@ import React, { Component } from 'react'
 import Header from '@components/NavBar/NavBar'
 import IntelligentWaitingItem from './components/IntelligentWaitingItem/IntelligentWaitingItem'
 import './style.less'
+import BindCardItem from '@components/BindCard/components/BindCardItem/BindCardItem'
+import LoadingMask from '../../components/Loading/LoadingMask'
+//Redux
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -18,8 +22,6 @@ import {
   getIntelligentWaitingList,
   getFetchingStatus
 } from '@reduxs/modules/bindCard'
-import BindCardItem from '@components/BindCard/components/BindCardItem/BindCardItem'
-import LoadingMask from '../../components/Loading/LoadingMask'
 
 const IntelligentWaitingRefreshTime = {
   time: 60000 // 刷新时间一分钟，单位为毫秒

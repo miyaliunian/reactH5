@@ -108,7 +108,7 @@ class Tabs extends Component {
                   e.stopPropagation()
                 }}>
                 <div>
-                  <div>医院类型: {this.state.sx_lx.title}</div>
+                  <div style={{ fontSize: '14px' }}>医院类型: {this.state.sx_lx.title}</div>
                   <div className={'tabs__tab3__inner'}>
                     {this.state.sx_lx.data.map(item => {
                       return (
@@ -123,7 +123,7 @@ class Tabs extends Component {
                   </div>
                 </div>
                 <div>
-                  <div>医院类型: {this.state.sx_dj.title}</div>
+                  <div style={{ fontSize: '14px' }}>医院类型: {this.state.sx_dj.title}</div>
                   <div className={'tabs__tab3__inner'}>
                     {this.state.sx_dj.data.map(item => {
                       return (

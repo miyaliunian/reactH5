@@ -24,6 +24,7 @@ import './style.less'
 class HospitalsContainer extends PureComponent {
   render() {
     const { fetchingStatus, hospitalList, isLastPage } = this.props
+    console.log(hospitalList)
     return (
       <div id="hospitalsContainer" onTouchMove={e => this.handleTouchMove(e)} className={'hospitalsContainer'}>
         <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>

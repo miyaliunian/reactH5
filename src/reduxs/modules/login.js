@@ -43,6 +43,7 @@ export const actions = {
           if (data.infocode === -1) {
             dispatch(loginFailure(data.infomessage))
           } else {
+            debugger
             let token = {}
             token.access_token = data.data.loginData.access_token
             token.refresh_token = data.data.loginData.refresh_token

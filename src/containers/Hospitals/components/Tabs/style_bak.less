@@ -1,24 +1,25 @@
 @import '../../../../assets/less/varibles';
 
 .tabs {
-  color: #686868;
   .tabs__searchTOPWrapper {
     display: flex;
     flex-direction: row;
-    background-color: white;
     .searchItem {
-      display: flex;
-      flex: 1;
+      width: 33.33%;
+      text-align: center;
       height: 40px;
-      line-height: 38px;
-      justify-content: center;
+      line-height: 40px;
+      background: white;
     }
     .itemSelected {
+      width: 33.33%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      text-align: center;
       height: 40px;
-      line-height: 38px;
+      line-height: 37px;
+      background: white;
+      font-size: 16px;
       color: @theme-font-color;
       align-items: center;
       &::after {
@@ -30,22 +31,24 @@
       }
     }
     .searchItem2 {
-      display: flex;
-      flex: 1;
+      width: 33.33%;
+      text-align: center;
       height: 40px;
-      line-height: 38px;
-      justify-content: center;
+      line-height: 40px;
+      background: white;
       border-left: @border-LightGrey;
       border-right: @border-LightGrey;
     }
     .searchItem2Seled {
+      width: 33.33%;
       display: flex;
-      flex: 1;
       flex-direction: column;
-      justify-content: space-between;
+      text-align: center;
       height: 40px;
-      line-height: 38px;
+      line-height: 37px;
+      background: white;
       color: @theme-font-color;
+      font-size: 16px;
       border-left: @border-LightGrey;
       border-right: @border-LightGrey;
       align-items: center;
@@ -100,7 +103,6 @@
     .tabs__Bottom__Item {
       padding: 10px;
       height: 25px;
-      font-size: 14px;
       line-height: 25px;
       background: white;
     }
@@ -110,7 +112,6 @@
       padding: 10px;
       background: white;
       position: relative;
-      color: #686868;
     }
 
     .tabs__tab3__btn {
@@ -134,29 +135,23 @@
 
     .tabs3__innerTextSel {
       background: @theme-blue;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 20px;
+      height: 25px;
       color: white;
-      font-size: 12px;
-      box-sizing: border-box;
+      line-height: 25px;
+      text-align: center;
       padding: 2px 8px;
-      border-radius: 4px;
+      border-radius: 7px;
       margin: 0px 10px 10px 0;
     }
 
     .tabs3__innerText {
       background: white;
       border: @border-LightGrey;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      height: 20px;
-      box-sizing: border-box;
+      height: 25px;
+      line-height: 25px;
+      text-align: center;
       padding: 2px 8px;
-      border-radius: 4px;
+      border-radius: 7px;
       margin: 0px 10px 10px 0;
       color: #cccccc;
     }

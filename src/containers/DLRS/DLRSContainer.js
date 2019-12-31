@@ -4,12 +4,19 @@
  */
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-
+import './style.less'
 class DLRSContainer extends Component {
   render() {
-    return <div />
+    return (
+      <div className={'tabsWrapper'}>
+        <div className={'tab_item'}>全部区域</div>
+        <div className={'tab_item'}>综合排序</div>
+        <div className={'tab_item'}>筛选</div>
+      </div>
+    )
   }
   componentDidMount() {
+    return
     const { history } = this.props
     console.log(this.props)
     // console.log(this.props.location.search)

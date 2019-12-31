@@ -45,9 +45,7 @@ class DivisionContainer extends Component {
                   return (
                     <div
                       key={index}
-                      className={
-                        item.isSel ? 'clinic__left__item border-bottom item_sel' : 'clinic__left__item border-bottom'
-                      }
+                      className={item.isSel ? 'clinic__left__item  item_sel' : 'clinic__left__item border-bottom'}
                       onClick={() => this.leftItemClick(item)}>
                       {item.name}
                     </div>

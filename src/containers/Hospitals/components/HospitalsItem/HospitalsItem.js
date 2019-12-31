@@ -95,7 +95,7 @@ class HospitalsItem extends Component {
                       </div>
                     ) : null}
                   </div>
-                  <div className="hospitalsItem__bottom">地址：{item.fullAddress}</div>
+                  <div className="hospitalsItem__bottom">地址：{item.address}</div>
                 </li>
               </Link>
             )
