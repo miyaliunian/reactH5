@@ -61,6 +61,8 @@ const PayResultContainerComponent = lazy(() => import('@components/Pay/Result/Pa
 
 const DLRSComponent = lazy(() => import('@containers/DLRS/DLRSContainer'))
 
+const SiDynamicInfoComponent = lazy(() => import('@containers/SiDynamicInfo/SiDynamicInfoContainer'))
+
 const routerMap = [
   {
     path: '/',
@@ -199,6 +201,11 @@ const routerMap = [
     path: '/dlrs',
     name: 'dlrs',
     component: SuspenseComponent(DLRSComponent)
+  },
+  {
+    path: '/siDynamicInfo',
+    name: 'siDynamicInfo',
+    component: SuspenseComponent(SiDynamicInfoComponent)
   }
 ]
 

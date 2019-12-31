@@ -13,6 +13,7 @@ import detail from './detail'
 import home from './home'
 import tabs from './tabs'
 import hospital from './hospital'
+import siDynamicInfo from './siDynamicInfo'
 import division from './division'
 import bindCard from './bindCard'
 import bindCardIList from './bindCardIList'
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   home,
   tabs,
   hospital,
+  siDynamicInfo,
   division,
   bindCard,
   bindCardIList,
