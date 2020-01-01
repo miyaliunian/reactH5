@@ -10,7 +10,7 @@ import HospitalsItem from './components/HospitalsItem/HospitalsItem'
 import Tabs from './components/Tabs/Tabs'
 import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 import LoadingMask from '../../components/Loading/LoadingMask'
-import EntryLoader from '@components/entryLoader'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -24,7 +24,6 @@ import './style.less'
 class HospitalsContainer extends PureComponent {
   render() {
     const { fetchingStatus, hospitalList, isLastPage } = this.props
-    console.log(hospitalList)
     return (
       <div id="hospitalsContainer" onTouchMove={e => this.handleTouchMove(e)} className={'hospitalsContainer'}>
         <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
@@ -39,7 +38,7 @@ class HospitalsContainer extends PureComponent {
             pullingDownHandler={() => this.pullingDownHandler()}
             pullingUpHandler={() => this.pullingUpHandler()}
           />
-          {fetchingStatus && <EntryLoader />}
+
           <LoadingMask />
         </SafeAreaView>
       </div>

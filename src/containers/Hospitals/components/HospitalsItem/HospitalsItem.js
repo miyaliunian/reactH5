@@ -67,7 +67,6 @@ class HospitalsItem extends Component {
     return (
       <ul className={'hospitalsItem'} ref={'hospitalsItem'}>
         <div>
-          {this.state.isShowRefreshHeader && <EntryLoader />}
           {data.map((item, index) => {
             return (
               <Link to={`/division/${item.id}/${item.name}`} key={index}>
@@ -115,9 +114,12 @@ class HospitalsItem extends Component {
   }
 
   pullingDownHandler = () => {
-    this.setState({
-      isShowRefreshHeader: true
-    })
+    // this.setState({
+    //   isShowRefreshHeader: true
+    // })
+
+    console.log(this.refs.hospitalsItem.offset)
+    return
     this.props.pullingDownHandler()
   }
 }
