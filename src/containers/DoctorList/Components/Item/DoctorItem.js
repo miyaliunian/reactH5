@@ -16,7 +16,7 @@ class DoctorItem extends Component {
   render() {
     const { data } = this.props
     return (
-      <ul className={'doctorItem'}>
+      <ul className={'doctorItem'} ref={'doctorItem'}>
         <div>
           {data.map(item => {
             return (
@@ -70,6 +70,21 @@ class DoctorItem extends Component {
     }
     // console.log(path)
     this.props.history.push(path)
+  }
+
+  componentDidMount() {
+    this.bscroll = new Bscroll(this.refs.doctorItem, {
+      mouseWheel: true,
+      probeType: 3,
+      click: true,
+      tap: true,
+      bounce: {
+        top: true,
+        bottom: true
+      }
+    })
+    // this.bscroll.on('pullingDown', this.pullingDownHandler)
+    // this.bscroll.on('pullingUp', this.props.pullingUpHandler)
   }
 }
 

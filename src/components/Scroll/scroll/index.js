@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import BScroll from "better-scroll";
-import Loading from "../loading/loading";
-import Bubble from "../bubble/bubble";
+import BScroll from 'better-scroll'
+import Loading from '../loading/loading'
+import Bubble from '../bubble/bubble'
 
-import "./betterScroll.css";
+import './betterScroll.css'
 
 let defaultPullDownRefresh = {
   threshold: 100,
   stop: 50,
   stopTime: 600,
   txt: {
-    success: "刷新成功"
+    success: '刷新成功'
   }
-};
+}
 
 let defaultPullUpLoad = {
   threshold: 0,
   txt: {
-    more: "加载更多",
-    nomore: "我是有底线的"
+    more: '加载更多',
+    nomore: '我是有底线的'
   }
-};
+}
 
 class Scroll extends Component {
   static defaultProps = {
@@ -40,11 +40,11 @@ class Scroll extends Component {
       className: /(^|\s)originEvent(\s|$)/,
       tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|TABLE)$/
     },
-    eventPassthrough: "",
+    eventPassthrough: '',
     isPullUpTipHide: true,
     disabled: false,
     stopPropagation: true
-  };
+  }
 
   static propTypes = {
     children: PropTypes.any,
@@ -70,17 +70,17 @@ class Scroll extends Component {
     bounce: PropTypes.bool,
     disabled: PropTypes.bool,
     stopPropagation: PropTypes.bool
-  };
+  }
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
-    this.scroll = null; // scroll 实例
+    this.scroll = null // scroll 实例
 
-    this.isRebounding = false;
-    this.pulling = false;
+    this.isRebounding = false
+    this.pulling = false
 
-    this.pullDownInitTop = -50;
+    this.pullDownInitTop = -50
 
     this.state = {
       isPullUpLoad: false,
@@ -90,34 +90,34 @@ class Scroll extends Component {
         top: `${this.pullDownInitTop}px`
       },
       bubbleY: 0
-    };
+    }
   }
   createScrollId() {
     return Math.random()
       .toString(36)
-      .substr(3, 10);
+      .substr(3, 10)
   }
   componentDidMount() {
-    this.initScroll();
+    this.initScroll()
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.children !== prevProps.children) {
       if (!this.state.pulling) {
-        this.scroll.refresh();
+        this.scroll.refresh()
       }
       if (prevProps.disabled !== this.props.disabled) {
-        this.props.disabled ? this.scroll.disable() : this.scroll.enable();
+        this.props.disabled ? this.scroll.disable() : this.scroll.enable()
       }
     }
   }
 
   componentWillUnmount() {
-    this.scroll.stop();
-    this.scroll.destroy();
-    this.scroll = null;
-    clearTimeout(this.TimerA);
-    clearTimeout(this.TimerB);
+    this.scroll.stop()
+    this.scroll.destroy()
+    this.scroll = null
+    clearTimeout(this.TimerA)
+    clearTimeout(this.TimerB)
   }
 
   initScroll() {
@@ -135,26 +135,26 @@ class Scroll extends Component {
       eventPassthrough,
       bounce,
       stopPropagation
-    } = this.props;
+    } = this.props
     let _pullDownRefresh =
-      typeof pullDownRefresh === "object"
+      typeof pullDownRefresh === 'object'
         ? {
             ...defaultPullDownRefresh,
             ...pullDownRefresh
           }
         : pullDownRefresh
         ? defaultPullDownRefresh
-        : false;
+        : false
 
     let _pullUpLoad =
-      typeof pullUpLoad === "object"
+      typeof pullUpLoad === 'object'
         ? {
             ...defaultPullUpLoad,
             ...pullUpLoad
           }
         : pullUpLoad
         ? defaultPullUpLoad
-        : false;
+        : false
 
     this.options = {
       probeType,
@@ -170,68 +170,68 @@ class Scroll extends Component {
       eventPassthrough,
       bounce: bounce,
       stopPropagation: stopPropagation
-    };
-    let wrapper = this.refs.$dom;
-    this.scroll = new BScroll(wrapper, this.options);
-    this.initEvents();
+    }
+    let wrapper = this.refs.$dom
+    this.scroll = new BScroll(wrapper, this.options)
+    this.initEvents()
   }
 
   initEvents() {
     if (this.options.pullUpLoad) {
-      this._initPullUpLoad();
+      this._initPullUpLoad()
     }
     if (this.options.pullDownRefresh) {
-      this._initPullDownRefresh();
+      this._initPullDownRefresh()
     }
     if (this.props.doScrollStart) {
-      this.scroll.on("scrollStart", pos => {
-        this.props.doScrollStart(pos);
-      });
+      this.scroll.on('scrollStart', pos => {
+        this.props.doScrollStart(pos)
+      })
     }
     if (this.props.doScroll) {
-      this.scroll.on("scroll", pos => {
-        this.props.doScroll(pos);
-      });
+      this.scroll.on('scroll', pos => {
+        this.props.doScroll(pos)
+      })
     }
     if (this.props.doScrollEnd) {
-      this.scroll.on("scrollEnd", pos => {
-        this.props.doScrollEnd(pos);
-      });
+      this.scroll.on('scrollEnd', pos => {
+        this.props.doScrollEnd(pos)
+      })
     }
     if (this.props.disabled) {
-      this.scroll.disable();
+      this.scroll.disable()
     }
   }
 
   getScrollObj = () => {
-    return this.scroll;
-  };
+    return this.scroll
+  }
 
   _initPullDownRefresh() {
-    this.scroll.on("pullingDown", () => {
+    this.scroll.on('pullingDown', () => {
       this.setState({
         beforePullDown: false,
         pulling: true
-      });
+      })
 
       this.props.doPullDownFresh().then(() => {
         if (!this.scroll) {
-          return;
+          return
         }
         this.setState({
           pulling: false
-        });
+        })
         this._reboundPullDown().then(() => {
-          this._afterPullDown();
-        });
-      });
-    });
+          this._afterPullDown()
+        })
+      })
+    })
 
-    this.scroll.on("scroll", pos => {
-      const { beforePullDown } = this.state;
+    this.scroll.on('scroll', pos => {
+      const { beforePullDown } = this.state
 
       if (pos.y < 0) {
-        return;
+        return
       }
 
       if (beforePullDown) {
@@ -240,11 +240,11 @@ class Scroll extends Component {
           pullDownStyle: {
             top: `${Math.min(pos.y + this.pullDownInitTop, 10)}px`
           }
-        });
+        })
       } else {
         this.setState({
           bubbleY: 0
-        });
+        })
       }
 
       if (this.isRebounding) {
@@ -252,22 +252,22 @@ class Scroll extends Component {
           pullDownStyle: {
             top: `${10 - (defaultPullDownRefresh.stop - pos.y)}px`
           }
-        });
+        })
       }
-    });
+    })
   }
 
   _reboundPullDown = () => {
-    let { stopTime = 600 } = this.options.pullDownRefresh;
+    let { stopTime = 600 } = this.options.pullDownRefresh
 
     return new Promise(resolve => {
       this.TimerA = setTimeout(() => {
-        this.isRebounding = true;
-        this.scroll.finishPullDown();
-        resolve();
-      }, stopTime);
-    });
-  };
+        this.isRebounding = true
+        this.scroll.finishPullDown()
+        resolve()
+      }, stopTime)
+    })
+  }
 
   _afterPullDown() {
     this.TimerB = setTimeout(() => {
@@ -276,76 +276,72 @@ class Scroll extends Component {
         pullDownStyle: {
           top: `${this.pullDownInitTop}px`
         }
-      });
-      this.isRebounding = false;
-      this.scroll.refresh();
-    }, this.scroll.options.bounceTime);
+      })
+      this.isRebounding = false
+      this.scroll.refresh()
+    }, this.scroll.options.bounceTime)
   }
 
   _initPullUpLoad = () => {
-    this.scroll.on("pullingUp", () => {
+    this.scroll.on('pullingUp', () => {
       this.setState({
         isPullUpLoad: true
-      });
+      })
 
       this.props.pullUpLoadMoreData().then(() => {
         if (!this.scroll) {
-          return;
+          return
         }
         this.setState({
           isPullUpLoad: false
-        });
-        this.scroll.finishPullUp();
-        this.scroll.refresh();
-      });
-    });
-  };
+        })
+        this.scroll.finishPullUp()
+        this.scroll.refresh()
+      })
+    })
+  }
 
   renderPullUpLoad() {
-    let { pullUpLoad, isPullUpTipHide } = this.props;
+    let { pullUpLoad, isPullUpTipHide } = this.props
 
     if (pullUpLoad && isPullUpTipHide) {
       return (
         <div className="b-pullup-wrapper">
-          <div className="after-trigger" style={{ lineHeight: ".32rem" }}>
-            <span style={{ color: "#999999", fontSize: ".28rem" }}>{""}</span>
+          <div className="after-trigger" style={{ lineHeight: '.32rem' }}>
+            <span style={{ color: '#999999', fontSize: '.28rem' }}>{''}</span>
           </div>
         </div>
-      );
+      )
     }
 
     if (pullUpLoad && this.state.isPullUpLoad) {
       return (
         <div className="b-pullup-wrapper">
-          <div className="after-trigger" style={{ lineHeight: ".32rem" }}>
+          <div className="after-trigger" style={{ lineHeight: '.32rem' }}>
             <i className="loading-icon"></i>
-            <span style={{ color: "#999999", fontSize: "13px" }}>
-              {typeof pullUpLoad === "object"
-                ? pullUpLoad.txt.more
-                : "加载中..."}
+            <span style={{ color: '#999999', fontSize: '13px' }}>
+              {typeof pullUpLoad === 'object' ? pullUpLoad.txt.more : '加载中...'}
             </span>
           </div>
         </div>
-      );
+      )
     }
     if (pullUpLoad && !this.state.isPullUpLoad) {
       return (
         <div className="b-pullup-wrapper">
           <div className="before-trigger">
-            <span style={{ color: "#999999", fontSize: "13px" }}>
-              {typeof pullUpLoad === "object"
-                ? pullUpLoad.txt.nomore
-                : "加载完成"}
+            <span style={{ color: '#999999', fontSize: '13px' }}>
+              {typeof pullUpLoad === 'object' ? pullUpLoad.txt.nomore : '加载完成'}
             </span>
           </div>
         </div>
-      );
+      )
     }
   }
 
   renderPullUpDown() {
-    let { pullDownRefresh } = this.props;
-    let { beforePullDown, pulling, pullDownStyle } = this.state;
+    let { pullDownRefresh } = this.props
+    let { beforePullDown, pulling, pullDownStyle } = this.state
 
     if (pullDownRefresh && beforePullDown) {
       return (
@@ -354,7 +350,7 @@ class Scroll extends Component {
             <Bubble y={this.state.bubbleY}></Bubble>
           </div>
         </div>
-      );
+      )
     }
 
     if (pullDownRefresh && !beforePullDown && pulling) {
@@ -366,7 +362,7 @@ class Scroll extends Component {
             </div>
           </div>
         </div>
-      );
+      )
     }
 
     if (pullDownRefresh && !beforePullDown && !pulling) {
@@ -375,14 +371,14 @@ class Scroll extends Component {
           <div className="after-trigger">
             <div>
               <span>
-                {typeof this.options.pullDownRefresh === "object"
+                {typeof this.options.pullDownRefresh === 'object'
                   ? this.options.pullDownRefresh.txt.success
-                  : "刷新完成"}
+                  : '刷新完成'}
               </span>
             </div>
           </div>
         </div>
-      );
+      )
     }
   }
 
@@ -395,8 +391,8 @@ class Scroll extends Component {
         </div>
         {this.renderPullUpDown()}
       </div>
-    );
+    )
   }
 }
 
-export default Scroll;
+export default Scroll

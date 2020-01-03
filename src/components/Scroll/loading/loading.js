@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import "./loading.css";
+import './loading.css'
 
-const loadingImg = require("./loading.gif");
+const loadingImg = require('./loading.gif')
 
 class Loading extends Component {
   render() {
@@ -10,8 +10,8 @@ class Loading extends Component {
       <div className="loading-container">
         <img src={loadingImg} alt="loading" />
       </div>
-    );
+    )
   }
 }
 
-export default Loading;
+export default Loading

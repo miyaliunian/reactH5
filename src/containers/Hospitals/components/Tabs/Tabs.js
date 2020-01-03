@@ -10,6 +10,7 @@ import { ZHPX, SX_YYLX, SX_YYDJ } from '@api/Constant'
 import './style.less'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Icon } from 'antd-mobile'
 import { actions as tabActions, getAreasList } from '@reduxs/modules/tabs'
 
 class Tabs extends Component {
@@ -38,16 +39,24 @@ class Tabs extends Component {
           <li
             className={this.state.tab1focused ? 'searchItem  itemSelected ' : 'searchItem'}
             onClick={() => this.tabSelc(1)}>
-            {this.state.tab1focused_title}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {this.state.tab1focused_title}
+              <Icon type={'down'} size={'xs'} />
+            </div>
           </li>
           <li className={this.state.tab2focused ? 'searchItem2Seled' : 'searchItem2'} onClick={() => this.tabSelc(2)}>
-            {this.state.tab2focused_title}
-            <div className={this.state.tab2focused ? 'searchItemSeledLine' : ''} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {this.state.tab2focused_title}
+              <Icon type={'down'} size={'xs'} />
+            </div>
           </li>
           <li
             className={this.state.tab3focused ? 'searchItem  itemSelected' : 'searchItem'}
             onClick={() => this.tabSelc(3)}>
-            筛选
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              筛选
+              <Icon type={'down'} size={'xs'} />
+            </div>
           </li>
         </ul>
         <div

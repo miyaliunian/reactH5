@@ -196,16 +196,6 @@
         window.viewportUnitsBuggyfill.init({
           hacks: window.viewportUnitsBuggyfillHacks
         })
-
-        document.addEventListener('touchstart', function(event) {
-          if (event.touches.length > 1) {
-            event.preventDefault()
-          }
-        })
-
-        document.addEventListener('gesturestart', function(event) {
-          event.preventDefault()
-        })
       }
       if (!window.Promise) {
         document.writeln(

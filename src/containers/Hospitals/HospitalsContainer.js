@@ -47,6 +47,7 @@ class HospitalsContainer extends PureComponent {
 
   //下拉刷新
   pullingDownHandler() {
+    debugger
     this.props.hospitalActions.refreshHosipitalList()
   }
 
@@ -76,9 +77,11 @@ class HospitalsContainer extends PureComponent {
       }
     )
 
-    if (this.props.history.action === 'PUSH') {
-      this.initailData()
-    }
+    this.initailData()
+
+    // if (this.props.history.action === 'PUSH') {
+    //   this.initailData()
+    // }
   }
 
   initailData() {
