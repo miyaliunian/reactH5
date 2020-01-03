@@ -65,8 +65,9 @@ class HospitalsItem extends Component {
   render() {
     const { data, isLastPage } = this.props
     return (
-      <ul className={'hospitalsItem'} ref={'hospitalsItem'}>
-        <div>
+      <div className={'hospitalsItem_wrapper'} ref={'hospitalsItem'}>
+        <div className={"scroll-wrapper"}>
+        <ul>
           {data.map((item, index) => {
             return (
               <Link to={`/division/${item.id}/${item.name}`} key={index}>
@@ -99,8 +100,12 @@ class HospitalsItem extends Component {
               </Link>
             )
           })}
+        </ul>
         </div>
-      </ul>
+        {/*下拉刷新*/}
+        <div className={"pulldown-wrapper"}>
+        </div>
+      </div>
     )
   }
 
