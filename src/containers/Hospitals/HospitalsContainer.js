@@ -47,14 +47,15 @@ class HospitalsContainer extends PureComponent {
 
   //下拉刷新
   pullingDownHandler() {
-    this.props.hospitalActions.refreshHosipitalList()
+    const {hospitalActions:{refreshHosipitalList}} = this.props
+    refreshHosipitalList()
   }
 
   //
   pullingUpHandler() {
-    const { isLastPage } = this.props
+    const { isLastPage,hospitalActions:{loadHosipitalList}} = this.props
     if (!isLastPage) {
-      this.props.hospitalActions.loadHosipitalList()
+      loadHosipitalList()
     }
   }
 

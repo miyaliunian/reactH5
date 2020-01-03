@@ -56,7 +56,7 @@ export const SX_YYLX = {
       isSel: false
     },
     {
-      title: "专科",
+      title: "专科医院",
       value: "special",
       isSel: false
     },
