@@ -206,3 +206,11 @@
 - 异步代码(例如 setTimeOut 或 requestAnimationFrame 回调函数)
 - 服务端渲染
 - 错误边界本身抛出来的错误(而不是其子组件)
+
+react操作dom
+      // let top = Math.min(pops.y - 50 , 10)
+      // this.refs.pulldownWrapper.style.display = "flex"
+      // console.log("movingDirectionY",this.bscroll.movingDirectionY)
+      // console.log("directionY",this.bscroll.directionY)
+
+

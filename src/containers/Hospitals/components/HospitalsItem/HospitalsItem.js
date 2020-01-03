@@ -13,7 +13,6 @@ import Bscroll from "better-scroll";
 import { withRouter } from "react-router-dom";
 //图标
 import icon_sj from "@assets/images/Home/三甲图标IOS.png";
-import icon_arr from "@assets/images/other/arr.png";
 import icon_bg from "@assets/images/Home/报告图标IOS.png";
 import icon_zh from "@assets/images/Home/综合图标IOS.png";
 import icon_yy from "@assets/images/Home/预约图标IOS.png";
@@ -28,11 +27,14 @@ class HospitalsItem extends Component {
     this.state = {
       pulldownMsg: "下拉刷新",
       pulldownIsShow: false,
-      showLoadingIcon:false
+      showLoadingIcon: false
     };
+    //区分下拉刷新:down、上啦加载更多:up
+    this.pullDirection = "";
   }
 
   componentDidMount() {
+    console.log("zi");
     this.bscroll = new Bscroll(this.refs.hospitalListWrapper, {
       mouseWheel: true,
       probeType: 3,
@@ -53,28 +55,13 @@ class HospitalsItem extends Component {
     this.bscroll.on("pullingDown", () => {
       console.log("pullingDown");
       setTimeout(() => {
+        this.pullDirection = "down";
         console.log("发送请求");
-        setTimeout(() => {
-          this.bscroll.finishPullDown();
-          this.bscroll.refresh();
-          setTimeout(()=>{
-            this.setState({
-              pulldownMsg: "下拉刷新",
-              pulldownIsShow: false,
-              showLoadingIcon: false
-            });
-          },500)
-        }, 1500);
+        this.props.pullingDownHandler();
+
       }, 1500);
     });
     this.bscroll.on("scroll", pops => {
-      // let top = Math.min(pops.y - 50 , 10)
-      // this.refs.pulldownWrapper.style.display = "flex"
-      // console.log("movingDirectionY",this.bscroll.movingDirectionY)
-      // console.log("directionY",this.bscroll.directionY)
-
-
-
       if (pops.y > 50) {
         this.setState({
           pulldownMsg: "释放即可刷新...",
@@ -82,10 +69,8 @@ class HospitalsItem extends Component {
         });
       }
 
-
-
       if (this.bscroll.directionY == -1) {
-        if (pops.y <=50) {
+        if (pops.y <= 50) {
           this.setState({
             pulldownMsg: "加载中...",
             showLoadingIcon: true
@@ -94,26 +79,33 @@ class HospitalsItem extends Component {
       }
     });
 
-    this.bscroll.on("touchEnd", (e)=>{
-    });
-
-
     this.bscroll.on("pullingUp", this.props.pullingUpHandler);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isLastPage) {
+  componentWillReceiveProps() {
+    //判断是下拉刷新 还是加载更多
+    if (this.pullDirection === "down") {
+      //  下拉刷新
+      setTimeout(() => {
+        this.bscroll.finishPullDown();
+        this.bscroll.refresh();
+        setTimeout(() => {
+          this.setState({
+            pulldownMsg: "下拉刷新",
+            pulldownIsShow: false,
+            showLoadingIcon: false
+          });
+        }, 500);
+      }, 1500);
+    }
+
+    if (this.pullDirection === "up") {
+      //上啦加载更多
       this.bscroll.refresh();
       this.bscroll.finishPullUp();
     }
-    setTimeout(() => {
-      if (!this.props.fetchingStatus) {
-        this.setState({
-          isShowRefreshHeader: false
-        });
-        this.bscroll.finishPullDown();
-      }
-    }, 200);
+
+
   }
 
   render() {
@@ -157,7 +149,7 @@ class HospitalsItem extends Component {
           </ul>
         </div>
         <PullDownWrapper isShow={this.state.pulldownIsShow}>
-          <IconWrapper isShowLoadingIcon ={this.state.showLoadingIcon}>
+          <IconWrapper isShowLoadingIcon={this.state.showLoadingIcon}>
             <Icon type={"loading"} size={"xs"}/>
           </IconWrapper>
           <span style={{ marginLeft: "5px", color: "#7b7b7b" }}>{this.state.pulldownMsg}</span>
