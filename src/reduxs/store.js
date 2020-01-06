@@ -5,7 +5,7 @@
  * Description:  redux-store并结合ReactDevTool
  */
 import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk' //处理异步action
+import thunk from 'redux-thunk'
 import api from './middleware/api'
 import rootReducer from './modules'
 

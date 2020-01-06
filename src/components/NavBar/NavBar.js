@@ -8,7 +8,7 @@
 import React, { PureComponent } from 'react'
 import { NavBar, Icon } from 'antd-mobile'
 import PropTypes from 'prop-types'
-import './style.less'
+import './navbar.less'
 
 export default class Header extends PureComponent {
   static propTypes = {
@@ -20,7 +20,7 @@ export default class Header extends PureComponent {
   render() {
     const { title, onBack, isRight } = this.props
     return (
-      <div className={'header'}>
+      <div className={'navbar border-bottom'}>
         {isRight ? (
           <NavBar
             mode="light"

@@ -12,13 +12,13 @@ export default class DoctorTabs extends Component {
   render() {
     const { iniTabSel } = this.props
     return (
-      <div className={'doctorTabs'}>
+      <div className={'doctorTabs border-bottom'}>
         <div
           onClick={() => this.tabSel(1)}
           className={
             iniTabSel === 1
-              ? 'doctorTabs__tabsLeft border-rightbottom itemSelected '
-              : 'doctorTabs__tabsLeft  border-rightbottom '
+              ? 'doctorTabs__tabsLeft border-right itemSelected '
+              : 'doctorTabs__tabsLeft  border-right '
           }>
           按专家预约
         </div>

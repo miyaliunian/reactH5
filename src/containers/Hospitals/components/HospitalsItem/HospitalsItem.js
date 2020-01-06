@@ -3,12 +3,11 @@
  * Author: wufei
  * Date: 2019/5/24
  * Description:
- *
+ * scrollTop + clientHeight >= scrollHeight(当页面没有滚动时scrollheight是不存在当 只有body的高度超过clientHeight时才会出现)
  */
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 //没封装之前
-import Bscroll from "better-scroll";
 
 import { withRouter } from "react-router-dom";
 //图标
@@ -25,128 +24,50 @@ class HospitalsItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pulldownMsg: "下拉刷新",
-      pulldownIsShow: false,
-      showLoadingIcon: false
+      isend: false//标示页面是否可以滚动
     };
-    //区分下拉刷新:down、上啦加载更多:up
-    this.pullDirection = "";
+    //记录当前页码
+    this.page = 0;
   }
 
-  componentDidMount() {
-    console.log("zi");
-    this.bscroll = new Bscroll(this.refs.hospitalListWrapper, {
-      mouseWheel: true,
-      probeType: 3,
-      click: true,
-      tap: true,
-      pullDownRefresh: {
-        threshold: 50
-        // stop: 40  // 默认40
-      },
-      pullUpLoad: {
-        threshold: 80
-      },
-      bounce: {
-        top: true,
-        bottom: true
-      }
-    });
-    this.bscroll.on("pullingDown", () => {
-      console.log("pullingDown");
-      setTimeout(() => {
-        this.pullDirection = "down";
-        console.log("发送请求");
-        this.props.pullingDownHandler();
-
-      }, 1500);
-    });
-    this.bscroll.on("scroll", pops => {
-      if (pops.y > 50) {
-        this.setState({
-          pulldownMsg: "释放即可刷新...",
-          showLoadingIcon: false
-        });
-      }
-
-      if (this.bscroll.directionY == -1) {
-        if (pops.y <= 50) {
-          this.setState({
-            pulldownMsg: "加载中...",
-            showLoadingIcon: true
-          });
-        }
-      }
-    });
-
-    this.bscroll.on("pullingUp", this.props.pullingUpHandler);
-  }
-
-  componentWillReceiveProps() {
-    //判断是下拉刷新 还是加载更多
-    if (this.pullDirection === "down") {
-      //  下拉刷新
-      setTimeout(() => {
-        this.bscroll.finishPullDown();
-        this.bscroll.refresh();
-        setTimeout(() => {
-          this.setState({
-            pulldownMsg: "下拉刷新",
-            pulldownIsShow: false,
-            showLoadingIcon: false
-          });
-        }, 500);
-      }, 1500);
-    }
-
-    if (this.pullDirection === "up") {
-      //上啦加载更多
-      this.bscroll.refresh();
-      this.bscroll.finishPullUp();
-    }
-
-
-  }
 
   render() {
     const { data } = this.props;
     return (
-      <div className={"hospitalsItem_wrapper"} ref={"hospitalListWrapper"}>
+      <div className={"hospitalsItem_wrapper"}>
         <div className={"scroll-wrapper"}>
-          <ul>
-            {data.map((item, index) => {
-              return (
-                <Link to={`/division/${item.id}/${item.name}`} key={index}>
-                  <li className="hospitalsItem__con border-topbottom">
-                    <div className="hospitalsItem__title">{item.name}</div>
-                    <div className="hospitalsItem__middle">
-                      <div className={"hospitalsItem__middle__item"}>
-                        <img src={icon_sj} alt="" className={"hospitalsItem__middle__icon"}/>
-                        <span className={"hospitalsItem__middle__innerTxt"}>{item.hosGradeShortName}</span>
-                      </div>
-                      <div className={"hospitalsItem__middle__item"}>
-                        <img src={icon_zh} alt="" className={"hospitalsItem__middle__icon"}/>
-                        <span className={"hospitalsItem__middle__innerTxt"}>{item.hosCategory}</span>
-                      </div>
-                      {item.regOpened ? (
-                        <div className={"hospitalsItem__middle__item"}>
-                          <img src={icon_yy} alt="/" className={"hospitalsItem__middle__icon"}/>
-                          <span className={"hospitalsItem__middle__innerTxt"}>可预约</span>
-                        </div>
-                      ) : null}
-                      {item.reportOpened ? (
-                        <div className={"hospitalsItem__middle__item"}>
-                          <img src={icon_bg} className={"hospitalsItem__middle__icon"} alt=""/>
-                          <span className={"hospitalsItem__middle__innerTxt"}>查报告</span>
-                        </div>
-                      ) : null}
+          {data.map((item, index) => {
+            return (
+              <Link to={`/division/${item.id}/${item.name}`} key={index}>
+                <li className="hospitalsItem__con border-topbottom">
+                  <div className="hospitalsItem__title">{item.name}</div>
+                  <div className="hospitalsItem__middle">
+                    <div className={"hospitalsItem__middle__item"}>
+                      <img src={icon_sj} alt="" className={"hospitalsItem__middle__icon"}/>
+                      <span className={"hospitalsItem__middle__innerTxt"}>{item.hosGradeShortName}</span>
                     </div>
-                    <div className="hospitalsItem__address">地址：{item.address}</div>
-                  </li>
-                </Link>
-              );
-            })}
-          </ul>
+                    <div className={"hospitalsItem__middle__item"}>
+                      <img src={icon_zh} alt="" className={"hospitalsItem__middle__icon"}/>
+                      <span className={"hospitalsItem__middle__innerTxt"}>{item.hosCategory}</span>
+                    </div>
+                    {item.regOpened ? (
+                      <div className={"hospitalsItem__middle__item"}>
+                        <img src={icon_yy} alt="/" className={"hospitalsItem__middle__icon"}/>
+                        <span className={"hospitalsItem__middle__innerTxt"}>可预约</span>
+                      </div>
+                    ) : null}
+                    {item.reportOpened ? (
+                      <div className={"hospitalsItem__middle__item"}>
+                        <img src={icon_bg} className={"hospitalsItem__middle__icon"} alt=""/>
+                        <span className={"hospitalsItem__middle__innerTxt"}>查报告</span>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="hospitalsItem__address">地址：{item.address}</div>
+                </li>
+              </Link>
+            );
+          })}
         </div>
         <PullDownWrapper isShow={this.state.pulldownIsShow}>
           <IconWrapper isShowLoadingIcon={this.state.showLoadingIcon}>
@@ -156,6 +77,38 @@ class HospitalsItem extends Component {
         </PullDownWrapper>
       </div>
     );
+  }
+
+  onLoadPage() {
+    let clientHeight = document.documentElement.clientHeight;
+      let scrollHeight = document.body.scrollHeight;
+      let scrollTop = document.documentElement.scrollTop;
+      let proLoadDis = 80;
+      if ((scrollTop + clientHeight) >= (scrollHeight - proLoadDis)) {
+        this.page++;
+        if (this.page > 1) {
+          this.setState({
+            isend: true
+          });
+        } else {
+          this.props.pullingUpHandler();
+        }
+
+
+      }
+    }
+
+
+  componentDidMount() {
+    window.addEventListener("scroll", () => this.onLoadPage());
+  }
+
+  componentWillReceiveProps() {
+
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", () => this.onLoadPage());
   }
 
 }

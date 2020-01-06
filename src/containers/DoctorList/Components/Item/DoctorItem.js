@@ -83,8 +83,6 @@ class DoctorItem extends Component {
         bottom: true
       }
     })
-    // this.bscroll.on('pullingDown', this.pullingDownHandler)
-    // this.bscroll.on('pullingUp', this.props.pullingUpHandler)
   }
 }
 

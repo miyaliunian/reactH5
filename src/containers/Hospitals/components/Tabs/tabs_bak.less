@@ -1,11 +1,18 @@
 @import '../../../../assets/less/varibles';
 
 .tabs {
+  width: 100%;
+  background-color: #fff;
+  margin-top: 45px;
   color: #686868;
+  position: relative;
   .tabs__searchTOPWrapper {
+    position: fixed;
+    width: 100%;
     display: flex;
     flex-direction: row;
     background-color: white;
+    height: 40px;
     .searchItem {
       display: flex;
       flex: 1;
@@ -14,6 +21,7 @@
       justify-content: center;
     }
     .itemSelected {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -22,6 +30,7 @@
       color: @theme-font-color;
       align-items: center;
       &::after {
+        content: "";
         width: 95%;
         height: 2px;
         margin-bottom: 1px;
@@ -50,6 +59,7 @@
       border-right: @border-LightGrey;
       align-items: center;
       &::after {
+        content: "";
         width: 95%;
         height: 2px;
         margin-bottom: 1px;
@@ -62,26 +72,27 @@
     display: flex;
     width: 100%;
     z-index: 1;
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
-    top: 87px;
+    top: 85px;
     bottom: 0;
     border-top: @border-LightGrey;
     background: rgba(0, 0, 0, 0.3);
     visibility: hidden;
+    z-index: 4;
   }
   .tabs__BottomWrapper__con__show {
+    position: absolute;
+    z-index: 100;
     display: flex;
     width: 100%;
-    z-index: 1;
-    position: fixed;
-    overflow: hidden;
     left: 0;
-    right: 0;
-    top: 87px;
+    top: 86px;
     bottom: 0;
+    right: 0;
     background: rgba(0, 0, 0, 0.3);
+
 
     .tabs__BottomWrapper__tab {
       width: 100%;

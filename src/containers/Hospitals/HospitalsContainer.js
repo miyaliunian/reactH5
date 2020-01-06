@@ -25,7 +25,7 @@ class HospitalsContainer extends PureComponent {
   render() {
     const { fetchingStatus, hospitalList, isLastPage } = this.props
     return (
-      <div id="hospitalsContainer" onTouchMove={e => this.handleTouchMove(e)} className={'hospitalsContainer'}>
+      <div id="hospitalsContainer"  className={'hospitalsContainer'}>
         <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
           <Tabs
             handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
@@ -38,7 +38,6 @@ class HospitalsContainer extends PureComponent {
             pullingDownHandler={() => this.pullingDownHandler()}
             pullingUpHandler={() => this.pullingUpHandler()}
           />
-
           <LoadingMask />
         </SafeAreaView>
       </div>
@@ -64,24 +63,9 @@ class HospitalsContainer extends PureComponent {
     this.props.history.goBack()
   }
 
-  handleTouchMove(event) {}
 
   componentDidMount() {
-    document.getElementById('hospitalsContainer').addEventListener(
-      'touchmove',
-      event => {
-        event.preventDefault()
-      },
-      {
-        passive: false //  禁止 passive 效果
-      }
-    )
-
     this.initailData()
-    console.log("fu")
-    // if (this.props.history.action === 'PUSH') {
-    //   this.initailData()
-    // }
   }
 
   initailData() {

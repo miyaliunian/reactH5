@@ -3,7 +3,7 @@
 .doctorItem {
   height: 100vm;
   position: fixed;
-  top: @navScrolH;
+  top: 86px;
   left: 0px;
   right: 0px;
   bottom: 0px;
@@ -19,8 +19,8 @@
     box-sizing: border-box;
     //border-bottom: 1px solid #D3D3D3;
     .doctorItem__avator {
-      width: 55px;
-      height: 55px;
+      width: 53px;
+      height: 53px;
       box-sizing: border-box;
       border-radius: 27.5px;
       background: rgb(234, 234, 234);
@@ -49,15 +49,28 @@
         }
         .doctorItem__title {
           font-size: 13px;
-          color: #7e8c8d;
+          color: #686868;
         }
       }
       .doctorItem__skills {
+        //font-size: 13px;
+        //color: #7e8c8d;
+        //white-space: nowrap;
+        //overflow: hidden;
+        //text-overflow: ellipsis;
+
+        //height: 5px;
+        line-height: 16px;
         font-size: 13px;
-        color: #7e8c8d;
-        white-space: nowrap;
+        color: #686868;
+
+        display: -webkit-box;
+        -webkit-line-clamp:2;
         overflow: hidden;
         text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+
+
       }
     }
     .doctorItem__right__icon {
