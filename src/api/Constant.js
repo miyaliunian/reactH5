@@ -35,70 +35,79 @@ export const BASE_URL = "http://www.ntyibao.com/t-core";
 //预约挂号-医院列表
 //
 
+
+export const TABKAY = {
+  AREA: "AREA",//全部区域
+  SORT: "SORT",//综合排序
+  FILTER: "FILTER"//过滤
+};
+
 // -综合排序
 export const ZHPX = [
-  { title: "综合排序", value: "register" },
-  { title: "医院等级", value: "grade" }
+  { name: "综合排序", value: "register" },
+  { name: "医院等级", value: "grade" }
 ];
 
-//筛选->医院类型
-export const SX_YYLX = {
-  title: "不限",
-  data: [
-    {
-      title: "不限",
-      value: "",
-      isSel: true
-    },
-    {
-      title: "综合医院",
-      value: "general",
-      isSel: false
-    },
-    {
-      title: "专科医院",
-      value: "special",
-      isSel: false
-    },
-    {
-      title: "其它",
-      value: "other",
-      isSel: false
-    }
-  ]
-};
-
-//筛选->医院等级
-export const SX_YYDJ = {
-  title: "不限",
-  data: [
-    {
-      title: "不限",
-      value: "",
-      isSel: true
-    },
-    {
-      title: "三甲",
-      value: "threeAGrade",
-      isSel: false
-    },
-    {
-      title: "三级",
-      value: "threeGrade",
-      isSel: false
-    },
-    {
-      title: "二级",
-      value: "twoGrade",
-      isSel: false
-    },
-    {
-      title: "其它",
-      value: "othersGrade",
-      isSel: false
-    }
-  ]
-};
+//筛选
+export const SX = [
+  {
+    groupTitle: "不限",
+    key:'lx',//医院等级
+    items: [
+      {
+        name: "不限",
+        key:'lx',//医院类型
+        value: ""
+      },
+      {
+        name: "综合医院",
+        key:'lx',//医院类型
+        value: "general"
+      },
+      {
+        name: "专科医院",
+        key:'lx',//医院类型
+        value: "special"
+      },
+      {
+        name: "其它",
+        key:'lx',//医院类型
+        value: "other"
+      }
+    ]
+  },
+  {
+    groupTitle: "不限",
+    key:'dj',//医院等级
+    items: [
+      {
+        name: "不限",
+        key:'dj',//医院等级
+        value: ""
+      },
+      {
+        name: "三甲",
+        key:'dj',//医院等级
+        value: "threeAGrade"
+      },
+      {
+        name: "三级",
+        key:'dj',//医院等级
+        value: "threeGrade"
+      },
+      {
+        name: "二级",
+        key:'dj',//医院等级
+        value: "twoGrade"
+      },
+      {
+        name: "其它",
+        key:'dj',//医院等级
+        value: "othersGrade"
+      }
+    ]
+  }
+];
 
 //医生类别
 export const DoctorOrderType = {
