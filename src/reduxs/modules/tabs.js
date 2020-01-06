@@ -25,7 +25,7 @@ tabs[TABKAY.SORT] = {
 tabs[TABKAY.FILTER] = {
   key: TABKAY.FILTER,
   text: "筛选",
-  obj: {}
+  obj: SX
 };
 const initialState = {
   areas: [{ id: "", name: "全部区域" }],
@@ -37,6 +37,7 @@ const initialState = {
 // action types
 const actionTypes = {
   CHANGE_TAB: "CHANGE_TAB",
+  CLOSE_PANEL: "CLOSE_PANEL",
   CHANGE_FILTER: "CHANGE_FILTER",
   FETCH_AREAS_REQUEST: "TABS/FETCH__AREAS_REQUEST",
   FETCH_AREAS_SUCCESS: "TABS/FETCH__AREAS_SUCCESS",
@@ -65,7 +66,17 @@ export const actions = {
   changeFilter: (item, key) => {
     return (dispatch, getstate) => {
       if (key == TABKAY.FILTER) {
-
+        let _newtabs = JSON.parse(JSON.stringify(getstate().tabs.tabs));
+        _newtabs[key].obj.filter((i) => i.key === item.key)[0].groupTitle = item.name;
+        _newtabs[key].obj.filter((i) => i.key === item.key)[0].value = item.value;
+        _newtabs[key].obj.filter((i) => i.key === item.key)[0].items.map(i => {
+          if (i.name === item.name) {
+            i.active = !item.active;
+          } else {
+            i.active = false;
+          }
+        });
+        dispatch({ type: actionTypes.CHANGE_FILTER, tab: _newtabs, closePanel: false });
       } else {
         let newtabs = JSON.parse(JSON.stringify(getstate().tabs.tabs));
         newtabs[key] = {
@@ -74,8 +85,16 @@ export const actions = {
           obj: item
         };
 
-        dispatch({ type: actionTypes.CHANGE_FILTER, tab: newtabs,closePanel:true});
+        dispatch({ type: actionTypes.CHANGE_FILTER, tab: newtabs, closePanel: true });
       }
+    };
+  },
+
+
+  // 遮罩空白区域事件
+  closePanelAction: () => {
+    return (dispatch, getstate) => {
+      dispatch({ type: actionTypes.CLOSE_PANEL });
     };
   }
 
@@ -101,7 +120,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tabs: action.tab,
-        closePanel:action.closePanel
+        closePanel: action.closePanel
+      };
+    case actionTypes.CLOSE_PANEL:
+      return {
+        ...state,
+        closePanel: true
       };
     case actionTypes.FETCH_AREAS_REQUEST:
       return { ...state, isFetching: true };

@@ -53,24 +53,29 @@ export const SX = [
   {
     groupTitle: "不限",
     key:'lx',//医院等级
+    value:"",
     items: [
       {
         name: "不限",
+        active:false,
         key:'lx',//医院类型
         value: ""
       },
       {
         name: "综合医院",
+        active:false,
         key:'lx',//医院类型
         value: "general"
       },
       {
         name: "专科医院",
+        active:false,
         key:'lx',//医院类型
         value: "special"
       },
       {
         name: "其它",
+        active:false,
         key:'lx',//医院类型
         value: "other"
       }
@@ -82,26 +87,31 @@ export const SX = [
     items: [
       {
         name: "不限",
+        active:false,
         key:'dj',//医院等级
         value: ""
       },
       {
         name: "三甲",
+        active:false,
         key:'dj',//医院等级
         value: "threeAGrade"
       },
       {
         name: "三级",
+        active:false,
         key:'dj',//医院等级
         value: "threeGrade"
       },
       {
         name: "二级",
+        active:false,
         key:'dj',//医院等级
         value: "twoGrade"
       },
       {
         name: "其它",
+        active:false,
         key:'dj',//医院等级
         value: "othersGrade"
       }

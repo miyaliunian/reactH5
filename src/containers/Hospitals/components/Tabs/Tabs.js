@@ -32,7 +32,7 @@ class Tabs extends Component {
   changeDoFilter(item, key, event) {
     const { tabActions: { changeFilter } } = this.props;
     changeFilter(item, key);
-    event.stopPropagation()
+    event.stopPropagation();
   }
 
   /**
@@ -110,7 +110,7 @@ class Tabs extends Component {
       let cls = item.action ? "type-item active" : "type-item";
 
       return (
-        <li key={index} className={cls} onClick={(e) => this.changeDoFilter(item, TABKAY.SORT,e)}>
+        <li key={index} className={cls} onClick={(e) => this.changeDoFilter(item, TABKAY.SORT, e)}>
           {item.name}
         </li>
       );
@@ -125,16 +125,14 @@ class Tabs extends Component {
 
   renderFilterInnerContent(items/*filterList*/) {
     return items.map((item, index) => {
-      let cls = "cate-box-inner";
-      if (item.action) {
-        cls += " action";
+      let cls = "cate-box";
+      if (item.active) {
+        cls += " active";
       }
 
       return (
-        <div key={index} className={"cate-box"} onClick={(e) => this.changeDoFilter(item, TABKAY.FILTER,e)}>
-          <div className={cls}>
-            {item.name}
-          </div>
+        <div key={index} className={cls} onClick={(e) => this.changeDoFilter(item, TABKAY.FILTER, e)}>
+          {item.name}
         </div>
       );
     });
@@ -142,7 +140,9 @@ class Tabs extends Component {
   }
 
   renderFILTERContent() {
-    let filterList = SX;
+    let filterList = [];
+    const { tabs } = this.props;
+    filterList = tabs[TABKAY.FILTER].obj;
     return filterList.map((item, index) => {
       return (
         <li key={index} className={"filter-item"}>
@@ -187,6 +187,10 @@ class Tabs extends Component {
         array.push(
           <ul key={item.key} className={cls}>
             {this.renderFILTERContent()}
+
+            <div className={"filterBtn"}  /*onClick={() => this.tabItemBtnClick()}*/>
+              确定
+            </div>
           </ul>
         );
       }
@@ -199,7 +203,7 @@ class Tabs extends Component {
 
   render() {
 
-    const { closePanel,} = this.props;
+    const { closePanel, tabActions: { closePanelAction } } = this.props;
     let cls = "panel";
 
 
@@ -214,9 +218,7 @@ class Tabs extends Component {
         <div className={"tab-header-top border-bottom"}>
           {this.renderTabs()}
         </div>
-        <div className={cls} onClick={() => {
-
-        }} id="panel">
+        <div className={cls} onClick={() => closePanelAction()}>
           <div className={"panel-inner"}>
             {this.renderContent()}
           </div>
@@ -226,20 +228,12 @@ class Tabs extends Component {
   }
 
 
-  close() {
-    this.setState({
-      tabMaskIsSHow: false
-    });
-  }
-
-
   componentDidMount() {
     const { areasList, tabActions: { loadAreas } } = this.props;
     if (areasList && areasList.length !== 1) {
       return;
     }
     loadAreas();
-
   }
 }
 

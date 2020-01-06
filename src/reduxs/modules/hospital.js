@@ -68,7 +68,9 @@ export const actions = {
     }
   },
 
-  fetchHosipitalListBy: () => {
+
+  //
+  fetchHosipitalListByFilter: () => {
     return (dispatch, getstate) => {
       const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, '1')
       let param = {

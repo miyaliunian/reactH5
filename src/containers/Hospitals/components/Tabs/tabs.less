@@ -4,6 +4,7 @@
   width: 100%;
   margin-top: 45px;
   z-index: 99;
+
   .tab-header-top {
     position: fixed;
     background-color: white;
@@ -20,6 +21,7 @@
     font-size: 15px;
     border-right: 0.5px solid #eaeaea;
     text-align: center;
+
     &:last-child {
       border: none;
     }
@@ -59,6 +61,7 @@
     right: 0;
     background: rgba(0, 0, 0, 0.3);
     display: none;
+
     &.show {
       display: block;
     }
@@ -69,15 +72,34 @@
       overflow-y: auto;
       background-color: #fff;
 
+
       > ul { // 每一个面板默认情况下都是隐藏的
         display: none;
         background: #fff;
 
-         &.current {
+        &.current {
           display: block;
 
         }
 
+      }
+
+
+      .FILTER-panel {
+        padding-top: 5px;
+        position: relative;
+
+        .filterBtn {
+          position: absolute;
+          text-align: center;
+          width: 70px;
+          height: 28px;
+          line-height: 28px;
+          background: @theme-blue;
+          bottom: -10px;
+          right: 10px;
+          color: white;
+        }
       }
 
 
@@ -92,22 +114,32 @@
       }
 
       .item-content {
-        min-height: 20px;
+        min-height: 25px;
         display: flex;
-      }
-
-      .cate-box {
-        margin-top: 5px;
-        font-size: 13px;
         padding-left: 14px;
       }
 
-      .cate-box-inner {
-        padding: 2px 5px;
+      .cate-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        margin-right: 5px;
         font-size: 12px;
-        text-align: center;
-        border: 1px solid #c4c4c4;
+        padding: 2px 8px;
+        border: 1px solid rgba(51, 51, 51, 0.8);
         border-radius: 4px;
+        color: #686868;
+
+        &.active {
+          color: #fff;
+          display: flex;
+          padding: 2px 6px;
+          background-color: #0084ff;
+          border: none;
+          justify-content: center;
+          align-items: center;
+        }
       }
 
       .type-item {
@@ -125,15 +157,16 @@
       }
 
       .filter-item {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         margin-top: 5px;
+
         padding-left: 5px;
         padding-right: 5px;
       }
 
       .filter-title {
         color: #686868;
-        font-size: 12px;
+        font-size: 13px;
         padding-left: 14px;
       }
 

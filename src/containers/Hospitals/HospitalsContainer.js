@@ -3,7 +3,7 @@
  * Author: wufei
  * Date: 2019/5/24
  * Description:
- *              医院列表容器
+ *  医院列表容器
  */
 import React, { PureComponent } from 'react'
 import HospitalsItem from './components/HospitalsItem/HospitalsItem'
@@ -25,7 +25,7 @@ class HospitalsContainer extends PureComponent {
   render() {
     const { fetchingStatus, hospitalList, isLastPage } = this.props
     return (
-      <div id="hospitalsContainer"  className={'hospitalsContainer'}>
+      <div  className={'hospitalsContainer'}>
         <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
           <Tabs
             handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
@@ -79,6 +79,7 @@ class HospitalsContainer extends PureComponent {
 
   //处理行选中
   handelTabRowSel(item, index) {
+    const {hospitalActions:{fetchHosipitalListByFilter}} = this.props
     if (index === 1) {
       // 区域
       this.props.hospitalActions.setAreaId(item.code)
@@ -86,13 +87,14 @@ class HospitalsContainer extends PureComponent {
       // 综合排序
       this.props.hospitalActions.setSord(item.value)
     }
-    this.props.hospitalActions.fetchHosipitalListBy()
+    fetchHosipitalListByFilter()
   }
 
   //处理列选中
   handelTabItemSel(item) {
+    const {hospitalActions:{fetchHosipitalListByFilter}} = this.props
     this.props.hospitalActions.setCategoryGrade(item)
-    this.props.hospitalActions.fetchHosipitalListBy()
+    fetchHosipitalListByFilter()
   }
 }
 
