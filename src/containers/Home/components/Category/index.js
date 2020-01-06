@@ -46,6 +46,10 @@ const dataSource = [
     {
       name: '医保动态',
       src: 'https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png'
+    },
+    {
+      name: '门诊缴费',
+      src: 'https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png'
     }
   ]
 ]

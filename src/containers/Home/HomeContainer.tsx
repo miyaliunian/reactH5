@@ -65,6 +65,9 @@ class Home extends Component {
       case 8:
         history.push('/siDynamicInfo')
         break
+      case 9:
+        history.push('/outpatientPayment')
+        break
       case 10:
         break
     }

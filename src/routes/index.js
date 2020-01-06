@@ -63,6 +63,8 @@ const DLRSComponent = lazy(() => import('@containers/DLRS/DLRSContainer'))
 
 const SiDynamicInfoComponent = lazy(() => import('@containers/SiDynamicInfo/SiDynamicInfoContainer'))
 
+const OutpatientPaymentComponent = lazy(() => import('@containers/OutpatientPayment/OutpatientPaymentContainer'))
+
 const routerMap = [
   {
     path: '/',
@@ -206,6 +208,12 @@ const routerMap = [
     path: '/siDynamicInfo',
     name: 'siDynamicInfo',
     component: SuspenseComponent(SiDynamicInfoComponent)
+  },
+  {
+    path: '/outpatientPayment',
+    name: 'outpatientPayment',
+    requiresAuth: true,
+    component: SuspenseComponent(OutpatientPaymentComponent)
   }
 ]
 
