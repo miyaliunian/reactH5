@@ -84,6 +84,7 @@ export const SX = [
   {
     groupTitle: "不限",
     key:'dj',//医院等级
+    value:"",
     items: [
       {
         name: "不限",

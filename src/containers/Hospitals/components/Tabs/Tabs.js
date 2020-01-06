@@ -6,7 +6,7 @@
  *  医院列表
  */
 import React, { Component } from "react";
-import { ZHPX, SX, TABKAY } from "@api/Constant";
+import { ZHPX, TABKAY } from "@api/Constant";
 //Util
 import { fixedBody, looseBody } from "@utils/fixRollingPenetration";
 //Redux
@@ -30,9 +30,23 @@ class Tabs extends Component {
    * @param key   哪个tab是选中状态
    */
   changeDoFilter(item, key, event) {
-    const { tabActions: { changeFilter } } = this.props;
-    changeFilter(item, key);
+    const { tabActions: { changeFilter }, filterHosipitalList } = this.props;
     event.stopPropagation();
+    changeFilter(item, key, (filter) => {
+      filterHosipitalList(filter);
+    });
+  }
+
+  /**
+   *
+   * @param event
+   */
+  filterPanel(event) {
+    event.stopPropagation();
+    const {tabActions:{closePanelAction}, tabs,filterHosipitalList} = this.props;
+    closePanelAction(()=>{
+      filterHosipitalList(tabs)
+    })
   }
 
   /**
@@ -187,8 +201,7 @@ class Tabs extends Component {
         array.push(
           <ul key={item.key} className={cls}>
             {this.renderFILTERContent()}
-
-            <div className={"filterBtn"}  /*onClick={() => this.tabItemBtnClick()}*/>
+            <div className={"filterBtn"} onClick={(e) => this.filterPanel(e)}>
               确定
             </div>
           </ul>
@@ -196,23 +209,18 @@ class Tabs extends Component {
       }
 
     }
-
     return array;
   }
 
 
   render() {
-
     const { closePanel, tabActions: { closePanelAction } } = this.props;
     let cls = "panel";
-
-
     if (!closePanel) {
       cls += " show";
     } else {
       cls = "panel";
     }
-
     return (
       <div className={"tab-header"}>
         <div className={"tab-header-top border-bottom"}>

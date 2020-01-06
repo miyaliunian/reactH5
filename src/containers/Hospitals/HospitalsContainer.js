@@ -28,8 +28,7 @@ class HospitalsContainer extends PureComponent {
       <div  className={'hospitalsContainer'}>
         <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
           <Tabs
-            handelTabRowSel={(item, index) => this.handelTabRowSel(item, index)}
-            handelTabItemSel={item => this.handelTabItemSel(item)}
+            filterHosipitalList={(item) => this.filterHosipitalList(item)}
           />
           <HospitalsItem
             data={hospitalList}
@@ -69,32 +68,19 @@ class HospitalsContainer extends PureComponent {
   }
 
   initailData() {
+    const {hospitalActions:{loadHosipitalList}} = this.props
     this.resetData()
-    this.props.hospitalActions.loadHosipitalList()
+    loadHosipitalList()
   }
 
   resetData() {
     this.props.hospitalActions.reset()
   }
 
-  //处理行选中
-  handelTabRowSel(item, index) {
-    const {hospitalActions:{fetchHosipitalListByFilter}} = this.props
-    if (index === 1) {
-      // 区域
-      this.props.hospitalActions.setAreaId(item.code)
-    } else {
-      // 综合排序
-      this.props.hospitalActions.setSord(item.value)
-    }
-    fetchHosipitalListByFilter()
-  }
 
-  //处理列选中
-  handelTabItemSel(item) {
-    const {hospitalActions:{fetchHosipitalListByFilter}} = this.props
-    this.props.hospitalActions.setCategoryGrade(item)
-    fetchHosipitalListByFilter()
+  filterHosipitalList(item) {
+    const {hospitalActions:{filterHosipitalList}} = this.props
+    filterHosipitalList(item)
   }
 }
 

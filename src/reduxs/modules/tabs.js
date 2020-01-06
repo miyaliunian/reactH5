@@ -63,7 +63,7 @@ export const actions = {
   },
 
   //每个tab对应的列表 元素被点击时 调用这个方法
-  changeFilter: (item, key) => {
+  changeFilter: (item, key,i) => {
     return (dispatch, getstate) => {
       if (key == TABKAY.FILTER) {
         let _newtabs = JSON.parse(JSON.stringify(getstate().tabs.tabs));
@@ -84,7 +84,7 @@ export const actions = {
           text: item.name,
           obj: item
         };
-
+        i(newtabs)
         dispatch({ type: actionTypes.CHANGE_FILTER, tab: newtabs, closePanel: true });
       }
     };
@@ -92,9 +92,10 @@ export const actions = {
 
 
   // 遮罩空白区域事件
-  closePanelAction: () => {
+  closePanelAction: (i) => {
     return (dispatch, getstate) => {
       dispatch({ type: actionTypes.CLOSE_PANEL });
+      i()
     };
   }
 
