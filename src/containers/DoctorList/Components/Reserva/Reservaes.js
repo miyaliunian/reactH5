@@ -6,19 +6,17 @@
  *  医生列表->按照日期选择->日期
  */
 import React, { Component } from "react";
-import "./style.less";
 import { getDate } from "@utils/dayutils";
+
+import "./style.less";
 
 const getMonths = data => {
   let months = [];
   data.map((item, index) => {
-    let { oDay, oweekDay } = getDate(item);
-    let Obj = { oDay, oweekDay };
-    if (index === 0) {
-      Obj.isSel = true;
-    } else {
-      Obj.isSel = false;
-    }
+    let { oMonth, oDay, oweekDay } = getDate(item);
+
+    let Obj = { oMonth, oDay, oweekDay };
+    index === 0 ? Obj.isSel = true : Obj.isSel = false;
     months.push(Obj);
   });
   return months;
@@ -33,29 +31,31 @@ export default class Reservaes extends Component {
   }
 
   render() {
-    const { filterConditions } = this.props;
+    const { filterMore } = this.props;
     return (
-      <div className={"reservaes border-bottom"}>
+      <div className={"reservaes-content"}>
         {this.state.days.map((day, index) => {
+          let cls = "reservaes-box";
+          if (day.isSel) {
+            cls += " reservaes-box active";
+          }
           return (
             <div
               key={index}
-              className={
-                day.isSel ? "reservaes__box boxSel" : "reservaes__box border"
-              }
-              onClick={() => this.boxClick(day, index)}
+              className={cls}
+              onClick={() => this.boxClick(day,index)}
             >
-              <div className={"reservaes__top"}>{day.oweekDay}</div>
-              <div className={"reservaes__bottom"}>{day.oDay}</div>
+              <div>{day.oweekDay}</div>
+              <div style={{fontSize:"11px"}}>{day.oMonth + "-" + day.oDay}</div>
             </div>
           );
         })}
-        {filterConditions.length > 0 ? (
-          <div className={"reservaes__more"} onClick={this.props.showModal}>
-            {filterConditions}
+        {filterMore.length > 0 ? (
+          <div className={"reservaes-more"} onClick={this.props.showModal}>
+            {filterMore}
           </div>
         ) : (
-          <div className={"reservaes__more"} onClick={this.props.showModal}>
+          <div className={"reservaes-more"} onClick={this.props.showModal}>
             更多 >>
           </div>
         )}
@@ -70,6 +70,7 @@ export default class Reservaes extends Component {
       this.state.days.length === 0
     ) {
       let days = getMonths(nextPros.reservations);
+
       this.setState({
         days: days
       });
@@ -80,12 +81,13 @@ export default class Reservaes extends Component {
     return true;
   }
 
+
   /**
    * 更新数据状态
    * @param dayObj
    */
-  boxClick(dayObj, index) {
-    const { reservations } = this.props;
+  boxClick(dayObj,index) {
+    const { reservations,doFilter } = this.props;
     let days = getMonths(reservations);
     days.map(item => {
       if (item.oDay === dayObj.oDay) {
@@ -98,6 +100,6 @@ export default class Reservaes extends Component {
     this.setState({
       days: days
     });
-    this.props.fetchDoctors(reservations[index]);
+    doFilter(reservations[index])
   }
 }

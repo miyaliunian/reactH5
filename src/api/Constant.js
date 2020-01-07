@@ -42,6 +42,11 @@ export const TABKAY = {
   FILTER: "FILTER"//过滤
 };
 
+export const DOCTORTABKAY = {
+  expert: "expert",//按专家预约
+  date: "date",//按日期预约
+};
+
 // -综合排序
 export const ZHPX = [
   { name: "综合排序", value: "register" },

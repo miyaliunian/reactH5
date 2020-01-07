@@ -54,16 +54,13 @@ class Tabs extends Component {
    * @param key
    */
   onChangeTab(key) {
-    const { actionKey } = this.props;
+    const { actionKey,tabActions: { changeTab }  } = this.props;
     let closePanel = false;
     //如果前后点击的是同一个tab 就关闭panel
     if (actionKey === key && !this.props.closePanel) {
       closePanel = true;
     }
-
     closePanel ? looseBody() : fixedBody();
-
-    const { tabActions: { changeTab } } = this.props;
     changeTab(key, closePanel);
   }
 
@@ -226,7 +223,7 @@ class Tabs extends Component {
         <div className={"tab-header-top border-bottom"}>
           {this.renderTabs()}
         </div>
-        <div className={cls} onClick={() => closePanelAction()}>
+        <div className={cls} onClick={() => closePanelAction(()=>{})}>
           <div className={"panel-inner"}>
             {this.renderContent()}
           </div>

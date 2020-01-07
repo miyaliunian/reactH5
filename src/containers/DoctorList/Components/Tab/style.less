@@ -1,29 +1,36 @@
 @import '../../../../assets/less/varibles';
 
 .doctorTabs {
+  margin-top: @navScrolH;
   display: flex;
+  flex-direction: column;
   width: 100%;
   background: white;
-  height: 40px;
-  line-height: 40px;
-  flex-direction: row;
   flex: 1;
-  color: #686868;
-  .doctorTabs__tabsLeft {
-    width: calc(50% - 0.5px);
-    text-align: center;
+  .tab_header {
+    display: flex;
+  }
+  .item {
     height: 40px;
     line-height: 40px;
-  }
-
-  .doctorTabs__tabsRight {
+    font-size: 15px;
+    display: flex;
     flex: 1;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
+    justify-content: center;
+    align-items: center;
+    &.current {
+      color: #0084ff;
+    }
+    &:first-child{
+      border-right: 0.5px solid #eaeaea;
+    }
   }
 
-  .itemSelected {
-    color: @theme-font-color;
+  .reservaes {
+    display: none;
+    &.current {
+      display: block;
+      z-index: 10;
+    }
   }
 }

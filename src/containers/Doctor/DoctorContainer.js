@@ -43,7 +43,7 @@ class DoctorContainer extends Component {
           handleBack={this.handleBack}
           ref={"doctor"}
         >
-          <div id={"doctorDetailHeader"}>
+          <div id={"doctorDetailHeader"} className={"doctorDetailHeader"}>
             <DoctorTitle data={location.state.doctorInfo} />
             <DoctorDesc introduction={introduction} skills={skills} />
             <div className={"doctor__interval"} />

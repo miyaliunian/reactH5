@@ -18,6 +18,7 @@ import division from './division'
 import bindCard from './bindCard'
 import bindCardIList from './bindCardIList'
 import doctorList from './doctorList'
+import doctorTabs from './doctorTabs'
 import doctor from './doctor'
 import reservation from './reservation'
 import register from './register'
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   bindCard,
   bindCardIList,
   doctorList,
+  doctorTabs,
   doctor,
   reservation,
   register,

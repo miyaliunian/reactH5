@@ -8,8 +8,8 @@ export function getDate(str) {
   let weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   let oDate = new Date(str),
     oYear = oDate.getFullYear(),
-    oMonth = oDate.getMonth() + 1,
-    oDay = oDate.getDate(),
+    oMonth = (oDate.getMonth() + 1) >= 10 ? `${oDate.getMonth() + 1}`: `0${oDate.getMonth() + 1}`,
+    oDay = oDate.getDate()>= 10 ? `${oDate.getDate()}` : `0${oDate.getDate()}`,
     oweekDay = weekDays[oDate.getDay()];
   let current = new Date(),
     cDay = current.getDate();

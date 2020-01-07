@@ -1,28 +1,31 @@
 @import '../../../../assets/less/varibles';
 
-.doctorItem {
+.doctor-content {
   height: 100vm;
   position: fixed;
-  top: 86px;
+  top: 85px;
   left: 0px;
   right: 0px;
   bottom: 0px;
   background: white;
   overflow: hidden;
+  &.current {
+    top: 150px;
+  }
   .doctorItem__item {
     position: relative;
+    align-items: center;
     display: flex;
     flex-direction: row;
-    height: 80px;
+    height: 100px;
     background: white;
-    padding: 10px 10px 15px 10px;
+    padding:  10px;
     box-sizing: border-box;
-    //border-bottom: 1px solid #D3D3D3;
     .doctorItem__avator {
-      width: 53px;
-      height: 53px;
+      width: 60px;
+      height: 60px;
       box-sizing: border-box;
-      border-radius: 27.5px;
+      border-radius: 30px;
       background: rgb(234, 234, 234);
       margin-right: 10px;
       display: flex;
@@ -36,7 +39,7 @@
     }
     .doctorItem__info {
       display: flex;
-      height: 55px;
+      height: 60px;
       width: calc(100% - 65px);
       flex-direction: column;
       justify-content: space-between;

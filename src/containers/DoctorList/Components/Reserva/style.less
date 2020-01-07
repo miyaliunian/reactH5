@@ -1,40 +1,43 @@
 @import "../../../../assets/less/varibles";
 
-.reservaes {
+.reservaes-content {
+  color: #999999;
   background: white;
   display: flex;
   flex-direction: row;
   align-items: center;
-  //border-bottom: @border-LightGrey;
   padding: 10px;
-  height: 60px;
   box-sizing: border-box;
   position: relative;
-  .reservaes__box {
+  min-height: 35px;
+  font-size: 12px;
+  z-index: 98;
+  .reservaes-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    width: 45px;
+    height: 45px;
+    border-top: 0.5px solid #eaeaea;
+    border-right: 0.5px solid #eaeaea;
+    border-bottom: 0.5px solid #eaeaea;
+    &:first-child{
+      border-left: 0.5px solid #eaeaea;
+    }
+    &.active {
+      background: @theme-blue;
+      color: white;
+    }
+  }
+
+  .reservaes-more {
+    position: absolute;
+    right: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
-    width: 40px;
-    height: 40px;
-    margin-right: 1px;
-    .reservaes__top {
-      margin-bottom: 5px;
-      font-size: 13px;
-    }
-    .reservaes__bottom {
-      font-size: 13px;
-    }
-  }
-  .boxSel {
-    background: @theme-blue;
-    color: white;
-  }
-  .reservaes__more {
-    position: absolute;
-    right: 10px;
-    font-size: 10px;
-    color: grey;
   }
 }

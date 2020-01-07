@@ -12,19 +12,10 @@ import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
 import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";
 import { Modal } from "antd-mobile";
 import Calendar from "@components/Calendar/Calendar";
-import LoadingMask from "@components/Loading/LoadingMask";
-import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
-
-import {  formateTimeStep } from "@utils/dayutils";
+import { getDate, formateTimeStep } from "@utils/dayutils";
 import { connect } from "react-redux";
-
-//Redux
+import { ContentWrapper, DateFilterBar } from "./style";
 import { bindActionCreators } from "redux";
-import {
-  actions as doctorTabsActions,
-  getActionTabKey
-
-} from "@reduxs/modules/doctorTabs";
 import {
   actions as doctorListActions,
   getFetchStatus,
@@ -34,12 +25,19 @@ import {
   getTabSelStatus
 } from "@reduxs/modules/doctorList";
 
-//样式
-import { ContentWrapper, DateFilterBar } from "./style";
 import "./style.less";
+import LoadingMask from "@components/Loading/LoadingMask";
+import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
-
-
+const getMonths = data => {
+  let months = [];
+  data.map(item => {
+    let { oDay, oweekDay } = getDate(item);
+    let Obj = { oDay, oweekDay };
+    months.push(getDate(item));
+  });
+  return months;
+};
 
 class DoctorListContainer extends Component {
   constructor(props) {
@@ -53,37 +51,48 @@ class DoctorListContainer extends Component {
 
   render() {
     const { name } = this.props.match.params;
-    const { doctors, reservations, actionTabKey} = this.props;
+    const { doctors, reservations, tabSel } = this.props;
     return (
-      <SafeAreaView
-        showBar={true}
-        title={name}
-        isRight={false}
-        handleBack={this.handleBack}
-      >
-        <DoctorTabs
-          filters={reservations}
-        />
-
-        <DoctorItem data={doctors} {...this.props.match.params} actionTabKey={actionTabKey}/>
-
-        <Modal visible={this.state.isShow} title="" afterClose={() => {}}>
-          <div className={"calendar_box"}>
-            <Header
-              title={"选择出诊日期"}
-              isRight={false}
-              onBack={() => this.closeModal()}
-            />
-            <Calendar
-              reservations={reservations}
-              markSelDate={date => {
-                this.markSelDate(date);
-              }}
-            />
-          </div>
-        </Modal>
-        <LoadingMask />
-      </SafeAreaView>
+      <ContentWrapper>
+        <SafeAreaView
+          showBar={true}
+          title={name}
+          isRight={false}
+          handleBack={this.handleBack}
+        >
+          <DoctorTabs
+            tabSel={target => this.tabSel(target)}
+            iniTabSel={tabSel}
+          />
+          <DateFilterBar ref={"reservations"}>
+            {tabSel === 2 && reservations ? (
+              <Reservaes
+                reservations={reservations}
+                fetchDoctors={dayObj => this.fetchDoctors(dayObj)}
+                filterConditions={this.filterConditions}
+                showModal={() => this.showModal()}
+              />
+            ) : null}
+          </DateFilterBar>
+          <DoctorItem data={doctors} {...this.props.match.params} />
+          <Modal visible={this.state.isShow} title="" afterClose={() => {}}>
+            <div className={"calendar_box"}>
+              <Header
+                title={"选择出诊日期"}
+                isRight={false}
+                onBack={() => this.closeModal()}
+              />
+              <Calendar
+                reservations={reservations}
+                markSelDate={date => {
+                  this.markSelDate(date);
+                }}
+              />
+            </div>
+          </Modal>
+          <LoadingMask />
+        </SafeAreaView>
+      </ContentWrapper>
     );
   }
 
@@ -99,6 +108,8 @@ class DoctorListContainer extends Component {
     //切换选中的tab
     changeTab(target);
     if (target === 1) {
+      //按专家预约
+      this.resizeReservationsBox();
       this.props.doctorListActions.loadDoctorList(id);
     } else {
       const { reservations } = this.props;
@@ -125,7 +136,12 @@ class DoctorListContainer extends Component {
     this.props.doctorListActions.loadDoctorList(id, date);
   }
 
-
+  /**
+   * 默认状态:隐藏预约日期
+   */
+  resizeReservationsBox() {
+    this.refs.reservations.style.height = 0;
+  }
 
   /**
    * 通过日期过滤数据
@@ -181,6 +197,7 @@ class DoctorListContainer extends Component {
         doctorListActions: { clearAllItems }
       } = this.props;
       clearAllItems(() => {
+        this.resizeReservationsBox();
       });
     }
   }
@@ -194,7 +211,6 @@ class DoctorListContainer extends Component {
 const mapStateToProps = state => {
   return {
     fetchingStatus: getFetchStatus(state),
-    actionTabKey:getActionTabKey(state),
     doctors: getDoctorList(state),
     tabSel: getTabSelStatus(state),
     reservations: getReservationList(state),
@@ -202,11 +218,14 @@ const mapStateToProps = state => {
   };
 };
 
-
+/**
+ * store.dispatch
+ * @param dispatch
+ * @returns {{doctorListActions: {loadDoctorList: function(*=), loadReservationList: function(*=)}|ActionCreator<any>|ActionCreatorsMapObject<any>}}
+ */
 const mapDispatchToProps = dispatch => {
   return {
-    doctorListActions: bindActionCreators(doctorListActions, dispatch),
-    doctorTabsActions: bindActionCreators(doctorTabsActions, dispatch)
+    doctorListActions: bindActionCreators(doctorListActions, dispatch)
   };
 };
 
