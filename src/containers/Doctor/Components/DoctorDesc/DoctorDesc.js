@@ -12,7 +12,7 @@ export default class DoctorDesc extends Component {
   render() {
     return (
       <div className={"doctorDesc border-top"}>
-        <div className={"doctorDesc__title"}>医生详情</div>
+        <div className={"doctorDesc__title"}>医生简介</div>
         <div className={"doctorDesc__info"}>
           <div className={"doctorDesc__experience__goodAt"}>
             经历: {this.props.introduction ? this.props.introduction : "暂无"}

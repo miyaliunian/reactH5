@@ -48,7 +48,7 @@ class DoctorContainer extends Component {
             <DoctorDesc introduction={introduction} skills={skills} />
             <div className={"doctor__interval"} />
           </div>
-          <DoctorVisiting
+           <DoctorVisiting
             {...this.props}
             doctorInfo={location.state.doctorInfo}
             clinicData={clinicData}
