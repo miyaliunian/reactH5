@@ -22,16 +22,13 @@ import {
   getIntelligentWaitingList,
   getFetchingStatus
 } from '@reduxs/modules/bindCard'
+import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 
 const IntelligentWaitingRefreshTime = {
   time: 60000 // 刷新时间一分钟，单位为毫秒
 }
 
 class IntelligentWaitingContainer extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.bindCardList !== this.props.bindCardList) {
       let perObj = nextProps.bindCardList.filter(item => item.isSel)
@@ -45,46 +42,19 @@ class IntelligentWaitingContainer extends Component {
   render() {
     const { bindCardList, waitingList, fetchingStatus } = this.props
     return (
-      <div
-        id="intelligentWaitingContainer"
-        onTouchMove={e => this.handleTouchMove(e)}
-        className={'intelligentWaitingContainer'}>
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            leift: 0,
-            right: 0,
-            width: '100%',
-            zIndex: '999'
-          }}>
-          <Header
-            id="intelligentWaitingContainer__header"
-            title={'智能候诊'}
-            onBack={this.handleBack}
-            isRight={false}
-          />
-          {/*-------------------------选择成员信息*/}
+      <SafeAreaView showBar={true} title={'智能候诊'} isRight={false} handleBack={this.handleBack}>
+        <div className={'intelligentWaitingContainer'}>
           <BindCardItem data={bindCardList} isRefresh={this.refresh} callBack={data => this.refreshCallBack(data)} />
+          <IntelligentWaitingItem
+            data={waitingList}
+            fetchingStatus={fetchingStatus}
+            pullingDownHandler={() => this.pullingDownHandler()}
+          />
+         <LoadingMask/>
         </div>
-        <IntelligentWaitingItem
-          data={waitingList}
-          fetchingStatus={fetchingStatus}
-          pullingDownHandler={() => this.pullingDownHandler()}
-        />
-        {fetchingStatus ? <LoadingMask /> : null}
-      </div>
+      </SafeAreaView>
     )
   }
-
-  // componentDidMount() {
-  //   this.props.bindCardActions.loadWaitingList();
-  //   // 定时器，可以修改IntelligentWaitingRefreshTime.time为自己想要的时间
-  //   this.timer = setInterval(
-  //     () => this.timeToRefresh(),
-  //     IntelligentWaitingRefreshTime.time
-  //   );
-  // }
   componentDidMount() {
     const {
       history,
@@ -98,8 +68,6 @@ class IntelligentWaitingContainer extends Component {
   }
 
   componentWillUnmount() {
-    // 如果存在this.timer，则使用clearTimeout清空。
-    // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
     this.timer && clearTimeout(this.timer)
   }
   //下拉刷新
