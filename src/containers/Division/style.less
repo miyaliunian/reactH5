@@ -1,14 +1,12 @@
 @import '../../assets/less/varibles';
 
 .clinic {
-  margin-top: @navScrolH;
-  background: white;
-  .container();
   .clinic__bar {
     text-align: center;
-    height: 35px;
-    line-height: 35px;
+    height: 40px;
+    line-height: 40px;
     position: relative;
+    border-bottom: 1px solid #eaeaea;
     .clinic__bar__icon {
       position: absolute;
       top: 6px;
@@ -16,10 +14,11 @@
     }
   }
   .clinic__container {
+    padding-top: 40px;
     display: flex;
     flex-direction: row;
     .clinic__left {
-      top: 40px;
+      top: 80px;
       left: 0px;
       right: 0px;
       bottom: 0px;
@@ -39,7 +38,7 @@
       }
     }
     .clinic__right {
-      top: 40px;
+      top: 80px;
       left: 140px;
       right: 0px;
       bottom: 0px;

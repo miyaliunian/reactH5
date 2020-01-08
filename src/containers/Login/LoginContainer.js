@@ -24,12 +24,12 @@ class LoginContainer extends Component {
     }
 
     return (
-      <div className={'login'}>
-        <SafeAreaView showBar={true} title={'账号密码登录'} isRight={false} handleBack={this.handleBack}>
+      <SafeAreaView showBar={true} title={'账号密码登录'} isRight={false} handleBack={this.handleBack}>
+        <div className={'login'}>
           <LoginForm username={username} password={password} onChange={this.handleChange} onSubmit={this.onSubmit} />
-        </SafeAreaView>
-        <LoadingMask />
-      </div>
+          <LoadingMask />
+        </div>
+      </SafeAreaView>
     )
   }
 

@@ -1,0 +1,32 @@
+.doctorTabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  flex: 1;
+}
+.doctorTabs .tab_header {
+  display: flex;
+}
+.doctorTabs .item {
+  height: 40px;
+  line-height: 40px;
+  font-size: 15px;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+.doctorTabs .item.current {
+  color: #0084ff;
+}
+.doctorTabs .item:first-child {
+  border-right: 0.5px solid #eaeaea;
+}
+.doctorTabs .reservaes {
+  display: none;
+}
+.doctorTabs .reservaes.current {
+  display: block;
+  z-index: 10;
+}

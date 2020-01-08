@@ -6,17 +6,20 @@
  *    卡绑定列表
  */
 import React, { Component } from 'react'
-import './style.less'
+import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
+import LoadingMask from '@components/Loading/LoadingMask'
+// 图标
 import ico_man from '@assets/images/Home/ico_man.png'
 import avatar_man from '@assets/images/Home/pic_man.png'
 import ico_wman from '@assets/images/Home/ico_wman.png'
 import avatar_wman from '@assets/images/Home/pic_wman.png'
+// Redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions as bindCardActions, getBindCardList } from '@reduxs/modules/bindCard'
-import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
-import LoadingMask from '@components/Loading/LoadingMask'
 
+// 样式
+import './style.less'
 class BindCardList extends Component {
   handleBack = () => {
     this.props.history.goBack()

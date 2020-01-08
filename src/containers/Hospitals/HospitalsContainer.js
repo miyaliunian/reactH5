@@ -25,11 +25,9 @@ class HospitalsContainer extends PureComponent {
   render() {
     const { fetchingStatus, hospitalList, isLastPage } = this.props
     return (
-      <div  className={'hospitalsContainer'}>
-        <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
-          <Tabs
-            filterHosipitalList={(item) => this.filterHosipitalList(item)}
-          />
+      <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
+        <div className={'hospitalsContainer'}>
+          <Tabs filterHosipitalList={item => this.filterHosipitalList(item)} />
           <HospitalsItem
             data={hospitalList}
             fetchingStatus={fetchingStatus}
@@ -38,20 +36,25 @@ class HospitalsContainer extends PureComponent {
             pullingUpHandler={() => this.pullingUpHandler()}
           />
           <LoadingMask />
-        </SafeAreaView>
-      </div>
+        </div>
+      </SafeAreaView>
     )
   }
 
   //下拉刷新
   pullingDownHandler() {
-    const {hospitalActions:{refreshHosipitalList}} = this.props
+    const {
+      hospitalActions: { refreshHosipitalList }
+    } = this.props
     refreshHosipitalList()
   }
 
   //
   pullingUpHandler() {
-    const { isLastPage,hospitalActions:{loadHosipitalList}} = this.props
+    const {
+      isLastPage,
+      hospitalActions: { loadHosipitalList }
+    } = this.props
     if (!isLastPage) {
       loadHosipitalList()
     }
@@ -62,13 +65,14 @@ class HospitalsContainer extends PureComponent {
     this.props.history.goBack()
   }
 
-
   componentDidMount() {
     this.initailData()
   }
 
   initailData() {
-    const {hospitalActions:{loadHosipitalList}} = this.props
+    const {
+      hospitalActions: { loadHosipitalList }
+    } = this.props
     this.resetData()
     loadHosipitalList()
   }
@@ -77,9 +81,10 @@ class HospitalsContainer extends PureComponent {
     this.props.hospitalActions.reset()
   }
 
-
   filterHosipitalList(item) {
-    const {hospitalActions:{filterHosipitalList}} = this.props
+    const {
+      hospitalActions: { filterHosipitalList }
+    } = this.props
     filterHosipitalList(item)
   }
 }

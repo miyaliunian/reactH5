@@ -32,9 +32,10 @@ class DivisionContainer extends Component {
     const { name } = this.props.match.params
     const { divisionList, departmentList } = this.props
     return (
-      <div className={'clinic'}>
+      
         <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
-          <div className={'clinic__bar border-bottom'}>
+        <div className={'clinic'}>
+          <div className={'clinic__bar'}>
             <div>进入医院主页</div>
             <Icon className={'clinic__bar__icon'} type={'right'} />
           </div>
@@ -68,8 +69,9 @@ class DivisionContainer extends Component {
             </div>
           </div>
           <LoadingMask />
+          </div>
         </SafeAreaView>
-      </div>
+      
     )
   }
 
