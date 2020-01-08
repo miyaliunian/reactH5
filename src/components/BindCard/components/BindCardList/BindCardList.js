@@ -25,8 +25,8 @@ class BindCardList extends Component {
   render() {
     const { bindCardList } = this.props
     return (
-      <div className={'bindCardList'}>
-        <SafeAreaView showBar={true} title={'成员信息'} isRight={false} handleBack={this.handleBack}>
+      <SafeAreaView showBar={true} title={'成员信息'} isRight={false} handleBack={this.handleBack}>
+        <div className={'bindCardList'}>
           {bindCardList.map(item => {
             return (
               <div className={'bindCardList__con'} key={item.id} onClick={() => this.handleItemClick(item)}>
@@ -45,8 +45,8 @@ class BindCardList extends Component {
             )
           })}
           <LoadingMask />
-        </SafeAreaView>
-      </div>
+        </div>
+      </SafeAreaView>
     )
   }
 

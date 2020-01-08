@@ -1,0 +1,69 @@
+.reservationHeader {
+  margin-top: 45px;
+}
+.reservationHeader .reservationHeader__desc {
+  background-color: #ececec;
+  height: 60px;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.reservationHeader .reservationHeader__desc .reservationHeader__avatar {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #ebeae7;
+  background-color: #ffffff;
+}
+.reservationHeader .reservationHeader__desc .reservationHeader__type {
+  max-width: 70%;
+  margin: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reservationHeader .reservationHeader__desc .reservationHeader__title {
+  flex: 1;
+  display: inline-block;
+  font-size: 15px;
+  color: #7e8c8d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reservationHeader .reservationHeader__info {
+  padding: 15px 15px 5px 15px;
+  box-sizing: border-box;
+  background-color: white;
+  font-size: 16px;
+}
+.reservationHeader .reservationHeader__info .reservationHeader__cell {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.reservationHeader .reservationHeader__info .reservationHeader__cell .reservationHeader__left_colu {
+  display: inline-block;
+  width: 100px;
+}
+.reservationHeader .reservationHeader__info .reservationHeader__cell .reservationHeader__right_colu {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.reservationHeader .reservationHeader__info .reservationHeader__cell .reservationHeader__right_colu .reservationHeader__right_colu__txt {
+  text-space: 3px;
+}
+.reservationHeader .reservationHeader__info .reservationHeader__cell .reservationHeader__right_colu .right__price {
+  color: #0084ff;
+}
