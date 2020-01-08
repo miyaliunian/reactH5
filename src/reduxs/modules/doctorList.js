@@ -42,6 +42,7 @@ const actionTypes = {
  * @type {{loadDoctorList: function(*=), loadReservationList: function(*=)}}
  */
 export const actions = {
+
   loadDoctorList: (id, seeDate = '') => {
     return (dispatch, getstate) => {
       let param = {
@@ -62,19 +63,14 @@ export const actions = {
     }
   },
 
-  loadReservationList: id => {
+  loadFilterTabList: id => {
     return (dispatch, getstate) => {
       const targetURL = url.API_DOCTOR_RESERVATION_LIST(PlatformType.HospitalDepartments, id, 7)
       return dispatch(fetchReservationList(targetURL))
     }
   },
 
-  //标识选中的tab是哪个
-  changeTab: tab => {
-    return (dispatch, getstate) => {
-      dispatch({ type: actionTypes.TAB_SEL, response: tab })
-    }
-  },
+
 
   //退出页面时，重置数据状态
   clearAllItems: callBack => {
@@ -84,11 +80,7 @@ export const actions = {
     }
   },
 
-  //选中的日期过滤条件
-  setSeeDate: value => ({
-    type: actionTypes.SET_SEEDATE,
-    value
-  })
+
 }
 
 const fetchDoctorList = (targetURL, param) => ({
@@ -185,6 +177,4 @@ export const getReservationList = state => {
   return state.doctorList.dataReservation
 }
 
-export const getTabSelStatus = state => {
-  return state.doctorList.tabSel
-}
+

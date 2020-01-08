@@ -5,111 +5,98 @@
  * Description:
  *    首页->医院列表->科室选择->医生列表
  */
-import React, { Component } from "react";
-import Header from "@components/NavBar/NavBar";
-import DoctorTabs from "@containers/DoctorList/Components/Tab/DoctorTabs";
-import DoctorItem from "@containers/DoctorList/Components/Item/DoctorItem";
-import Reservaes from "@containers/DoctorList/Components/Reserva/Reservaes";
-import { Modal } from "antd-mobile";
-import Calendar from "@components/Calendar/Calendar";
-import LoadingMask from "@components/Loading/LoadingMask";
-import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
+import React, { Component } from 'react'
+import Header from '@components/NavBar/NavBar'
+import DoctorTabs from '@containers/DoctorList/Components/Tab/DoctorTabs'
+import DoctorItem from '@containers/DoctorList/Components/Item/DoctorItem'
+import { Modal } from 'antd-mobile'
+import Calendar from '@components/Calendar/Calendar'
+import LoadingMask from '@components/Loading/LoadingMask'
+import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 
-import {  formateTimeStep } from "@utils/dayutils";
-import { connect } from "react-redux";
+import { formateTimeStep, getDate } from '@utils/dayutils'
+import { connect } from 'react-redux'
 
 //Redux
-import { bindActionCreators } from "redux";
-import {
-  actions as doctorTabsActions,
-  getActionTabKey
-
-} from "@reduxs/modules/doctorTabs";
+import { bindActionCreators } from 'redux'
+import { actions as doctorTabsActions, getActionTabKey } from '@reduxs/modules/doctorTabs'
 import {
   actions as doctorListActions,
   getFetchStatus,
   getDoctorList,
   getReservationList,
-  getSeeDate,
-  getTabSelStatus
-} from "@reduxs/modules/doctorList";
+  getSeeDate
+} from '@reduxs/modules/doctorList'
 
 //样式
-import { ContentWrapper, DateFilterBar } from "./style";
-import "./style.less";
-
-
-
+import './style.less'
+import { DOCTORTABKAY } from '@api/Constant'
 
 class DoctorListContainer extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      isShow: false
-    };
+      iShow: false
+    }
     //日期右侧过滤条件
-    this.filterConditions = [];
+    this.filterMore = ''
+    this.filterItem = ''
   }
 
   render() {
-    const { name } = this.props.match.params;
-    const { doctors, reservations, actionTabKey} = this.props;
+    const { name } = this.props.match.params
+    const { doctors, reservations, actionTabKey } = this.props
     return (
-      <SafeAreaView
-        showBar={true}
-        title={name}
-        isRight={false}
-        handleBack={this.handleBack}
-      >
+      <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
         <DoctorTabs
           filters={reservations}
+          filterMoreItem={this.filterMore}
+          doChangeTab={key => this.dataFilterTab(key)}
+          filterItemClick={i => this.doDoctorListFilter(i)}
+          CalendarPaneliShow={() => this.ishowCalendar()}
         />
 
-        <DoctorItem data={doctors} {...this.props.match.params} actionTabKey={actionTabKey}/>
+        <DoctorItem data={doctors} {...this.props.match.params} actionTabKey={actionTabKey} />
 
         <Modal visible={this.state.isShow} title="" afterClose={() => {}}>
-          <div className={"calendar_box"}>
-            <Header
-              title={"选择出诊日期"}
-              isRight={false}
-              onBack={() => this.closeModal()}
-            />
+          <div className={'calendar_box'}>
+            <Header title={'选择出诊日期'} isRight={false} onBack={() => this.ishowCalendar()} />
             <Calendar
               reservations={reservations}
-              markSelDate={date => {
-                this.markSelDate(date);
+              markDate={date => {
+                this.markDate(date)
               }}
             />
           </div>
         </Modal>
         <LoadingMask />
       </SafeAreaView>
-    );
+    )
   }
 
   /**
-   * 按专家、日期预约 条件筛选 数据
-   * @param target(1: 专家、2:日期)
+   * 按日期预约tab选中 调用此方法
    */
-  tabSel(target) {
-    const { id } = this.props.match.params;
+  dataFilterTab(key) {
     const {
-      doctorListActions: { loadDoctorList, changeTab }
-    } = this.props;
-    //切换选中的tab
-    changeTab(target);
-    if (target === 1) {
-      this.props.doctorListActions.loadDoctorList(id);
-    } else {
-      const { reservations } = this.props;
-      if (!reservations) {
-        return;
-      }
-      const date = formateTimeStep(reservations[0]);
-      //按日期预约
-      this.refs.reservations.style.height = "60px";
-      loadDoctorList(id, date);
-    }
+      match,
+      reservations,
+      doctorListActions: { loadDoctorList }
+    } = this.props
+    const { id } = match.params
+    const date = formateTimeStep(this.filterItem != '' ? this.filterItem : reservations[0])
+    loadDoctorList(id, key === DOCTORTABKAY.expert ? '' : date)
+  }
+
+  doDoctorListFilter(i) {
+    const {
+      match,
+      doctorListActions: { loadDoctorList }
+    } = this.props
+    const { id } = match.params
+    const date = formateTimeStep(i)
+    loadDoctorList(id, date)
+    this.filterItem = i
   }
 
   /**
@@ -118,99 +105,68 @@ class DoctorListContainer extends Component {
    * 2: 通过过滤条件，过滤数据
    * @param date
    */
-  markSelDate(date) {
-    this.closeModal();
-    const { id } = this.props.match.params;
-    this.filterConditions = date;
-    this.props.doctorListActions.loadDoctorList(id, date);
-  }
-
-
-
-  /**
-   * 通过日期过滤数据
-   * @param param
-   */
-  fetchDoctors(dayObj) {
-    const { id } = this.props.match.params;
-    const date = formateTimeStep(dayObj);
-    this.props.doctorListActions.setSeeDate(dayObj);
-    this.props.doctorListActions.loadDoctorList(id, date);
+  markDate(date) {
+    const {
+      match,
+      doctorListActions: { loadDoctorList }
+    } = this.props
+    const { id } = match.params
+    this.filterMore = getDate(date)
+    this.ishowCalendar()
+    loadDoctorList(id, date)
   }
 
   handleBack = () => {
-    this.props.history.goBack();
-  };
+    this.props.history.goBack()
+  }
 
   /**
    * 日历:显示/隐藏
    */
-  showModal() {
+  ishowCalendar() {
     this.setState({
-      isShow: true
-    });
-  }
-
-  /**
-   * 日历Modal:隐藏
-   */
-  closeModal() {
-    this.setState({ isShow: false });
+      isShow: !this.state.isShow
+    })
   }
 
   componentDidMount() {
     const {
       history,
-      doctorListActions: { loadDoctorList, loadReservationList }
-    } = this.props;
-    const { id } = this.props.match.params;
-    if (history.action === "PUSH") {
-      loadDoctorList(id);
-      loadReservationList(id);
+      doctorListActions: { loadDoctorList, loadFilterTabList }
+    } = this.props
+    const { id } = this.props.match.params
+    if (history.action === 'PUSH') {
+      loadDoctorList(id)
+      loadFilterTabList(id)
     }
   }
 
   componentWillUnmount() {
-    // step1: 跳转页面时 自动滚动到 顶部
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-
-    const { history } = this.props;
-    if (history.action === "POP") {
-      const {
-        doctorListActions: { clearAllItems }
-      } = this.props;
-      clearAllItems(() => {
-      });
+    const {
+      history,
+      doctorListActions: { clearAllItems }
+    } = this.props
+    if (history.action === 'POP') {
+      clearAllItems(() => {})
     }
   }
 }
 
-/**
- * 刷新状态、医生列表、可预约日历,上一次选中的日期
- * @param state
- * @returns {{fetchingStatus: *, doctors: *, reservations: *, seeDate: *}}
- */
 const mapStateToProps = state => {
   return {
     fetchingStatus: getFetchStatus(state),
-    actionTabKey:getActionTabKey(state),
+    actionTabKey: getActionTabKey(state),
     doctors: getDoctorList(state),
-    tabSel: getTabSelStatus(state),
     reservations: getReservationList(state),
     seeDate: getSeeDate(state)
-  };
-};
-
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
     doctorListActions: bindActionCreators(doctorListActions, dispatch),
     doctorTabsActions: bindActionCreators(doctorTabsActions, dispatch)
-  };
-};
+  }
+}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoctorListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DoctorListContainer)

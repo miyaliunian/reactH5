@@ -6,9 +6,7 @@
  *  某个门诊 对应的医生列表
  */
 
-import url from "@api/httpUrl";
 import { cityID, DOCTORTABKAY } from "@api/Constant";
-import { FETCH_DATA } from "../middleware/api";
 
 
 let tabs = {};
@@ -31,6 +29,7 @@ const initialState = {
 // action types
 const actionTypes = {
   CHANGE_TAB_DOCTOR: "CHANGE_TAB_DOCTOR",
+  INIT_TAB_DOCTOR: "INIT_TAB_DOCTOR",
   CHANGE_FILTER_DOCTOR: "CHANGE_FILTER_DOCTOR",
 };
 
@@ -38,32 +37,22 @@ const actionTypes = {
 export const actions = {
 
   //切换tab
-  changeTab: (key) => {
+  changeTab: (key,i) => {
     return (dispatch, getstate) => {
       dispatch({ type: actionTypes.CHANGE_TAB_DOCTOR, actionKey: key});
+      i()
     };
   },
 
-
-
-
-  // 遮罩空白区域事件
-  closePanelAction: (i) => {
+  //初始化tab选中
+  iniActionKey:()=>{
     return (dispatch, getstate) => {
-      dispatch({ type: actionTypes.CLOSE_PANEL });
-      i()
-    };
+      dispatch({ type: actionTypes.INIT_TAB_DOCTOR});
+    }
   }
 
 };
 
-// action creators：二
-const fetchAreasList = targetURL => ({
-  [FETCH_DATA]: {
-    types: [actionTypes.FETCH_AREAS_REQUEST, actionTypes.FETCH_AREAS_SUCCESS, actionTypes.FETCH_AREAS_FAILURE],
-    targetURL
-  }
-});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -71,6 +60,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         actionKey: action.actionKey,
+      };
+
+    case actionTypes.INIT_TAB_DOCTOR:
+      return {
+        ...state,
+        actionKey: DOCTORTABKAY.expert,
       };
 
     default:

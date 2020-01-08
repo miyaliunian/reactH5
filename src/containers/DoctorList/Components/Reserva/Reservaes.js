@@ -13,9 +13,9 @@ import "./style.less";
 const getMonths = data => {
   let months = [];
   data.map((item, index) => {
-    let { oMonth, oDay, oweekDay } = getDate(item);
+    let { oMonth, spliceDay, oweekDay } = getDate(item);
 
-    let Obj = { oMonth, oDay, oweekDay };
+    let Obj = { oMonth, spliceDay, oweekDay };
     index === 0 ? Obj.isSel = true : Obj.isSel = false;
     months.push(Obj);
   });
@@ -30,8 +30,24 @@ export default class Reservaes extends Component {
     };
   }
 
+  renderFilterMore(){
+    const {filterMore} = this.props
+    if (filterMore !=''){
+        return (
+          <div
+            className={"reservaes-box"}
+          >
+            <div>{filterMore.oweekDay}</div>
+            <div style={{fontSize:"11px"}}>{filterMore.oMonth + "-" + filterMore.spliceDay}</div>
+          </div>
+        )
+    } else {
+      return "更多 >>"
+    }
+  }
+
   render() {
-    const { filterMore } = this.props;
+    const {filterMoreClick} = this.props;
     return (
       <div className={"reservaes-content"}>
         {this.state.days.map((day, index) => {
@@ -46,19 +62,15 @@ export default class Reservaes extends Component {
               onClick={() => this.boxClick(day,index)}
             >
               <div>{day.oweekDay}</div>
-              <div style={{fontSize:"11px"}}>{day.oMonth + "-" + day.oDay}</div>
+              <div style={{fontSize:"11px"}}>{day.oMonth + "-" + day.spliceDay}</div>
             </div>
           );
         })}
-        {filterMore.length > 0 ? (
-          <div className={"reservaes-more"} onClick={this.props.showModal}>
-            {filterMore}
+
+          <div className={"reservaes-more"} onClick={filterMoreClick}>
+            {this.renderFilterMore()}
           </div>
-        ) : (
-          <div className={"reservaes-more"} onClick={this.props.showModal}>
-            更多 >>
-          </div>
-        )}
+
       </div>
     );
   }
@@ -82,15 +94,17 @@ export default class Reservaes extends Component {
   }
 
 
+
+
   /**
    * 更新数据状态
    * @param dayObj
    */
   boxClick(dayObj,index) {
-    const { reservations,doFilter } = this.props;
+    const { reservations,filterItemClick } = this.props;
     let days = getMonths(reservations);
     days.map(item => {
-      if (item.oDay === dayObj.oDay) {
+      if (item.spliceDay === dayObj.spliceDay) {
         item.isSel = true;
       } else {
         item.isSel = false;
@@ -100,6 +114,6 @@ export default class Reservaes extends Component {
     this.setState({
       days: days
     });
-    doFilter(reservations[index])
+    filterItemClick(reservations[index])
   }
 }

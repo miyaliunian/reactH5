@@ -30,8 +30,10 @@ class DoctorTabs extends Component {
    * @param key
    */
   onChangeTab(key) {
-    const { doctorTabActions: { changeTab } } = this.props;
-    changeTab(key);
+    const { doctorTabActions: { changeTab } ,doChangeTab} = this.props;
+    changeTab(key,()=>{
+        doChangeTab(key)
+    })
   }
 
 
@@ -62,7 +64,7 @@ class DoctorTabs extends Component {
    * 渲染日期过滤条件tab
    */
   renderFilterTab() {
-    const { filters, actionTabKey } = this.props;
+    const { filters, actionTabKey,filterItemClick,CalendarPaneliShow,filterMoreItem} = this.props;
     let cls = "reservaes";
     if (actionTabKey === DOCTORTABKAY.date) {
       cls += " current";
@@ -71,9 +73,9 @@ class DoctorTabs extends Component {
       <div className={cls}>
         <Reservaes
           reservations={filters}
-          doFilter={(filter) => {
-          console.log(filter);
-        }} filterMore={{}}/>
+          filterItemClick={filterItemClick}
+          filterMoreClick={CalendarPaneliShow}
+          filterMore={filterMoreItem}/>
       </div>
     );
   }
@@ -88,6 +90,12 @@ class DoctorTabs extends Component {
         {this.renderFilterTab()}
       </div>
     );
+  }
+
+
+  componentWillUnmount(){
+    const {doctorTabActions:{iniActionKey}} = this.props
+    iniActionKey()
   }
 
 }

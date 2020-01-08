@@ -43,22 +43,14 @@ const displayDaysPerMonth = year => {
       monthData = [];
     //补足上一个月
     for (; addDays > 0; addDays--) {
-      // monthData.unshift(daysCountPrevious--)
       monthData.unshift([]);
     }
     //添入当前月
     for (let i = 0; i < daysCount; ) {
       monthData.push(++i);
     }
-
     //补足下一个月
     monthData.push(new Array(42 - monthData.length).fill(null));
-
-    // for (let i = 42 - monthData.length, j = 0; j < i;) {
-    //     monthData.push(++j)
-    //     // monthData.push([])
-    // }
-
     return monthData;
   });
 };
@@ -66,7 +58,7 @@ const displayDaysPerMonth = year => {
 const getMonths = data => {
   let months = [];
   data.map(item => {
-    let { oDay, cDay } = getDate(item);
+    let { oDay } = getDate(item);
     months.push(oDay);
   });
   return months;
@@ -82,10 +74,8 @@ export default class Calendar extends Component {
       day: now.getDate(),
       picked: false
     };
-    /**
-     *  只有是当前月的时候才显示
-     * @type {number}
-     */
+
+    //只有是当前月的时候才显示
     this.isCurrentMonth = 0;
   }
 
@@ -128,23 +118,11 @@ export default class Calendar extends Component {
     this.setState({ day });
   }
 
-  //切换日期选择器是否显示
-  datePickerToggle() {
-    this.refs.main.style.height =
-      this.refs.main.style.height === "460px" ? "0px" : "460px";
-  }
-
-  //标记日期已经选择
-  picked() {
-    this.state.picked = true;
-  }
-
   render() {
     let props = {
       viewData: displayDaysPerMonth(this.state.year),
       fillterMonths: getMonths(this.props.reservations)
     };
-
     return (
       <div className="output">
         <div className="main" ref="main">
@@ -157,7 +135,7 @@ export default class Calendar extends Component {
           />
           <CalendarMain
             {...props}
-            datePick={date => this.props.markSelDate(date)}
+            datePick={date => this.props.markDate(date)}
             isRender={this.isCurrentMonth}
             year={this.state.year}
             month={this.state.month}
