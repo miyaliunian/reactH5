@@ -5,151 +5,229 @@
  * Description:
  *
  */
-import React, { Component } from "react";
-import RefreshFooter from "@components/Refresh/Footer/RefreshFooter";
-import Bscroll from "better-scroll";
-import { Icon, Modal, List, Radio } from "antd-mobile";
-import posed from "react-pose";
-import { getDate } from "@utils/dayutils";
-import { withRouter } from "react-router-dom";
-import "./style.less";
-
-/**
- * 样式文件
- * @type {<PoseElementProps & <any>>}
- */
-const Box = posed.div({
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 }
-});
+import React, { Component } from 'react'
+import RefreshFooter from '@components/Refresh/Footer/RefreshFooter'
+import Bscroll from 'better-scroll'
+import { Icon, Modal, List, Radio } from 'antd-mobile'
+import { getDate } from '@utils/dayutils'
+import { withRouter } from 'react-router-dom'
+import './style.less'
 
 class DoctorVisiting extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isVisible: false,
       timeIntervalShow: false,
-      timeIntervalValue: 0
-    };
+      timeIntervalValue: 0,
+      cliIntervalShow: false,
+      cliInterValue: 0
+    }
     //默认显示的科室
-    this.defSelClinic = "";
+    this.defSelClinic = ''
     //选中的预约信息
-    this.reservationInfoSel = {};
+    this.reservationInfoSel = {}
   }
 
   render() {
-    const {
-      isLastPage,
-      clinicData,
-      reservationData,
-      timeInterval,
-    } = this.props;
-    const { isVisible, timeIntervalValue } = this.state;
-    if (this.defSelClinic === "") {
+    const { isLastPage, clinicData, reservationData, timeInterval } = this.props
+    const { timeIntervalValue, cliInterValue } = this.state
+    if (this.defSelClinic === '') {
       if (Array.isArray(clinicData) && clinicData.length > 0) {
-        this.defSelClinic = clinicData[0].name;
+        this.defSelClinic = clinicData[0].name
       }
     }
     return (
-      <div className={"doctorVisiting"} id={"doctorVisitingTitle"}>
-        <div className={"doctorVisiting__title border-bottom"} id={"doctorVisiting__title"}>
+      <div className={'doctorVisiting'} id={'doctorVisitingTitle'}>
+        <div className={'doctorVisiting__title border-bottom'} id={'doctorVisiting__title'}>
           <div>出诊时间</div>
           <div
-            className={"doctorVisiting__title__right"}
-            onClick={() => this.arrowClick()}
-          >
+            className={'doctorVisiting__title__right'}
+            onClick={() => {
+              this.setState({ cliIntervalShow: !this.state.cliIntervalShow })
+            }}>
             <div>{this.defSelClinic}</div>
-            <Icon type={"left"} />
+            <Icon type={'left'} />
           </div>
         </div>
-        {/*科室滚动*/}
-        <Box pose={isVisible ? "visible" : "hidden"}>
-          <div className={"clinic__box border"} ref={"clinicWrapper"}>
-            <ul>
-              {clinicData.map(item => {
-                return (
-                  <span
-                    key={item.id}
-                    className={"box__item border-bottom"}
-                    onClick={() => this.itemClick(item)}
-                  >
-                    {item.name}
-                  </span>
-                );
-              })}
-            </ul>
-          </div>
-        </Box>
 
-        <div className={"doctorVisiting__list"} ref={"doctorVisitingList"}>
+        <div className={'doctorVisiting__list'} ref={'doctorVisitingList'}>
           <div>
             {reservationData.map((item, index) => {
               return (
-                <div
-                  className={"doctorVisiting__item border-bottom"}
-                  key={index}
-                  onClick={() => this.navPage(item)}
-                >
+                <div className={'doctorVisiting__item border-bottom'} key={index} onClick={() => this.navPage(item)}>
                   {this.renderDesc(item)}
-                  <div className={"item__right"}>
-                    <div className={"item__right__price"}>
-                      ￥{item.regFee.toFixed(2)}
-                    </div>
-                    <div
-                      className={
-                        item.status !== 2
-                          ? "item__right__icon icon__selBg"
-                          : "item__right__icon"
-                      }
-                    >
-                      {item.status === 2
-                        ? "约满"
-                        : item.status === 0
-                        ? "停诊"
-                        : "预约"}
+                  <div className={'item__right'}>
+                    <div className={'item__right__price'}>￥{item.regFee.toFixed(2)}</div>
+                    <div className={item.status !== 2 ? 'item__right__icon icon__selBg' : 'item__right__icon'}>
+                      {item.status === 2 ? '约满' : item.status === 0 ? '停诊' : '预约'}
                     </div>
                   </div>
                 </div>
-              );
+              )
             })}
             <RefreshFooter refreshStatus={isLastPage} />
           </div>
         </div>
 
+        {/******************************popup 科室过滤*****************************************************/}
+        <Modal
+          popup
+          visible={this.state.cliIntervalShow}
+          title={'科室列表'}
+          onClose={() => this.onClinicIntervalClose(0)}
+          animationType="slide-up"
+          afterClose={() => {}}
+          footer={[
+            {
+              text: '取消',
+              onPress: () => this.onClinicIntervalClose(1)
+            },
+            {
+              text: '确定',
+              onPress: () => this.onClinicIntervalClose(2)
+            }
+          ]}>
+          <List className="doctorVisiting__timeInterval">
+            {clinicData.map(i => {
+              return (
+                <Radio.RadioItem
+                  key={i.id}
+                  checked={
+                    (typeof cliInterValue.name === 'undefined' ? this.defSelClinic : cliInterValue.name) === i.name
+                  }
+                  onChange={() => this.setState({ cliInterValue: i })}>
+                  {i.name}
+                </Radio.RadioItem>
+              )
+            })}
+          </List>
+        </Modal>
+
+        {/******************************popup 预约时间段*****************************************************/}
         <Modal
           popup
           visible={this.state.timeIntervalShow}
-          title={"预约信息"}
+          title={'预约信息'}
           onClose={() => this.onTimeIntervalClose(0)}
           animationType="slide-up"
           afterClose={() => {}}
           footer={[
             {
-              text: "取消",
+              text: '取消',
               onPress: () => this.onTimeIntervalClose(1)
             },
             {
-              text: "确定",
+              text: '确定',
               onPress: () => this.onTimeIntervalClose(2)
             }
-          ]}
-        >
+          ]}>
           <List className="doctorVisiting__timeInterval">
             {timeInterval.map(i => {
               return (
                 <Radio.RadioItem
                   key={i.id}
                   checked={timeIntervalValue === i.id}
-                  onChange={() => this.onChange(i.id)}
-                >
+                  onChange={() =>
+                    this.setState({
+                      timeIntervalValue: i.id
+                    })
+                  }>
                   {this.reservationInfoSel.noon} {i.beginTime} - {i.endTime}
                 </Radio.RadioItem>
-              );
+              )
             })}
           </List>
         </Modal>
       </div>
-    );
+    )
+  }
+
+  /**
+   * 关闭门诊列表Modal  门诊下拉列表选中,并关闭
+   * @param target
+   */
+  onClinicIntervalClose(target) {
+    console.log(target)
+    console.log('选中的科室')
+    console.log(this.state.cliInterValue)
+    if (target === 2) {
+      this.defSelClinic = this.state.cliInterValue.name
+      this.props.fetchReservationList(this.state.cliInterValue)
+    } else {
+      this.setState({ cliInterValue: '' })
+    }
+    this.setState({ cliIntervalShow: !this.state.cliIntervalShow })
+  }
+
+  /**
+   * 格式化字符串
+   * @param data
+   * @returns {*}
+   */
+  renderDesc(data) {
+    const { seeDate, noon, reglevlName } = data
+    const { oMonth, oDay, oweekDay } = getDate(seeDate)
+    return (
+      <div className={'doctorVisiting__item__desc'}>
+        {oMonth < 10 ? '0' + oMonth + '-' + oDay : oMonth + '-' + oDay} {oweekDay} {noon} {reglevlName}
+      </div>
+    )
+  }
+
+  /**
+   * 跳转页面
+   * @param data
+   */
+  navPage(data) {
+    const {
+      doctorActions: { loadTimeInterval }
+    } = this.props
+    if (data.status === 2) {
+      return
+    }
+    this.reservationInfoSel = data
+    loadTimeInterval(this.props.doctorInfo, data, this)
+  }
+
+  /**
+   * 时间段选项
+   * @param value
+   */
+  onChange = value => {
+    this.setState({
+      timeIntervalValue: value
+    })
+  }
+
+  /**
+   * 关闭时间段Modal
+   * @param target
+   */
+  onTimeIntervalClose(target) {
+    const { doctorInfo, timeInterval } = this.props
+    //只有点击确定按钮，才跳转页面
+    switch (target) {
+      case 2:
+        const deptInfo = { name: this.defSelClinic }
+        let timeFilter = timeInterval.filter(item => item.id === this.state.timeIntervalValue)
+        let path = {
+          pathname: '/reservation',
+          state: {
+            doctorInfo: doctorInfo,
+            reservationInfo: { ...this.reservationInfoSel, deptInfo },
+            timeInterval: timeFilter[0]
+          }
+        }
+        console.log(path)
+        this.props.history.push(path)
+        break
+      default:
+        break
+    }
+    this.setState({
+      timeIntervalShow: false
+    })
   }
 
   componentDidMount() {
@@ -163,120 +241,20 @@ class DoctorVisiting extends Component {
         threshold: 80
       },
       useTransition: false
-    });
-    this.scroll.on("pullingUp", this.props.pullingUpHandler);
-
-    // 诊室滚动列表
-    this.clinicScroll = new Bscroll(this.refs.clinicWrapper, {
-      mouseWheel: true,
-      click: true,
-      tap: true,
-      useTransition: false
-    });
+    })
+    this.scroll.on('pullingUp', this.props.pullingUpHandler)
 
     //顶部禁止滑动
-    document.getElementById("doctorVisiting__title").addEventListener(
-      "touchmove",
+    document.getElementById('doctorVisiting__title').addEventListener(
+      'touchmove',
       event => {
-        event.preventDefault();
+        event.preventDefault()
       },
       {
         passive: false //  禁止 passive 效果
       }
-    );
-
-  }
-
-  /**
-   * 右侧箭头被点击
-   * @param clinicData
-   */
-  arrowClick(clinicData) {
-    this.setState({ isVisible: !this.state.isVisible });
-  }
-
-  /**
-   * 门诊下拉列表选中,并关闭
-   * @param data
-   */
-  itemClick(data) {
-    this.setState({
-      isVisible: false
-    });
-    this.defSelClinic = data.name;
-    this.props.fetchReservationList(data);
-  }
-
-  /**
-   * 格式化字符串
-   * @param data
-   * @returns {*}
-   */
-  renderDesc(data) {
-    const { seeDate, noon, reglevlName } = data;
-    const { oMonth, oDay, oweekDay } = getDate(seeDate);
-    return (
-      <div className={"doctorVisiting__item__desc"}>
-        {oMonth < 10 ? "0" + oMonth + "-" + oDay : oMonth + "-" + oDay}{" "}
-        {oweekDay} {noon} {reglevlName}
-      </div>
-    );
-  }
-
-  /**
-   * 跳转页面
-   * @param data
-   */
-  navPage(data) {
-    if (data.status === 2) {
-      return;
-    }
-    this.reservationInfoSel = data;
-    this.props.doctorActions.loadTimeInterval(
-      this.props.doctorInfo,
-      data,
-      this
-    );
-  }
-
-  /**
-   * 时间段选项
-   * @param value
-   */
-  onChange = value => {
-    this.setState({
-      timeIntervalValue: value
-    });
-  };
-
-  //关闭时间段Modal
-  onTimeIntervalClose(target) {
-    const { doctorInfo, timeInterval } = this.props;
-    //只有点击确定按钮，才跳转页面
-    switch (target) {
-      case 2:
-        const deptInfo = { name: this.defSelClinic };
-        let timeFilter = timeInterval.filter(
-          item => item.id === this.state.timeIntervalValue
-        );
-        let path = {
-          pathname: "/reservation",
-          state: {
-            doctorInfo: doctorInfo,
-            reservationInfo: { ...this.reservationInfoSel, deptInfo },
-            timeInterval: timeFilter[0]
-          }
-        };
-        console.log(path);
-        this.props.history.push(path);
-        break;
-      default:
-        break;
-    }
-    this.setState({
-      timeIntervalShow: false
-    });
+    )
   }
 }
 
-export default withRouter(DoctorVisiting);
+export default withRouter(DoctorVisiting)

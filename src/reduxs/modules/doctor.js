@@ -92,8 +92,8 @@ export const actions = {
             target.setState({
               timeIntervalShow: true
             })
-            //返回数据只有一条数据，则直接跳转页面
           } else {
+            //返回数据只有一条数据，则直接跳转页面
             let path = {
               pathname: '/reservation',
               state: {

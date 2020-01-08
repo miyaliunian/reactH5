@@ -11,6 +11,9 @@ import LoadingMask from '@components/Loading/LoadingMask'
 import DoctorTitle from '@containers/Doctor/Components/DoctorTitle/DoctorTitle'
 import DoctorDesc from '@containers/Doctor/Components/DoctorDesc/DoctorDesc'
 import DoctorVisiting from '@containers/Doctor/Components/DoctorVisiting/DoctorVisiting'
+import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
+
+//Redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -21,8 +24,9 @@ import {
   getReservationsData,
   getTimeInterval
 } from '@reduxs/modules/doctor'
+
+//样式
 import './style.less'
-import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 
 class DoctorContainer extends Component {
   render() {
