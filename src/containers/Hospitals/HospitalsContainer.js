@@ -23,7 +23,7 @@ import './style.less'
 
 class HospitalsContainer extends PureComponent {
   render() {
-    const {  hospitalList, isLastPage } = this.props
+    const { hospitalList, isLastPage } = this.props
     return (
       <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
         <div className={'hospitalsContainer'}>
@@ -31,7 +31,7 @@ class HospitalsContainer extends PureComponent {
           <HospitalsItem
             data={hospitalList}
             isLastPage={isLastPage}
-            pullingDownHandler={() => this.pullingDownHandler()}
+            pullingDownHandler={i => this.pullingDownHandler(i)}
             pullingUpHandler={() => this.pullingUpHandler()}
           />
           <LoadingMask />
@@ -41,21 +41,21 @@ class HospitalsContainer extends PureComponent {
   }
 
   //下拉刷新
-  pullingDownHandler() {
+  pullingDownHandler(i) {
     const {
       hospitalActions: { refreshHosipitalList }
     } = this.props
-    refreshHosipitalList()
+    refreshHosipitalList(i)
   }
 
   //
   pullingUpHandler() {
     const {
       isLastPage,
-      hospitalActions: { loadHosipitalList }
+      hospitalActions: { refreshHosipitalList }
     } = this.props
     if (!isLastPage) {
-      loadHosipitalList()
+      refreshHosipitalList()
     }
   }
 
@@ -70,10 +70,10 @@ class HospitalsContainer extends PureComponent {
 
   initailData() {
     const {
-      hospitalActions: { loadHosipitalList }
+      hospitalActions: { iniHosipitalList }
     } = this.props
     this.resetData()
-    loadHosipitalList()
+    iniHosipitalList()
   }
 
   resetData() {

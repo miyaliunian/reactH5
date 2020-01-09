@@ -1,25 +1,15 @@
+
 import { cityID } from "@api/Constant";
 import url from "@api/httpUrl";
 import { FETCH_DATA } from "../middleware/api";
-import React, { Component } from "react";
-
-/**
- * Class:
- * Author: wufei
- * Date: 2019/5/28
- * Description:
- *    医院列表 reduce
- *
- */
 
 const initialState = {
-  areaId: "", //区域列表
   sort: "register", //综合排序:第二个tab默认传综合排序
-  hosCategory: "", //医院类型
-  hosGrade: "", // 医院等级
 
   isFetching: false,
   isLastPage: false,
+  refreshed:false,//下拉刷新动作是否完成
+  reset:false,//上拉加载更多动作是否完成
   page: 1, //翻页
   data: [] //列表数据
 };
@@ -29,45 +19,62 @@ const actionTypes = {
   FETCH_HOSPITAL_REQUEST: "HOSPITAL/FETCH_HOSPITAL_REQUEST",
   FETCH_HOSPITAL_SUCCESS: "HOSPITAL/FETCH_HOSPITAL_SUCCESS",
   FETCH_HOSPITAL_FAILURE: "HOSPITAL/FETCH_HOSPITAL_FAILURE",
-
   REFRESH_HOSPITAL_SUCCESS: "HOSPITAL/REFRESH_HOSPITAL_SUCCESS",
   FETCH_HOSPITAL_BY_SUCCESS: "HOSPITAL/REFRESH_HOSPITAL_BY_SUCCESS",
-
   SET_PAGE: "HOSPITAL/SET_PAGE",
-  SET_AREA: "HOSPITAL/SET_AREA",
-  SET_SORT: "HOSPITAL/SET_SORT",
-  SET_FILTER: "HOSPITAL/SET_FILTER",
   RESET: "HOSPITAL/RESET"
 };
 
 // action creators
 export const actions = {
-  //加载列表、上拉加载更多
-  loadHosipitalList: () => {
+
+  //初始化
+  iniHosipitalList: () => {
     return (dispatch, getstate) => {
       const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
       let param = {
-        areaId: getstate().hospital.areaId || null,
-        hosCategory: getstate().hospital.hosCategory || null,
-        hosGrade: getstate().hospital.hosGrade || null
+        areaId:  null,
+        hosCategory: null,
+        hosGrade: null
       };
       return dispatch(fetchHosipitalList(targetURL, param));
     };
   },
 
-  //下拉刷新
-  refreshHosipitalList: () => {
+  /**
+   * 下拉刷新
+   * @param cbf  回调函数
+   * @returns {function(*, *): *}
+   */
+  refreshHosipitalList: (callBack) => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, "1");
+      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
       let param = {
-        areaId: getstate().hospital.areaId || null,
-        hosCategory: getstate().hospital.hosCategory || null,
-        hosGrade: getstate().hospital.hosGrade || null
+        areaId:  null,
+        hosCategory: null,
+        hosGrade: null
       };
-      return dispatch(refreshHosipitalList(targetURL, param));
+      return dispatch(fetchHosipitalList(targetURL, param,callBack));
     };
   },
 
+
+  /**
+   * 加载更多
+   * @param cbf  回调标识
+   * @returns {function(*, *): *}
+   */
+    moreHosipitalList: (cbf) => {
+      return (dispatch, getstate) => {
+        const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
+        let param = {
+          areaId:  null,
+          hosCategory: null,
+          hosGrade: null
+        };
+        return dispatch(fetchHosipitalList(targetURL, param,cbf));
+      };
+    },
 
   //tab过滤数据
   filterHosipitalList: (filter) => {
@@ -90,26 +97,20 @@ export const actions = {
   })
 };
 
-// action creators：二
-const fetchHosipitalList = (targetURL, param) => ({
-  [FETCH_DATA]: {
-    types: [actionTypes.FETCH_HOSPITAL_REQUEST, actionTypes.FETCH_HOSPITAL_SUCCESS, actionTypes.FETCH_HOSPITAL_FAILURE],
-    targetURL
-  },
-  param
-});
-
-const refreshHosipitalList = (targetURL, param) => ({
+const fetchHosipitalList = (targetURL, param,callBack='') => ({
   [FETCH_DATA]: {
     types: [
       actionTypes.FETCH_HOSPITAL_REQUEST,
-      actionTypes.REFRESH_HOSPITAL_SUCCESS,
+      actionTypes.FETCH_HOSPITAL_SUCCESS,
       actionTypes.FETCH_HOSPITAL_FAILURE
     ],
     targetURL
   },
-  param
+  param,
+  callBack
 });
+
+
 
 const fetchHosipitalListBy = (targetURL, param) => ({
   [FETCH_DATA]: {
@@ -158,22 +159,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         page: 1
       };
-    case actionTypes.SET_AREA:
-      return {
-        ...state,
-        areaId: action.code
-      };
-    case actionTypes.SET_SORT:
-      return {
-        ...state,
-        sort: action.value
-      };
-    case actionTypes.SET_FILTER:
-      return {
-        ...state,
-        hosCategory: action.value.yylx,
-        hosGrade: action.value.yydj
-      };
+
     case actionTypes.RESET:
       return {
         ...state,

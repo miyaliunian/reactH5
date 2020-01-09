@@ -91,13 +91,17 @@ class HospitalsItem extends Component {
 
 
   handelDown(){
-    setTimeout(() => {
-      this.setState({
-        hasMore: true,
-        action: STATS.refreshed,
-        index: loadMoreLimitNum
-      });
-    }, 1000);
+  const {pullingDownHandler}  = this.props
+    pullingDownHandler((e)=>{
+      console.log(e)
+      setTimeout(() => {
+        this.setState({
+          hasMore: true,
+          action: STATS.refreshed,
+        });
+      }, 300);
+    })
+
   }
 
 
