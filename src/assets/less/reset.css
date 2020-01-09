@@ -91,12 +91,7 @@ input {
   vertical-align: baseline;
 }
 
-html,
-body {
-  width: 100vm;
-  height: 100vm;
-  overflow: hidden;
-}
+
 
 /* HTML5 display-role reset for older browsers */
 article,
