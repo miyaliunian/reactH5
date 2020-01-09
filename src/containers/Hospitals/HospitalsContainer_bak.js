@@ -23,13 +23,14 @@ import './style.less'
 
 class HospitalsContainer extends PureComponent {
   render() {
-    const {  hospitalList, isLastPage } = this.props
+    const { fetchingStatus, hospitalList, isLastPage } = this.props
     return (
       <SafeAreaView showBar={true} title={'医院列表'} isRight={false} handleBack={this.handleBack}>
         <div className={'hospitalsContainer'}>
           <Tabs filterHosipitalList={item => this.filterHosipitalList(item)} />
           <HospitalsItem
             data={hospitalList}
+            fetchingStatus={fetchingStatus}
             isLastPage={isLastPage}
             pullingDownHandler={() => this.pullingDownHandler()}
             pullingUpHandler={() => this.pullingUpHandler()}
