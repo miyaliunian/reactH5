@@ -22,6 +22,12 @@ import './style.less'
 import LoadingMask from '@components/Loading/LoadingMask'
 
 class CategoryHosList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hospitalList: []
+    };
+  }
   static propTypes = {
     bindCardList: PropTypes.array,
     callBack: PropTypes.func.isRequired,
@@ -29,7 +35,7 @@ class CategoryHosList extends Component {
   }
 
   render() {
-    const { appointmentHos, allHos, onNavBack } = this.props
+    const { appointmentHos, hospitalList, onNavBack } = this.props
     return (
       <div>
         <Header title={'选择医院'} isRight={false} onBack={() => onNavBack()} />
@@ -62,7 +68,7 @@ class CategoryHosList extends Component {
                   <span style={{ fontSize: 13, fontWeight: 'bold' }}>医院列表</span>
                 </div>
                 <ul className={'hospitalizationList_body'}>
-                  {allHos.map((item, index) => {
+                  {hospitalList.map((item, index) => {
                     return (
                       <li
                         className={'hospitalizationItem_row border-bottom'}
@@ -81,15 +87,16 @@ class CategoryHosList extends Component {
       </div>
     )
   }
-
   componentDidMount() {
     console.log('CategoryHosList')
     const {
       bindCardList,
       chooseCategoryHospListActions: { initCategaryHospitalList }
     } = this.props
-    let bindCardObj = bindCardList.filter(item => item.def)
-    initCategaryHospitalList('inPrePay', bindCardObj[0], 1)
+    if(bindCardList){
+      let bindCardObj = bindCardList.filter(item => item.def)
+      initCategaryHospitalList('inPrePay', bindCardObj[0], 1)
+    }
   }
 
   pullDownFreshAction = () => {
@@ -97,16 +104,18 @@ class CategoryHosList extends Component {
       bindCardList,
       chooseCategoryHospListActions: { pullDownRefresh }
     } = this.props
-    let bindCardObj = bindCardList.filter(item => item.def)
+    if(bindCardList){
+        let bindCardObj = bindCardList.filter(item => item.def)
 
-    return new Promise((resolve, reject) => {
-      pullDownRefresh('inPrePay', bindCardObj[0]).then(status => {
-        if (status && status === 'success') {
-          console.log('下拉刷新状态')
-          resolve()
-        }
-      })
-    })
+        return new Promise((resolve, reject) => {
+          pullDownRefresh('inPrePay', bindCardObj[0]).then(status => {
+            if (status && status === 'success') {
+              console.log('下拉刷新状态')
+              resolve()
+            }
+          })
+        })
+    }
   }
 
   loadMoreData = () => {

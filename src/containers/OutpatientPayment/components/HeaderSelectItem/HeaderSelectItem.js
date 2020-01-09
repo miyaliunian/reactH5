@@ -16,9 +16,10 @@ class HeaderSelectItem extends Component {
 
   render() {
     const { data, title, txt, clickTxt, type } = this.props
+    // console.log("8888888888888888888888888888")
     // console.group(this.props)
     return (
-      <div className={'select_item__list'} onClick={() => this.navPage(data)}>
+      <div className={'select_item__list'}>
         <div className={'select_item'}>
           <div className={'select_item_left'}>
             <span className={'select_item_title'}>{title}:</span>
@@ -31,20 +32,6 @@ class HeaderSelectItem extends Component {
         </div>
       </div>
     )
-  }
-
-  navPage(data) {
-    let path = {
-      pathname: 'outpatientPayment',
-      callBack: data => this.callBack(data)
-    }
-    this.props.history.push(path)
-  }
-
-  callBack(data) {
-    if (this.props.callBack && typeof this.props.callBack === 'function') {
-      this.props.callBack(data)
-    }
   }
 }
 
