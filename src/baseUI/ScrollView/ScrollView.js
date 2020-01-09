@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import './scrollView.less'
-
-/**
- * <ScrollView loadCallback={function} isend={false}>
- */
 export default class ScrollView extends Component {
 
   constructor(props) {
@@ -18,19 +14,21 @@ export default class ScrollView extends Component {
   render() {
     return (
       <div className={"scrollview"}>
-        {this.props.child}
+        {this.props.children}
       </div>
     );
   }
 
 
   onLoadPage() {
-    console.log(this.props.data);
+    const {loadCallback} = this.props
     let clientHeight = document.documentElement.clientHeight;
     let scrollHeight = document.body.scrollHeight;
     let scrollTop = document.documentElement.scrollTop;
     let proLoadDis = 80;
     if ((scrollTop + clientHeight) >= (scrollHeight - proLoadDis)) {
+     loadCallback &&  loadCallback()
+      return
       if (!this.props.isend){
         this.props.loadCallback &&  this.props.loadCallback()
       }

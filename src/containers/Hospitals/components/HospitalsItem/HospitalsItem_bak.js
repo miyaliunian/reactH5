@@ -81,22 +81,22 @@ class HospitalsItem extends Component {
 
   onLoadPage() {
     let clientHeight = document.documentElement.clientHeight;
-      let scrollHeight = document.body.scrollHeight;
-      let scrollTop = document.documentElement.scrollTop;
-      let proLoadDis = 80;
-      if ((scrollTop + clientHeight) >= (scrollHeight - proLoadDis)) {
-        this.page++;
-        if (this.page > 1) {
-          this.setState({
-            isend: true
-          });
-        } else {
-          this.props.pullingUpHandler();
-        }
-
-
+    let scrollHeight = document.body.scrollHeight;
+    let scrollTop = document.documentElement.scrollTop;
+    let proLoadDis = 80;
+    if ((scrollTop + clientHeight) >= (scrollHeight - proLoadDis)) {
+      this.page++;
+      if (this.page > 1) {
+        this.setState({
+          isend: true
+        });
+      } else {
+        this.props.pullingUpHandler();
       }
+
+
     }
+  }
 
 
   componentDidMount() {

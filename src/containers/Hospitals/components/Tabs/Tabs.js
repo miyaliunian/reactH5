@@ -13,39 +13,35 @@ import { fixedBody, looseBody } from "@utils/fixRollingPenetration";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actions as tabActions, getTabs, getAreasList, getActionKey, getClosePanel } from "@reduxs/modules/tabs";
+import { actions as hospitalActions,} from "@reduxs/modules/hospital";
 
 //样式
 import "./tabs.less";
 
 class Tabs extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-
+  
   /**
    *  变化当前点击的item状态 同时filter 请求
-   * @param item  当前选中的元素
+   * @param filterItem  当前选中的元素
    * @param key   哪个tab是选中状态
    */
-  changeDoFilter(item, key, event) {
-    const { tabActions: { changeFilter }, filterHosipitalList } = this.props;
+  changeDoFilter(filterItem, key, event) {
+    const { tabActions: { changeFilter }, hospitalActions:{filterHosiContentList} } = this.props;
     event.stopPropagation();
-    changeFilter(item, key, (filter) => {
-      filterHosipitalList(filter);
+    changeFilter(filterItem, key, (filter) => {
+      filterHosiContentList(filter);
     });
   }
 
   /**
-   *
+   * 筛选tab确定按钮
    * @param event
    */
   filterPanel(event) {
+    const {tabActions:{closePanelAction}, tabs,hospitalActions:{filterHosiContentList}} = this.props;
     event.stopPropagation();
-    const {tabActions:{closePanelAction}, tabs,filterHosipitalList} = this.props;
     closePanelAction(()=>{
-      filterHosipitalList(tabs)
+      filterHosiContentList(tabs)
     })
   }
 
@@ -253,7 +249,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    tabActions: bindActionCreators(tabActions, dispatch)
+    tabActions: bindActionCreators(tabActions, dispatch),
+    hospitalActions: bindActionCreators(hospitalActions, dispatch)
   };
 };
 

@@ -20,16 +20,14 @@ const actionTypes = {
   FETCH_HOSPITAL_SUCCESS: "HOSPITAL/FETCH_HOSPITAL_SUCCESS",
   FETCH_HOSPITAL_FAILURE: "HOSPITAL/FETCH_HOSPITAL_FAILURE",
   REFRESH_HOSPITAL_SUCCESS: "HOSPITAL/REFRESH_HOSPITAL_SUCCESS",
-  FETCH_HOSPITAL_BY_SUCCESS: "HOSPITAL/REFRESH_HOSPITAL_BY_SUCCESS",
+  FILTER_HOSPITAL_SUCCESS: "HOSPITAL/FILTER_HOSPITAL_SUCCESS",
   SET_PAGE: "HOSPITAL/SET_PAGE",
   RESET: "HOSPITAL/RESET"
 };
 
-// action creators
 export const actions = {
 
-  //初始化
-  iniHosipitalList: () => {
+  iniHosiList: () => {
     return (dispatch, getstate) => {
       const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
       let param = {
@@ -46,7 +44,7 @@ export const actions = {
    * @param cbf  回调函数
    * @returns {function(*, *): *}
    */
-  refreshHosipitalList: (callBack) => {
+  refreshHosiList: (callBack) => {
     return (dispatch, getstate) => {
       const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
       let param = {
@@ -76,8 +74,10 @@ export const actions = {
       };
     },
 
+
+
   //tab过滤数据
-  filterHosipitalList: (filter) => {
+  filterHosiContentList: (filter) => {
     return (dispatch, getstate) => {
       const { AREA, SORT, FILTER } = filter;
       const targetURL = url.API_HOSPITAL_LIST(cityID, typeof (SORT.obj.value) === "undefined" ? "register" : SORT.obj.value, "1");
@@ -86,7 +86,7 @@ export const actions = {
         hosCategory: FILTER.obj[0].value || null,
         hosGrade: FILTER.obj[1].value || null
       };
-      return dispatch(fetchHosipitalListBy(targetURL, param))
+      return dispatch(filterHosListBy(targetURL, param))
     };
   },
 
@@ -112,11 +112,11 @@ const fetchHosipitalList = (targetURL, param,callBack='') => ({
 
 
 
-const fetchHosipitalListBy = (targetURL, param) => ({
+const filterHosListBy = (targetURL, param) => ({
   [FETCH_DATA]: {
     types: [
       actionTypes.FETCH_HOSPITAL_REQUEST,
-      actionTypes.FETCH_HOSPITAL_BY_SUCCESS,
+      actionTypes.FILTER_HOSPITAL_SUCCESS,
       actionTypes.FETCH_HOSPITAL_FAILURE
     ],
     targetURL
@@ -144,12 +144,12 @@ const reducer = (state = initialState, action) => {
         page: 2,
         data: action.response.data.list
       };
-    case actionTypes.FETCH_HOSPITAL_BY_SUCCESS:
+    case actionTypes.FILTER_HOSPITAL_SUCCESS:
       return {
         ...state,
         isFetching: false,
         isLastPage: action.response.data.lastPage,
-        page: 2,
+        page: 1,
         data: action.response.data.list
       };
     case actionTypes.FETCH_HOSPITAL_FAILURE:
