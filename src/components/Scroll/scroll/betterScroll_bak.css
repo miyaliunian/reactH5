@@ -35,10 +35,11 @@
 
 .b-pulldown-wrapper .before-trigger span {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .b-pulldown-wrapper .after-trigger span {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 13px;
+  color: #2b343c;
 }
