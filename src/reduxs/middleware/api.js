@@ -76,7 +76,7 @@ const fetchData = (targetURL, param, schema, callBack) => {
 const normalizeData = (data, schema,callBack) => {
   if (schema === "") {
     if (typeof callBack == "function") {
-      callBack('middle:callBack')
+      callBack(data)
     }
     return data;
   } else {
@@ -105,7 +105,7 @@ const normalizeData = (data, schema,callBack) => {
     }
 
     if (typeof callBack == "function") {
-      callBack('middle:callBack')
+      callBack(data)
     }
   }
 

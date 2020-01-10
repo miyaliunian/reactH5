@@ -5,12 +5,9 @@ import { FETCH_DATA } from "../middleware/api";
 
 const initialState = {
   sort: "register", //综合排序:第二个tab默认传综合排序
-
   isFetching: false,
   isLastPage: false,
-  refreshed:false,//下拉刷新动作是否完成
-  reset:false,//上拉加载更多动作是否完成
-  page: 1, //翻页
+  pageNo: 0, //翻页
   data: [] //列表数据
 };
 
@@ -19,9 +16,8 @@ const actionTypes = {
   FETCH_HOSPITAL_REQUEST: "HOSPITAL/FETCH_HOSPITAL_REQUEST",
   FETCH_HOSPITAL_SUCCESS: "HOSPITAL/FETCH_HOSPITAL_SUCCESS",
   FETCH_HOSPITAL_FAILURE: "HOSPITAL/FETCH_HOSPITAL_FAILURE",
-  REFRESH_HOSPITAL_SUCCESS: "HOSPITAL/REFRESH_HOSPITAL_SUCCESS",
+  LOAD_MORE_HOSPITAL_SUCCESS: "HOSPITAL/LOAD_MORE_HOSPITAL_SUCCESS",
   FILTER_HOSPITAL_SUCCESS: "HOSPITAL/FILTER_HOSPITAL_SUCCESS",
-  SET_PAGE: "HOSPITAL/SET_PAGE",
   RESET: "HOSPITAL/RESET"
 };
 
@@ -29,7 +25,7 @@ export const actions = {
 
   iniHosiList: () => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
+      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, 1);
       let param = {
         areaId:  null,
         hosCategory: null,
@@ -46,7 +42,10 @@ export const actions = {
    */
   refreshHosiList: (callBack) => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
+      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, 1);
+      console.log(
+        targetURL
+      )
       let param = {
         areaId:  null,
         hosCategory: null,
@@ -64,13 +63,16 @@ export const actions = {
    */
     moreHosipitalList: (cbf) => {
       return (dispatch, getstate) => {
-        const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.page);
+        const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.pageNo);
+        console.log(
+          targetURL
+        )
         let param = {
           areaId:  null,
           hosCategory: null,
           hosGrade: null
         };
-        return dispatch(fetchHosipitalList(targetURL, param,cbf));
+        return dispatch(mroeHosipitalList(targetURL, param,cbf));
       };
     },
 
@@ -111,6 +113,20 @@ const fetchHosipitalList = (targetURL, param,callBack='') => ({
 });
 
 
+const mroeHosipitalList = (targetURL, param,callBack='') => ({
+  [FETCH_DATA]: {
+    types: [
+      actionTypes.FETCH_HOSPITAL_REQUEST,
+      actionTypes.LOAD_MORE_HOSPITAL_SUCCESS,
+      actionTypes.FETCH_HOSPITAL_FAILURE
+    ],
+    targetURL
+  },
+  param,
+  callBack
+});
+
+
 
 const filterHosListBy = (targetURL, param) => ({
   [FETCH_DATA]: {
@@ -133,43 +149,36 @@ const reducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         isLastPage: action.response.data.lastPage,
-        page: (state.page += 1),
-        data: state.data.concat(action.response.data.list)
+        pageNo: action.response.data.pageNo += 1,
+        data: action.response.data.list
       };
-    case actionTypes.REFRESH_HOSPITAL_SUCCESS:
+    case actionTypes.LOAD_MORE_HOSPITAL_SUCCESS:
+      console.table(state)
+      console.table(action)
       return {
         ...state,
         isFetching: false,
         isLastPage: action.response.data.lastPage,
-        page: 2,
-        data: action.response.data.list
+        pageNo: action.response.data.pageNo += 1,
+        data: state.data.concat(action.response.data.list)
       };
     case actionTypes.FILTER_HOSPITAL_SUCCESS:
       return {
         ...state,
         isFetching: false,
         isLastPage: action.response.data.lastPage,
-        page: 1,
+        pageNo: 1,
         data: action.response.data.list
       };
     case actionTypes.FETCH_HOSPITAL_FAILURE:
       return { ...state, isFetching: false };
-    case actionTypes.SET_PAGE:
-      return {
-        ...state,
-        page: 1
-      };
-
     case actionTypes.RESET:
       return {
         ...state,
-        areaId: "",
         sort: "register",
-        hosCategory: "",
-        hosGrade: "",
         isFetching: false,
         isLastPage: false,
-        page: 1,
+        pageNo: 1,
         data: []
       };
     default:
