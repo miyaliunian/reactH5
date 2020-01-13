@@ -107,5 +107,8 @@ export default {
   API_QUERY_REPORT_EXAMINE: (hosId, reportId) => `/baseURL/inPrePay/v1.0/getExamineResult/${hosId}/${reportId}.do`,
   API_QUERY_EXAMINE_PIC: (hosId, reportId) => `/baseURL//inPrePay/v1.0/getChectPic/${hosId}/${reportId}.do`,
 
+  /* 12:--------------------------------------------报告查询-----*/
+  API_QUERY_BALANCEINFO_LIST:(personId,hospitalId)=>
+      `/balanceinfo/v1.1/list/${personId}/${hospitalId}.do`,
   API_WX_PAY: () => `/baseURL/cmbBank/getCMBWeChatPay/v1.0.do` //微信支付
 }
