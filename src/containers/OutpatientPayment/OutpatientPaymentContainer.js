@@ -4,12 +4,13 @@
 import React, {Component} from 'react'
 import Header from '@components/NavBar/NavBar'
 import './style.less'
+import {Modal} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import CategoryHosList from "@components/CategoryHosList/CategoryHosList";
 import HeaderSelectItem from './components/HeaderSelectItem/HeaderSelectItem'
 import LoadingMask from '../../components/Loading/LoadingMask'
-import Modal from "@material-ui/core/Modal";
+import Modal2Hos from "@material-ui/core/Modal";
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import {
     actions as outpatientPaymentActions,
@@ -45,7 +46,7 @@ class OutpatientPaymentContainer extends Component {
     }
 
     render() {
-        const {familyList, hospitalList, fetchingStatus, recentHopsitalList,selHospital} = this.props
+        const {familyList, hospitalList, fetchingStatus, recentHopsitalList, selHospital} = this.props
         console.log('OutpatientPaymentCOntainer render this.props')
         console.group(this.props)
         return (
@@ -87,23 +88,22 @@ class OutpatientPaymentContainer extends Component {
                                 data={hospitalList}
                                 isRefresh={this.refresh}
                                 title={'就诊医院'}
-                                txt={selHospital ? selHospital.name : hospitalList[0].name }
+                                txt={selHospital ? selHospital.name : hospitalList[0].name}
                                 type={'hospital'}
                                 // callBack={data => this.refreshCallBack(data)}
                             />
                         </div>
                     </div>
-                    <Modal
+                    <Modal2Hos
                         BackdropProps={{"background-color": "red"}}
                         open={this.state.openModalHospital}
                     >
                         <CategoryHosList
-                            hospitalList={hospitalList}
-                            appointmentHos={recentHopsitalList}
+
                             onNavBack={() => this.setState({openModalHospital: !this.state.openModalHospital})}
                             callBack={data => this.refreshHospital(data)}
                         />
-                    </Modal>
+                    </Modal2Hos>
                 </div>
                 <LoadingMask/>
             </SafeAreaView>
@@ -121,7 +121,7 @@ class OutpatientPaymentContainer extends Component {
     refreshPerson = (data) => {
         console.log("refreshPerson")
         console.group(data)
-        if(data&&(data.id!=this.props.defaultPerson.id))
+        if (data && (data.id != this.props.defaultPerson.id))
             this.props.outpatientPaymentActions.loadPageBySelectPerson(data)
         else
             console.log('人员未变')
@@ -131,8 +131,10 @@ class OutpatientPaymentContainer extends Component {
     refreshHospital(data) {
         console.log('OutpatientPaymentContainer refreshHospital:')
         console.group(data)
-        if(data&&(data.id!=this.props.selHospital.id))
-            this.props.outpatientPaymentActions.loadPageBySelectHospital(data,()=>{this.setState({openModalHospital: !this.state.openModalHospital})})
+        if (data && (data.id != this.props.selHospital.id))
+            this.props.outpatientPaymentActions.loadPageBySelectHospital(data, () => {
+                this.setState({openModalHospital: !this.state.openModalHospital})
+            })
         else
             console.log('医院未变')
     }
@@ -145,24 +147,22 @@ class OutpatientPaymentContainer extends Component {
     //     IntelligentWaitingRefreshTime.time
     //   );
     // }
-    handelModalHospitalization() {
-        this.state = {
-            openModalHospital: false
-        }
-    }
 
     componentDidMount() {
         const {history} = this.props
         if (history.action === 'PUSH') {
-            this.props.outpatientPaymentActions.loadPageByDefaultPerson()
-            this.props.outpatientPaymentActions.loadRecentHospitalListByPersonId(this.props.defaultPerson)
+            const alert = Modal.alert
+            const showAlert = () => {
+                const alertInstance = alert('提示', '请选择就诊人和就诊医院，以准确查找缴费订单。', [
+                    { text: '我已知晓', onPress: () => this.loadPageData() }
+                ]);
+            }
+            showAlert()
         }
-        // let defaultPerson = this.props.defaultPerson
-        // console.group(defaultPerson)
-        // if (defaultPerson) {
-        //   this.props.outpatientPaymentActions.loadingHospitalListByPersonId('recipe', defaultPerson.id)
-        //   console.group(this.props.hospitalList)
-        // }
+    }
+    loadPageData(){
+        this.props.outpatientPaymentActions.loadPageByDefaultPerson()
+        this.props.outpatientPaymentActions.loadRecentHospitalListByPersonId(this.props.defaultPerson)
     }
 
     componentWillUnmount() {
