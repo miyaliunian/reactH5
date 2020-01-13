@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
 import BScroll from "better-scroll";
-import Loading from "../loading/loading";
-import Bubble from "../bubble/bubble";
-
-import "./betterScroll.css";
+import icon_arrow from "@assets/images/other/arr.png";
+//样式
+import "./betterScroll.less";
 
 let defaultPullDownRefresh = {
   threshold: 100,
   stop: 50,
   stopTime: 600,
   txt: {
-    success: "-----刷新成功-------"
+    success: "刷新成功"
   }
 };
 
@@ -80,7 +78,8 @@ class Scroll extends Component {
     this.isRebounding = false;
     this.pulling = false;
 
-    this.pullDownInitTop = -50
+    this.pullDownInitTop = -50;
+    // this.pullDownInitTop = 0;
 
     this.state = {
       isPullUpLoad: false,
@@ -219,7 +218,6 @@ class Scroll extends Component {
       });
       this.props.doPullDownFresh().then(() => {
         //刷新方法调用成功
-        console.log("调用传递过来的方法")
         if (!this.scroll) {
           return;
         }
@@ -263,7 +261,6 @@ class Scroll extends Component {
 
   _reboundPullDown = () => {
     let { stopTime = 4000 } = this.options.pullDownRefresh;
-    console.log("_reboundPullDown")
     return new Promise(resolve => {
       this.TimerA = setTimeout(() => {
         this.isRebounding = true;
@@ -345,14 +342,17 @@ class Scroll extends Component {
 
   renderPullUpDown() {
     let { pullDownRefresh } = this.props;
-    let { beforePullDown, pulling, pullDownStyle,bubbleY } = this.state;
-    let cls = "after-trigger"
+    let { beforePullDown, pulling, pullDownStyle, bubbleY } = this.state;
+    let cls = "arrow";
     if (pullDownRefresh && beforePullDown) {
-
+      if (bubbleY > 50) {
+        cls += " up";
+      }
       return (
         <div className="b-pulldown-wrapper" style={pullDownStyle}>
-          <div className={cls}>
-           <span>
+          <div className={"after-trigger"}>
+            <img src={icon_arrow} className={cls}/>
+            <span>
               {bubbleY > 50 ? "松开立即刷新" : "下拉刷新"}
            </span>
           </div>
@@ -363,7 +363,7 @@ class Scroll extends Component {
     if (pullDownRefresh && !beforePullDown && pulling) {
       return (
         <div className="b-pulldown-wrapper" style={pullDownStyle}>
-          <div className={cls}>
+          <div className={"after-trigger"}>
            <span>
               加载中...
            </span>
@@ -375,7 +375,7 @@ class Scroll extends Component {
     if (pullDownRefresh && !beforePullDown && !pulling) {
       return (
         <div className="b-pulldown-wrapper" style={pullDownStyle}>
-          <div className={cls}>
+          <div className={"after-trigger"}>
             <div>
               <span>
                 {typeof this.options.pullDownRefresh === "object"

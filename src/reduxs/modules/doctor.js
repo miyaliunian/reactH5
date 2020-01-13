@@ -9,6 +9,7 @@
 import URL from '@api/httpUrl'
 import { FETCH_DATA } from '@reduxs/middleware/api'
 import { post } from '@api/httpUtil'
+import { Toast } from "antd-mobile";
 
 const initialState = {
   isFetching: false, //标识请求是否进行中
@@ -54,7 +55,9 @@ export const actions = {
           const target = URL.API_DOCTOR_VISITING_LIST(hosId, data.data[0].id, doctid, getstate().doctor.page)
           return dispatch(loadReservationList(target))
         },
-        error => {}
+        error => {
+          Toast.info(error.message)
+        }
       )
     }
   },

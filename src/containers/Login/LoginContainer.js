@@ -7,13 +7,16 @@
  */
 import React, { Component } from 'react'
 import LoginForm from './components/LoginForm/LoginForm'
+import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
+import LoadingMask from '@components/Loading/LoadingMask'
+
+//Redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { actions as loginActions, isLogin, getPassword, getUserName } from '../../reduxs/modules/login'
 import './style.less'
-import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
-import LoadingMask from '@components/Loading/LoadingMask'
+
 
 class LoginContainer extends Component {
   render() {

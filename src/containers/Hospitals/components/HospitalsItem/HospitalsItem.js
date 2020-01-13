@@ -16,7 +16,7 @@ class HospitalsItem extends Component {
     const { itemData } = this.props;
     return (
       <Link to={`/division/${itemData.id}/${itemData.name}`} >
-        <div className="hospitalsItem__con border-topbottom">
+        <li className="hospitalsItem__con border-topbottom">
           <div className="hospitalsItem__title">{itemData.name}</div>
           <div className="hospitalsItem__middle">
             <div className={"hospitalsItem__middle__item"}>
@@ -41,7 +41,7 @@ class HospitalsItem extends Component {
             ) : null}
           </div>
           <div className="hospitalsItem__address">地址：{itemData.address}</div>
-        </div>
+        </li>
       </Link>
     );
   }

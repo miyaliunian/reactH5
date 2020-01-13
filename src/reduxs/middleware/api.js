@@ -61,7 +61,24 @@ export default store => next => action => {
       next(
         actionWith({
           type: failureType,
-          error: error.message || "获取数据失败"
+          error: `${targetURL}:${error.message}` || `${targetURL}:获取数据失败`
+        })
+      )
+  );
+
+  return fetchData(targetURL, action.param, schema,callBack).then(
+    response =>
+      next(
+        actionWith({
+          type: successType,
+          response
+        })
+      ),
+    error =>
+      next(
+        actionWith({
+          type: failureType,
+          error: `${targetURL}:${error.message}` || `${targetURL}:获取数据失败`
         })
       )
   );
@@ -73,11 +90,8 @@ const fetchData = (targetURL, param, schema, callBack) => {
   });
 };
 
-const normalizeData = (data, schema,callBack) => {
+const normalizeData = (data, schema) => {
   if (schema === "") {
-    if (typeof callBack == "function") {
-      callBack(data)
-    }
     return data;
   } else {
     const { name } = schema;
@@ -102,10 +116,6 @@ const normalizeData = (data, schema,callBack) => {
         return data;
       default:
         return;
-    }
-
-    if (typeof callBack == "function") {
-      callBack(data)
     }
   }
 

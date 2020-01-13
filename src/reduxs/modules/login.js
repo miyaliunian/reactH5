@@ -8,6 +8,9 @@
 import url from '@api/httpUrl'
 import { post } from '@api/httpUtil'
 import { PUBLIC_LEY } from '../../assets/static'
+import { Toast} from 'antd-mobile';
+
+
 
 const initialState = {
   username: '',
@@ -51,7 +54,7 @@ export const actions = {
           }
         },
         error => {
-          console.log(error)
+          Toast.info(error.message)
         }
       )
     }

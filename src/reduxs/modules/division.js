@@ -10,6 +10,7 @@ import url from '@api/httpUrl'
 import { FETCH_DATA } from '../middleware/api'
 import { dataConversionDic } from '../../assets/static'
 import { post } from '@api/httpUtil'
+import { Toast } from "antd-mobile";
 
 export const schema = {
   name: dataConversionDic.divisionList
@@ -59,7 +60,9 @@ export const actions = {
           const targetURL = url.API_DIVSION__DEPARTMENT_LIST(hosid, data.data[0].id)
           return dispatch(fetchDepartmentList(targetURL))
         },
-        error => {}
+        error => {
+          Toast.info(error.message)
+        }
       )
     }
   },

@@ -8,7 +8,7 @@
 import React, { Component } from 'react'
 import Header from '@components/NavBar/NavBar'
 import PropTypes from 'prop-types'
-import Scroll from '@components/Scroll/scroll'
+import Scroll from '@baseUI/ScrollView/scroll'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -35,7 +35,7 @@ class CategoryHosList extends Component {
   }
 
   render() {
-    const { appointmentHos, hospitalList, onNavBack } = this.props
+    const { appointmentHos, allHos, onNavBack } = this.props
     return (
       <div>
         <Header title={'选择医院'} isRight={false} onBack={() => onNavBack()} />
@@ -68,7 +68,7 @@ class CategoryHosList extends Component {
                   <span style={{ fontSize: 13, fontWeight: 'bold' }}>医院列表</span>
                 </div>
                 <ul className={'hospitalizationList_body'}>
-                  {hospitalList.map((item, index) => {
+                  {allHos.map((item, index) => {
                     return (
                       <li
                         className={'hospitalizationItem_row border-bottom'}
@@ -110,7 +110,6 @@ class CategoryHosList extends Component {
         return new Promise((resolve, reject) => {
           pullDownRefresh('inPrePay', bindCardObj[0]).then(status => {
             if (status && status === 'success') {
-              console.log('下拉刷新状态')
               resolve()
             }
           })
@@ -125,7 +124,6 @@ class CategoryHosList extends Component {
     return new Promise(resolve => {
       loadMoreAction('inPrePay').then(status => {
         if (status && status === 'success') {
-          console.log('上拉刷新状态')
           resolve()
         }
       })

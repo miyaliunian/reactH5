@@ -6,7 +6,7 @@
  *
  */
 
-import { toast } from 'react-toastify'
+import { Toast} from 'antd-mobile';
 const initialState = {
   error: '',
   token: null,
@@ -14,7 +14,8 @@ const initialState = {
 }
 
 export const actionTypes = {
-  CLEAR_ERROR: 'APP/CLEAR_ERROR' //清除错误
+  CLEAR_ERROR: 'APP/CLEAR_ERROR', //清除错误
+  APP_ERROR: 'APP/ERROR'
 }
 
 //action creators
@@ -32,8 +33,7 @@ const reducer = (state = initialState, action) => {
   if (type === actionTypes.CLEAR_ERROR) {
     return { error: '' }
   } else if (error) {
-    // Toast.fail(error,2)
-    toast.error(error)
+    Toast.info(error)
     return { ...state, error: error }
   }
   return state
@@ -46,10 +46,3 @@ export const getError = state => {
   return state.app.error
 }
 
-export const getToken = state => {
-  return state.app.token
-}
-
-export const getFetchStatus = state => {
-  return state.app.fetStatus
-}

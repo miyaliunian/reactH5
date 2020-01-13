@@ -54,7 +54,7 @@ export const actions = {
               per = true
               dispatch(fetchPersonSuccess(personResp.data))
             } else {
-              Toast.fail(personResp.infomessage, 2)
+              Toast.info(personResp.infomessage, 2)
               return Promise.reject({ message: personResp.infomessage })
             }
             //预约信息
@@ -62,7 +62,7 @@ export const actions = {
               ad = true
               dispatch(fetchSettleSuccess(advanceSettleResp.data))
             } else {
-              Toast.fail(advanceSettleResp.infomessage, 2)
+              Toast.info(advanceSettleResp.infomessage, 2)
               return Promise.reject({ message: advanceSettleResp.infomessage })
             }
 
@@ -98,7 +98,7 @@ export const actions = {
               per = true
               dispatch(fetchPersonSuccess(personResp.data))
             } else {
-              Toast.fail(personResp.infomessage, 2)
+              Toast.info(personResp.infomessage, 2)
               return Promise.reject({ message: personResp.infomessage })
             }
 

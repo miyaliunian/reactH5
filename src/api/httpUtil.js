@@ -6,9 +6,6 @@
  */
 
 import Axios from 'axios'
-import { Component } from 'react'
-
-Component.prototype.$axios = Axios //将axios挂载到Component上，以供全局使用
 
 Axios.defaults.timeout = 30000
 Axios.defaults.headers = { 'Content-Type': 'application/json;charset=UTF-8' }
@@ -57,10 +54,13 @@ export function post(url, bodyParam = '') {
       cancelToken: Axios.CancelToken.source.token
     })
       .then(res => {
-        resolve(res)
+        if (res.infocode && res.infocode === 1){
+          resolve(res)
+        } else  {
+          reject({message:res.infomessage})
+        }
       })
       .catch(err => {
-        console.log(err)
         isShowLoading(false)
         if (err.code && err.code === 'ECONNABORTED') {
           //请求超时

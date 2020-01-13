@@ -5,7 +5,7 @@ import BScroll from 'better-scroll'
 import Loading from '../loading/loading'
 import Bubble from '../bubble/bubble'
 
-import './betterScroll.css'
+import './betterScroll.less'
 
 let defaultPullDownRefresh = {
   threshold: 100,

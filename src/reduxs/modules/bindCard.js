@@ -139,7 +139,7 @@ const reducer = (state = initialState, action) => {
       }
     case actionTypes.FETCH_WAITING_SUCCESS:
       if (action.response.infocode !== 1) {
-        Toast.fail(action.response.infomessage, 2)
+        Toast.info(action.response.infomessage, 2)
         return { ...state, isFetching: false }
       }
       return {

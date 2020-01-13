@@ -184,7 +184,7 @@ export const actions = {
         data => {
           dispatch(fetchSiTypesSuccess(data.data))
         },
-        error => {}
+        error => {Toast.info(error.message)}
       )
     }
   },

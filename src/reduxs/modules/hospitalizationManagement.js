@@ -48,13 +48,13 @@ export const actions = {
                   dispatch(hospitalDetail(data.data))
                 } else {
                   dispatch(fetchEnd())
-                  Toast.fail(data.infomessage, 2)
+                  Toast.info(data.infomessage, 2)
                 }
               })
-              .catch()
+              .catch(err=>Toast.info(err.message))
           }
         })
-        .catch()
+        .catch(err=>Toast.info(err.message))
     }
   },
 
@@ -70,10 +70,10 @@ export const actions = {
             dispatch(hospitalDetail(data.data))
           } else {
             dispatch(hospitalDetailNUll())
-            Toast.fail(data.infomessage, 2)
+            Toast.info(data.infomessage, 2)
           }
         })
-        .catch()
+        .catch(err=>Toast.info(err.message))
     }
   },
 

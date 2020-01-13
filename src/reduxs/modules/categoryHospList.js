@@ -36,7 +36,7 @@ const actionTypes = {
 }
 
 // action creators
-export const actions = {
+export const  actions = {
   //点击医院列表 加载所有医院数据
   initCategaryHospitalList: (type, perObj, pageNu) => {
     return (dispatch, getstate) => {
@@ -60,13 +60,13 @@ export const actions = {
         return post(targetUrl)
           .then(data => {
             if (data.infocode && data.infocode === 1) {
-              console.log('数据请求成功')
               dispatch(pullDownRefreshHospitals(data.data))
-              console.log('返回刷新状态')
               resolve('success')
             }
           })
-          .catch()
+          .catch(err=>{
+            Toast.info(err.message)
+          })
       })
     }
   },
@@ -92,7 +92,9 @@ export const actions = {
                 resolve('success')
               }
             })
-            .catch()
+            .catch(err=>{
+              Toast.info(err.message)
+            })
         })
       } else {
         return new Promise((resolve, reject) => {
@@ -111,7 +113,9 @@ function getReserHospitalList(targetURL, dispatch) {
         dispatch(loadReservationHospitals(data.data))
       }
     })
-    .catch()
+    .catch(err=>{
+      Toast.info(err.message)
+    })
 }
 
 //获取:全部医院
@@ -127,7 +131,9 @@ function getAllHospitalList(targetURL, dispatch) {
         dispatch(loadAllHospitals(data.data))
       }
     })
-    .catch()
+    .catch(err=>{
+      Toast.info(err.message)
+    })
 }
 
 const fetchRequest = () => ({

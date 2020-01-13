@@ -193,9 +193,7 @@ class HospitalizationManagementContainer extends Component {
       history,
       bindCardActions: { loadList }
     } = this.props;
-    if (history.action === "PUSH") {
-      loadList();
-    }
+    loadList();
   }
 
   componentWillUnmount() {

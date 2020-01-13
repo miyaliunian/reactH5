@@ -52,15 +52,16 @@ export const actions = {
                 callback({ status: 0 })
               }
             } else {
-              Toast.fail(data.infomessage, 2)
+              Toast.info(data.infomessage, 2)
             }
           },
           error => {
             dispatch(fetchFailure())
-            Toast.fail(error, 1)
+            Toast.info(error, 1)
           }
         )
         .catch(err => {
+          Toast.info(err.message)
           dispatch(fetchFailure())
         })
     }
@@ -82,16 +83,17 @@ export const actions = {
                 dispatch(fetchPayMethodAttriSuccess('2'))
               }
             } else {
-              Toast.fail(data.infomessage, 2)
+              Toast.info(data.infomessage, 2)
             }
           },
           error => {
             dispatch(fetchFailure())
-            Toast.fail(error, 1)
+            Toast.info(error, 1)
           }
         )
         .catch(err => {
           dispatch(fetchFailure())
+          Toast.info(err.message)
         })
     }
   },
@@ -192,12 +194,12 @@ export const actions = {
                 route.push(path)
               }
             } else {
-              Toast.fail(data.infomessage, 2)
+              Toast.info(data.infomessage, 2)
             }
           },
           error => {
             dispatch(fetchFailure())
-            Toast.fail(error, 1)
+            Toast.info(error, 1)
           }
         )
         .catch(err => {

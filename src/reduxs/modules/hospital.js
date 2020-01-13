@@ -1,7 +1,9 @@
-
 import { cityID } from "@api/Constant";
 import url from "@api/httpUrl";
 import { FETCH_DATA } from "../middleware/api";
+import { post } from "@api/httpUtil";
+import { Toast } from "antd-mobile";
+
 
 const initialState = {
   sort: "register", //综合排序:第二个tab默认传综合排序
@@ -23,11 +25,15 @@ const actionTypes = {
 
 export const actions = {
 
+  /**
+   * 初始化
+   * @returns {function(*, *): *}
+   */
   iniHosiList: () => {
     return (dispatch, getstate) => {
       const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, 1);
       let param = {
-        areaId:  null,
+        areaId: null,
         hosCategory: null,
         hosGrade: null
       };
@@ -40,18 +46,25 @@ export const actions = {
    * @param cbf  回调函数
    * @returns {function(*, *): *}
    */
-  refreshHosiList: (callBack) => {
+  pullDownFresh: () => {
     return (dispatch, getstate) => {
       const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, 1);
-      console.log(
-        targetURL
-      )
       let param = {
-        areaId:  null,
+        areaId: null,
         hosCategory: null,
         hosGrade: null
       };
-      return dispatch(fetchHosipitalList(targetURL, param,callBack));
+      return new Promise((resolve, reject) => {
+        return post(targetURL, param)
+          .then(response => {
+            dispatch({ type: actionTypes.FETCH_HOSPITAL_SUCCESS, response: response });
+            resolve()
+          })
+          .catch(err=>{
+            Toast.info(err.message)
+            resolve()
+          })
+      });
     };
   },
 
@@ -61,21 +74,30 @@ export const actions = {
    * @param cbf  回调标识
    * @returns {function(*, *): *}
    */
-    moreHosipitalList: (cbf) => {
-      return (dispatch, getstate) => {
-        const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.pageNo);
-        console.log(
-          targetURL
-        )
-        let param = {
-          areaId:  null,
-          hosCategory: null,
-          hosGrade: null
-        };
-        return dispatch(mroeHosipitalList(targetURL, param,cbf));
+  pullUpLoadMore: () => {
+    return (dispatch, getstate) => {
+      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.pageNo);
+      console.log(
+        targetURL
+      );
+      let param = {
+        areaId: null,
+        hosCategory: null,
+        hosGrade: null
       };
-    },
-
+      return new Promise((resolve, reject) => {
+        return post(targetURL, param)
+          .then(response => {
+            dispatch({ type: actionTypes.LOAD_MORE_HOSPITAL_SUCCESS, response: response });
+            resolve()
+          })
+          .catch(err=>{
+            Toast.info(err.message)
+            resolve()
+          })
+      });
+    };
+  },
 
 
   //tab过滤数据
@@ -88,7 +110,7 @@ export const actions = {
         hosCategory: FILTER.obj[0].value || null,
         hosGrade: FILTER.obj[1].value || null
       };
-      return dispatch(filterHosListBy(targetURL, param))
+      return dispatch(filterHosListBy(targetURL, param));
     };
   },
 
@@ -99,7 +121,7 @@ export const actions = {
   })
 };
 
-const fetchHosipitalList = (targetURL, param,callBack='') => ({
+const fetchHosipitalList = (targetURL, param, ) => ({
   [FETCH_DATA]: {
     types: [
       actionTypes.FETCH_HOSPITAL_REQUEST,
@@ -109,11 +131,9 @@ const fetchHosipitalList = (targetURL, param,callBack='') => ({
     targetURL
   },
   param,
-  callBack
 });
 
-
-const mroeHosipitalList = (targetURL, param,callBack='') => ({
+const mroeHosipitalList = (targetURL, param, callBack = "") => ({
   [FETCH_DATA]: {
     types: [
       actionTypes.FETCH_HOSPITAL_REQUEST,
@@ -125,7 +145,6 @@ const mroeHosipitalList = (targetURL, param,callBack='') => ({
   param,
   callBack
 });
-
 
 
 const filterHosListBy = (targetURL, param) => ({
@@ -153,8 +172,6 @@ const reducer = (state = initialState, action) => {
         data: action.response.data.list
       };
     case actionTypes.LOAD_MORE_HOSPITAL_SUCCESS:
-      console.table(state)
-      console.table(action)
       return {
         ...state,
         isFetching: false,
