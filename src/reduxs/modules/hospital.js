@@ -14,7 +14,7 @@ const initialState = {
 };
 
 // action types
-const actionTypes = {
+export const actionTypes = {
   FETCH_HOSPITAL_REQUEST: "HOSPITAL/FETCH_HOSPITAL_REQUEST",
   FETCH_HOSPITAL_SUCCESS: "HOSPITAL/FETCH_HOSPITAL_SUCCESS",
   FETCH_HOSPITAL_FAILURE: "HOSPITAL/FETCH_HOSPITAL_FAILURE",
@@ -48,11 +48,12 @@ export const actions = {
    */
   pullDownFresh: () => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, 1);
+      const {AREA, SORT, FILTER} = getstate().tabs.tabs
+      const targetURL = url.API_HOSPITAL_LIST(cityID, typeof (SORT.obj.value) === "undefined" ? "register" : SORT.obj.value, "1");
       let param = {
-        areaId: null,
-        hosCategory: null,
-        hosGrade: null
+        areaId: AREA.obj.code || null,
+        hosCategory: FILTER.obj[0].value || null,
+        hosGrade: FILTER.obj[1].value || null
       };
       return new Promise((resolve, reject) => {
         return post(targetURL, param)
@@ -76,14 +77,12 @@ export const actions = {
    */
   pullUpLoadMore: () => {
     return (dispatch, getstate) => {
-      const targetURL = url.API_HOSPITAL_LIST(cityID, getstate().hospital.sort, getstate().hospital.pageNo);
-      console.log(
-        targetURL
-      );
+      const {AREA, SORT, FILTER} = getstate().tabs.tabs
+      const targetURL = url.API_HOSPITAL_LIST(cityID, typeof (SORT.obj.value) === "undefined" ? "register" : SORT.obj.value, getstate().hospital.pageNo);
       let param = {
-        areaId: null,
-        hosCategory: null,
-        hosGrade: null
+        areaId: AREA.obj.code || null,
+        hosCategory: FILTER.obj[0].value || null,
+        hosGrade: FILTER.obj[1].value || null
       };
       return new Promise((resolve, reject) => {
         return post(targetURL, param)

@@ -50,7 +50,6 @@ class HospitalizationManagementContainer extends Component {
 
   render() {
     const { bindCardList, hospitalizationSel, hospitalDetails } = this.props;
-    console.log(hospitalDetails)
     return (
       <div className={"hospitalizationManagement"}>
         <SafeAreaView
