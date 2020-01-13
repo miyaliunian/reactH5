@@ -155,8 +155,6 @@ class DoctorVisiting extends Component {
     if (target === 2) {
       this.defSelClinic = this.state.cliInterValue.name
       this.props.fetchReservationList(this.state.cliInterValue)
-    } else {
-      this.setState({ cliInterValue: '' })
     }
     this.setState({ cliIntervalShow: !this.state.cliIntervalShow })
   }
