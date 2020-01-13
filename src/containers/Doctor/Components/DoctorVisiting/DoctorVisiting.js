@@ -35,6 +35,7 @@ class DoctorVisiting extends Component {
     if (this.defSelClinic === '') {
       if (Array.isArray(clinicData) && clinicData.length > 0) {
         this.defSelClinic = clinicData[0].name
+        this.setState({cliInterValue:clinicData[0]})
       }
     }
     return (
