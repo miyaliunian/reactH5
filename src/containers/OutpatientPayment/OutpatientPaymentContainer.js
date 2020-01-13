@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import CategoryHosList from "@components/CategoryHosList/CategoryHosList";
 import HeaderSelectItem from './components/HeaderSelectItem/HeaderSelectItem'
+import OutpatientPaymentContent from './components/OutpatientPaymentContent/OutpatientPaymentContent'
 import LoadingMask from '../../components/Loading/LoadingMask'
 import Modal2Hos from "@material-ui/core/Modal";
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
@@ -62,7 +63,7 @@ class OutpatientPaymentContainer extends Component {
                         isRight={false}
                     />
                     {/*-------------------------选择成员信息*/}
-                    <div className={'header_select_item_div'}>
+                    <div className={'header_select_item_div border-bottom'}>
                         <div onClick={() => this.gotoFamilyPage()}>
                             <HeaderSelectItem
                                 data={familyList}
@@ -70,15 +71,6 @@ class OutpatientPaymentContainer extends Component {
                                 title={'就诊人'}
                                 clickTxt={'切换成员'}
                                 txt={this.props.defaultPerson.name}
-                                type={'person'}
-                                // callBack={data => this.refreshCallBack(data)}
-                                // onClickEvent={() => {
-                                //     console.log("909090909")
-                                //     console.group(this.state)
-                                //     this.setState({
-                                //         openModalHospital: false
-                                //     });
-                                // }}
                             />
                         </div>
                         <div onClick={() =>
@@ -89,8 +81,6 @@ class OutpatientPaymentContainer extends Component {
                                 isRefresh={this.refresh}
                                 title={'就诊医院'}
                                 txt={selHospital ? selHospital.name : hospitalList[0].name}
-                                type={'hospital'}
-                                // callBack={data => this.refreshCallBack(data)}
                             />
                         </div>
                     </div>
@@ -104,6 +94,7 @@ class OutpatientPaymentContainer extends Component {
                             callBack={data => this.refreshHospital(data)}
                         />
                     </Modal2Hos>
+                    <OutpatientPaymentContent/>
                 </div>
                 <LoadingMask/>
             </SafeAreaView>

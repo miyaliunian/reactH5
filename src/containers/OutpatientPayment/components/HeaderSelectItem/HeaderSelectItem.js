@@ -15,7 +15,7 @@ class HeaderSelectItem extends Component {
   }
 
   render() {
-    const { data, title, txt, clickTxt, type } = this.props
+    const { title, txt, clickTxt } = this.props
     // console.log("8888888888888888888888888888")
     // console.group(this.props)
     return (

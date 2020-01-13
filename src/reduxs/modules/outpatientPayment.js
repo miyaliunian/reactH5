@@ -14,7 +14,7 @@ const initialState = {
     defaultPerson: {}, //默认人员
     hospitalList: [], //人员相关医院列表
     selHospital: {}, //当前选择的医院。默认为 hospitalList[0]
-    balanceinfoList: [],//门诊缴费列表
+    outpatientPaymentList: [],//门诊缴费列表
     recentHopsitalList: []
 }
 
@@ -70,6 +70,7 @@ export const actions = {
                                 return post(targetURL2).then(data => {
                                     if (data && data.infocode) {
                                         console.group(data)
+                                        dispatch(loadBalanceInfoSuccess(data.data))
                                     }
                                 })
                             }
@@ -242,7 +243,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                balanceinfoList: action.data
+                outpatientPaymentList: action.data
             }
         case actionTypes.FETCH_RECENTHOS_BY_PERSON_SUCCESS:
             return {
@@ -286,4 +287,7 @@ export const getRecentHospitalList = state => {
 }
 export const getFetchingStatus = state => {
     return state.outpatientPayment.isFetching
+}
+export const getOutpatientPaymentList = state => {
+    return state.outpatientPayment.outpatientPaymentList
 }

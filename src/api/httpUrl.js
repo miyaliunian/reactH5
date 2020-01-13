@@ -109,6 +109,6 @@ export default {
 
   /* 12:--------------------------------------------报告查询-----*/
   API_QUERY_BALANCEINFO_LIST:(personId,hospitalId)=>
-      `/balanceinfo/v1.1/list/${personId}/${hospitalId}.do`,
+      `/baseURL/balanceinfo/v1.1/list/${personId}/${hospitalId}.do`,
   API_WX_PAY: () => `/baseURL/cmbBank/getCMBWeChatPay/v1.0.do` //微信支付
 }
