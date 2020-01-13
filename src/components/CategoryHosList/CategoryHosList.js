@@ -88,7 +88,6 @@ class CategoryHosList extends Component {
     )
   }
   componentDidMount() {
-    console.log('CategoryHosList')
     const {
       bindCardList,
       chooseCategoryHospListActions: { initCategaryHospitalList }
