@@ -145,13 +145,14 @@ class OutpatientPaymentContainer extends Component {
             const alert = Modal.alert
             const showAlert = () => {
                 const alertInstance = alert('提示', '请选择就诊人和就诊医院，以准确查找缴费订单。', [
-                    { text: '我已知晓', onPress: () => this.loadPageData() }
+                    {text: '我已知晓', onPress: () => this.loadPageData()}
                 ]);
             }
             showAlert()
         }
     }
-    loadPageData(){
+
+    loadPageData() {
         this.props.outpatientPaymentActions.loadPageByDefaultPerson()
         this.props.outpatientPaymentActions.loadRecentHospitalListByPersonId(this.props.defaultPerson)
     }
