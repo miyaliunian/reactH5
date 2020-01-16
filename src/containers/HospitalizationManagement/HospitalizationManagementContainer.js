@@ -192,7 +192,9 @@ class HospitalizationManagementContainer extends Component {
       history,
       bindCardActions: { loadList }
     } = this.props;
-    loadList();
+    if (history.action === "PUSH") {
+      loadList();
+    }
   }
 
   componentWillUnmount() {
@@ -200,7 +202,7 @@ class HospitalizationManagementContainer extends Component {
       history,
       hospitalizationManagementActions: { setHospNUll }
     } = this.props;
-    if (history.action !== "PUSH") {
+    if (history.action !== "POP") {
       setTimeout(() => setHospNUll(), 200);
     }
   }
