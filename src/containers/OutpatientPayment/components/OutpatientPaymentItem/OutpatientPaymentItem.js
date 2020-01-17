@@ -19,14 +19,14 @@ class OutpatientPaymentItem extends Component {
                     <img src={ico_clinic_pay_item} className={'outpatientPayment-item-part1-img'}/>
                     <div className={'outpatientPayment-item-part1-content'}>
                         <div className={'outpatientPayment-item-part1-content-txt'}>门诊费用</div>
-                        <div className={'outpatientPayment-item-part1-content-date'}>01-09 14:02</div>
+                        <div className={'outpatientPayment-item-part1-content-date'}>{itemData.seeDate}</div>
                     </div>
                 </div>
                 <div className={'outpatientPayment-item-part2'}>
-                    <div className={'outpatientPayment-item-part2-cost'}>￥ 35.00</div>
-                    <div className={'outpatientPayment-item-part2-txt border-bottom'}>呼吸内科门诊|谭雪贤</div>
+                    <div className={'outpatientPayment-item-part2-cost'}>{'￥'+itemData.totCost}</div>
+                    <div className={'outpatientPayment-item-part2-txt border-bottom'}>{itemData.deptName+'|'+itemData.doctName}</div>
                 </div>
-                <div className={'outpatientPayment-item-part3'} onClick={()=>this.gotoDetailPage('5a06766a9e584198b2f9194dddbd48aa')}>
+                <div className={'outpatientPayment-item-part3'} onClick={()=>this.gotoDetailPage(itemData)}>
                     <div className={'outpatientPayment-item-part3-btn'}>立即缴费</div>
                 </div>
                 <div className={'outpatientPayment-item-distance'}></div>
@@ -35,12 +35,12 @@ class OutpatientPaymentItem extends Component {
     }
 
 
-    gotoDetailPage(outpatientPaymentId) {
+    gotoDetailPage(item) {
         const {history,defaultPerson,selHospital} = this.props;
         let path = {
             pathname: "/outpatientPaymentDetail",
             state: {
-                outpatientPaymentId: outpatientPaymentId,
+                detail: item,
                 defaultPerson: defaultPerson,
                 selHospital: selHospital
             }

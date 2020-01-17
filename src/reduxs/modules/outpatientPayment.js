@@ -72,6 +72,8 @@ export const actions = {
                     ]).then(
                         Axios.spread((recentHos, allHos) => {
                             console.log("--------------------3")
+                            console.group(recentHos)
+                            console.group(allHos)
                             hospital = recentHos[0]
                             dispatch(loadHospitalSuccess(recentHos, allHos))
                             if (hospital) {
@@ -79,6 +81,8 @@ export const actions = {
                                 const targetURL2 = URL.API_QUERY_BALANCEINFO_LIST(person.id, hospital.id)
                                 dispatch(loadBalanceInfoRequest())
                                 return post(targetURL2).then(data => {
+                                    console.log('outpatientPayment data: ')
+                                    console.group(data)
                                     if (data && data.infocode) {
                                         console.group(data)
                                         dispatch(loadBalanceInfoSuccess(data.data))

@@ -40,7 +40,7 @@ class OutpatientPaymentDetailContainer extends Component {
     render() {
         console.log('000000000000000000000')
         console.group(this.props)
-        const {detail,fullData} = this.props
+        const {detail} = this.props.location.state
         const {reservationEntity, reservationName, reservationCode} = this.props.location.state
         console.log('OutpatientPaymentDetailContainer render this.props')
         console.group(this.props)
@@ -168,7 +168,7 @@ class OutpatientPaymentDetailContainer extends Component {
     }
 
     generatePaymentUl() {
-        const {detail} = this.props
+        const {detail} = this.props.location.state
         if (detail && detail.hisRecipeDetailList) {
             let items = detail.hisRecipeDetailList;
             return (
@@ -209,10 +209,9 @@ class OutpatientPaymentDetailContainer extends Component {
 
     componentDidMount() {
         const {history} = this.props
-        const {outpatientPaymentId} = this.props.location.state
-        if (history.action === 'PUSH') {
-            this.props.outpatientPaymentDetailActions.loadDetailById(outpatientPaymentId)
-        }
+        // if (history.action === 'PUSH') {
+        //     this.props.outpatientPaymentDetailActions.loadDetailById(outpatientPaymentId)
+        // }
     }
 
 

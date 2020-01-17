@@ -20,7 +20,8 @@ import {
     getHospitalList,
     getSelHospital,
     getFetchingStatus,
-    getRecentHospitalList
+    getRecentHospitalList,
+    getOutpatientPaymentList
 } from '@reduxs/modules/outpatientPayment'
 
 const IntelligentWaitingRefreshTime = {
@@ -188,7 +189,8 @@ const mapStateToProps = state => {
         fetchingStatus: getFetchingStatus(state),
         defaultPerson: getDefaultPerson(state),
         recentHopsitalList: getRecentHospitalList(state),
-        selHospital: getSelHospital(state)
+        selHospital: getSelHospital(state),
+        outpatientPaymentList: getOutpatientPaymentList(state)
     }
 }
 
