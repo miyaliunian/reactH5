@@ -57,7 +57,11 @@ class OutpatientPaymentContent extends Component {
         const {outpatientPaymentList} = this.props
         let outpatientPaymentTestList=[{'testK':'testV'},{'testK':'testV'}]
         return outpatientPaymentTestList.map((item, index) => {
-            return <OutpatientPaymentItem itemData={item} key={index}/>;
+            return <OutpatientPaymentItem
+                {...this.props}
+                itemData={item}
+                key={index}
+            />;
         });
     }
 

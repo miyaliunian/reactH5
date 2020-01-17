@@ -5,12 +5,11 @@ import React, {Component} from 'react'
 import './style.less'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {Switch} from 'antd-mobile'
+import {IOSSwitch} from "@components/IOSSwitch/IOSSwitch";
 import LoadingMask from '../../components/Loading/LoadingMask'
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 import {
     actions as outpatientPaymentDetailActions,
-    getFetchingStatus,
     getDetail
 } from '@reduxs/modules/outpatientPaymentDetail'
 
@@ -22,7 +21,8 @@ class OutpatientPaymentDetailContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            btnChecked: false
+            btnChecked: true,
+            detail: {}
         };
     }
 
@@ -40,9 +40,9 @@ class OutpatientPaymentDetailContainer extends Component {
     render() {
         console.log('000000000000000000000')
         console.group(this.props)
+        const {detail,fullData} = this.props
         const {reservationEntity, reservationName, reservationCode} = this.props.location.state
-        const {familyList, hospitalList, fetchingStatus, recentHopsitalList, selHospital} = this.props
-        console.log('OutpatientPaymentContainer render this.props')
+        console.log('OutpatientPaymentDetailContainer render this.props')
         console.group(this.props)
         return (
             <SafeAreaView showBar={true} title={'门诊缴费详情'} isRight={false} handleBack={this.handleBack}>
@@ -50,46 +50,67 @@ class OutpatientPaymentDetailContainer extends Component {
                 <div className={'outpatientPaymentDetail-content'}>
                     <div className={'outpatientPaymentDetail-part1'}>
                         <div className={'outpatientPaymentDetail-part1-header border-bottom'}>
-                            <div className={'outpatientPaymentDetail-part1-header-name'}>耿昌健</div>
-                            <div className={'outpatientPaymentDetail-part1-header-status'}>待支付</div>
+                            <div className={'outpatientPaymentDetail-part1-header-name'}>{detail.patientName}</div>
+                            <div
+                                className={'outpatientPaymentDetail-part1-header-status'}>{this.paymentStatus2Str(detail.paymentStatus)}</div>
                         </div>
                         <div className={'outpatientPaymentDetail-part1-content border-topbottom'}>
                             <div className={'outpatientPaymentDetail-part1-content-item'}>
                                 <div className={'outpatientPaymentDetail-part1-content-item-key'}>就诊医院</div>
-                                <div className={'outpatientPaymentDetail-part1-content-item-value'}>解放军联勤保障部队第九零四医院
+                                <div
+                                    className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.hospitalName}
                                 </div>
                             </div>
                             <div className={'outpatientPaymentDetail-part1-content-item'}>
                                 <div className={'outpatientPaymentDetail-part1-content-item-key'}>科室</div>
-                                <div className={'outpatientPaymentDetail-part1-content-item-value'}>呼吸内科门诊</div>
+                                <div
+                                    className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.deptName}</div>
                             </div>
                             <div className={'outpatientPaymentDetail-part1-content-item'}>
                                 <div className={'outpatientPaymentDetail-part1-content-item-key'}>医生</div>
-                                <div className={'outpatientPaymentDetail-part1-content-item-value'}>谭雪贤</div>
+                                <div
+                                    className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.doctName}</div>
                             </div>
                         </div>
                     </div>
                     <div className={'outpatientPaymentDetail-distance'}></div>
                     <div className={'outpatientPaymentDetail-part2 border-topbottom'}>
                         <div className={'outpatientPaymentDetail-part2-header border-bottom'}>缴费项目</div>
+                        {/*{this.generatePaymentUl(detail.hisRecipeDetailList)}*/}
                         <ul className={'outpatientPaymentDetail-part2-items'}>
-                            <li className={'outpatientPaymentDetail-part2-item border-bottom'}>
-                                <div className={'outpatientPaymentDetail-part2-item-txt'}>高敏感C-反应蛋白测定×1</div>
-                                <div className={'outpatientPaymentDetail-part2-item-price'}>￥35.00</div>
-                            </li>
+                            {this.generatePaymentUl()}
+                            {/*<li className={'outpatientPaymentDetail-part2-item border-bottom'}>*/}
+                            {/*    <div className={'outpatientPaymentDetail-part2-item-txt'}>{'补水针x1'}</div>*/}
+                            {/*    <div className={'outpatientPaymentDetail-part2-item-price'}>￥35.00</div>*/}
+                            {/*</li>*/}
                         </ul>
-                        <div className={'outpatientPaymentDetail-part2-footer'}>
+                        <div className={'outpatientPaymentDetail-part2-footer border-top'}>
                             <div className={'outpatientPaymentDetail-part2-footer-txt'}>使用医保支付</div>
                             <div className={'outpatientPaymentDetail-part2-footer-btn'}>
-                                <Switch className={'outpatientPaymentDetail-part2-footer-btn-switch'}
+                                <div
+                                    style={{flex: 1, justifyContent: "flex-end", display: "flex"}}
+                                >
+                                    <IOSSwitch
+                                        // disabled = {true}
                                         checked={this.state.btnChecked}
-                                        onClick={() => {
-                                            // set new value
+                                        onChange={() => {
                                             this.setState({
                                                 btnChecked: !this.state.btnChecked
                                             })
                                         }}
-                                />
+                                    />
+                                </div>
+                                {/*<List>*/}
+                                {/*<Switch*/}
+                                {/*        checked={this.state.btnChecked}*/}
+                                {/*        onClick={() => {*/}
+                                {/*            // set new value*/}
+                                {/*            this.setState({*/}
+                                {/*                btnChecked: !this.state.btnChecked*/}
+                                {/*            })*/}
+                                {/*        }}*/}
+                                {/*/>*/}
+                                {/*</List>*/}
                             </div>
                         </div>
                     </div>
@@ -97,15 +118,25 @@ class OutpatientPaymentDetailContainer extends Component {
                 <div className={'outpatientPaymentDetail-part3'}>
                     <div className={'outpatientPaymentDetail-part3-fee'}>
                         <div className={'outpatientPaymentDetail-part3-fee-txt'}>费用总额：</div>
-                        <div className={'outpatientPaymentDetail-part3-fee-cost'}>￥35.00</div>
+                        <div className={'outpatientPaymentDetail-part3-fee-cost'}>{'￥' + detail.totCost}</div>
                     </div>
-                    <div className={'outpatientPaymentDetail-part3-btn'}>去结算</div>
+                    <div onClick={()=>this.onSubmit()} className={'outpatientPaymentDetail-part3-btn'}>去结算</div>
                 </div>
                 <LoadingMask/>
             </SafeAreaView>
         )
     }
 
+
+    onSubmit() {
+        const {
+            outpatientPaymentDetailActions: { onSubmit },
+            history,
+            detail
+        } = this.props
+        const {defaultPerson, selHospital} = this.props.location.state
+        onSubmit(detail,defaultPerson,selHospital, { ...history })
+    }
 
     // componentDidMount() {
     //   this.props.bindCardActions.loadWaitingList();
@@ -115,6 +146,66 @@ class OutpatientPaymentDetailContainer extends Component {
     //     IntelligentWaitingRefreshTime.time
     //   );
     // }
+    paymentStatus2Str(status) {
+        switch (status) {
+            case 0:
+                return '未支付';
+            case 1:
+                return '部分支付';
+            case 2:
+                return '已支付';
+            case 3:
+                return '已支付';
+            case 4:
+                return '部分退款';
+            case 5:
+                return '已退款';
+            case 6:
+                return '已退款';
+            default:
+                return '未知';
+        }
+    }
+
+    generatePaymentUl() {
+        const {detail} = this.props
+        if (detail && detail.hisRecipeDetailList) {
+            let items = detail.hisRecipeDetailList;
+            return (
+                items.map(item => {
+                    return this.generatePaymentDetailLi(item);
+                })
+            )
+        }
+    }
+
+    generatePaymentDetailLi(item) {
+        return (<li className={'outpatientPaymentDetail-part2-item'}>
+            <div className={'outpatientPaymentDetail-part2-item-txt'}>
+                {item.itemName + 'x' + item.qty}
+            </div>
+            <div className={'outpatientPaymentDetail-part2-item-price'}>
+                {'￥' + item.totCost}
+            </div>
+        </li>);
+    }
+
+
+    /**
+     * 转向预结算页
+     */
+    gotoPreSiPay() {
+        let path = {
+            // pathname: "/advanceSettlementContainer",
+            // state: {
+            //     reservationName: typeEntity.name, //确认预约
+            //     reservationCode: typeEntity.code, //确认预约
+            //     reservationEntity: reservationEntity, //预约实体
+            //     paymentMethod: reservationEntity.paymentMethod, //支付方式
+            //     from: resObj.fromTarget
+            // }
+        };
+    }
 
     componentDidMount() {
         const {history} = this.props
@@ -149,7 +240,7 @@ class OutpatientPaymentDetailContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        // familyList: getFamilyList(state),
+        detail: getDetail(state),
         // hospitalList: getHospitalList(state),
         // fetchingStatus: getFetchingStatus(state),
         // defaultPerson: getDefaultPerson(state),

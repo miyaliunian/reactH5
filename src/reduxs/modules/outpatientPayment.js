@@ -6,7 +6,8 @@ import {FETCH_DATA} from '@reduxs/middleware/api'
 import URL from '@api/httpUrl'
 import {post} from '@api/httpUtil'
 import Axios from "axios";
-import {cityID} from "@api/Constant";
+import {cityID, OrderType} from "@api/Constant";
+import {Toast} from "antd-mobile";
 
 const initialState = {
     isFetching: false,
@@ -47,6 +48,7 @@ export const actions = {
      * @returns {function(*=, *): *}
      */
     loadPageByDefaultPerson: () => {
+        console.log("--------------------0")
         let person
         return (dispatch, getstate) => {
             const targetURL = URL.API__BIND_CARD_LIST()
@@ -54,15 +56,24 @@ export const actions = {
             return post(targetURL).then(data => {
                 person = getDefaultPersonFromList(data.data)
                 dispatch(loadFamilySuccess(data.data))
+                console.log("--------------------1")
                 if (person) {
                     let hospital
+                    // const targetURL1 = URL.API_GET_REGED_LIST_BY_OPEN_TYPE('recipe', person.id)
                     const targetURL1 = URL.API_GET_REGED_LIST_BY_OPEN_TYPE('recipe', person.id)
+                    const targetURL2 = URL.API_QUERY_ALL_HOSPASTIENT(cityID, 'recipe', 1)
                     // return dispatch(loadHospitalsByPersonId(targetURL1))
                     dispatch(loadHospitalRequest())
-                    return post(targetURL1).then(data => {
-                        if (data && data.infocode) {
-                            dispatch(loadHospitalSuccess(data.data))
-                            hospital = data.data[0];
+
+                    console.log("--------------------2")
+                    return Axios.all([
+                        loadRecentHos(targetURL1),
+                        loadAllHos(targetURL2)
+                    ]).then(
+                        Axios.spread((recentHos, allHos) => {
+                            console.log("--------------------3")
+                            hospital = recentHos[0]
+                            dispatch(loadHospitalSuccess(recentHos, allHos))
                             if (hospital) {
                                 console.log("hospital: " + JSON.stringify(hospital))
                                 const targetURL2 = URL.API_QUERY_BALANCEINFO_LIST(person.id, hospital.id)
@@ -74,8 +85,8 @@ export const actions = {
                                     }
                                 })
                             }
-                        }
-                    })
+                        })
+                    )
                 }
             })
         }
@@ -124,8 +135,12 @@ export const actions = {
                 if (data && data.infocode) {
                     console.group(data)
                 }
-                goback()
+                if (goback)
+                    goback()
             })
+                .catch(err => {
+
+                })
         }
     },
     /**
@@ -133,18 +148,54 @@ export const actions = {
      * @returns {function(*=, *): Promise<T | never>}
      */
     loadRecentHospitalListByPersonId: (person) => {
+        console.log('loadRecentHospitalListByPersonId : ' + person.id)
         return (dispatch, state) => {
             let targetURL = URL.API_GET_REGED_LIST_BY_OPEN_TYPE('recipe', person.id)
             return post(targetURL)
                 .then(data => {
                     if (data.infocode && data.infocode === 1) {
-                        dispatch(loadBalanceInfoSuccess(data.data))
+                        dispatch(loadRecentHospitalsSuccess(data.data))
                     }
                 })
                 .catch()
         }
     }
 }
+
+/**
+ * 先后查询 最近的医院列表 和 医院列表，放到list中返回。
+ * @param person
+ */
+function loadHospitals(person) {
+    let result = []
+    const targetURL1 = URL.API_GET_REGED_LIST_BY_OPEN_TYPE('recipe', person.id)
+    const targetURL2 = URL.API_QUERY_ALL_HOSPASTIENT(cityID, 'recipe', 1)
+    // return dispatch(loadHospitalsByPersonId(targetURL1))
+    Axios.all([
+        loadRecentHos(targetURL1),
+        loadAllHos(targetURL2)
+    ]).then(
+        Axios.spread((recentHos, allHos) => {
+            result[0] = recentHos
+            result[1] = allHos
+        })
+    )
+    return result
+}
+
+function loadRecentHos(targetUrl) {
+    return post(targetUrl).then(data => data.data)
+}
+
+function loadAllHos(targetUrl) {
+    let params = {
+        areaId: null,
+        hosCategory: null,
+        hosGrade: null
+    }
+    return post(targetUrl, params).then(data => data.data)
+}
+
 
 /**
  * 从家庭人员列表中筛选出默认人员
@@ -169,6 +220,7 @@ function getDefaultPersonFromList(personList) {
     return defaultPerson
 }
 
+
 const loadFamilyRequest = () => ({
     type: actionTypes.FETCH_FAMILY_REQUEST
 })
@@ -179,9 +231,10 @@ const loadFamilySuccess = data => ({
 const loadHospitalRequest = data => ({
     type: actionTypes.FETCH_HOSPITAL_BY_PERSON_REQUEST
 })
-const loadHospitalSuccess = data => ({
+const loadHospitalSuccess = (data1, data2) => ({
     type: actionTypes.FETCH_HOSPITAL_BY_PERSON_SUCCESS,
-    data
+    data1,
+    data2
 })
 const loadBalanceInfoRequest = data => ({
     type: actionTypes.FETCH_BALANCEINFO_REQUEST
@@ -190,7 +243,7 @@ const loadBalanceInfoSuccess = data => ({
     type: actionTypes.FETCH_BALANCEINFO_SUCCESS,
     data
 })
-const loadRecentHospitals = data => ({
+const loadRecentHospitalsSuccess = data => ({
     type: actionTypes.FETCH_RECENTHOS_BY_PERSON_SUCCESS,
     data
 })
@@ -228,11 +281,12 @@ const reducer = (state = initialState, action) => {
             return {...state, isFetching: true}
         case actionTypes.FETCH_HOSPITAL_BY_PERSON_SUCCESS:
             console.log("FETCH_HOSPITAL_BY_PERSON_SUCCESS action.data:")
-            console.group(action.data)
             return {
                 ...state,
-                hospitalList: action.data,
-                selHospital: action.data[0]
+                isFetching: false,
+                recentHopsitalList: action.data1,
+                hospitalList: action.data2,
+                selHospital: action.data1[0]
             }
         case actionTypes.FETCH_BALANCEINFO_REQUEST:
             return {

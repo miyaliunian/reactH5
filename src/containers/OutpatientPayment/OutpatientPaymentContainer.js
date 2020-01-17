@@ -89,12 +89,14 @@ class OutpatientPaymentContainer extends Component {
                         open={this.state.openModalHospital}
                     >
                         <CategoryHosList
-
+                            bindCardList={familyList}
                             onNavBack={() => this.setState({openModalHospital: !this.state.openModalHospital})}
                             callBack={data => this.refreshHospital(data)}
                         />
                     </Modal2Hos>
-                    <OutpatientPaymentContent/>
+                    <OutpatientPaymentContent
+                        {...this.props}
+                    />
                 </div>
                 <LoadingMask/>
             </SafeAreaView>
@@ -123,11 +125,10 @@ class OutpatientPaymentContainer extends Component {
         console.log('OutpatientPaymentContainer refreshHospital:')
         console.group(data)
         if (data && (data.id != this.props.selHospital.id))
-            this.props.outpatientPaymentActions.loadPageBySelectHospital(data, () => {
-                this.setState({openModalHospital: !this.state.openModalHospital})
-            })
+            this.props.outpatientPaymentActions.loadPageBySelectHospital(data)
         else
             console.log('医院未变')
+        this.setState({openModalHospital: !this.state.openModalHospital})
     }
 
     // componentDidMount() {
@@ -153,8 +154,9 @@ class OutpatientPaymentContainer extends Component {
     }
 
     loadPageData() {
+        console.log("--------------------9999")
         this.props.outpatientPaymentActions.loadPageByDefaultPerson()
-        this.props.outpatientPaymentActions.loadRecentHospitalListByPersonId(this.props.defaultPerson)
+        // this.props.outpatientPaymentActions.loadRecentHospitalListByPersonId(this.props.defaultPerson)
     }
 
     componentWillUnmount() {

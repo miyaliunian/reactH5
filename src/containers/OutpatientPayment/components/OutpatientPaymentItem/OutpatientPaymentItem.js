@@ -11,6 +11,8 @@ import "./style.less";
 class OutpatientPaymentItem extends Component {
     render() {
         const {itemData} = this.props;
+        console.log("000000000000000000000000")
+        console.group(this.props)
         return (
             <li className="outpatientPayment-item border-topbottom">
                 <div className={'outpatientPayment-item-part1'}>
@@ -34,11 +36,13 @@ class OutpatientPaymentItem extends Component {
 
 
     gotoDetailPage(outpatientPaymentId) {
-        const {history} = this.props;
+        const {history,defaultPerson,selHospital} = this.props;
         let path = {
             pathname: "/outpatientPaymentDetail",
             state: {
-                outpatientPaymentId: outpatientPaymentId
+                outpatientPaymentId: outpatientPaymentId,
+                defaultPerson: defaultPerson,
+                selHospital: selHospital
             }
         };
         history.push(path);
