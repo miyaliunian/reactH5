@@ -34,6 +34,8 @@ const HospitalizationManagementContainerComponent = lazy(() =>
   import('@containers/HospitalizationManagement/HospitalizationManagementContainer')
 )
 const ReportContainerComponent = lazy(() => import('@containers/Report/ReportContainer'))
+const ReportDetailComponent = lazy(() => import('@containers/Report/components/ReportDetail/ReportDetail'))
+const ReportExamineComponent = lazy(() => import('@containers/Report/components/ReportExamine/ReportExamine'))
 const MakeUpAdvancePaymentComponent = lazy(() =>
   import('@containers/HospitalizationManagement/Components/MakeUpAdvancePayment/MakeUpAdvancePaymentContainer')
 )
@@ -149,6 +151,18 @@ const routerMap = [
     name: 'report',
     requiresAuth: true,
     component: SuspenseComponent(ReportContainerComponent)
+  },
+  {
+    path: '/reportDetail',
+    name: 'reportDetail',
+    requiresAuth: true,
+    component: SuspenseComponent(ReportDetailComponent)
+  },
+  {
+    path: '/reportExamine',
+    name: 'reportExamine',
+    requiresAuth: true,
+    component: SuspenseComponent(ReportExamineComponent)
   },
   {
     path: '/makeUpAdvancePayment/:inName/:inHosNo',

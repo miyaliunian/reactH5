@@ -93,6 +93,7 @@ class ReportContainer extends Component {
               data={reportList}
               fetchingStatus={fetchingStatus}
               pullingDownHandler={() => this.pullingDownHandler()}
+              {...this.props}
             />
           ) : (
             <div className={"report_empty"}>
