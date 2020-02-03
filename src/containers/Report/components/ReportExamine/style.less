@@ -1,0 +1,76 @@
+@import "../../../../assets/less/varibles";
+.reportExamine {
+  margin-top: 10px;
+  background-color: white;
+  .reportExamine__Examine {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    width: 100%;
+    padding: 5px 10px 5px 10px;
+    box-sizing: border-box;
+
+    .reportExamine__Examine__info {
+      .Examine__info__row {
+        height: 30px;
+        line-height: 30px;
+        flex-direction: row;
+        display: flex;
+        flex: 1;
+
+        .row_info_title {
+          //display: block;
+          margin-right: 5px;
+          font-size: 15px;
+          color: #808080;
+        }
+
+        .row_info_detail {
+          font-size: 15px;
+          color: #000000;
+        }
+      }
+      .Examine__info__title {
+        height: 30px;
+        line-height: 30px;
+        flex-direction: row;
+        display: flex;
+        background: #acacac;
+        flex: 1;
+
+        .row_title_title {
+          //display: block;
+          margin-right: 5px;
+          font-size: 15px;
+          color: #000000;
+        }
+
+        .row_title_detail {
+          font-size: 15px;
+          color: #000000;
+        }
+      }
+    }
+  }
+}
+
+.reportExamine__btnContainer {
+  text-align: center;
+  padding: 0 15px;
+  .reportExamine__btn {
+    width: 90%;
+    line-height: 40px;
+    color: #fff;
+    text-decoration: none;
+    background: @theme-blue;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 6px;
+  }
+}
+
+.rightIcon_position {
+  position: absolute;
+  right: 5px;
+}

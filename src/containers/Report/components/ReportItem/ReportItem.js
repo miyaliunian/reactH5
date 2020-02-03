@@ -137,11 +137,28 @@ class ReportItem extends Component {
    */
   handelPageNav(data) {
     console.log(data);
-    let path = {
-      pathname: "/reportDetail",
-      state: data
-    };
-    this.props.history.push(path);
+    if (data.type === "1") {
+      let bindCardObj = this.props.reportActions.bindCardList.filter(item => item.isSel);
+      let path = {
+        pathname: "/reportDetail",
+        state: {
+          reportData: data,
+          hosName: this.props.reportActions.hospitalizationSel.aliasName,
+          hosId: this.props.reportActions.hospitalizationSel.id,
+          perId: bindCardObj.id
+        }
+      };
+      this.props.history.push(path);
+    } else {
+      let path = {
+        pathname: "/reportExamine",
+        state: {
+          reportData: data,
+          hosId: this.props.reportActions.hospitalizationSel.id
+        }
+      };
+      this.props.history.push(path);
+    }
   }
 }
 

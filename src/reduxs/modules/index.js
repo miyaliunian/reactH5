@@ -24,6 +24,7 @@ import reservation from './reservation'
 import register from './register'
 import report from './report'
 import reportDetail from './reportDetail'
+import reportExamine from './reportExamine'
 import intelligentWaiting from './intelligentWaiting'
 import hospitalizationManagement from './hospitalizationManagement'
 import historyAdvancePayment from './historyAdvancePayment'
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   register,
   report,
   reportDetail,
+  reportExamine,
   intelligentWaiting,
   hospitalizationManagement,
   historyAdvancePayment,
