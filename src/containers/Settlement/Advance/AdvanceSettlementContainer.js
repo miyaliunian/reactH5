@@ -83,7 +83,7 @@ class AdvanceSettlementContainer extends Component {
                   fontSize: '22px',
                   fontWeight: 'bold'
                 }}>
-                ￥{reservationEntity.regFee.toFixed(2)}
+                ￥{reservationEntity.regFee?reservationEntity.regFee.toFixed(2):'未知'}
               </span>
             </InfoRow>
           </SettleInfoContent>

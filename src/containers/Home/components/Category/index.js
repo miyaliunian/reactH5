@@ -50,6 +50,10 @@ const dataSource = [
     {
       name: '门诊缴费',
       src: 'https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png'
+    },
+    {
+      name: '我的订单',
+      src: 'https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png'
     }
   ]
 ]

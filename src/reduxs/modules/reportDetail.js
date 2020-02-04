@@ -1,6 +1,6 @@
-import URL from '@utils/httpUrl'
+import URL from '@api/httpUrl'
 import {FETCH_DATA} from "@reduxs/middleware/api";
-import {post} from "@utils/httpUtil";
+import {post} from '@api/httpUtil'
 import {Toast} from "antd-mobile";
 
 const initialState = {

@@ -37,6 +37,7 @@ class OutpatientPaymentItem extends Component {
 
     gotoDetailPage(item) {
         const {history,defaultPerson,selHospital} = this.props;
+        // console.log("item: "+JSON.stringify(item));
         let path = {
             pathname: "/outpatientPaymentDetail",
             state: {

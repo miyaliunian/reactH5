@@ -42,6 +42,7 @@ class DoctorTabs extends Component {
    */
   renderTabs() {
     const { tabs, actionTabKey } = this.props;
+    console.group(this.props)
     let aray = [];
     for (let key in tabs) {
       let item = tabs[key];

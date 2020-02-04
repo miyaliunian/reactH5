@@ -69,6 +69,7 @@ class Home extends Component {
         history.push("/outpatientPayment");
         break;
       case 10:
+        history.push("/myOrder");
         break;
     }
   }

@@ -131,10 +131,9 @@ class OutpatientPaymentDetailContainer extends Component {
     onSubmit() {
         const {
             outpatientPaymentDetailActions: { onSubmit },
-            history,
-            detail
+            history
         } = this.props
-        const {defaultPerson, selHospital} = this.props.location.state
+        const {detail,defaultPerson, selHospital} = this.props.location.state
         onSubmit(detail,defaultPerson,selHospital, { ...history })
     }
 
