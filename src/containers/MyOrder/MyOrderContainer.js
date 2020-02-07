@@ -33,6 +33,7 @@ class MyOrderContainer extends Component {
     return (
         <SafeAreaView showBar={true} title={'我的订单'} isRight={false} handleBack={this.handleBack}>
           <MyOrderTabs
+              {...this.props}
               filterMoreItem={this.filterMore}
               doChangeTab={key => this.dataFilterTab(key)}
               filterItemClick={i => this.doDoctorListFilter(i)}

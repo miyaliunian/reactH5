@@ -11,7 +11,7 @@ import {
     getTabs,
     getActionTabKey,
     getRegisterList,
-    getOutpatientList
+    getOutpatientList,
 } from "@reduxs/modules/myOrderTabs";
 import MyOutpatientPaymentItem from '../../components/MyOutpatientPaymentItem/MyOutpatientPaymentItem'
 import MyRegisterItem from '../../components/MyRegisterItem/MyRegisterItem'
@@ -117,6 +117,8 @@ class MyOrderTabs extends Component {
 
     render() {
         const {actionTabKey, registerList,outpatientList} = this.props
+        console.log("MyOrderTabs")
+        console.group(this.props)
         switch (actionTabKey) {
             case MYORDERTABKAY.register:
                 console.log('777777777777777777')
@@ -125,7 +127,10 @@ class MyOrderTabs extends Component {
                         <div className={"tab_header border-bottom"}>
                             {this.renderOrderTabs()}
                         </div>
-                        {this.renderRegisterContent()}
+                        <MyRegisterItem
+                            {...this.props}
+                        />
+                        {/*{this.renderRegisterContent()}*/}
                     </div>
                 );
                 break;
@@ -136,7 +141,10 @@ class MyOrderTabs extends Component {
                         <div className={"tab_header border-bottom"}>
                             {this.renderOrderTabs()}
                         </div>
-                        {this.renderOutpatientContent()}
+                        <MyOutpatientPaymentItem
+                            {...this.props}
+                        />
+                        {/*{this.renderOutpatientContent()}*/}
                     </div>
                 );
                 break;

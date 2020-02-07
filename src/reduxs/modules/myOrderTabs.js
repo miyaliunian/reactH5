@@ -90,6 +90,31 @@ export const actions = {
     }
 
 };
+//
+// function loadRegisterByPageNo(pageno) {
+//     if (!pageno)
+//         pageno = 1
+//     const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(pageno)
+//     return post(targetURL).then(data => {
+//         console.log("123456789")
+//         console.group(data)
+//         if (data && data.infocode) {
+//             return data.data.list;
+//         }
+//     })
+// }
+// function loadOutpatientByPage(pageno){
+//     if (!pageno)
+//         pageno = 1
+//     const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(pageno)
+//     return post(targetURL).then(data => {
+//         console.log("987654321")
+//         console.group(data)
+//         if (data && data.infocode) {
+//             return data.data.list;
+//         }
+//     })
+// }
 
 
 const loadRegisterByPageRequest = () => ({
