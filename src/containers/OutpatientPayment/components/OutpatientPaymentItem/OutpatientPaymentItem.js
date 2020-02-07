@@ -7,7 +7,6 @@ import ico_clinic_pay_item from '@assets/images/OutpatientPayment/ico_clinic_pay
 //样式
 import "./style.less";
 
-
 class OutpatientPaymentItem extends Component {
     render() {
         const {itemData} = this.props;

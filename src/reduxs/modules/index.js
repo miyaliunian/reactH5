@@ -38,7 +38,7 @@ import popUp from './popUp'
 import orderPay from './orderPay'
 import outpatientPayment from './outpatientPayment'
 import outpatientPaymentDetail from './outpatientPaymentDetail'
-import myOrder from './myOrder'
+import myOrderTabs from './myOrderTabs'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -73,7 +73,7 @@ const rootReducer = combineReducers({
   popUp,
   outpatientPayment,
   outpatientPaymentDetail,
-  myOrder
+  myOrderTabs
 })
 
 export default rootReducer

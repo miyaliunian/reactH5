@@ -1,0 +1,35 @@
+@import '../../../../assets/less/varibles';
+
+.doctorTabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  flex: 1;
+  .tab_header {
+    display: flex;
+  }
+  .item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    &.current {
+      color: #0084ff;
+    }
+    &:first-child{
+      border-right: 0.5px solid #eaeaea;
+    }
+  }
+
+  .reservaes {
+    display: none;
+    &.current {
+      display: block;
+      z-index: 10;
+    }
+  }
+}

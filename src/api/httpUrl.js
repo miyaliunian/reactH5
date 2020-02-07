@@ -60,6 +60,9 @@ export default {
   //挂号统一接口
   API_REGISTER_UNION: () => `/baseURL/register/v1.5/regist.do`,
 
+  API_QUERY_REGISTER_IN_MY_ORDER:(pageno)=>
+      `/baseURL/register/v1.0/getPageList/${pageno}.do`,//我的订单页，tab中查询预约挂号
+
   /* 7:---------------------------------------------家庭成员---*/
   //家庭成员选择:卡绑定
   API__BIND_CARD_LIST: () => `/baseURL/bindcard/v1.0/list.do`,
@@ -113,6 +116,9 @@ export default {
 
   API_QUERY_BALANCEINFO_BY_ID:(balanceId)=>
       `/baseURL/balanceinfo/v1.0/get/${balanceId}.do`,
+
+  API_QUERY_BALANCEINFO_IN_MY_ORDER:(pageno)=>
+      `/baseURL/balanceinfo/v1.0/getPageList/${pageno}.do`,//我的订单页，tab中查询门诊缴费
 
 
   API_WX_PAY: () => `/baseURL/cmbBank/getCMBWeChatPay/v1.0.do` //微信支付
