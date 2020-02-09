@@ -41,6 +41,7 @@ import outpatientPaymentDetail from './outpatientPaymentDetail'
 import myOrderTabs from './myOrderTabs'
 import myOutpatientPayment from './myOutpatientPayment'
 import myRegister from './myRegister'
+import registerDetail from './registerDetail'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
@@ -77,7 +78,8 @@ const rootReducer = combineReducers({
     outpatientPaymentDetail,
     myOrderTabs,
     myOutpatientPayment,
-    myRegister
+    myRegister,
+    registerDetail
 })
 
 export default rootReducer

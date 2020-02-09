@@ -71,6 +71,8 @@ const OutpatientPaymentDetailComponent = lazy(() => import('@containers/Outpatie
 
 const MyOrderComponent = lazy(() => import('@containers/MyOrder/MyOrderContainer'))
 
+const RegisterDetailComponent = lazy(() => import('@containers/MyOrder/components/MyRegisterDetail/RegisterDetailContainer'))
+
 const routerMap = [
   {
     path: '/',
@@ -244,6 +246,12 @@ const routerMap = [
     name: 'myOrder',
     requiresAuth: true,
     component: SuspenseComponent(MyOrderComponent)
+  },
+  {
+    path: '/registerDetail',
+    name: 'registerDetail',
+    requiresAuth: true,
+    component: SuspenseComponent(RegisterDetailComponent)
   }
 ]
 

@@ -103,9 +103,9 @@ class MyRegisterItem extends Component {
 
     gotoDetailPage(item) {
         const {history,defaultPerson,selHospital} = this.props;
-        // console.log("item: "+JSON.stringify(item));
+        console.log("item: "+JSON.stringify(item));
         let path = {
-            pathname: "/outpatientPaymentDetail",
+            pathname: "/registerDetail",
             state: {
                 detail: item,
                 defaultPerson: defaultPerson,
