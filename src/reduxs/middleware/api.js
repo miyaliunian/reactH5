@@ -6,50 +6,49 @@
  *  next 代表了当前中间件到下一个中间件所提供的方法
  *
  */
-import { post } from "@api/httpUtil";
-import { dataConversionDic } from "@assets/static";
+import { post } from '@api/httpUtil'
+import { dataConversionDic } from '@assets/static'
 
-export const FETCH_DATA = "FETCH DATA";
+export const FETCH_DATA = 'FETCH DATA'
 export default store => next => action => {
-  let callAPI = action[FETCH_DATA];
+  let callAPI = action[FETCH_DATA]
 
-  let { callBack } = action;
-  if (typeof callBack === "undefined") {
-    callBack = "";
+  let { callBack } = action
+  if (typeof callBack === 'undefined') {
+    callBack = ''
   }
 
-  if (typeof callAPI === "undefined") {
-    return next(action);
+  if (typeof callAPI === 'undefined') {
+    return next(action)
   }
 
-  let { targetURL, schema, types } = callAPI;
+  let { targetURL, schema, types } = callAPI
 
-  if (typeof targetURL !== "string") {
-    throw new Error("targetURL必须为字符串类型的URL");
+  if (typeof targetURL !== 'string') {
+    throw new Error('targetURL必须为字符串类型的URL')
   }
 
-  if (typeof schema === "undefined") {
-    schema = "";
+  if (typeof schema === 'undefined') {
+    schema = ''
   }
-
 
   if (!Array.isArray(types) && types.length !== 3) {
-    throw new Error("需要指定一个包含了3个action.type的数组");
+    throw new Error('需要指定一个包含了3个action.type的数组')
   }
 
-  if (!types.every(type => typeof type === "string")) {
-    throw new Error("action.type必须为字符串类型");
+  if (!types.every(type => typeof type === 'string')) {
+    throw new Error('action.type必须为字符串类型')
   }
 
   const actionWith = data => {
-    const finalAction = { ...action, ...data };
-    delete finalAction[FETCH_DATA];
-    return finalAction;
-  };
+    const finalAction = { ...action, ...data }
+    delete finalAction[FETCH_DATA]
+    return finalAction
+  }
 
-  const [requestType, successType, failureType] = types;
-  next(actionWith({ type: requestType }));
-  return fetchData(targetURL, action.param, schema,callBack).then(
+  const [requestType, successType, failureType] = types
+  next(actionWith({ type: requestType }))
+  return fetchData(targetURL, action.param, schema, callBack).then(
     response =>
       next(
         actionWith({
@@ -64,9 +63,9 @@ export default store => next => action => {
           error: `${targetURL}:${error.message}` || `${targetURL}:获取数据失败`
         })
       )
-  );
+  )
 
-  return fetchData(targetURL, action.param, schema,callBack).then(
+  return fetchData(targetURL, action.param, schema, callBack).then(
     response =>
       next(
         actionWith({
@@ -81,42 +80,41 @@ export default store => next => action => {
           error: `${targetURL}:${error.message}` || `${targetURL}:获取数据失败`
         })
       )
-  );
+  )
 }
 
 const fetchData = (targetURL, param, schema, callBack) => {
-  return post(targetURL, param,callBack).then(data => {
-    return normalizeData(data, schema,callBack);
-  });
-};
+  return post(targetURL, param, callBack).then(data => {
+    return normalizeData(data, schema, callBack)
+  })
+}
 
 const normalizeData = (data, schema) => {
-  if (schema === "") {
-    return data;
+  if (schema === '') {
+    return data.data === null ? { infocode: 1, infomessage: '', vfms: null, data: [] } : data
   } else {
-    const { name } = schema;
+    const { name } = schema
     switch (name) {
       case dataConversionDic.divisionList:
         data.data.map((item, index) => {
           if (index === 0) {
-            item.isSel = true;
+            item.isSel = true
           } else {
-            item.isSel = false;
+            item.isSel = false
           }
-        });
-        return data;
-      case "bindCard":
+        })
+        return data
+      case 'bindCard':
         data.data.map((item, index) => {
           if (index === 0) {
-            item.isSel = true;
+            item.isSel = true
           } else {
-            item.isSel = false;
+            item.isSel = false
           }
-        });
-        return data;
+        })
+        return data
       default:
-        return;
+        return
     }
   }
-
-};
+}
