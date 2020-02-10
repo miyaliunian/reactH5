@@ -15,7 +15,7 @@ const SuspenseComponent = Component => props => {
   )
 }
 
-const HomeComponent = lazy(() => import('@containers/Home/HomeContainer.tsx'))
+const HomeComponent = lazy(() => import('@containers/Home/HomeContainer'))
 const HospitalsComponent = lazy(() => import('@containers/Hospitals/HospitalsContainer'))
 const LoginComponent = lazy(() => import('@containers/Login/LoginContainer'))
 const DivisionComponent = lazy(() => import('@containers/Division/DivisionContainer'))
@@ -67,11 +67,15 @@ const SiDynamicInfoComponent = lazy(() => import('@containers/SiDynamicInfo/SiDy
 
 const OutpatientPaymentComponent = lazy(() => import('@containers/OutpatientPayment/OutpatientPaymentContainer'))
 
-const OutpatientPaymentDetailComponent = lazy(() => import('@containers/OutpatientPayment/OutpatientPaymentDetailContainer'))
+const OutpatientPaymentDetailComponent = lazy(() =>
+  import('@containers/OutpatientPayment/OutpatientPaymentDetailContainer')
+)
 
 const MyOrderComponent = lazy(() => import('@containers/MyOrder/MyOrderContainer'))
 
-const RegisterDetailComponent = lazy(() => import('@containers/MyOrder/components/MyRegisterDetail/RegisterDetailContainer'))
+const RegisterDetailComponent = lazy(() =>
+  import('@containers/MyOrder/components/MyRegisterDetail/RegisterDetailContainer')
+)
 
 const routerMap = [
   {
