@@ -25,8 +25,10 @@
       border: none;
     }
 
-    &.AREA:after, &.SORT:after, &.FILTER:after {
-      content: "";
+    &.AREA:after,
+    &.SORT:after,
+    &.FILTER:after {
+      content: '';
       display: inline-block;
       width: 5px;
       height: 5px;
@@ -36,8 +38,8 @@
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
       -webkit-transform: rotate(45deg);
-      -webkit-transition: .3s;
-      transition: .3s;
+      -webkit-transition: 0.3s;
+      transition: 0.3s;
     }
 
     &.current {
@@ -71,18 +73,15 @@
       overflow-y: auto;
       background-color: #fff;
 
-
-      > ul { // 每一个面板默认情况下都是隐藏的
+      > ul {
+        // 每一个面板默认情况下都是隐藏的
         display: none;
         background: #fff;
 
         &.current {
           display: block;
-
         }
-
       }
-
 
       .FILTER-panel {
         padding-top: 5px;
@@ -100,7 +99,6 @@
           color: white;
         }
       }
-
 
       .area-item {
         background: #fff;
@@ -168,7 +166,6 @@
         font-size: 13px;
         padding-left: 14px;
       }
-
     }
   }
 }
