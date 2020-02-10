@@ -204,7 +204,7 @@ class DoctorVisiting extends Component {
    * @param target
    */
   onTimeIntervalClose(target) {
-    const { doctorInfo, timeInterval } = this.props
+    const { doctorInfo, timeInterval} = this.props
     //只有点击确定按钮，才跳转页面
     switch (target) {
       case 2:
@@ -218,7 +218,6 @@ class DoctorVisiting extends Component {
             timeInterval: timeFilter[0]
           }
         }
-        console.log(path)
         this.props.history.push(path)
         break
       default:
