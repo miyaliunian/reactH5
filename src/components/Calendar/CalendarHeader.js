@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Icon } from "antd-mobile";
-import "./style.less";
+import "./Calendar.less";
 
 export default class CalendarHeader extends Component {
   render() {

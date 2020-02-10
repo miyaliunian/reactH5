@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./style.less";
+import "./Calendar.less";
 
 export default class CalendarMain extends Component {
   state = {
