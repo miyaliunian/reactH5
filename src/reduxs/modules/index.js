@@ -5,7 +5,7 @@
  * Description:  合并所有页面的UI状态以及业务数据状态
  *
  */
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 //################################# 页面对应的UI状态
 import app from './app'
 import login from './login'
@@ -45,41 +45,41 @@ import registerDetail from './registerDetail'
 
 //合并成根Reducer
 const rootReducer = combineReducers({
-    login,
-    app,
-    detail,
-    home,
-    tabs,
-    hospital,
-    siDynamicInfo,
-    division,
-    bindCard,
-    bindCardIList,
-    doctorList,
-    doctorTabs,
-    doctor,
-    reservation,
-    register,
-    report,
-    reportDetail,
-    reportExamine,
-    intelligentWaiting,
-    hospitalizationManagement,
-    historyAdvancePayment,
-    categoryHospList,
-    dailyListQueryPayment,
-    orderPay,
-    advanceSettlement,
-    medicarePay,
-    thirdPay,
-    payResult,
-    popUp,
-    outpatientPayment,
-    outpatientPaymentDetail,
-    myOrderTabs,
-    myOutpatientPayment,
-    myRegister,
-    registerDetail
+  login,
+  app,
+  detail,
+  home,
+  tabs,
+  hospital,
+  siDynamicInfo,
+  division,
+  bindCard,
+  bindCardIList,
+  doctorList,
+  doctorTabs,
+  doctor,
+  reservation,
+  register,
+  report,
+  reportDetail,
+  reportExamine,
+  intelligentWaiting,
+  hospitalizationManagement,
+  historyAdvancePayment,
+  categoryHospList,
+  dailyListQueryPayment,
+  orderPay,
+  advanceSettlement,
+  medicarePay,
+  thirdPay,
+  payResult,
+  popUp,
+  outpatientPayment,
+  outpatientPaymentDetail,
+  myOrderTabs,
+  myOutpatientPayment,
+  myRegister,
+  registerDetail
 })
 
 export default rootReducer

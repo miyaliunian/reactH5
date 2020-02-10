@@ -42,7 +42,6 @@ const actionTypes = {
  * @type {{loadDoctorList: function(*=), loadReservationList: function(*=)}}
  */
 export const actions = {
-
   loadDoctorList: (id, seeDate = '') => {
     return (dispatch, getstate) => {
       let param = {
@@ -70,17 +69,13 @@ export const actions = {
     }
   },
 
-
-
   //退出页面时，重置数据状态
   clearAllItems: callBack => {
     return (dispatch, getstate) => {
       dispatch({ type: actionTypes.CLEAR_ALL_ITEMS })
       callBack()
     }
-  },
-
-
+  }
 }
 
 const fetchDoctorList = (targetURL, param) => ({
@@ -176,5 +171,3 @@ export const getDoctorList = state => {
 export const getReservationList = state => {
   return state.doctorList.dataReservation
 }
-
-
