@@ -37,6 +37,7 @@ export const actions = {
         hosCategory: null,
         hosGrade: null
       };
+
       return dispatch(fetchHosipitalList(targetURL, param));
     };
   },
@@ -63,7 +64,7 @@ export const actions = {
           })
           .catch(err=>{
             Toast.info(err.message)
-            resolve()
+            reject()
           })
       });
     };
@@ -91,8 +92,9 @@ export const actions = {
             resolve()
           })
           .catch(err=>{
+
             Toast.info(err.message)
-            resolve()
+            reject()
           })
       });
     };

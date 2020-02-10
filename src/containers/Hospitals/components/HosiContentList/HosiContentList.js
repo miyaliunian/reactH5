@@ -67,13 +67,19 @@ class HosiContentList extends Component {
     }
   }
 
+  outputItems=()=>{
+
+  }
+
   render() {
+    const {iLastPage} = this.props
     return (
       <div className={"hosi-content"}>
         <ScrollView
           pullDownRefresh
           doPullDownFresh={this.pullDownFresh}
           pullUpLoad
+          isLastPgae={iLastPage}
           pullUpLoadMoreData={this.pullUpLoadMore}
           click={true}
           isPullUpTipHide={false}>

@@ -62,7 +62,7 @@ class HospitalizationManagementContainer extends Component {
           <BindCardItem
             data={bindCardList}
             isRefresh={this.refresh}
-            callBack={data => this.refreshCallBack(data)}
+            callBack={this.refreshCallBack}
           />
           {/*-------------------------选择医院*/}
           <div
@@ -193,8 +193,10 @@ class HospitalizationManagementContainer extends Component {
       bindCardActions: { loadList }
     } = this.props;
     if (history.action === "PUSH") {
-      loadList();
+      // loadList();
     }
+
+    loadList();
   }
 
   componentWillUnmount() {
@@ -208,7 +210,8 @@ class HospitalizationManagementContainer extends Component {
   }
 
   //重新选择家庭成员后重新刷新数据
-  refreshCallBack(data) {
+  refreshCallBack=(data)=> {
+    console.log(data)
     const {
       hospitalizationManagementActions: { refreshRegedListByOpenType },
       hospitalizationSel

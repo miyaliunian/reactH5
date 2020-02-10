@@ -13,5 +13,6 @@
     <orderEntry type="library" name="@types/react" level="application" />
     <orderEntry type="library" name="@types/react-instantsearch-native" level="application" />
     <orderEntry type="library" name="@types/html5-history" level="application" />
+    <orderEntry type="library" name="@types/redux-saga-routines" level="application" />
   </component>
 </module>

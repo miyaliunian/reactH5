@@ -5,26 +5,43 @@
  * Description:
  *  安全区外部包裹
  */
-import React, { Component } from 'react'
-import NavBar from '@components/NavBar/NavBar'
-import PropTypes from 'prop-types'
-import { StyledComponent } from './style'
+import React, { useState,useCallback} from "react";
+import NavBar from "@components/NavBar/NavBar";
+import SearchSelector from "@components/doSearch/SearchSelector";
+import { withRouter } from "react-router-dom";
+//样式
+import PropTypes from "prop-types";
+import { StyledComponent } from "./style";
 
-export default class SafeAreaView extends Component {
-  static propTypes = {
-    showBar: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
-    isRight: PropTypes.bool.isRequired,
-    handleBack: PropTypes.func.isRequired
-  }
+function SafeAreaView(props) {
+  const { showBar, title, isRight, handleBack, isCLose } = props;
+  const [showSearchPage, setSearchPage] = useState(false);
 
-  render() {
-    const { showBar, title, isRight, handleBack } = this.props
-    return (
-      <StyledComponent>
-        {showBar ? <NavBar title={title} isRight={isRight} onBack={handleBack} /> : null}
-        {this.props.children}
-      </StyledComponent>
-    )
-  }
+  const onClose=useCallback(()=>{
+    props.history.push("/")
+  },[])
+
+
+  return (
+    <StyledComponent>
+      {showBar ? <NavBar title={title} isShowSearchIcon={isRight} onClick={() => setSearchPage(!showSearchPage)}
+                         onBack={handleBack} isShowCloseIcon={isCLose} onClose={onClose}/> : null}
+      {props.children}
+      <SearchSelector
+        show={showSearchPage}
+        onBack={() => setSearchPage(!showSearchPage)}
+      />
+    </StyledComponent>
+  );
 }
+
+
+SafeAreaView.prototype = {
+  showBar: PropTypes.bool.isRequired,
+  isShowSearchIcon:PropTypes.bool,
+  isCLose:PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  handleBack: PropTypes.func.isRequired
+};
+
+export default withRouter(SafeAreaView);

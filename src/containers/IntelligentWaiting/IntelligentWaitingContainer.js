@@ -48,7 +48,7 @@ class IntelligentWaitingContainer extends Component {
     return (
       <SafeAreaView showBar={true} title={"智能候诊"} isRight={false} handleBack={this.handleBack}>
         <div className={"intelligentWaitingContainer"}>
-          <BindCardItem data={bindCardList} isRefresh={this.refresh} callBack={data => this.refreshCallBack(data)}/>
+          <BindCardItem data={bindCardList} isRefresh={this.refresh} callBack={this.refreshCallBack}/>
           <IntelligentWaitingItem
             data={waitingList}
             fetchingStatus={fetchingStatus}
@@ -69,23 +69,16 @@ class IntelligentWaitingContainer extends Component {
       bindCardActions: { loadList }
     } = this.props;
     if (history.action === "PUSH") {
-      loadList();
+      // loadList();
       // 定时器，可以修改IntelligentWaitingRefreshTime.time为自己想要的时间
-      this.timer = setInterval(() => this.timeToRefresh(), IntelligentWaitingRefreshTime.time);
+      // this.timer = setInterval(() => this.timeToRefresh(), IntelligentWaitingRefreshTime.time);
     }
-    // loadList();
-
+    loadList();
+    this.timer = setInterval(() => this.timeToRefresh(), IntelligentWaitingRefreshTime.time);
   }
 
   componentWillUnmount() {
-    const {
-      history
-    } = this.props;
-    if (history.action === "POP") {
-      this.timer && clearTimeout(this.timer);
-    }
-
-    // this.timer && clearTimeout(this.timer);
+    this.timer && clearTimeout(this.timer);
   }
 
   //下拉刷新
@@ -95,16 +88,15 @@ class IntelligentWaitingContainer extends Component {
 
   //定时执行刷新
   timeToRefresh() {
-
     this.getWaitingListByPerson();
   }
 
   //重新选择家庭成员后重新刷新数据
-  refreshCallBack(data) {
+  refreshCallBack =(data)=>{
     const {
       bindCardActions: { loadingWaitingListByPerson }
     } = this.props;
-    loadingWaitingListByPerson(data,"refreshCallBack");
+    loadingWaitingListByPerson(data);
   }
 
   getWaitingListByPerson() {
@@ -113,7 +105,7 @@ class IntelligentWaitingContainer extends Component {
     setTimeout(()=>{
       bindCardList.map(item => {
         if (item.isSel) {
-          loadingWaitingListByPerson(item,"getWaitingListByPerson");
+          loadingWaitingListByPerson(item);
         }
       });
     },300)

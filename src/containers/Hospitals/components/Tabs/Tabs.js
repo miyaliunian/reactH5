@@ -1,6 +1,6 @@
 /**
  * Class:
- * Author: wufei
+ * Author: miyaliunian
  * Date: 2019/5/26
  * Description:  tabs 选择器
  *  医院列表
@@ -216,7 +216,7 @@ class Tabs extends Component {
     }
     return (
       <div className={"tab-header"}>
-        <div className={"tab-header-top border-bottom"}>
+        <div className={"tab-header-top"}>
           {this.renderTabs()}
         </div>
         <div className={cls} onClick={() => closePanelAction(()=>{})}>

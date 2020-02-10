@@ -11,7 +11,7 @@ import { actions as homeActions } from "@reduxs/modules/home";
 import { connect } from "react-redux";
 
 import Category from "./components/Category";
-import "./style.less";
+import "./HomeContainer.less";
 
 class Home extends Component {
   render() {

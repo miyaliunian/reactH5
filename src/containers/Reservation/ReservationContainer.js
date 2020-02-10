@@ -33,7 +33,7 @@ class ReservationContainer extends Component {
     const { doctorInfo, reservationInfo, timeInterval } = this.props.location.state
     const { diagnosis, payType, switchInfo, medicalType, bindCardItem, btnDisable } = this.props
     return (
-      <SafeAreaView showBar={true} title={'预约信息'} isRight={false} handleBack={this.handleBack}>
+      <SafeAreaView showBar={true} title={'预约信息'} isRight={false} handleBack={this.handleBack} isCLose={true}>
         <div className={'reservation'}>
           <ReservationHeader doctorInfo={doctorInfo} reservationInfo={reservationInfo} timeInterval={timeInterval} />
           <div className={'reservation__interval'} />
