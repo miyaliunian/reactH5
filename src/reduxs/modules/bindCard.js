@@ -59,8 +59,9 @@ export const actions = {
       })
     }
   },
-  loadingWaitingListByPerson: person => {
+  loadingWaitingListByPerson: (person,from) => {
     return (dispatch, getstate) => {
+      console.log(from)
       const {id} = person
       const targetURL = URL.API__INTELLIGENT_WAITING_LIST(id)
       return dispatch(loadingWaitingListByPersonId(targetURL))

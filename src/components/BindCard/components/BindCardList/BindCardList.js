@@ -26,7 +26,8 @@ class BindCardList extends Component {
   }
 
   render() {
-    const { bindCardList } = this.props
+    const { bindCardList} = this.props
+
     return (
       <SafeAreaView showBar={true} title={'成员信息'} isRight={false} handleBack={this.handleBack}>
         <div className={'bindCardList'}>
@@ -66,6 +67,7 @@ class BindCardList extends Component {
       location: { callBack },
       history
     } = this.props
+
     //处理选中的家庭成员
     bindCardList.map(i => {
       if (i.id == cliItem.id) {
@@ -77,7 +79,7 @@ class BindCardList extends Component {
     if (callBack) {
       setTimeout(() => {
         //1：将选中的家庭成员 通过回调函数 传回给调用方
-        this.props.location.callBack(cliItem)
+        callBack(cliItem)
         //2：切换家庭成员之后 回退到上一页
         history.goBack()
       }, 10)
