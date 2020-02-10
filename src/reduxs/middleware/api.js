@@ -91,6 +91,7 @@ const fetchData = (targetURL, param, schema, callBack) => {
 
 const normalizeData = (data, schema) => {
   if (schema === '') {
+    debugger
     return data.data === null ? { infocode: 1, infomessage: '', vfms: null, data: [] } : data
   } else {
     const { name } = schema
