@@ -46,6 +46,10 @@ export const DOCTORTABKAY = {
   expert: "expert",//按专家预约
   date: "date",//按日期预约
 };
+export const MYORDERTABKAY = {
+  register: "register",//预约挂号
+  outpatientPayment: "outpatientPayment",//门诊缴费
+};
 
 // -综合排序
 export const ZHPX = [
