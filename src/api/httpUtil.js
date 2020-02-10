@@ -54,10 +54,10 @@ export function post(url, bodyParam = '') {
       cancelToken: Axios.CancelToken.source.token
     })
       .then(res => {
-        if (res.infocode && res.infocode === 1){
+        if (res.infocode && res.infocode === 1) {
           resolve(res)
-        } else  {
-          reject({message:res.infomessage})
+        } else {
+          reject({ message: res.infomessage })
         }
       })
       .catch(err => {

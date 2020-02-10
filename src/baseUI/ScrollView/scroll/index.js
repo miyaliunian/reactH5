@@ -25,7 +25,7 @@ let defaultPullUpLoad = {
 class Scroll extends Component {
   static defaultProps = {
     probeType: 3,
-    click: false, // https://ustbhuangyi.github.io/better-scroll/doc/options.html#tap
+    click: false,
     startY: 0,
     scrollY: true,
     scrollX: false,
@@ -303,9 +303,9 @@ class Scroll extends Component {
   };
 
   renderPullUpLoad() {
-    let { pullUpLoad, isPullUpTipHide } = this.props;
+    let { isLastPgae, isPullUpTipHide } = this.props;
 
-    if (pullUpLoad && isPullUpTipHide) {
+    if ( isPullUpTipHide) {
       return (
         <div className="b-pullup-wrapper">
           <div className="after-trigger" style={{ lineHeight: ".32rem" }}>
@@ -315,24 +315,24 @@ class Scroll extends Component {
       );
     }
 
-    if (pullUpLoad && this.state.isPullUpLoad) {
+    if ( this.state.isPullUpLoad) {
       return (
         <div className="b-pullup-wrapper">
           <div className="after-trigger" style={{ lineHeight: ".32rem" }}>
             <i className="loading-icon"></i>
             <span style={{ color: "#999999", fontSize: "13px" }}>
-              {typeof pullUpLoad === "object" ? pullUpLoad.txt.more : "加载中..."}
+              { "加载中..."}
             </span>
           </div>
         </div>
       );
     }
-    if (pullUpLoad && !this.state.isPullUpLoad) {
+    if ( !this.state.isPullUpLoad) {
       return (
         <div className="b-pullup-wrapper">
           <div className="before-trigger">
             <span style={{ color: "#999999", fontSize: "13px" }}>
-              {typeof pullUpLoad === "object" ? pullUpLoad.txt.nomore : "加载完成"}
+              {isLastPgae ? '~ 已加载全部数据 ~' : "正在加载..."}
             </span>
           </div>
         </div>
