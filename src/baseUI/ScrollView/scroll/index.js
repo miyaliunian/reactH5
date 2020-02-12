@@ -61,8 +61,10 @@ class Scroll extends Component {
     doScroll: PropTypes.func,
     doScrollStart: PropTypes.func,
     doScrollEnd: PropTypes.func,
-    isLastPgae:PropTypes.bool.isRequired,
-    data:PropTypes.array.isRequired,
+    fetchingStatus: PropTypes.bool.isRequired,
+    isLastPgae: PropTypes.bool.isRequired,
+    data: PropTypes.array.isRequired,
+    emptyTxt: PropTypes.string.isRequired,
     preventDefaultException: PropTypes.object,
     eventPassthrough: PropTypes.string,
     isPullUpTipHide: PropTypes.bool,
@@ -89,7 +91,7 @@ class Scroll extends Component {
       pullDownStyle: {
         top: `${this.pullDownInitTop}px`
       },
-      isEmptyData:false,//是不是空数据
+      isEmptyData: false,//是不是空数据
       bubbleY: 0
     };
   }
@@ -104,9 +106,22 @@ class Scroll extends Component {
     this.initScroll();
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.data !=undefined && nextProps.data.length === 0) {
-      this.setState({isEmptyData:true})
+  componentWillReceiveProps(nextProps) {
+
+    // if (nextProps.data.length === 0) {
+    //   this.setState({ isEmptyData: true });
+    // } else {
+    //   this.setState({ isEmptyData: false });
+    // }
+
+
+    if (!nextProps.fetchingStatus) {
+      console.log('数据加载成功')
+      if (nextProps.data.length === 0) {
+        this.setState({ isEmptyData: true });
+      } else {
+        this.setState({ isEmptyData: false });
+      }
     }
   }
 
@@ -312,8 +327,10 @@ class Scroll extends Component {
   };
 
   renderPullUpLoad() {
+    console.log("renderPullUpLoad");
     let { isLastPgae, isPullUpTipHide } = this.props;
-    if ( isPullUpTipHide) {
+
+    if (isPullUpTipHide) {
       return (
         <div className="b-pullup-wrapper">
           <div className="after-trigger" style={{ lineHeight: ".32rem" }}>
@@ -323,24 +340,24 @@ class Scroll extends Component {
       );
     }
 
-    if ( this.state.isPullUpLoad) {
+    if (this.state.isPullUpLoad) {
       return (
         <div className="b-pullup-wrapper">
           <div className="after-trigger" style={{ lineHeight: ".32rem" }}>
             <i className="loading-icon"></i>
             <span style={{ color: "#999999", fontSize: "13px" }}>
-              { "加载中..."}
+              {"加载中..."}
             </span>
           </div>
         </div>
       );
     }
-    if ( !this.state.isPullUpLoad) {
+    if (!this.state.isPullUpLoad) {
       return (
         <div className="b-pullup-wrapper">
           <div className="before-trigger">
             <span style={{ color: "#999999", fontSize: "13px" }}>
-              {isLastPgae ? '~ 已加载全部数据 ~' : "正在加载..."}
+              {isLastPgae ? "~ 已加载全部数据 ~" : "正在加载..."}
             </span>
           </div>
         </div>
@@ -397,13 +414,24 @@ class Scroll extends Component {
     }
   }
 
+  renderEmpty() {
+    const { emptyTxt } = this.props;
+    console.log("renderEmpty");
+    return (
+      <div className={"b-empty-wrapper"}>
+        <span>{emptyTxt}</span>
+      </div>
+    );
+  }
+
   render() {
-    console.log(this.state.isEmptyData)
+    const { isEmptyData,fetchingStatus } = this.state;
+    // console.log(isEmptyData)
     return (
       <div className="b-wrapper" ref="$dom">
         <div className="b-scroll-content">
           {this.props.children}
-          {this.renderPullUpLoad()}
+          { isEmptyData ? this.renderEmpty() : this.renderPullUpLoad() }
         </div>
         {this.renderPullUpDown()}
       </div>
