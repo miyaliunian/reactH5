@@ -50,6 +50,11 @@ class MyOutpatientPaymentItem extends Component {
         });
     }
 
+    /**
+     * 将毫秒时间改为 yyyy-MM-dd HH:mm:ss的形式
+     * @param mil
+     * @returns {string}
+     */
     timeChanger(mil){
         let curTime = new Date(mil);
         // let year = curTime.getFullYear();

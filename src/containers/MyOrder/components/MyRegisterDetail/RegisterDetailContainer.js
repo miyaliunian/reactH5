@@ -9,6 +9,7 @@ import LoadingMask from '../../../../components/Loading/LoadingMask'
 import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 import { actions as registerDetailActions, getDetail } from '@reduxs/modules/registerDetail'
 import ico_clinic_pay_item from '@assets/images/OutpatientPayment/ico_clinic_pay_item.png'
+import classnames from 'classnames'
 
 const IntelligentWaitingRefreshTime = {
   time: 60000 // 刷新时间一分钟，单位为毫秒
@@ -42,7 +43,7 @@ class RegisterDetailContainer extends Component {
       <SafeAreaView showBar={true} title={'预约详情'} isRight={false} handleBack={this.handleBack}>
         <div className={'registerDetail-part1 border-topbottom'}>
           <div className={'registerDetail-part1-key'}>订单状态</div>
-          <div className={'registerDetail-part1-value-blue'}>待支付（3天后就诊）</div>
+          {this.generatePaymentStatusPart()}
         </div>
         <div className={'registerDetail-part2 border-bottom'}>
           <div className={'registerDetail-part2-item'}>
@@ -59,7 +60,7 @@ class RegisterDetailContainer extends Component {
           </div>
           <div className={'registerDetail-part2-item'}>
             <div className={'registerDetail-part2-item-key'}>就诊时间</div>
-            <div className={'registerDetail-part2-item-value'}>{detail.seenDate}</div>
+            <div className={'registerDetail-part2-item-value'}>{this.generateSeeDateStr1()}</div>
           </div>
           <div className={'registerDetail-part2-item'}>
             <div className={'registerDetail-part2-item-key'}>就诊序号</div>
@@ -99,20 +100,13 @@ class RegisterDetailContainer extends Component {
             <div className={'registerDetail-part4-title-txt'}>温馨提示 :</div>
           </div>
           <div className={'registerDetail-part4-content'}>
-            请于2020年02月10日12:00-17:00至常州市第一人民医院二楼南D区就诊
-          </div>
-          <div className={'registerDetail-part4-content'}>
             挂号过程中如遇特殊情况不能正常就医，请按医院的相关管理流程执行。
           </div>
-        </div>
-        <div className={'registerDetail-part5'}>
-          <div className={'registerDetail-part5-btn-box'} onClick={this.register2Pay()}>
-            <div className={'registerDetail-part5-btn-core'}>支付</div>
-          </div>
-          <div className={'registerDetail-part5-btn-box'}>
-            <div className={'registerDetail-part5-btn-core'}>取消预约</div>
+          <div className={classnames('registerDetail-part4-content',{ hidden: (detail.hosResponse? false:true)})}>
+            {detail.hosResponse}
           </div>
         </div>
+        {this.generatePart5()}
         <div className={'registerDetail-part6'}>
           <div className={'registerDetail-part6-fee'}>
             <div className={'registerDetail-part6-fee-txt'}>费用总额：</div>
@@ -132,37 +126,84 @@ class RegisterDetailContainer extends Component {
       registerDetailActions: { register2SiPrePay ,history}
     } = this.props
     const { detail, defaultPerson, selHospital } = this.props.location.state
-    register2SiPrePay(detail, defaultPerson, selHospital, { ...history })
+    // register2SiPrePay(detail, defaultPerson, selHospital, { ...history })
   }
 
-  // componentDidMount() {
-  //   this.props.bindCardActions.loadWaitingList();
-  //   // 定时器，可以修改IntelligentWaitingRefreshTime.time为自己想要的时间
-  //   this.timer = setInterval(
-  //     () => this.timeToRefresh(),
-  //     IntelligentWaitingRefreshTime.time
-  //   );
-  // }
-  paymentStatus2Str(status) {
-    switch (status) {
+  /**
+   * 根据detail的seenDate，生成指定格式的预约时间：XXXX年XX月XX日 星期X 上午 9:00-12:00
+   * @param mis
+   */
+  generateSeeDateStr1(){
+    const { detail } = this.props.location.state
+    let tarTime = new Date(detail.seenDate);
+    // let year = curTime.getFullYear();
+    // let month = String(curTime.getMonth() + 1).padStart(2,"0");
+    // let day = String(curTime.getDate()).padStart(2,"0");
+    let year = tarTime.getFullYear();
+    let month = tarTime.getMonth()+1;
+    let day = tarTime.getDate();
+    let week=tarTime.getDay();
+    month = month <= 9 ? "0"+month : month;
+    day = day <= 9 ? "0"+day : day;
+    let weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    return year+'年'+month+'月'+day+'日 '+weekday[week]+' '+detail.noon+' '+detail.beginTime+'-'+detail.endTime;
+  }
+
+
+  /**
+   * 根据detail的seenDate，生成指定格式的预约时间：XXXX年XX月XX日9:00-12:00
+   * @param mis
+   */
+  generateSeeDateStr2(){
+    const { detail } = this.props.location.state
+    let tarTime = new Date(detail.seenDate);
+    let year = tarTime.getFullYear();
+    let month = tarTime.getMonth()+1;
+    let day = tarTime.getDate();
+    month = month <= 9 ? "0"+month : month;
+    day = day <= 9 ? "0"+day : day;
+    return year+'年'+month+'月'+day+'日'+detail.beginTime+'-'+detail.endTime;
+  }
+  /**
+   * 生成缴费状态部分的元素
+   * @returns {*}
+   */
+  generatePaymentStatusPart() {
+    const { detail } = this.props.location.state
+    switch (detail.paymentStatus) {
       case 0:
-        return '未支付'
+        return <div className={'registerDetail-part1-value-blue'}>待支付{this.calDayInfo(detail.seenDate)}</div>;
       case 1:
-        return '部分支付'
+        return <div className={'registerDetail-part1-value-blue'}>部分支付{this.calDayInfo(detail.seenDate)}</div>;
       case 2:
-        return '已支付'
       case 3:
-        return '已支付'
+        return <div className={'registerDetail-part1-value-blue'}>已支付{this.calDayInfo(detail.seenDate)}</div>;
       case 4:
-        return '部分退款'
+        return <div className={'registerDetail-part1-value'}>部分退款</div>;
       case 5:
-        return '已退款'
       case 6:
-        return '已退款'
+        return <div className={'registerDetail-part1-value'}>已取消</div>;
       default:
-        return '未知'
+        return <div className={'registerDetail-part1-value'}>未知</div>;
     }
   }
+
+  /**
+   * 根据传入的毫秒时间，计算当前日期到目标日期的天数之差，并返回对应信息: (今日就诊/3天后就诊)
+   * @param mis
+   */
+  calDayInfo(mis){
+    let tarTime = new Date(mis);
+    let curTime = new Date();
+    let diff = Math.abs(tarTime.getTime() - curTime.getTime())
+    let result = parseInt(diff / (1000 * 60 * 60 * 24));
+    if(result>0){
+      return ' ('+result+'天后就诊)';
+    }else{
+      return ' (今天就诊)';
+    }
+  }
+
   first2Str(isFirst) {
     if (typeof isFirst == 'undefined') return '未知'
     if (isFirst) return '初诊'
@@ -173,6 +214,30 @@ class RegisterDetailContainer extends Component {
     else return '未知'
   }
 
+
+  /**
+   * 将毫秒时间改为 yyyy-MM-dd HH:mm:ss的形式
+   * @param mil
+   * @returns {string}
+   */
+  timeChanger1(mil){
+    let curTime = new Date(mil);
+    // let year = curTime.getFullYear();
+    // let month = String(curTime.getMonth() + 1).padStart(2,"0");
+    // let day = String(curTime.getDate()).padStart(2,"0");
+    let year = curTime.getFullYear();
+    let month = curTime.getMonth()+1;
+    let day = curTime.getDate();
+    let hour=curTime.getHours();
+    let minute=curTime.getMinutes();
+    let second=curTime.getSeconds();
+    month = month <= 9 ? "0"+month : month;
+    day = day <= 9 ? "0"+day : day;
+    hour = hour <= 9 ? "0"+hour : hour;
+    minute = minute <= 9 ? "0"+minute : minute;
+    second = second <= 9 ? "0"+second : second;
+    return year + "-" + month + "-" + day+" "+hour+":"+minute+":"+second;
+  }
   /**
    * 根据调解，生成part5按钮区域
    * @returns {*}
@@ -182,8 +247,25 @@ class RegisterDetailContainer extends Component {
     switch (detail.paymentStatus) {
       case 0: //未支付
       case 1: //部分支付
-        return <div></div>
-        break
+        return (<div className={'registerDetail-part5'}>
+          <div className={'registerDetail-part5-btn-box'} onClick={this.register2Pay()}>
+            <div className={'registerDetail-part5-btn-core'}>支付</div>
+          </div>
+          <div className={'registerDetail-part5-btn-box'}>
+            <div className={'registerDetail-part5-btn-core'}>取消预约</div>
+          </div>
+        </div>);
+      case 2://已支付待确认
+      case 3://已支付
+            return(<div className={'registerDetail-part5'}>
+              <div className={'registerDetail-part5-btn-box'}>
+                <div className={'registerDetail-part5-btn-core'}>取消预约</div>
+              </div>
+            </div>);
+      case 4:
+      case 5:
+      case 6://已退款
+        return;
     }
   }
 

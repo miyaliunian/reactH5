@@ -68,6 +68,7 @@ class OutpatientPaymentContent extends Component {
     }
 
     render() {
+        const {outpatientPaymentList} = this.props
         return (
             <div className={"outpatientPayment-content"}>
                 <ScrollView
@@ -76,6 +77,9 @@ class OutpatientPaymentContent extends Component {
                     pullUpLoad
                     pullUpLoadMoreData={this.pullUpLoadMore}
                     click={true}
+                    isLastPage={false}
+                    data={outpatientPaymentList}
+                    emptyTxt={'未查询到您的待缴费信息'}
                     isPullUpTipHide={false}>
                     <ul className={'outpatientPayment-ul'}>
                         <div className={'outpatientPayment-hint'}>待缴费列表</div>
