@@ -88,6 +88,7 @@ class Scroll extends Component {
       pullDownStyle: {
         top: `${this.pullDownInitTop}px`
       },
+      isEmptyData:false,//是不是空数据
       bubbleY: 0
     };
   }
@@ -101,6 +102,13 @@ class Scroll extends Component {
   componentDidMount() {
     this.initScroll();
   }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.data !=undefined && nextProps.data.length === 0) {
+      this.setState({isEmptyData:true})
+    }
+  }
+
 
   componentDidUpdate(prevProps) {
     if (this.props.children !== prevProps.children) {
@@ -304,7 +312,6 @@ class Scroll extends Component {
 
   renderPullUpLoad() {
     let { isLastPgae, isPullUpTipHide } = this.props;
-
     if ( isPullUpTipHide) {
       return (
         <div className="b-pullup-wrapper">
@@ -390,6 +397,7 @@ class Scroll extends Component {
   }
 
   render() {
+    console.log(this.state.isEmptyData)
     return (
       <div className="b-wrapper" ref="$dom">
         <div className="b-scroll-content">
