@@ -129,7 +129,8 @@ class RegisterDetailContainer extends Component {
    */
   register2Pay() {
     const {
-      registerDetailActions: { register2SiPrePay }
+      registerDetailActions: { register2SiPrePay },
+      history
     } = this.props
     const { detail, defaultPerson, selHospital } = this.props.location.state
     register2SiPrePay(detail, defaultPerson, selHospital, { ...history })
@@ -163,11 +164,13 @@ class RegisterDetailContainer extends Component {
         return '未知'
     }
   }
+
   first2Str(isFirst) {
     if (typeof isFirst == 'undefined') return '未知'
     if (isFirst) return '初诊'
     else return '复诊'
   }
+
   diseaseValuator(diseaseName) {
     if (diseaseName) return diseaseName
     else return '未知'
