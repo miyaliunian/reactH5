@@ -17,13 +17,13 @@
 // 310101196310114532 123456nt
 
 //南通正式
-export const cityID = '320600'
-export const BASE_URL = 'http://www.ntyibao.com/t-core'
+// export const cityID = '320600'
+// export const BASE_URL = 'http://www.ntyibao.com/t-core'
 //  530101198001010051  Aa123456
 
 //常州正式
-// export const cityID = '320400'
-// export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
+export const cityID = '320400'
+export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
 //常州测试账号
 //321182198304262213 qwe123
 

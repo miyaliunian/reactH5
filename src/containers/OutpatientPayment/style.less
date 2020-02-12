@@ -1,22 +1,23 @@
 @import '../../assets/less/varibles';
-.outpatientPaymentContainer{
+.outpatientPaymentContainer {
   //background-color: #f7f7f7;
 }
-.outpatientPaymentDetail-distance{
+.outpatientPaymentDetail-distance {
   height: 8px;
   background-color: #f7f7f7;
 }
-.outpatientPaymentDetail-content{
+.outpatientPaymentDetail-content {
   display: flex;
   flex-direction: column;
+  margin-bottom: 70px; //避免被最下面绝对定位的按钮遮盖
   //padding-bottom: 100%;
   //background-color: #f7f7f7;
-  .outpatientPaymentDetail-part1{
+  .outpatientPaymentDetail-part1 {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
     margin-right: 10px;
-    .outpatientPaymentDetail-part1-header{
+    .outpatientPaymentDetail-part1-header {
       //background-color: red;
       display: flex;
       flex-direction: row;
@@ -24,30 +25,30 @@
       justify-content: center;
       padding-left: 5px;
       padding-right: 5px;
-      .outpatientPaymentDetail-part1-header-name{
+      .outpatientPaymentDetail-part1-header-name {
         line-height: 40px;
         font-size: 16px;
         font-weight: bold;
       }
-      .outpatientPaymentDetail-part1-header-status{
+      .outpatientPaymentDetail-part1-header-status {
         line-height: 40px;
         margin-left: auto;
         font-size: 14px;
         color: #0084ff;
       }
     }
-    .outpatientPaymentDetail-part1-content{
+    .outpatientPaymentDetail-part1-content {
       display: flex;
       flex-direction: column;
       padding: 5px;
-      .outpatientPaymentDetail-part1-content-item{
+      .outpatientPaymentDetail-part1-content-item {
         display: flex;
         flex-direction: row;
         height: 30px;
-        .outpatientPaymentDetail-part1-content-item-key{
+        .outpatientPaymentDetail-part1-content-item-key {
           line-height: 30px;
         }
-        .outpatientPaymentDetail-part1-content-item-value{
+        .outpatientPaymentDetail-part1-content-item-value {
           line-height: 30px;
           margin-left: auto;
         }
@@ -55,41 +56,41 @@
     }
   }
 
-  .outpatientPaymentDetail-part2{
+  .outpatientPaymentDetail-part2 {
     margin-left: 15px;
     margin-right: 15px;
     display: flex;
     flex-direction: column;
-    .outpatientPaymentDetail-part2-header{
+    .outpatientPaymentDetail-part2-header {
       height: 35px;
       line-height: 35px;
       text-align: left;
       font-weight: bold;
     }
-    .outpatientPaymentDetail-part2-items{
+    .outpatientPaymentDetail-part2-items {
       display: flex;
       flex-direction: column;
-      .outpatientPaymentDetail-part2-item{
+      .outpatientPaymentDetail-part2-item {
         display: flex;
         flex-direction: row;
         height: 35px;
-        .outpatientPaymentDetail-part2-item-txt{
+        .outpatientPaymentDetail-part2-item-txt {
           line-height: 35px;
         }
-        .outpatientPaymentDetail-part2-item-price{
+        .outpatientPaymentDetail-part2-item-price {
           line-height: 35px;
           margin-left: auto;
         }
       }
     }
-    .outpatientPaymentDetail-part2-footer{
+    .outpatientPaymentDetail-part2-footer {
       display: flex;
       flex-direction: row;
       height: 40px;
-      .outpatientPaymentDetail-part2-footer-txt{
+      .outpatientPaymentDetail-part2-footer-txt {
         line-height: 40px;
       }
-      .outpatientPaymentDetail-part2-footer-btn{
+      .outpatientPaymentDetail-part2-footer-btn {
         margin-left: auto;
         line-height: 40px;
         content: none;
@@ -97,14 +98,14 @@
     }
   }
 }
-.outpatientPaymentDetail-part3{
+.outpatientPaymentDetail-part3 {
   position: fixed;
   bottom: 0px;
   display: flex;
   flex-direction: row;
   height: 50px;
   width: 100%;
-  .outpatientPaymentDetail-part3-fee{
+  .outpatientPaymentDetail-part3-fee {
     line-height: 50px;
     flex-grow: 3;
     text-align: left;
@@ -124,7 +125,7 @@
       margin-left: 10px;
     }
   }
-  .outpatientPaymentDetail-part3-btn{
+  .outpatientPaymentDetail-part3-btn {
     line-height: 50px;
     flex-grow: 3;
     text-align: center;

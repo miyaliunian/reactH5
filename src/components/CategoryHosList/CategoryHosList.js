@@ -23,10 +23,10 @@ import LoadingMask from '@components/Loading/LoadingMask'
 
 class CategoryHosList extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       hospitalList: []
-    };
+    }
   }
   static propTypes = {
     bindCardList: PropTypes.array,
@@ -92,7 +92,7 @@ class CategoryHosList extends Component {
       bindCardList,
       chooseCategoryHospListActions: { initCategaryHospitalList }
     } = this.props
-    if(bindCardList){
+    if (bindCardList) {
       let bindCardObj = bindCardList.filter(item => item.def)
       initCategaryHospitalList('inPrePay', bindCardObj[0], 1)
     }
@@ -103,16 +103,16 @@ class CategoryHosList extends Component {
       bindCardList,
       chooseCategoryHospListActions: { pullDownRefresh }
     } = this.props
-    if(bindCardList){
-        let bindCardObj = bindCardList.filter(item => item.def)
+    if (bindCardList) {
+      let bindCardObj = bindCardList.filter(item => item.def)
 
-        return new Promise((resolve, reject) => {
-          pullDownRefresh('inPrePay', bindCardObj[0]).then(status => {
-            if (status && status === 'success') {
-              resolve()
-            }
-          })
+      return new Promise((resolve, reject) => {
+        pullDownRefresh('inPrePay', bindCardObj[0]).then(status => {
+          if (status && status === 'success') {
+            resolve()
+          }
         })
+      })
     }
   }
 
