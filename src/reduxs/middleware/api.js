@@ -77,7 +77,8 @@ export default store => next => action => {
       next(
         actionWith({
           type: failureType,
-          error: `${targetURL}:${error.message}` || `${targetURL}:获取数据失败`
+          // error: `${targetURL}:${error.message}` || `${targetURL}:获取数据失败`
+          error: `${error.message}` || `获取数据失败`
         })
       )
   )

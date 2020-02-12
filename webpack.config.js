@@ -6,17 +6,17 @@
  */
 
 module.exports = {
-  resolve: {
-    alias: {
-      '@assets': require('path').resolve(__dirname, 'src/assets'),
-      '@baseUI': path.resolve(__dirname, 'src/baseUI'),
-      '@components': require('path').resolve(__dirname, 'src/components'),
-      '@containers': require('path').resolve(__dirname, 'src/containers'),
-      '@images': require('path').resolve(__dirname, 'src/images'),
-      '@reduxs': require('path').resolve(__dirname, 'src/reduxs'),
-      '@routes': require('path').resolve(__dirname, 'src/routes'),
-      '@utils': require('path').resolve(__dirname, 'src/utils'),
-      '@api': require('path').resolve(__dirname, 'src/api')
+    resolve: {
+        alias: {
+            '@assets': require('path').resolve(__dirname, 'src/assets'),
+            '@baseUI': path.resolve(__dirname, 'src/baseUI'),
+            '@components': require('path').resolve(__dirname, 'src/components'),
+            '@containers': require('path').resolve(__dirname, 'src/containers'),
+            '@images': require('path').resolve(__dirname, 'src/images'),
+            '@reduxs': require('path').resolve(__dirname, 'src/reduxs'),
+            '@routes': require('path').resolve(__dirname, 'src/routes'),
+            '@utils': require('path').resolve(__dirname, 'src/utils'),
+            '@api': require('path').resolve(__dirname, 'src/api')
+        }
     }
-  }
 }

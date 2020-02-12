@@ -27,7 +27,6 @@ class Home extends Component {
   }
 
   categoryClick(index) {
-    // @ts-ignore
     const { history } = this.props
     switch (index) {
       case 0:

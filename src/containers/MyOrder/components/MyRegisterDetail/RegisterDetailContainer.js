@@ -129,7 +129,7 @@ class RegisterDetailContainer extends Component {
    */
   register2Pay() {
     const {
-      registerDetailActions: { register2SiPrePay }
+      registerDetailActions: { register2SiPrePay ,history}
     } = this.props
     const { detail, defaultPerson, selHospital } = this.props.location.state
     register2SiPrePay(detail, defaultPerson, selHospital, { ...history })

@@ -77,6 +77,9 @@ class DoctorListContainer extends Component {
       doctorListActions: { loadDoctorList }
     } = this.props
     const { id } = match.params
+    if (reservations.length === 0) {
+      return
+    }
     const date = formateTimeStep(this.filterItem != '' ? this.filterItem : reservations[0])
     loadDoctorList(id, key === DOCTORTABKAY.expert ? '' : date)
   }
