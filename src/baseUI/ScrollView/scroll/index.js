@@ -61,7 +61,8 @@ class Scroll extends Component {
     doScroll: PropTypes.func,
     doScrollStart: PropTypes.func,
     doScrollEnd: PropTypes.func,
-
+    isLastPgae:PropTypes.bool.isRequired,
+    data:PropTypes.array.isRequired,
     preventDefaultException: PropTypes.object,
     eventPassthrough: PropTypes.string,
     isPullUpTipHide: PropTypes.bool,
