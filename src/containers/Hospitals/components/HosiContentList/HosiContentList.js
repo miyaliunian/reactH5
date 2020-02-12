@@ -63,16 +63,17 @@ class HosiContentList extends Component {
   outputItems = () => {}
 
   render() {
-    const { iLastPage } = this.props
+    const { iLastPage,hospitalList} = this.props
     return (
       <div className={'hosi-content'}>
         <ScrollView
           pullDownRefresh
           doPullDownFresh={this.pullDownFresh}
           pullUpLoad
-          isLastPgae={iLastPage}
+          isLastPgae={iLastPage}  //是不是最后一页
           pullUpLoadMoreData={this.pullUpLoadMore}
           click={true}
+          data={hospitalList} //要遍历的数据
           isPullUpTipHide={false}>
           <ul>{this.renderItems()}</ul>
         </ScrollView>
