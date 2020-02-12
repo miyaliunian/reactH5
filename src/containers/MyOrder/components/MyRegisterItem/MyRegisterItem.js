@@ -27,7 +27,7 @@ class MyRegisterItem extends Component {
                             <div className={'my-outpatientPayment-item-part1-left-date'}>{this.timeChanger(item.regDate)}</div>
                         </div>
                         <div className={'my-outpatientPayment-item-part1-right'}>
-                            {this.packagePaymentStatusDiv(item.paymentStatus)}
+                            {this.packagePaymentStatusDiv(item.regStatus)}
                             {/*<div className={'my-outpatientPayment-item-part1-right-status'}>{item.paymentStatus}</div>*/}
                         </div>
                     </div>
@@ -69,9 +69,9 @@ class MyRegisterItem extends Component {
     }
 
     packagePaymentStatusDiv(status){
-        if(status==2||status==3){
+        if(status==0){
             return (<div className={'my-outpatientPayment-item-part1-right-status-blue'}>
-                {this.paymentStatus2Str(status)}
+                待支付
             </div>);
         }else{
             return (<div className={'my-outpatientPayment-item-part1-right-status'}>
@@ -83,19 +83,11 @@ class MyRegisterItem extends Component {
     paymentStatus2Str(status) {
         switch (status) {
             case 0:
-                return '未支付';
+                return '待支付';
             case 1:
-                return '部分支付';
+                return '已支付';
             case 2:
-                return '已支付';
-            case 3:
-                return '已支付';
-            case 4:
-                return '部分退款';
-            case 5:
-                return '已退款';
-            case 6:
-                return '已退款';
+                return '已取消预约';
             default:
                 return '未知';
         }

@@ -63,6 +63,8 @@ export default {
   API_QUERY_REGISTER_IN_MY_ORDER:(pageno)=>
       `/baseURL/register/v1.0/getPageList/${pageno}.do`,//我的订单页，tab中查询预约挂号
 
+  AIP_ORDER_CANCEL_REG: (id) => `/baseURL/register/v1.0/cancel/${id}.do`,// 取消线上挂号
+
   /* 7:---------------------------------------------家庭成员---*/
   //家庭成员选择:卡绑定
   API__BIND_CARD_LIST: () => `/baseURL/bindcard/v1.0/list.do`,
