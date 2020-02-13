@@ -91,6 +91,12 @@ input {
   vertical-align: baseline;
 }
 
+/*解决盒子模型 */
+div {
+  box-sizing: border-box;
+}
+
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
