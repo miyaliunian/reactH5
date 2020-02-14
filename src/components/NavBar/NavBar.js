@@ -7,6 +7,7 @@
  */
 import React from "react";
 import PropTypes from "prop-types";
+import { Icon } from 'antd-mobile';
 import "./navbar.less";
 
 export default function NavBar(props) {
@@ -37,9 +38,9 @@ export default function NavBar(props) {
       )}
       <h1 className="header-title">{title}</h1>
       {Boolean(isShowSearchIcon) && (
-        <span className={"header-right"} onClick={() => onClick()}>
-        🔍
-      </span>
+        <div className={"header-right"} onClick={() => onClick()}>
+            <Icon type="search" size="sm"/>
+      </div>
       )}
     </div>
   );
