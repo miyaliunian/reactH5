@@ -107,16 +107,7 @@ class Scroll extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
-    // if (nextProps.data.length === 0) {
-    //   this.setState({ isEmptyData: true });
-    // } else {
-    //   this.setState({ isEmptyData: false });
-    // }
-
-
     if (!nextProps.fetchingStatus) {
-      console.log('数据加载成功')
       if (nextProps.data.length === 0) {
         this.setState({ isEmptyData: true });
       } else {

@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="fangdajing" unicode="&#59015;" d="M449.408 832a385.408 385.408 0 0 0 294.272-634.24L960-18.56l-45.44-45.44-216.32 216.32A385.408 385.408 0 1 0 449.408 832z m0-64.256a321.152 321.152 0 1 1 0-642.304 321.152 321.152 0 0 1 0 642.304z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>
