@@ -38,7 +38,7 @@ export default function NavBar(props) {
       <h1 className="header-title">{title}</h1>
       {Boolean(isShowSearchIcon) && (
         <div className={"header-right"} onClick={() => onClick()}>
-          <span className="iconfont" style={{fontSize:"20px"}}>&#xe687;</span>
+          <i className="iconfont" style={{fontSize:"20px"}}>&#xe687;</i>
       </div>
       )}
     </div>
