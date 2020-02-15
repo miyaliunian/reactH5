@@ -1,27 +1,48 @@
-/**
- * Class: DoctorDesc
- * Author: wufei
- * Date: 2019/6/25
- * Description:
- *
- */
-import React, { Component } from "react";
+// /**
+//  * Class: DoctorDesc
+//  * Author: wufei
+//  * Date: 2019/6/25
+//  * Description:
+//  *
+//  */
+import React, { useRef, useCallback } from "react";
 import "./style.less";
 
-export default class DoctorDesc extends Component {
-  render() {
-    return (
-      <div className={"doctorDesc border-top"}>
-        <div className={"doctorDesc__title"}>医生简介</div>
-        <div className={"doctorDesc__info"}>
-          <div className={"doctorDesc__experience__goodAt"}>
-            经历: {this.props.introduction ? this.props.introduction : "暂无"}
-          </div>
-          <div className={"doctorDesc__experience__goodAt"}>
-            擅长: {this.props.skills ? this.props.skills : "暂无"}
-          </div>
-        </div>
+export default function DoctorDesc(props) {
+  const { introduction, skills } = props;
+  const arrowRef = useRef();
+  const infoContainerRef = useRef();
+  const infoRef = useRef();
+  let infoExpand = false; //展开或隐藏全部信息
+
+  const toggle = useCallback(() => {
+    const arrowDOM = arrowRef.current;
+    const infoContainerDOM = infoContainerRef.current;
+    const infoDOM = infoRef.current;
+    if (infoExpand === false) {
+      infoContainerDOM.style.height = infoDOM.offsetHeight + 80 + "px";
+      infoExpand = true;
+    } else {
+      infoContainerDOM.style.height = null;
+      infoExpand = false;
+    }
+  }, []);
+
+
+  return (
+    <div className={"doctorDesc_container border-top"} ref={infoContainerRef}>
+      <div className={"doctorDesc__title"}>医生简介</div>
+      <div className={"doctorDesc_info_wrapper"} ref={infoRef}>
+        <span className={"doctorDesc__experience__goodAt"}>
+          经历: {introduction ? introduction : "暂无"}
+        </span>
+        <span className={"doctorDesc__experience__goodAt"}>
+          擅长: {skills ? skills : "暂无"}
+        </span>
       </div>
-    );
-  }
+      <span className="iconfont icon-arrow" onClick={toggle} ref={arrowRef}>
+      &#xe628;
+      </span>
+    </div>
+  );
 }

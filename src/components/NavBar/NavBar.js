@@ -25,14 +25,7 @@ export default function NavBar(props) {
       </div>
       {Boolean(isShowCloseIcon) && (
         <div className="header-close" onClick={() => onClose()}>
-          <svg width="42" height="42">
-            <polyline
-              points="25,13 16,21 25,29"
-              stroke="black"
-              strokeWidth="1"
-              fill="none"
-            />
-          </svg>
+          <i className="iconfont" style={{fontSize:"20px"}}>&#xe615;</i>
         </div>
       )}
       <h1 className="header-title">{title}</h1>

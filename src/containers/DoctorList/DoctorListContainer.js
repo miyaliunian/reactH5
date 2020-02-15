@@ -43,7 +43,6 @@ class DoctorListContainer extends Component {
   render() {
     const { name } = this.props.match.params
     const { doctors, reservations, actionTabKey } = this.props
-    console.log(reservations)
     return (
       <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
         <DoctorTabs

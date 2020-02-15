@@ -1,21 +1,42 @@
 @import "../../../../assets/less/varibles";
 
-.doctorDesc {
-  background: white;
-  padding: 15px 20px 20px 20px;
-  border-bottom: 1px solid rgb(213, 213, 213);
+.doctorDesc_container {
+  background: #fff;
+  padding: 15px 50px 5px 15px;
+  position: relative;
+  border-bottom: 0.5px solid rgb(213, 213, 213);
+  height: 85px;
+  overflow: hidden;
+  transition: height .5s;
+  transform: translateZ(0);
   >div {
     font-size: 15px;
   }
-  .doctorDesc__info {
+
+  .doctorDesc_info_wrapper {
     margin-top: 15px;
+    font-size: 13px;
+    color: #686868;
+
     .doctorDesc__experience__goodAt {
+      width: 100%;
+      // height: auto;
+      display: block;
       margin-bottom: 3px;
-      font-size: 14px;
-      color: rgb(130, 130, 130);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+
+      line-height: 20px;
+      //white-space: nowrap;
+      //overflow: hidden;
+      //text-overflow: ellipsis;
     }
   }
+
+  .icon-arrow {
+    position: absolute;
+    top: 45px;
+    right: 22px;
+    color:#aaa
+  }
+
+  
 }
