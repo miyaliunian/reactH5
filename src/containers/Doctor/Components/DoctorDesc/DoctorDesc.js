@@ -1,10 +1,10 @@
-// /**
-//  * Class: DoctorDesc
-//  * Author: wufei
-//  * Date: 2019/6/25
-//  * Description:
-//  *
-//  */
+ /**
+  * Class: DoctorDesc
+  * Author: wufei
+  * Date: 2019/6/25
+  * Description:
+  *
+  */
 import React, { useRef, useCallback } from "react";
 import "./style.less";
 
@@ -21,9 +21,11 @@ export default function DoctorDesc(props) {
     const infoDOM = infoRef.current;
     if (infoExpand === false) {
       infoContainerDOM.style.height = infoDOM.offsetHeight + 80 + "px";
+      arrowDOM.classList.add("arrow-rotate");
       infoExpand = true;
     } else {
       infoContainerDOM.style.height = null;
+      arrowDOM.classList.remove("arrow-rotate");
       infoExpand = false;
     }
   }, []);

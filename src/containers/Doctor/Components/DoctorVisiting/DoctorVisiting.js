@@ -29,6 +29,10 @@ class DoctorVisiting extends Component {
     this.reservationInfoSel = {};
   }
 
+  toggleCliIntervalShow=()=>{
+    this.setState({ cliIntervalShow: !this.state.cliIntervalShow });
+  }
+
   render() {
     const {
       isLastPage,
@@ -52,9 +56,7 @@ class DoctorVisiting extends Component {
           <div>出诊时间</div>
           <div
             className={"doctorVisiting__title__right"}
-            onClick={() => {
-              this.setState({ cliIntervalShow: !this.state.cliIntervalShow });
-            }}
+            onClick={this.toggleCliIntervalShow}
           >
             <div>{this.defSelClinic}</div>
             <div style={{color:"#aaa",marginLeft:"10px"}}>
