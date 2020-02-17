@@ -20,7 +20,7 @@ class MyOutpatientPaymentItem extends Component {
         console.group(this.props)
         return outpatientList.map((item, index) => {
             return (
-                <li className="my-my-outpatientPayment-item border-topbottom" onClick={()=>this.gotoDetailPage(item)}>
+                <li className="my-my-outpatientPayment-item border-topbottom" onClick={()=>this.gotoDetailPage(item)} key={item.id}>
                     <div className={'my-outpatientPayment-item-distance'}></div>
                     <div className={'my-outpatientPayment-item-part1 border-topbottom'}>
                         <div className={'my-outpatientPayment-item-part1-left'}>

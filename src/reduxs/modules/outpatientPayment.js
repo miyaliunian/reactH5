@@ -87,6 +87,9 @@ export const actions = {
                     dispatch(loadBalanceInfoSuccess(data.data))
                   }
                 })
+                    .catch(
+                        console.log('未获取到有效门诊缴费信息！')
+                    )
               }
             })
           )
