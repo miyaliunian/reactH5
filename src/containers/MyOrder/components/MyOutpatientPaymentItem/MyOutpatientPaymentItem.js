@@ -18,6 +18,7 @@ class MyOutpatientPaymentItem extends Component {
         const {outpatientList} = this.props;
         console.log("000000000000000000000001")
         console.group(this.props)
+
         return outpatientList.map((item, index) => {
             return (
                 <li className="my-my-outpatientPayment-item border-topbottom" onClick={()=>this.gotoDetailPage(item)} key={item.id}>

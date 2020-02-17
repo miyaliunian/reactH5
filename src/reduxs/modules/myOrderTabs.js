@@ -1,9 +1,10 @@
 /**
  * 我的订单的tab
  */
-import {MYORDERTABKAY} from "@api/Constant";
+import {cityID, MYORDERTABKAY} from "@api/Constant";
 import URL from '@api/httpUrl'
 import {post} from "@api/httpUtil";
+import {Toast} from "antd-mobile";
 
 let tabs = {};
 tabs[MYORDERTABKAY.register] = {
@@ -21,7 +22,12 @@ const initialState = {
     headerTabs: tabs,
     actionKey: MYORDERTABKAY.register,
     registerList: [],
-    outpatientList: []
+    outpatientList: [],
+    isFetching: false,
+    isRegisterLastPage: false,
+    isOutpatientLastPage: false,
+    registerPageno: 0,
+    outpatientPageno: 0
 };
 
 // action types
@@ -36,7 +42,14 @@ const actionTypes = {
 
     FETCH_OUTPATIENT_BY_PAGE_REQUEST: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_REQUEST',
     FETCH_OUTPATIENT_BY_PAGE_SUCCESS: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_SUCCESS',
-    FETCH_OUTPATIENT_BY_PAGE_FAILURE: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_FAILURE'
+    FETCH_OUTPATIENT_BY_PAGE_FAILURE: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_FAILURE',
+
+    LOAD_MORE_REGISTER_SUCCESS:'MYORDER/LOAD_MORE_REGISTER_SUCCESS',
+    LOAD_MORE_ROUTPATIENT_SUCCESS:'MYORDER/LOAD_MORE_ROUTPATIENT_SUCCESS',
+
+    RESET_PAGE_DATA:'MYORDER/RESET_PAGE_DATA',
+    RESET_REGISTER_DATA:'MYORDER/RESET_REGISTER_DATA',
+    RESET_OUTPATIENT_DATA:'MYORDER/RESET_OUTPATIENT_DATA',
 };
 
 // action creators
@@ -67,7 +80,7 @@ export const actions = {
                 console.log("123456789")
                 console.group(data)
                 if (data && data.infocode) {
-                    dispatch(loadRegisterByPageSuccess(data.data.list))
+                    dispatch(loadRegisterByPageSuccess(data.data))
                 }
             })
         }
@@ -83,12 +96,45 @@ export const actions = {
                 console.log("123456789")
                 console.group(data)
                 if (data && data.infocode) {
-                    dispatch(loadOutpatientByPageSuccess(data.data.list))
+                    dispatch(loadOutpatientByPageSuccess(data.data))
                 }
             })
         }
-    }
+    },
 
+
+    /**
+     *  上拉加载更多预约挂号
+     * @returns {function(*=, *): Promise<any>}
+     */
+    pullUpLoadMoreRegister: () => {
+        return (dispatch, getstate) => {
+            const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(getstate().myOrderTabs.registerPageno)
+            return new Promise((resolve, reject) => {
+                return post(targetURL)
+                    .then(response => {
+                        dispatch({ type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response })
+                        resolve()
+                    })
+                    .catch(err => {
+                        Toast.info(err.message)
+                        reject()
+                    })
+            })
+        }
+    },
+
+
+    //清空
+    resetData: () => ({
+        type: actionTypes.RESET_PAGE_DATA
+    }),
+    resetRegisterData: () => ({
+        type: actionTypes.RESET_REGISTER_DATA
+    }),
+    resetOutpatientData: () => ({
+        type: actionTypes.RESET_OUTPATIENT_DATA
+    }),
 };
 //
 // function loadRegisterByPageNo(pageno) {
@@ -161,14 +207,54 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                registerList:action.data
+                registerList: action.data.list,
+                isRegisterLastPage: action.data.lastPage,
+                registerPageno: (action.data.pageNo+=1)
             };
         case actionTypes.FETCH_OUTPATIENT_BY_PAGE_SUCCESS:
             return {
                 ...state,
                 isFetching: false,
-                outpatientList:action.data
+                outpatientList: action.data.list,
+                isOutpatientLastPage: action.data.lastPage,
+                outpatientPageno: (action.data.pageNo+=1)
             };
+        case actionTypes.LOAD_MORE_REGISTER_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                registerList: state.registerList.concat(action.response.data.list),
+                isRegisterLastPage: action.response.data.lastPage,
+                registerPageno: (action.response.data.pageNo+=1)
+            }
+        case actionTypes.RESET_PAGE_DATA:
+            return {
+                ...state,
+                // actionKey: MYORDERTABKAY.register,
+                registerList: [],
+                outpatientList: [],
+                isFetching: false,
+                isRegisterLastPage: false,
+                isOutpatientLastPage: false,
+                registerPageno: 1,
+                outpatientPageno: 1
+            }
+        case actionTypes.RESET_REGISTER_DATA:
+            return {
+                ...state,
+                registerList: [],
+                isFetching: false,
+                isRegisterLastPage: false,
+                registerPageno: 1
+            }
+        case actionTypes.RESET_OUTPATIENT_DATA:
+            return {
+                ...state,
+                outpatientList: [],
+                isFetching: false,
+                isOutpatientLastPage: false,
+                outpatientPageno: 1
+            }
         default:
             return state;
     }
@@ -192,4 +278,15 @@ export const getRegisterList = state => {
 export const getOutpatientList = state => {
     return state.myOrderTabs.outpatientList;
 };
+export const getFetchingStatus = state => {
+    return state.myOrderTabs.isFetching;
+};
+
+export const getIsRegisterLastPage = state => {
+    return state.myOrderTabs.isRegisterLastPage
+}
+
+export const getIsOutpatientLastPage = state => {
+    return state.myOrderTabs.isOutpatientLastPage
+}
 
