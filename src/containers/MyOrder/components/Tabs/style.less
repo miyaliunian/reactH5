@@ -10,6 +10,7 @@
     display: flex;
   }
   .item {
+    width: 100%;
     height: 40px;
     line-height: 40px;
     font-size: 15px;
@@ -18,7 +19,16 @@
     justify-content: center;
     align-items: center;
     &.current {
+      width: 100%;
       color: #0084ff;
+    }
+    &.current::after {
+      content: "";
+      width: 100px;
+      height: 1px;
+      background-color: #0084ff;
+      position: absolute;
+      bottom: 0px;
     }
     &:first-child{
       border-right: 0.5px solid #eaeaea;
