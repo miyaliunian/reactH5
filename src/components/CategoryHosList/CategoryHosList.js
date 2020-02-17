@@ -46,6 +46,9 @@ class CategoryHosList extends Component {
             pullUpLoad
             pullUpLoadMoreData={this.loadMoreData}
             click={true}
+            isLastPgae={false}  //是不是最后一页
+            emptyTxt={'空文本描述'} //空文本描述
+            data={[]} //要遍历的数据
             isPullUpTipHide={false}>
             <ul className={'hospitalizationList_content'}>
               <li>

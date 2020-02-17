@@ -130,7 +130,7 @@ class RegisterDetailContainer extends Component {
             history,
             location
         } = this.props
-        register2SiPrePay(location.state.detail, { ...history })
+        register2SiPrePay(location.state.detail, {...history})
         // register2SiPrePay()
     }
 
@@ -145,7 +145,7 @@ class RegisterDetailContainer extends Component {
             history,
             location
         } = this.props
-        cancelReg(location.state.detail.id, { ...history })
+        cancelReg(location.state.detail.id, {...history})
     }
 
     /**
@@ -190,6 +190,49 @@ class RegisterDetailContainer extends Component {
      */
     generatePaymentStatusPart() {
         const {detail} = this.props.location.state
+        let choice=3;//未知
+        switch (detail.regStatus) {
+            case 0:
+                //线下支付
+                if (detail.paymentMethod == 0) {
+                    choice=1;//已支付
+                } else {
+                    //支付状态为：0未支付、1部分支付；显示支付按钮
+                    switch (detail.paymentStatus) {
+                        case 0:
+                            choice=0;//待支付
+                            break;
+                        case 1:
+                            choice=0;//待支付
+                            break
+                        case 2://支付确认中
+                            choice=1;//已支付
+                            break
+                        case 3://已支付
+                            choice=1;//已支付
+                            break
+                        case 4://部分退款
+                            choice=2;//已退款
+                        case 5://已退款待确认(第三方发送退费申请)
+                            choice=2;//已退款
+                            break
+                        case 6:
+                            choice=2;//已退款
+                            break
+                    }
+                }
+                break
+            case 1:
+                choice=1;//已支付
+                break
+            case 2:
+                //取消
+                choice=2;//已退款
+                break
+            default:
+                break
+        }
+
         // switch (detail.paymentStatus) {
         //     case 0:
         //         return <div className={'registerDetail-part1-value-blue'}>待支付{this.calDayInfo(detail.seenDate)}</div>;
@@ -206,7 +249,7 @@ class RegisterDetailContainer extends Component {
         //     default:
         //         return <div className={'registerDetail-part1-value'}>未知</div>;
         // }
-        switch (detail.regStatus) {
+        switch (choice) {
             case 0:
                 return <div className={'registerDetail-part1-value-blue'}>待支付{this.calDayInfo(detail.seenDate)}</div>;
             case 1:
@@ -225,12 +268,14 @@ class RegisterDetailContainer extends Component {
     calDayInfo(mis) {
         let tarTime = new Date(mis);
         let curTime = new Date();
-        let diff = Math.abs(tarTime.getTime() - curTime.getTime())
+        let diff = (tarTime.getTime() - curTime.getTime())
         let result = parseInt(diff / (1000 * 60 * 60 * 24));
         if (result > 0) {
             return ' (' + result + '天后就诊)';
-        } else {
+        } else if (result==0) {
             return ' (今天就诊)';
+        } else{
+            return '(已过期)';
         }
     }
 
@@ -275,30 +320,80 @@ class RegisterDetailContainer extends Component {
      * @returns {*}
      */
     generatePart5() {
+        console.log('generatePart5');
         const {detail} = this.props.location.state
-        switch (detail.paymentStatus) {
-            case 0: //未支付
-            case 1: //部分支付
-                return (<div className={'registerDetail-part5'}>
+        let showPay=false;
+        let showCancel=false;
+        switch (detail.regStatus) {
+            case 0:
+                //线下支付
+                if (detail.paymentMethod == 0) {
+                    showCancel = true;
+                } else {
+                    //支付状态为：0未支付、1部分支付；显示支付按钮
+                    switch (detail.paymentStatus) {
+                        case 0://未支付
+                        case 1://部分支付
+                            showPay = true;
+                            break
+                        case 2://已支付待确认
+                            break
+                        case 3://已支付
+                            break
+                        case 4://部分退款
+                        case 5://已退款待确认(第三方发送退费申请)
+                            break
+                        case 6://已退款
+                            break
+                    }
+                }
+                break
+            case 1://就诊完成
+                break
+            case 2:
+                //已取
+                break
+            default://预约超期
+                break
+        }
+        return (<div>
+            <div className={'registerDetail-part5'}>
+                {(showPay) ?
                     <div className={'registerDetail-part5-btn-box'} onClick={this.register2Pay.bind(this)}>
                         <div className={'registerDetail-part5-btn-core'}>支付</div>
-                    </div>
+                    </div> : ''
+                }
+                {(showCancel) ?
                     <div className={'registerDetail-part5-btn-box'} onClick={this.goCancelReg.bind(this)}>
                         <div className={'registerDetail-part5-btn-core'}>取消预约</div>
-                    </div>
-                </div>);
-            case 2://已支付待确认
-            case 3://已支付
-                return (<div className={'registerDetail-part5'}>
-                    <div className={'registerDetail-part5-btn-box'}>
-                        <div className={'registerDetail-part5-btn-core'}>取消预约</div>
-                    </div>
-                </div>);
-            case 4:
-            case 5:
-            case 6://已退款
-                return;
-        }
+                    </div> : ''
+                }
+            </div>
+        </div>);
+        // switch (detail.paymentStatus) {
+        //     case 0: //未支付
+        //     case 1: //部分支付
+        //         return (<div className={'registerDetail-part5'}>
+        //             <div className={'registerDetail-part5-btn-box'} onClick={this.register2Pay.bind(this)}>
+        //                 <div className={'registerDetail-part5-btn-core'}>支付</div>
+        //             </div>
+        //             <div className={'registerDetail-part5-btn-box'} onClick={()=>{alert('00000')}}>
+        //             {/*<div className={'registerDetail-part5-btn-box'} onClick={this.goCancelReg.bind(this)}>*/}
+        //                 <div className={'registerDetail-part5-btn-core'}>取消预约</div>
+        //             </div>
+        //         </div>);
+        //     case 2://已支付待确认
+        //     case 3://已支付
+        //         return (<div className={'registerDetail-part5'}>
+        //             <div className={'registerDetail-part5-btn-box'}>
+        //                 <div className={'registerDetail-part5-btn-core'}>取消预约</div>
+        //             </div>
+        //         </div>);
+        //     case 4:
+        //     case 5:
+        //     case 6://已退款
+        //         return;
+        // }
     }
 
 
