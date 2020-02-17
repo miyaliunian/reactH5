@@ -63,6 +63,10 @@ class RegisterDetailContainer extends Component {
                         <div className={'registerDetail-part2-item-value'}>{this.generateSeeDateStr1()}</div>
                     </div>
                     <div className={'registerDetail-part2-item'}>
+                        <div className={'registerDetail-part2-item-key'}></div>
+                        <div className={'registerDetail-part2-item-value'}>{this.generateSeeDateStr2()}</div>
+                    </div>
+                    <div className={'registerDetail-part2-item'}>
                         <div className={'registerDetail-part2-item-key'}>就诊序号</div>
                         <div className={'registerDetail-part2-item-value'}>{detail.seeNo}</div>
                     </div>
@@ -72,7 +76,7 @@ class RegisterDetailContainer extends Component {
                     </div>
                     <div className={'registerDetail-part2-item'}>
                         <div className={'registerDetail-part2-item-key'}>挂号费用</div>
-                        <div className={'registerDetail-part2-item-value-money'}>￥{detail.regFee}</div>
+                        <div className={'registerDetail-part2-item-value-money'}>{'￥'+this.feeValuator(detail.regFee)}</div>
                     </div>
                 </div>
                 <div className={'registerDetail-distance'}></div>
@@ -111,7 +115,7 @@ class RegisterDetailContainer extends Component {
                 <div className={'registerDetail-part6'}>
                     <div className={'registerDetail-part6-fee'}>
                         <div className={'registerDetail-part6-fee-txt'}>费用总额：</div>
-                        <div className={'registerDetail-part6-fee-cost'}>{'￥' + detail.regFee}</div>
+                        <div className={'registerDetail-part6-fee-cost'}>{'￥' + this.feeValuator(detail.regFee)}</div>
                     </div>
                 </div>
                 <LoadingMask/>
@@ -165,7 +169,11 @@ class RegisterDetailContainer extends Component {
         month = month <= 9 ? "0" + month : month;
         day = day <= 9 ? "0" + day : day;
         let weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-        return year + '年' + month + '月' + day + '日 ' + weekday[week] + ' ' + detail.noon + ' ' + detail.beginTime + '-' + detail.endTime;
+        return year + '年' + month + '月' + day + '日 ' + weekday[week] + ' '+detail.noon;
+    }
+    generateSeeDateStr2() {
+        const {detail} = this.props.location.state
+        return detail.beginTime + '-' + detail.endTime;
     }
 
 
@@ -173,16 +181,16 @@ class RegisterDetailContainer extends Component {
      * 根据detail的seenDate，生成指定格式的预约时间：XXXX年XX月XX日9:00-12:00
      * @param mis
      */
-    generateSeeDateStr2() {
-        const {detail} = this.props.location.state
-        let tarTime = new Date(detail.seenDate);
-        let year = tarTime.getFullYear();
-        let month = tarTime.getMonth() + 1;
-        let day = tarTime.getDate();
-        month = month <= 9 ? "0" + month : month;
-        day = day <= 9 ? "0" + day : day;
-        return year + '年' + month + '月' + day + '日' + detail.beginTime + '-' + detail.endTime;
-    }
+    // generateSeeDateStr2() {
+    //     const {detail} = this.props.location.state
+    //     let tarTime = new Date(detail.seenDate);
+    //     let year = tarTime.getFullYear();
+    //     let month = tarTime.getMonth() + 1;
+    //     let day = tarTime.getDate();
+    //     month = month <= 9 ? "0" + month : month;
+    //     day = day <= 9 ? "0" + day : day;
+    //     return year + '年' + month + '月' + day + '日' + detail.beginTime + '-' + detail.endTime;
+    // }
 
     /**
      * 生成缴费状态部分的元素
@@ -286,8 +294,14 @@ class RegisterDetailContainer extends Component {
     }
 
     diseaseValuator(diseaseName) {
-        if (diseaseName) return diseaseName
+        if (diseaseName) return diseaseName;
         else return '未知'
+    }
+
+    feeValuator(fee){
+        if (fee) return fee.toFixed(2);
+        else return '未知'
+
     }
 
 
