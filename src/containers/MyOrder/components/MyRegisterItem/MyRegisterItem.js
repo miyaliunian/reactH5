@@ -2,10 +2,10 @@
  * 我的订单-预约挂号
  */
 import React, {Component} from "react";
-import {
-    actions as myRegisterActions,
-    getRegisterList
-} from "@reduxs/modules/myRegister";
+// import {
+//     actions as myRegisterActions,
+//     getRegisterList
+// } from "@reduxs/modules/myRegister";
 //样式
 import "./style.less";
 import {bindActionCreators} from "redux";
@@ -14,10 +14,10 @@ import {connect} from "react-redux";
 
 class MyRegisterItem extends Component {
     render() {
-        const {registerList} = this.props;
+        const {realList} = this.props;
         console.log("000000000000000000000000")
         console.group(this.props)
-        return registerList.map((item, index) => {
+        return realList.map((item, index) => {
             return (
                 <li className="my-my-outpatientPayment-item border-topbottom" onClick={()=>this.gotoDetailPage(item)} key={item.id}>
                     <div className={'my-outpatientPayment-item-distance'}></div>
@@ -156,21 +156,19 @@ class MyRegisterItem extends Component {
 
 
     componentDidMount() {
-        const {actionTabKey, registerList} = this.props
-        console.log('66666666666666666666666666666')
-        this.props.registerActions.loadRegisterByPage(1)
+        // const {actionTabKey, registerList} = this.props
+        // console.log('66666666666666666666666666666')
+        // this.props.registerActions.loadRegisterByPage(1)
     }
 }
 
 
 const mapStateToProps = state => {
     return {
-        registerList: getRegisterList(state)
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        registerActions: bindActionCreators(myRegisterActions, dispatch)
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MyRegisterItem);

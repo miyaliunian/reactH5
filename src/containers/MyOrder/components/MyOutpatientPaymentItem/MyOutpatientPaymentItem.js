@@ -2,24 +2,21 @@
  * 我的订单-门诊缴费项
  */
 import React, {Component} from "react";
-import {withRouter} from "react-router-dom";
 import {
-    actions as myOutpatientActions,
-    getOutpatientList
-} from "@reduxs/modules/myOutpatientPayment";
+    actions as myOrderTabsActions,
+} from "@reduxs/modules/myOrderTabs";
 //样式
 import "./style.less";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
 class MyOutpatientPaymentItem extends Component {
-
     render() {
-        const {outpatientList} = this.props;
+        const {realList} = this.props;
         console.log("000000000000000000000001")
         console.group(this.props)
 
-        return outpatientList.map((item, index) => {
+        return realList.map((item, index) => {
             return (
                 <li className="my-my-outpatientPayment-item border-topbottom" onClick={()=>this.gotoDetailPage(item)} key={item.id}>
                     <div className={'my-outpatientPayment-item-distance'}></div>
@@ -138,19 +135,20 @@ class MyOutpatientPaymentItem extends Component {
     componentDidMount() {
         const {actionTabKey, registerList} = this.props
         console.log('5555555555555555555555555555')
-        this.props.myOutpatientPaymentActions.loadOutpatientByPage(1)
+        this.props.myOrderTabsActions.loadOutpatientByPage(1)
     }
 
 }
 
 const mapStateToProps = state => {
     return {
-        outpatientList: getOutpatientList(state)
+        // outpatientList: getOutpatientList(state)
     };
 };
 const mapDispatchToProps = dispatch => {
     return {
-        myOutpatientPaymentActions: bindActionCreators(myOutpatientActions, dispatch)
+        // myOutpatientPaymentActions: bindActionCreators(myOutpatientActions, dispatch),
+        myOrderTabsActions: bindActionCreators(myOrderTabsActions, dispatch)
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MyOutpatientPaymentItem);

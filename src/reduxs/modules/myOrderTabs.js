@@ -45,7 +45,7 @@ const actionTypes = {
     FETCH_OUTPATIENT_BY_PAGE_FAILURE: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_FAILURE',
 
     LOAD_MORE_REGISTER_SUCCESS:'MYORDER/LOAD_MORE_REGISTER_SUCCESS',
-    LOAD_MORE_ROUTPATIENT_SUCCESS:'MYORDER/LOAD_MORE_ROUTPATIENT_SUCCESS',
+    LOAD_MORE_OUTPATIENT_SUCCESS:'MYORDER/LOAD_MORE_OUTPATIENT_SUCCESS',
 
     RESET_PAGE_DATA:'MYORDER/RESET_PAGE_DATA',
     RESET_REGISTER_DATA:'MYORDER/RESET_REGISTER_DATA',
@@ -104,6 +104,28 @@ export const actions = {
 
 
     /**
+     *  上拉加载更多门诊缴费
+     * @returns {function(*=, *): Promise<any>}
+     */
+    pullUpLoadMoreOutpatient: () => {
+        return (dispatch, getstate) => {
+            const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(getstate().myOrderTabs.outpatientPageno)
+            return new Promise((resolve, reject) => {
+                return post(targetURL)
+                    .then(response => {
+                        dispatch({ type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response })
+                        resolve()
+                    })
+                    .catch(err => {
+                        Toast.info(err.message)
+                        reject()
+                    })
+            })
+        }
+    },
+
+
+    /**
      *  上拉加载更多预约挂号
      * @returns {function(*=, *): Promise<any>}
      */
@@ -114,6 +136,46 @@ export const actions = {
                 return post(targetURL)
                     .then(response => {
                         dispatch({ type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response })
+                        resolve()
+                    })
+                    .catch(err => {
+                        Toast.info(err.message)
+                        reject()
+                    })
+            })
+        }
+    },
+    /**
+     * 下拉刷新预约注册页面。根据常州人社app逻辑，将页面pageno置为1后，重新加载第一页
+     */
+    pullDownFreshRegister:()=>{
+        return (dispatch, getstate) => {
+            dispatch(resetData());
+            const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(1)
+            return new Promise((resolve, reject) => {
+                return post(targetURL)
+                    .then(response => {
+                        dispatch({ type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response })
+                        resolve()
+                    })
+                    .catch(err => {
+                        Toast.info(err.message)
+                        reject()
+                    })
+            })
+        }
+    },
+    /**
+     * 下拉刷新门诊缴费页面。根据常州人社app逻辑，将页面pageno置为1后，重新加载第一页
+     */
+    pullDownFreshOutpatient:()=>{
+        return (dispatch, getstate) => {
+            dispatch(resetData());
+            const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(1)
+            return new Promise((resolve, reject) => {
+                return post(targetURL)
+                    .then(response => {
+                        dispatch({ type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response })
                         resolve()
                     })
                     .catch(err => {
@@ -176,6 +238,10 @@ const loadOutpatientByPageRequest = () => ({
     type: actionTypes.FETCH_OUTPATIENT_BY_PAGE_REQUEST
 })
 
+const resetData = () => ({
+    type: actionTypes.RESET_PAGE_DATA
+})
+
 const loadOutpatientByPageSuccess = (data) => ({
     type: actionTypes.FETCH_OUTPATIENT_BY_PAGE_SUCCESS,
     data
@@ -226,6 +292,14 @@ const reducer = (state = initialState, action) => {
                 registerList: state.registerList.concat(action.response.data.list),
                 isRegisterLastPage: action.response.data.lastPage,
                 registerPageno: (action.response.data.pageNo+=1)
+            }
+        case actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                outpatientList: state.outpatientList.concat(action.response.data.list),
+                isOutpatientLastPage: action.response.data.lastPage,
+                outpatientPageno: (action.response.data.pageNo+=1)
             }
         case actionTypes.RESET_PAGE_DATA:
             return {

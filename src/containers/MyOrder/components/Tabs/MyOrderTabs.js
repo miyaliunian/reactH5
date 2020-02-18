@@ -13,7 +13,8 @@ import {
     getRegisterList,
     getOutpatientList,
     getFetchingStatus,
-    getIsLastPage, getIsRegisterLastPage, getIsOutpatientLastPage
+    getIsRegisterLastPage,
+    getIsOutpatientLastPage
 } from "@reduxs/modules/myOrderTabs";
 import MyOutpatientPaymentItem from '../../components/MyOutpatientPaymentItem/MyOutpatientPaymentItem'
 import MyRegisterItem from '../../components/MyRegisterItem/MyRegisterItem'
@@ -117,15 +118,30 @@ class MyOrderTabs extends Component {
     //     })
     // }
     /**
-     * 下拉刷新
+     * 下拉刷新预约挂号
      */
-    pullDownFreshRegister = () => {
+    pullDownRegister = () => {
         const {
-            myOrderTabActions: { pullDownFresh }
+            myOrderTabActions: { pullDownFreshRegister }
         } = this.props
 
         return new Promise((resolve, reject) => {
-            pullDownFresh().then(response => {
+            pullDownFreshRegister().then(response => {
+                resolve()
+            })
+        })
+    }
+    /**
+     * 下拉刷新门诊缴费
+     */
+    pullDownOutpatient = () => {
+        console.log('87776666')
+        const {
+            myOrderTabActions: { pullDownFreshOutpatient }
+        } = this.props
+
+        return new Promise((resolve, reject) => {
+            pullDownFreshOutpatient().then(response => {
                 resolve()
             })
         })
@@ -151,6 +167,26 @@ class MyOrderTabs extends Component {
         })
     }
 
+    /**
+     * 上啦加载更多门诊缴费
+     */
+    pullUpLoadOutpatient = () => {
+        const {
+            isOutpatientLastPage,
+            myOrderTabActions: { pullUpLoadMoreOutpatient }
+        } = this.props
+
+        return new Promise((resolve, reject) => {
+            if (isOutpatientLastPage) {
+                resolve()
+                return
+            }
+            pullUpLoadMoreOutpatient().then(response => {
+                resolve()
+            })
+        })
+    }
+
     render() {
         const {actionTabKey, registerList,outpatientList,fetchingStatus,isRegisterLastPage,isOutpatientLastPage} = this.props
         console.log("MyOrderTabs")
@@ -166,18 +202,21 @@ class MyOrderTabs extends Component {
                         <div className={'register-content'}>
                             <ScrollView
                                 pullDownRefresh
-                                doPullDownFresh={this.pullDownFresh}
+                                doPullDownFresh={this.pullDownRegister}
                                 pullUpLoad
                                 fetchingStatus={fetchingStatus}
                                 isLastPgae={isRegisterLastPage}  //是不是最后一页
                                 pullUpLoadMoreData={this.pullUpLoadRegister}
                                 click={true}
                                 data={registerList} //要遍历的数据
-                                emptyTxt={'空文本描述'} //空文本描述
+                                emptyTxt={'什么也没找到'} //空文本描述
                                 isPullUpTipHide={false}>
                                 <ul>
                                     <MyRegisterItem
-                                        {...this.props}
+                                        realList={registerList}
+                                        {
+                                            ...this.props
+                                        }
                                     />
                                 </ul>
                             </ScrollView>
@@ -200,17 +239,18 @@ class MyOrderTabs extends Component {
                         <div className={'register-content'}>
                             <ScrollView
                                 pullDownRefresh
-                                doPullDownFresh={this.pullDownFresh}
+                                doPullDownFresh={this.pullDownOutpatient}
                                 pullUpLoad
                                 fetchingStatus={fetchingStatus}
                                 isLastPgae={isOutpatientLastPage}  //是不是最后一页
-                                pullUpLoadMoreData={this.pullUpLoadMore}
+                                pullUpLoadMoreData={this.pullUpLoadOutpatient}
                                 click={true}
                                 data={outpatientList} //要遍历的数据
-                                emptyTxt={'空文本描述'} //空文本描述
+                                emptyTxt={'什么也没找到'} //空文本描述
                                 isPullUpTipHide={false}>
                                 <ul>
                                     <MyOutpatientPaymentItem
+                                        realList={outpatientList}
                                         {...this.props}
                                     />
                                 </ul>
@@ -243,6 +283,8 @@ class MyOrderTabs extends Component {
                 this.props.myOrderTabActions.loadRegisterByPage(this.props.registerPageno)
                 break;
             case MYORDERTABKAY.outpatientPayment:
+                console.log('8888888888888888800')
+                this.props.myOrderTabActions.loadOutpatientByPage(this.props.registerPageno)
                 break;
             default:
                 return;

@@ -39,8 +39,6 @@ import orderPay from "./orderPay";
 import outpatientPayment from "./outpatientPayment";
 import outpatientPaymentDetail from "./outpatientPaymentDetail";
 import myOrderTabs from "./myOrderTabs";
-import myOutpatientPayment from "./myOutpatientPayment";
-import myRegister from "./myRegister";
 import registerDetail from "./registerDetail";
 
 //合并成根Reducer
@@ -77,8 +75,6 @@ const rootReducer = combineReducers({
   outpatientPayment,
   outpatientPaymentDetail,
   myOrderTabs,
-  myOutpatientPayment,
-  myRegister,
   registerDetail
 });
 

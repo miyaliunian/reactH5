@@ -53,21 +53,21 @@ export const actions = {
         return (dispatch, getstate) => {
 
             const { push } = route
-            let PARAM = {}
-            PARAM.hosId = hospital.id //医院id
-            PARAM.deptName = detail.deptName //科室名称(依排版信息为准)
-            PARAM.doctorId = detail.doctCode //医生id
-
-            /**
-             * 家庭成员对象
-             * @type {T[]}
-             */
-
-
-            //家庭成员id
-            PARAM.personId = detail.memberId
-            //家庭成员mgwid
-            PARAM.cardId = person.mgwId
+            // let PARAM = {}
+            // PARAM.hosId = hospital.id //医院id
+            // PARAM.deptName = detail.deptName //科室名称(依排版信息为准)
+            // PARAM.doctorId = detail.doctCode //医生id
+            //
+            // /**
+            //  * 家庭成员对象
+            //  * @type {T[]}
+            //  */
+            //
+            //
+            // //家庭成员id
+            // PARAM.personId = detail.memberId
+            // //家庭成员mgwid
+            // PARAM.cardId = person.mgwId
 
 
 
