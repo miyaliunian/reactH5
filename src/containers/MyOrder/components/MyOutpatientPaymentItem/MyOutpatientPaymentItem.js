@@ -41,7 +41,8 @@ class MyOutpatientPaymentItem extends Component {
                         </div>
                     </div>
                     <div className={'my-outpatientPayment-item-part3 border-bottom'} >
-                        <div className={'my-outpatientPayment-item-part3-cost'}>合计：￥{item.totCost}</div>
+                        <div className={'my-outpatientPayment-item-part3-txt'}>合计：</div>
+                        <div className={'my-outpatientPayment-item-part3-cost'}>￥{item.totCost}</div>
                     </div>
                 </li>
             );
