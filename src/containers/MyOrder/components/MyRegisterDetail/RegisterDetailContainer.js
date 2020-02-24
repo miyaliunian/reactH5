@@ -399,30 +399,6 @@ class RegisterDetailContainer extends Component {
                 </div>:''
             }
         </div>);
-        // switch (detail.paymentStatus) {
-        //     case 0: //未支付
-        //     case 1: //部分支付
-        //         return (<div className={'registerDetail-part5'}>
-        //             <div className={'registerDetail-part5-btn-box'} onClick={this.register2Pay.bind(this)}>
-        //                 <div className={'registerDetail-part5-btn-core'}>支付</div>
-        //             </div>
-        //             <div className={'registerDetail-part5-btn-box'} onClick={()=>{alert('00000')}}>
-        //             {/*<div className={'registerDetail-part5-btn-box'} onClick={this.goCancelReg.bind(this)}>*/}
-        //                 <div className={'registerDetail-part5-btn-core'}>取消预约</div>
-        //             </div>
-        //         </div>);
-        //     case 2://已支付待确认
-        //     case 3://已支付
-        //         return (<div className={'registerDetail-part5'}>
-        //             <div className={'registerDetail-part5-btn-box'}>
-        //                 <div className={'registerDetail-part5-btn-core'}>取消预约</div>
-        //             </div>
-        //         </div>);
-        //     case 4:
-        //     case 5:
-        //     case 6://已退款
-        //         return;
-        // }
     }
 
 
