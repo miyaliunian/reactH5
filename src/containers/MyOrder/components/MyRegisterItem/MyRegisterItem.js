@@ -98,7 +98,8 @@ class MyRegisterItem extends Component {
                             statusLabel = '退款中'
                             break
                         case 6:
-                            statusLabel = "已退款"
+                            // statusLabel = "已退款"
+                            statusLabel = "已取消预约"
                             break
                     }
                 }

@@ -45,14 +45,18 @@ class OutpatientPaymentDetailContainer extends Component {
       <SafeAreaView showBar={true} title={'门诊缴费详情'} isRight={false} handleBack={this.handleBack}>
         <div className={'outpatientPaymentDetail-distance'}></div>
         <div className={'outpatientPaymentDetail-content'}>
-          <div className={'outpatientPaymentDetail-part1'}>
-            <div className={'outpatientPaymentDetail-part1-header border-bottom'}>
+          <div className={'outpatientPaymentDetail-part1 border-bottom'}>
+            <div className={'outpatientPaymentDetail-part1-header'}>
               <div className={'outpatientPaymentDetail-part1-header-name'}>{detail.patientName}</div>
               <div className={'outpatientPaymentDetail-part1-header-status'}>
                 {this.paymentStatus2Str(detail.paymentStatus)}
               </div>
             </div>
             <div className={'outpatientPaymentDetail-part1-content border-topbottom'}>
+              <div className={'outpatientPaymentDetail-part1-content-item'}>
+                <div className={'outpatientPaymentDetail-part1-content-item-key'}>单据号</div>
+                <div className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.siBillNo}</div>
+              </div>
               <div className={'outpatientPaymentDetail-part1-content-item'}>
                 <div className={'outpatientPaymentDetail-part1-content-item-key'}>就诊医院</div>
                 <div className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.hospitalName}</div>
@@ -139,24 +143,41 @@ class OutpatientPaymentDetailContainer extends Component {
   //   );
   // }
   paymentStatus2Str(status) {
+    let statusStr='';
+    let statusClass='outpatientPaymentDetail-part1-header-status';
     switch (status) {
       case 0:
-        return '未支付'
+        statusStr= '未支付';
+        statusClass='outpatientPaymentDetail-part1-header-status-blue';
+      break;
       case 1:
-        return '部分支付'
+        statusStr=  '部分支付'
+        break;
       case 2:
-        return '已支付'
+        statusStr=  '已支付'
+        statusClass='outpatientPaymentDetail-part1-header-status-blue';
+        break;
       case 3:
-        return '已支付'
+        statusStr=  '已支付'
+        statusClass='outpatientPaymentDetail-part1-header-status-blue';
+        break;
       case 4:
-        return '部分退款'
+        statusStr=  '部分退款'
+        break;
       case 5:
-        return '已退款'
+        statusStr=  '已退款'
+        break;
       case 6:
-        return '已退款'
+        statusStr=  '已退款'
+        break;
       default:
-        return '未知'
+        statusStr=  '未知'
     }
+    return (
+        <div className={statusClass}>
+          {statusStr}
+        </div>
+    )
   }
 
   generatePaymentUl() {

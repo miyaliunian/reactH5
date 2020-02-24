@@ -112,12 +112,12 @@ class RegisterDetailContainer extends Component {
                     </div>
                 </div>
                 {this.generatePart5()}
-                <div className={'registerDetail-part6'}>
-                    <div className={'registerDetail-part6-fee'}>
-                        <div className={'registerDetail-part6-fee-txt'}>费用总额：</div>
-                        <div className={'registerDetail-part6-fee-cost'}>{'￥' + this.feeValuator(detail.regFee)}</div>
-                    </div>
-                </div>
+                {/*<div className={'registerDetail-part6'}>*/}
+                {/*    <div className={'registerDetail-part6-fee'}>*/}
+                {/*        <div className={'registerDetail-part6-fee-txt'}>费用总额：</div>*/}
+                {/*        <div className={'registerDetail-part6-fee-cost'}>{'￥' + this.feeValuator(detail.regFee)}</div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <LoadingMask/>
             </SafeAreaView>
         )
@@ -338,6 +338,7 @@ class RegisterDetailContainer extends Component {
         const {detail} = this.props.location.state
         let showPay=false;
         let showCancel=false;
+        let showFee=false;
         switch (detail.regStatus) {
             case 0:
                 //线下支付
@@ -347,12 +348,16 @@ class RegisterDetailContainer extends Component {
                     //支付状态为：0未支付、1部分支付；显示支付按钮
                     switch (detail.paymentStatus) {
                         case 0://未支付
+                            showCancel = true;
                         case 1://部分支付
                             showPay = true;
+                            showCancel = true;
                             break
                         case 2://已支付待确认
+                            showCancel = true;
                             break
                         case 3://已支付
+                            showCancel = true;
                             break
                         case 4://部分退款
                         case 5://已退款待确认(第三方发送退费申请)
@@ -363,8 +368,10 @@ class RegisterDetailContainer extends Component {
                 }
                 break
             case 1://就诊完成
+                showFee=true;
                 break
             case 2:
+                showFee=true;
                 //已取
                 break
             default://预约超期
@@ -383,6 +390,14 @@ class RegisterDetailContainer extends Component {
                     </div> : ''
                 }
             </div>
+            {(showFee)?
+                <div className={'registerDetail-part6'}>
+                    <div className={'registerDetail-part6-fee'}>
+                        <div className={'registerDetail-part6-fee-txt'}>费用总额：</div>
+                        <div className={'registerDetail-part6-fee-cost'}>{'￥' + this.feeValuator(detail.regFee)}</div>
+                    </div>
+                </div>:''
+            }
         </div>);
         // switch (detail.paymentStatus) {
         //     case 0: //未支付
