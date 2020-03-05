@@ -72,57 +72,12 @@ class MyOrderTabs extends Component {
         return aray;
     }
 
-    // /**
-    //  * 渲染我的订单content
-    //  * @returns {Array}
-    //  */
-    // renderOrderContent() {
-    //     const {actionTabKey, registerList,outpatientList} = this.props
-    //     console.log('renderOrderContent actionTabKey: ' + actionTabKey)
-    //     console.group(this.props)
-    //     switch (actionTabKey) {
-    //         case MYORDERTABKAY.register:
-    //             return registerList.map((item, index) => {
-    //                 return <MyOutpatientPaymentItem/>;
-    //             });
-    //         case MYORDERTABKAY.outpatientPayment:
-    //             console.log("9999999999999999999");
-    //             // this.props.myOrderTabActions.loadOutpatientByPage(this.state.outpatientPageno);
-    //             return outpatientList.map((item, index) => {
-    //                 return <MyRegisterItem/>;
-    //             });
-    //             break;
-    //         default:
-    //             return;
-    //     }
-    // }
-    //
-    //
-    // renderRegisterContent() {
-    //     const {actionTabKey, registerList,outpatientList} = this.props
-    //     console.log('renderRegisterContent actionTabKey: ' + actionTabKey)
-    //     console.group(this.props)
-    //
-    //     return registerList.map((item, index) => {
-    //         return <MyOutpatientPaymentItem/>;
-    //     });
-    // }
-    //
-    //
-    // renderOutpatientContent() {
-    //     const {actionTabKey, registerList,outpatientList} = this.props
-    //     console.log('renderOutpatientContent actionTabKey: ' + actionTabKey)
-    //     console.group(this.props)
-    //     return outpatientList.map((item, index) => {
-    //         return <MyRegisterItem/>;
-    //     })
-    // }
     /**
      * 下拉刷新预约挂号
      */
     pullDownRegister = () => {
         const {
-            myOrderTabActions: { pullDownFreshRegister }
+            myOrderTabActions: {pullDownFreshRegister}
         } = this.props
 
         return new Promise((resolve, reject) => {
@@ -137,7 +92,7 @@ class MyOrderTabs extends Component {
     pullDownOutpatient = () => {
         console.log('87776666')
         const {
-            myOrderTabActions: { pullDownFreshOutpatient }
+            myOrderTabActions: {pullDownFreshOutpatient}
         } = this.props
 
         return new Promise((resolve, reject) => {
@@ -153,7 +108,7 @@ class MyOrderTabs extends Component {
     pullUpLoadRegister = () => {
         const {
             isRegisterLastPage,
-            myOrderTabActions: { pullUpLoadMoreRegister }
+            myOrderTabActions: {pullUpLoadMoreRegister}
         } = this.props
 
         return new Promise((resolve, reject) => {
@@ -173,7 +128,7 @@ class MyOrderTabs extends Component {
     pullUpLoadOutpatient = () => {
         const {
             isOutpatientLastPage,
-            myOrderTabActions: { pullUpLoadMoreOutpatient }
+            myOrderTabActions: {pullUpLoadMoreOutpatient}
         } = this.props
 
         return new Promise((resolve, reject) => {
@@ -188,7 +143,7 @@ class MyOrderTabs extends Component {
     }
 
     render() {
-        const {actionTabKey, registerList,outpatientList,fetchingStatus,isRegisterLastPage,isOutpatientLastPage} = this.props
+        const {actionTabKey, registerList, outpatientList, fetchingStatus, isRegisterLastPage, isOutpatientLastPage} = this.props
         console.log("MyOrderTabs")
         console.group(this.props)
         switch (actionTabKey) {
@@ -197,7 +152,7 @@ class MyOrderTabs extends Component {
                 return (
                     <div className={"doctorTabs"}>
                         <div className={"tab_header border-bottom"}>
-                            {this.renderOrderTabs()}
+                            {this.renderOrderTabs(actionTabKey)}
                         </div>
                         <div className={'register-content'}>
                             <ScrollView
@@ -221,10 +176,6 @@ class MyOrderTabs extends Component {
                                 </ul>
                             </ScrollView>
                         </div>
-                        {/*<MyRegisterItem*/}
-                        {/*    {...this.props}*/}
-                        {/*/>*/}
-                        {/*{this.renderRegisterContent()}*/}
                     </div>
                 );
                 break;
@@ -275,19 +226,21 @@ class MyOrderTabs extends Component {
     }
 
     componentDidMount() {
-        const {actionTabKey, myOrderTabActions: {  resetData }} = this.props
-        resetData();
-        switch (actionTabKey) {
-            case MYORDERTABKAY.register:
-                console.log('777777777777777777')
-                this.props.myOrderTabActions.loadRegisterByPage(this.props.registerPageno)
-                break;
-            case MYORDERTABKAY.outpatientPayment:
-                console.log('8888888888888888800')
-                this.props.myOrderTabActions.loadOutpatientByPage(this.props.registerPageno)
-                break;
-            default:
-                return;
+        const {actionTabKey, myOrderTabActions: {resetData}, history} = this.props
+        if (history.action === 'PUSH') {
+            resetData();
+            switch (actionTabKey) {
+                case MYORDERTABKAY.register:
+                    console.log('777777777777777777')
+                    this.props.myOrderTabActions.loadRegisterByPage(this.props.registerPageno)
+                    break;
+                case MYORDERTABKAY.outpatientPayment:
+                    console.log('8888888888888888800')
+                    this.props.myOrderTabActions.loadOutpatientByPage(this.props.registerPageno)
+                    break;
+                default:
+                    return;
+            }
         }
     }
 
@@ -300,9 +253,9 @@ const mapStateToProps = state => {
         actionTabKey: getActionTabKey(state),
         registerList: getRegisterList(state),
         outpatientList: getOutpatientList(state),
-        fetchingStatus:getFetchingStatus(state),
-        isRegisterLastPage:getIsRegisterLastPage(state),
-        isOutpatientLastPage:getIsOutpatientLastPage(state)
+        fetchingStatus: getFetchingStatus(state),
+        isRegisterLastPage: getIsRegisterLastPage(state),
+        isOutpatientLastPage: getIsOutpatientLastPage(state)
     };
 };
 

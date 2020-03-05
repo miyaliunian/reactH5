@@ -7,8 +7,9 @@ import ScrollView from "@baseUI/ScrollView/scroll";
 import OutpatientPaymentItem from '../../components/OutpatientPaymentItem/OutpatientPaymentItem'
 //Redux
 import {
-    actions as outpatientPaymentActions,
-    getOutpatientPaymentList
+    getOutpatientPaymentList,
+    getFetchingStatus,
+    getIsLastPage
 } from "@reduxs/modules/outpatientPayment";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -68,16 +69,17 @@ class OutpatientPaymentContent extends Component {
     }
 
     render() {
-        const {outpatientPaymentList} = this.props
+        const {outpatientPaymentList, fetchingStatus, isLastPage} = this.props
         return (
             <div className={"outpatientPayment-content"}>
                 <ScrollView
                     pullDownRefresh
                     doPullDownFresh={this.pullDownFresh}
                     pullUpLoad
+                    fetchingStatus={fetchingStatus}
                     pullUpLoadMoreData={this.pullUpLoadMore}
                     click={true}
-                    isLastPage={false}
+                    isLastPgae={isLastPage}//是不是最后一页
                     data={outpatientPaymentList}
                     emptyTxt={'未查询到您的待缴费信息'}
                     isPullUpTipHide={false}>
@@ -104,7 +106,9 @@ class OutpatientPaymentContent extends Component {
 
 const mapStateToProps = state => {
     return {
-        outpatientPaymentList: getOutpatientPaymentList(state)
+        outpatientPaymentList: getOutpatientPaymentList(state),
+        fetchingStatus: getFetchingStatus(state),
+        isLastPage: getIsLastPage(state),
     };
 };
 

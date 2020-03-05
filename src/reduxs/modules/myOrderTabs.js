@@ -57,6 +57,8 @@ export const actions = {
 
     //切换tab
     changeTab: (key, i) => {
+        console.log('key');
+        console.log(key);
         return (dispatch, getstate) => {
             dispatch({type: actionTypes.CHANGE_TAB_DOCTOR, actionKey: key});
             i()
