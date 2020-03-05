@@ -44,7 +44,6 @@ class DoctorContainer extends Component {
         title={"医生详情"}
         isRight={false}
         handleBack={this.handleBack}
-        ref={"doctor"}
       >
         <div className={"doctor"}>
           <div id={"doctorDetailHeader"} className={"doctorDetailHeader"}>

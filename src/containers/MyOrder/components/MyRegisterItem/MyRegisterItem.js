@@ -2,10 +2,10 @@
  * 我的订单-预约挂号
  */
 import React, {Component} from "react";
-// import {
-//     actions as myRegisterActions,
-//     getRegisterList
-// } from "@reduxs/modules/myRegister";
+
+import {
+    actions as myOrderTabActions
+} from "@reduxs/modules/myOrderTabs";
 //样式
 import "./style.less";
 import {bindActionCreators} from "redux";
@@ -19,19 +19,23 @@ class MyRegisterItem extends Component {
         console.group(this.props)
         return realList.map((item, index) => {
             return (
-                <li className="my-my-outpatientPayment-item border-topbottom" onClick={()=>this.gotoDetailPage(item)} key={item.id}>
+                <li className="my-my-outpatientPayment-item border-topbottom"
+                    key={item.id}>
                     <div className={'my-outpatientPayment-item-distance'}></div>
-                    <div className={'my-outpatientPayment-item-part1 border-topbottom'}>
+                    <div className={'my-outpatientPayment-item-part1 border-topbottom'}
+                         onClick={() => this.gotoDetailPage(item)}>
                         <div className={'my-outpatientPayment-item-part1-left'}>
                             <div className={'my-outpatientPayment-item-part1-left-hos'}>{item.hosName}</div>
-                            <div className={'my-outpatientPayment-item-part1-left-date'}>{this.timeChanger(item.regDate)}</div>
+                            <div
+                                className={'my-outpatientPayment-item-part1-left-date'}>{this.timeChanger(item.regDate)}</div>
                         </div>
                         <div className={'my-outpatientPayment-item-part1-right'}>
                             {this.packagePaymentStatusDiv(item)}
                             {/*<div className={'my-outpatientPayment-item-part1-right-status'}>{item.paymentStatus}</div>*/}
                         </div>
                     </div>
-                    <div className={'my-outpatientPayment-item-part2 border-bottom'}>
+                    <div className={'my-outpatientPayment-item-part2 border-bottom'}
+                         onClick={() => this.gotoDetailPage(item)}>
                         <div className={'my-outpatientPayment-item-part2-item1'}>
                             <div className={'my-outpatientPayment-item-part2-item-key'}>医生</div>
                             <div className={'my-outpatientPayment-item-part2-item-value'}>就诊人</div>
@@ -41,66 +45,80 @@ class MyRegisterItem extends Component {
                             <div className={'my-outpatientPayment-item-part2-item-value'}>{item.patientName}</div>
                         </div>
                     </div>
-                    <div className={'my-outpatientPayment-item-part3 border-bottom'} >
+                    <div className={'my-outpatientPayment-item-part3 border-bottom'}>
                         <div className={'my-outpatientPayment-item-part3-txt'}>合计：</div>
                         <div className={'my-outpatientPayment-item-part3-cost'}>￥{item.regFee}</div>
+                        {this.packagePaymentButtonDiv(item)}
+                        {/*<div className={'my-outpatientPayment-item-part3-btn-div'}>*/}
+                        {/*    <div className={'my-outpatientPayment-item-part3-btn blue'}>去支付</div>*/}
+                        {/*    <div className={'my-outpatientPayment-item-part3-btn'}*/}
+                        {/*         onClick={() => this.cancelRegistration(item)}>取消预约*/}
+                        {/*    </div>*/}
+                        {/*    <div className={'my-outpatientPayment-item-part3-btn blue'}*/}
+                        {/*         onClick={() => this.againRegistration(item)}>再次预约*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 </li>
             );
         });
     }
 
-    timeChanger(mil){
+    timeChanger(mil) {
         let curTime = new Date(mil);
         // let year = curTime.getFullYear();
         // let month = String(curTime.getMonth() + 1).padStart(2,"0");
         // let day = String(curTime.getDate()).padStart(2,"0");
         let year = curTime.getFullYear();
-        let month = curTime.getMonth()+1;
+        let month = curTime.getMonth() + 1;
         let day = curTime.getDate();
-        let hour=curTime.getHours();
-        let minute=curTime.getMinutes();
-        let second=curTime.getSeconds();
-        month = month <= 9 ? "0"+month : month;
-        day = day <= 9 ? "0"+day : day;
-        hour = hour <= 9 ? "0"+hour : hour;
-        minute = minute <= 9 ? "0"+minute : minute;
-        second = second <= 9 ? "0"+second : second;
-        return year + "-" + month + "-" + day+" "+hour+":"+minute+":"+second;
+        let hour = curTime.getHours();
+        let minute = curTime.getMinutes();
+        let second = curTime.getSeconds();
+        month = month <= 9 ? "0" + month : month;
+        day = day <= 9 ? "0" + day : day;
+        hour = hour <= 9 ? "0" + hour : hour;
+        minute = minute <= 9 ? "0" + minute : minute;
+        second = second <= 9 ? "0" + second : second;
+        return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
     }
 
-    packagePaymentStatusDiv(item){
-        let statusLabel='';
-        let divClassName='my-outpatientPayment-item-part1-right-status';
+    packagePaymentStatusDiv(item) {
+        let statusLabel = '';
+        let divClassName = 'my-outpatientPayment-item-part1-right-status';
         switch (item.regStatus) {
             case 0:
                 //线下支付
                 if (item.paymentMethod == 0) {
-                    divClassName='my-outpatientPayment-item-part1-right-status-blue';
+                    divClassName = 'my-outpatientPayment-item-part1-right-status-blue';
                     statusLabel = '预约成功'
                 } else {
                     //支付状态为：0未支付、1部分支付；显示支付按钮
                     switch (item.paymentStatus) {
                         case 0:
                         case 1:
-                            statusLabel = '待支付';
-                            divClassName='my-outpatientPayment-item-part1-right-status-blue';
-                            break
+                            return (
+                                <div className={'my-outpatientPayment-item-part3-btn-div'}>
+                                    <div className={'my-outpatientPayment-item-part3-btn blue'}>去支付</div>
+                                </div>
+                            );
                         case 2:
-                            statusLabel = '支付确认中';
-                            break
                         case 3:
-                            statusLabel = '已支付';
-                            divClassName='my-outpatientPayment-item-part1-right-status-blue';
-                            break
+                            return (
+                                <div className={'my-outpatientPayment-item-part3-btn-div'}>
+                                    <div className={'my-outpatientPayment-item-part3-btn'}
+                                         onClick={() => this.cancelRegistration(item)}>取消预约
+                                    </div>
+                                    <div className={'my-outpatientPayment-item-part3-btn blue'}
+                                         onClick={() => this.againRegistration(item)}>再次预约
+                                    </div>
+                                </div>
+                            );
                         case 4://部分退款
                         case 5://已退款待确认(第三方发送退费申请)
-                            statusLabel = '退款中'
-                            break
                         case 6:
                             // statusLabel = "已退款"
-                            statusLabel = "已取消预约"
-                            break
+                            return (<div></div>);
                     }
                 }
                 break
@@ -114,6 +132,55 @@ class MyRegisterItem extends Component {
             default:
                 statusLabel = '预约超期'
                 break
+        }
+        return (<div className={divClassName}>
+            {statusLabel}
+        </div>);
+    }
+
+
+    packagePaymentButtonDiv(item) {
+        let statusLabel = '';
+        let divClassName = 'my-outpatientPayment-item-part1-right-status';
+        switch (item.regStatus) {
+            case 0:
+                //线下支付
+                if (item.paymentMethod == 0) {
+                    return (<di></di>);
+                } else {
+                    //支付状态为：0未支付、1部分支付；显示支付按钮
+                    switch (item.paymentStatus) {
+                        case 0:
+                            return (<di></di>);
+                        case 1:
+                            statusLabel = '待支付';
+                            divClassName = 'my-outpatientPayment-item-part1-right-status-blue';
+                            break
+                        case 2:
+                            statusLabel = '支付确认中';
+                            break
+                        case 3:
+                            statusLabel = '已支付';
+                            divClassName = 'my-outpatientPayment-item-part1-right-status-blue';
+                            break
+                        case 4://部分退款
+                        case 5://已退款待确认(第三方发送退费申请)
+                            statusLabel = '退款中'
+                            break
+                        case 6:
+                            // statusLabel = "已退款"
+                            statusLabel = "已取消预约"
+                            break
+                    }
+                }
+                break
+            case 1:
+                return (<di></di>);
+            case 2:
+                //取消
+                return (<di></di>);
+            default:
+                return (<di></di>);
         }
         return (<div className={divClassName}>
             {statusLabel}
@@ -142,8 +209,8 @@ class MyRegisterItem extends Component {
     }
 
     gotoDetailPage(item) {
-        const {history,defaultPerson,selHospital} = this.props;
-        console.log("item: "+JSON.stringify(item));
+        const {history, defaultPerson, selHospital} = this.props;
+        console.log("item: " + JSON.stringify(item));
         let path = {
             pathname: "/registerDetail",
             state: {
@@ -155,6 +222,32 @@ class MyRegisterItem extends Component {
         history.push(path);
     }
 
+    againRegistration(item) {
+        const {history} = this.props;
+        console.log("item: " + JSON.stringify(item));
+        let path = {
+            pathname: "/doctor",
+            state: {
+                doctorInfo: {
+                    id: item.doctId,
+                    name: item.doctName,
+                    deptName: item.deptName,
+                    title: item.docTitle,
+                    hosName: item.hosName,
+                    hosId: item.hosId
+                },
+                deptInfo: {
+                    name: item.deptName
+                }
+            }
+        };
+        history.push(path);
+    }
+
+    cancelRegistration(item) {
+        console.group(item);
+        this.props.myOrderTabActions.cancelRegistration(item.id);
+    }
 
 
     componentDidMount() {
@@ -166,11 +259,11 @@ class MyRegisterItem extends Component {
 
 
 const mapStateToProps = state => {
-    return {
-    };
+    return {};
 };
 const mapDispatchToProps = dispatch => {
     return {
+        myOrderTabActions: bindActionCreators(myOrderTabActions, dispatch)
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MyRegisterItem);

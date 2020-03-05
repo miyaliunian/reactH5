@@ -1,30 +1,37 @@
 @import '../../../../assets/less/varibles';
-.my-outpatientPayment-item-distance{
+
+.my-outpatientPayment-item-distance {
   height: 12px;
   background-color: #f7f7f7;
 }
+
 .my-my-outpatientPayment-item {
   display: flex;
   flex-direction: column;
-  .my-outpatientPayment-item-part1{
+
+  .my-outpatientPayment-item-part1 {
     display: flex;
     flex-direction: row;
     padding: 10px 20px;
-    .my-outpatientPayment-item-part1-left{
+
+    .my-outpatientPayment-item-part1-left {
       display: flex;
       flex-direction: column;
-      width:75%;
-      .my-outpatientPayment-item-part1-left-hos{
+      width: 75%;
+
+      .my-outpatientPayment-item-part1-left-hos {
         font-size: 14px;
         margin: 3px 0px;
       }
-      .my-outpatientPayment-item-part1-left-date{
+
+      .my-outpatientPayment-item-part1-left-date {
         margin-top: 3px;
         font-size: 10px;
         color: #686868;
       }
     }
-    .my-outpatientPayment-item-part1-right{
+
+    .my-outpatientPayment-item-part1-right {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -33,14 +40,17 @@
       line-height: 100%;
       margin-left: auto;
       font-size: 13px;
-      .my-outpatientPayment-item-part1-right-status{
+
+      .my-outpatientPayment-item-part1-right-status {
       }
-      .my-outpatientPayment-item-part1-right-status-blue{
+
+      .my-outpatientPayment-item-part1-right-status-blue {
         color: dodgerblue;
       }
     }
   }
-  .my-outpatientPayment-item-part2{
+
+  .my-outpatientPayment-item-part2 {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -48,46 +58,73 @@
     padding: 15px 20px;
     color: #686868;
     font-size: 14px;
-    .my-outpatientPayment-item-part2-item1{
+
+    .my-outpatientPayment-item-part2-item1 {
       display: flex;
       flex-direction: column;
       font-size: 15px;
-      .my-outpatientPayment-item-part2-item-key{
+
+      .my-outpatientPayment-item-part2-item-key {
         padding: 10px 0px;
       }
-      .my-outpatientPayment-item-part2-item-value{
+
+      .my-outpatientPayment-item-part2-item-value {
         padding: 10px 0px;
       }
     }
-    .my-outpatientPayment-item-part2-item2{
+
+    .my-outpatientPayment-item-part2-item2 {
       display: flex;
       flex-direction: column;
       font-size: 15px;
       margin-left: 18px;
-      .my-outpatientPayment-item-part2-item-key{
+
+      .my-outpatientPayment-item-part2-item-key {
         padding: 10px 0px;
       }
-      .my-outpatientPayment-item-part2-item-value{
+
+      .my-outpatientPayment-item-part2-item-value {
         padding: 10px 0px;
       }
 
     }
   }
-  .my-outpatientPayment-item-part3{
+
+  .my-outpatientPayment-item-part3 {
     display: flex;
     flex-direction: row;
     //font-size: 15px;
-    padding: 15px 20px;
+    padding: 15px 10px 15px 20px;
     align-items: center;
     //justify-content: left;
     //color: #686868;
-    .my-outpatientPayment-item-part3-txt{
+    .my-outpatientPayment-item-part3-txt {
       color: #686868;
       font-size: 14px;
     }
-    .my-outpatientPayment-item-part3-cost{
+
+    .my-outpatientPayment-item-part3-cost {
       //color: #686868;
       font-size: 16px;
+    }
+
+    .my-outpatientPayment-item-part3-btn-div {
+      display: flex;
+      flex-direction: row;
+      margin-left: auto;
+      .my-outpatientPayment-item-part3-btn {
+        width: 80px;
+        height: 30px;
+        font-size: 14px;
+        line-height: 30px;
+        text-align: center;
+        border: #0e88eb 1px solid;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+      .blue{
+        color: #0e88eb;
+      }
     }
   }
 }

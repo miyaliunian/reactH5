@@ -44,12 +44,14 @@ const actionTypes = {
     FETCH_OUTPATIENT_BY_PAGE_SUCCESS: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_SUCCESS',
     FETCH_OUTPATIENT_BY_PAGE_FAILURE: 'MYORDER/FETCH_OUTPATIENT_BY_PAGE_FAILURE',
 
-    LOAD_MORE_REGISTER_SUCCESS:'MYORDER/LOAD_MORE_REGISTER_SUCCESS',
-    LOAD_MORE_OUTPATIENT_SUCCESS:'MYORDER/LOAD_MORE_OUTPATIENT_SUCCESS',
+    LOAD_MORE_REGISTER_SUCCESS: 'MYORDER/LOAD_MORE_REGISTER_SUCCESS',
+    LOAD_MORE_OUTPATIENT_SUCCESS: 'MYORDER/LOAD_MORE_OUTPATIENT_SUCCESS',
 
-    RESET_PAGE_DATA:'MYORDER/RESET_PAGE_DATA',
-    RESET_REGISTER_DATA:'MYORDER/RESET_REGISTER_DATA',
-    RESET_OUTPATIENT_DATA:'MYORDER/RESET_OUTPATIENT_DATA',
+    RESET_PAGE_DATA: 'MYORDER/RESET_PAGE_DATA',
+    RESET_REGISTER_DATA: 'MYORDER/RESET_REGISTER_DATA',
+    RESET_OUTPATIENT_DATA: 'MYORDER/RESET_OUTPATIENT_DATA',
+
+    CANCEL_REGISTEATION_SUCCESS: 'MYORDER/CANCEL_REGISTEATION_SUCCESS'
 };
 
 // action creators
@@ -87,6 +89,42 @@ export const actions = {
             })
         }
     },
+    /**
+     * 取消线上挂号
+     */
+    cancelRegistration: (regId) => {
+        console.log('myOrderTabs cancelRegistration')
+        console.log('regId: ' + regId)
+        return (dispatch, getstate) => {
+            const targetURL = URL.AIP_ORDER_CANCEL_REG(regId)
+            dispatch(loadRegisterByPageRequest())
+            return post(targetURL)
+                .then(data => {
+                    console.log('myOrderTabs cancelRegistration data: ')
+                    console.group(data)
+                    if (data.infocode && data.infocode == 1) {
+
+                        const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(1)
+                        dispatch(loadRegisterByPageRequest())
+                        return post(targetURL).then(data => {
+                            console.log("myOrderTabs cancelRegistration loadRegisterByPageRequest")
+                            console.group(data)
+                            if (data && data.infocode) {
+                                dispatch(loadRegisterByPageSuccess(data.data))
+                            }
+                        })
+                        //取消成功之后 重新刷新订单列表
+                    } else {
+                        // dispatch({type: Types.FETCH_FAILURE})
+                        // DeviceEventEmitter.emit(ToastResultType.TOAST_NAME, data.infomessage, ToastResultType.FAIL);
+                    }
+                })
+                .catch(err => {
+                    dispatch({type: actionTypes.CANCEL_REGISTER_FAILURE})
+                    // isEventEmitter(err)
+                })
+        }
+    },
 
     loadOutpatientByPage: (pageno) => {
         return (dispatch, getstate) => {
@@ -115,7 +153,7 @@ export const actions = {
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
-                        dispatch({ type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response })
+                        dispatch({type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response})
                         resolve()
                     })
                     .catch(err => {
@@ -137,7 +175,7 @@ export const actions = {
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
-                        dispatch({ type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response })
+                        dispatch({type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response})
                         resolve()
                     })
                     .catch(err => {
@@ -150,14 +188,14 @@ export const actions = {
     /**
      * 下拉刷新预约注册页面。根据常州人社app逻辑，将页面pageno置为1后，重新加载第一页
      */
-    pullDownFreshRegister:()=>{
+    pullDownFreshRegister: () => {
         return (dispatch, getstate) => {
             dispatch(resetData());
             const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(1)
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
-                        dispatch({ type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response })
+                        dispatch({type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response})
                         resolve()
                     })
                     .catch(err => {
@@ -170,14 +208,14 @@ export const actions = {
     /**
      * 下拉刷新门诊缴费页面。根据常州人社app逻辑，将页面pageno置为1后，重新加载第一页
      */
-    pullDownFreshOutpatient:()=>{
+    pullDownFreshOutpatient: () => {
         return (dispatch, getstate) => {
             dispatch(resetData());
             const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(1)
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
-                        dispatch({ type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response })
+                        dispatch({type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response})
                         resolve()
                     })
                     .catch(err => {
@@ -277,7 +315,7 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 registerList: action.data.list,
                 isRegisterLastPage: action.data.lastPage,
-                registerPageno: (action.data.pageNo+=1)
+                registerPageno: (action.data.pageNo += 1)
             };
         case actionTypes.FETCH_OUTPATIENT_BY_PAGE_SUCCESS:
             return {
@@ -285,7 +323,7 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 outpatientList: action.data.list,
                 isOutpatientLastPage: action.data.lastPage,
-                outpatientPageno: (action.data.pageNo+=1)
+                outpatientPageno: (action.data.pageNo += 1)
             };
         case actionTypes.LOAD_MORE_REGISTER_SUCCESS:
             return {
@@ -293,7 +331,7 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 registerList: state.registerList.concat(action.response.data.list),
                 isRegisterLastPage: action.response.data.lastPage,
-                registerPageno: (action.response.data.pageNo+=1)
+                registerPageno: (action.response.data.pageNo += 1)
             }
         case actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS:
             return {
@@ -301,7 +339,7 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 outpatientList: state.outpatientList.concat(action.response.data.list),
                 isOutpatientLastPage: action.response.data.lastPage,
-                outpatientPageno: (action.response.data.pageNo+=1)
+                outpatientPageno: (action.response.data.pageNo += 1)
             }
         case actionTypes.RESET_PAGE_DATA:
             return {
@@ -331,6 +369,10 @@ const reducer = (state = initialState, action) => {
                 isOutpatientLastPage: false,
                 outpatientPageno: 1
             }
+        // case actionTypes.CANCEL_REGISTEATION_SUCCESS:
+        //     return {
+        //
+        //     }
         default:
             return state;
     }
