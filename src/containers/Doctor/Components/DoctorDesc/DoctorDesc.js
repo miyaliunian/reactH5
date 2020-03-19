@@ -19,12 +19,13 @@ export default function DoctorDesc(props) {
     const arrowDOM = arrowRef.current;
     const infoContainerDOM = infoContainerRef.current;
     const infoDOM = infoRef.current;
+    console.log(infoContainerDOM.style.height)
     if (infoExpand === false) {
-      infoContainerDOM.style.height = infoDOM.offsetHeight + 80 + "px";
+      infoContainerDOM.style.height = infoDOM.offsetHeight + 70 + "px";
       arrowDOM.classList.add("arrow-rotate");
       infoExpand = true;
     } else {
-      infoContainerDOM.style.height = null;
+      infoContainerDOM.style.height = null
       arrowDOM.classList.remove("arrow-rotate");
       infoExpand = false;
     }
