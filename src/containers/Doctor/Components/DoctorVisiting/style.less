@@ -44,7 +44,12 @@
     }
   }
   .doctorVisiting__list {
-      overflow-y: auto;
+    height: 400px;
+    overflow-x: hidden; //垂直方向可以滚动
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 0 !important;
+    }
     .doctorVisiting__item {
       height: 40px;
       padding: 10px 20px;
@@ -83,6 +88,7 @@
       }
     }
   }
+
 }
 
 .am-modal-content {
