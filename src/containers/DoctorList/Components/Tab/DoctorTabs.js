@@ -79,7 +79,6 @@ class DoctorTabs extends Component {
     return (
       <div className={'doctorTabs'}>
         <div className={'tab_header border-bottom'}>{this.renderTabs()}</div>
-        {/* 右侧过滤 */}
         {this.renderFilterTab()}
       </div>
     )

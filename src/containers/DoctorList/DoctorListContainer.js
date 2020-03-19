@@ -52,7 +52,7 @@ class DoctorListContainer extends Component {
           filterItemClick={i => this.doDoctorListFilter(i)}
           CalendarPaneliShow={() => this.setState({ iShow: true })}
         />
-        <DoctorItem data={doctors} {...this.props.match.params} actionTabKey={actionTabKey} />
+        <DoctorItem data={doctors} {...this.props.match.params} reservations={reservations} actionTabKey={actionTabKey} />
         <Calendar
           show={this.state.iShow}
           reservations={reservations}

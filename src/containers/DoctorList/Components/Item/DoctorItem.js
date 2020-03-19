@@ -16,9 +16,9 @@ import "./style.less";
 
 class DoctorItem extends Component {
   render() {
-    const { data, actionTabKey } = this.props;
+    const { data, actionTabKey,reservations } = this.props;
     let cls = "doctor-content border-bottom";
-    if (actionTabKey === DOCTORTABKAY.date) {
+    if (actionTabKey === DOCTORTABKAY.date && reservations.length !== 0) {
       cls += " current";
     }
     return (
@@ -74,7 +74,6 @@ class DoctorItem extends Component {
         deptInfo: { ...this.props.match.params }
       }
     };
-    // console.log(path)
     this.props.history.push(path);
   }
 
