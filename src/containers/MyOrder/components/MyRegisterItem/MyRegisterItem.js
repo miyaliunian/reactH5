@@ -97,6 +97,59 @@ class MyRegisterItem extends Component {
                     switch (item.paymentStatus) {
                         case 0:
                         case 1:
+                            statusLabel = '待支付';
+                            divClassName='my-outpatientPayment-item-part1-right-status-blue';
+                            break
+                        case 2:
+                            statusLabel = '支付确认中';
+                            break
+                        case 3:
+                            statusLabel = '已支付';
+                            divClassName='my-outpatientPayment-item-part1-right-status-blue';
+                            break
+                        case 4://部分退款
+                        case 5://已退款待确认(第三方发送退费申请)
+                            statusLabel = '退款中'
+                            break
+                        case 6:
+                            // statusLabel = "已退款"
+                            statusLabel = "已取消预约"
+                            break
+                    }
+                }
+                break
+            case 1:
+                statusLabel = '就诊完成'
+                break
+            case 2:
+                //取消
+                statusLabel = '已取消预约'
+                break
+            default:
+                statusLabel = '预约超期'
+                break
+        }
+        return (<div className={divClassName}>
+            {statusLabel}
+        </div>);
+    }
+
+
+    packagePaymentButtonDiv(item) {
+        console.log('item');
+        console.log(item);
+        let statusLabel = '';
+        let divClassName = 'my-outpatientPayment-item-part1-right-status';
+        switch (item.regStatus) {
+            case 0:
+                //线下支付
+                if (item.paymentMethod == 0) {
+                    return (<di></di>);
+                } else {
+                    //支付状态为：0未支付、1部分支付；显示支付按钮
+                    switch (item.paymentStatus) {
+                        case 0:
+                        case 1:
                             return (
                                 <div className={'my-outpatientPayment-item-part3-btn-div'}>
                                     <div className={'my-outpatientPayment-item-part3-btn blue'}>去支付</div>
@@ -123,64 +176,13 @@ class MyRegisterItem extends Component {
                 }
                 break
             case 1:
-                statusLabel = '就诊完成'
-                break
+                //完成
+                return (<div></div>);
             case 2:
-                //取消
-                statusLabel = '已取消预约'
-                break
+                //作废
+                return (<div></div>);
             default:
-                statusLabel = '预约超期'
-                break
-        }
-        return (<div className={divClassName}>
-            {statusLabel}
-        </div>);
-    }
-
-
-    packagePaymentButtonDiv(item) {
-        let statusLabel = '';
-        let divClassName = 'my-outpatientPayment-item-part1-right-status';
-        switch (item.regStatus) {
-            case 0:
-                //线下支付
-                if (item.paymentMethod == 0) {
-                    return (<di></di>);
-                } else {
-                    //支付状态为：0未支付、1部分支付；显示支付按钮
-                    switch (item.paymentStatus) {
-                        case 0:
-                            return (<di></di>);
-                        case 1:
-                            statusLabel = '待支付';
-                            divClassName = 'my-outpatientPayment-item-part1-right-status-blue';
-                            break
-                        case 2:
-                            statusLabel = '支付确认中';
-                            break
-                        case 3:
-                            statusLabel = '已支付';
-                            divClassName = 'my-outpatientPayment-item-part1-right-status-blue';
-                            break
-                        case 4://部分退款
-                        case 5://已退款待确认(第三方发送退费申请)
-                            statusLabel = '退款中'
-                            break
-                        case 6:
-                            // statusLabel = "已退款"
-                            statusLabel = "已取消预约"
-                            break
-                    }
-                }
-                break
-            case 1:
-                return (<di></di>);
-            case 2:
-                //取消
-                return (<di></di>);
-            default:
-                return (<di></di>);
+                return (<div></div>);
         }
         return (<div className={divClassName}>
             {statusLabel}
