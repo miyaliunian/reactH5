@@ -22,6 +22,8 @@ function SafeAreaView(props) {
   },[])
 
 
+  
+
   return (
     <StyledComponent>
       {showBar ? <NavBar title={title} isShowSearchIcon={isRight} onClick={() => setSearchPage(!showSearchPage)}

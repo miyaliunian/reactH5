@@ -69,6 +69,9 @@ class DivisionContainer extends Component {
   }
 
   componentDidMount() {
+    // 修改导航条
+    window["J2C"].setNativeTitle4RN({title:'南通大学附属医院'}, function(e) {});
+    // 业务操作
     const { history } = this.props
     this.scroll = new Bscroll(this.refs.clinic__left, {
       scrollY: true,
