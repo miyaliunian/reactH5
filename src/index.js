@@ -8,6 +8,7 @@ import "@assets/less/border.less";
 import '@assets/iconfont/iconfont.css'
 import App from "@baseUI/App/AppContainer";
 import * as serviceWorker from "./serviceWorker";
+import "@assets/GlobalStyle.js";
 
 ReactDOM.render(
   <Provider store={store}>

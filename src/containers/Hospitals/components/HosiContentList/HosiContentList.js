@@ -13,7 +13,7 @@ import { actions as hospitalActions, getFetchingStatus, getHospitalList, getIsLa
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 //样式
-import './hosiContentList.less'
+import { Wrapper } from "./style";
 
 class HosiContentList extends Component {
   /**
@@ -64,8 +64,9 @@ class HosiContentList extends Component {
 
   render() {
     const {fetchingStatus,iLastPage,hospitalList} = this.props
+    
     return (
-      <div className={'hosi-content'}>
+      <Wrapper isTop={global.isShowNavBar}>
         <ScrollView
           pullDownRefresh
           doPullDownFresh={this.pullDownFresh}
@@ -79,7 +80,7 @@ class HosiContentList extends Component {
           isPullUpTipHide={false}>
           <ul>{this.renderItems()}</ul>
         </ScrollView>
-      </div>
+      </Wrapper>
     )
   }
 

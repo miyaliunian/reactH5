@@ -40,10 +40,6 @@ const dataSource = [
       src: 'https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png'
     },
     {
-      name: '大连人社',
-      src: 'https://www.dpfile.com/sc/eleconfig/20160126203542ktv.png'
-    },
-    {
       name: '医保动态',
       src: 'https://www.dpfile.com/sc/eleconfig/20170223152109dp_wx_maoyan_icon.png'
     },

@@ -9,23 +9,23 @@
 // //洛阳 行政区域代码
 // export const cityID = "410300";
 // export const BASE_URL = "http://ykt.haly12333.org.cn:80/t-core";
-//410305198201053012 qiaobin823
+// //410305198201053012 qiaobin823
 
 //南通测试
 // export const cityID = "320600";
 // export const BASE_URL = "http://58.208.84.112:10086/t-core";
-// 310101196310114532 123456nt
+// //310101196310114532 123456nt
 
 //南通正式
 export const cityID = '320600'
 export const BASE_URL = 'http://www.ntyibao.com/t-core'
-//  530101198001010051  Aa123456
+// //530101198001010051  Aa123456
 
 //常州正式
 // export const cityID = '320400'
 // export const BASE_URL = 'http://app.czrsj.cn:10086/t-core'
 //常州测试账号
-//321182198304262213 qwe123
+// //321182198304262213 qwe123
 
 //本溪
 // export const cityID = "210500";
@@ -33,7 +33,6 @@ export const BASE_URL = 'http://www.ntyibao.com/t-core'
 // //210502198806292141  qwer1234
 
 //预约挂号-医院列表
-//
 
 export const TABKAY = {
   AREA: 'AREA', //全部区域

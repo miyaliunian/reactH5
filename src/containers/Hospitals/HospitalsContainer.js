@@ -17,7 +17,7 @@ import './style.less'
 class HospitalsContainer extends Component {
   render() {
     return (
-      <SafeAreaView showBar={true} title={'医院列表'} isRight={true} handleBack={this.handleBack}>
+      <SafeAreaView showBar={true} title={'医院列表'} isRight={true} >
         <div className={'hospitalsContainer'}>
           <Tabs />
           <HosiContentList />
@@ -27,9 +27,6 @@ class HospitalsContainer extends Component {
     )
   }
 
-  handleBack = () => {
-    this.props.history.goBack()
-  }
 }
 
 export default HospitalsContainer

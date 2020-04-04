@@ -59,15 +59,12 @@ class Home extends Component {
         history.push('/report')
         break
       case 7:
-        history.push('/dlrs')
-        break
-      case 8:
         history.push('/siDynamicInfo')
         break
-      case 9:
+      case 8:
         history.push('/outpatientPayment')
         break
-      case 10:
+      case 9:
         history.push('/myOrder')
         break
     }

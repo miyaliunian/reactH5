@@ -14,19 +14,22 @@ import PropTypes from "prop-types";
 import { StyledComponent } from "./style";
 
 function SafeAreaView(props) {
-  const { showBar, title, isRight, handleBack, isCLose } = props;
+  const { showBar, title, isRight, isCLose } = props;
   const [showSearchPage, setSearchPage] = useState(false);
 
   const onClose=useCallback(()=>{
     props.history.push("/")
   },[])
 
-
-  
+  const handleBack = useCallback(()=>{
+    props.history.goBack()
+  },[])
+ 
+  let show = !global.isShowNavBar ? false : (showBar ? true :false)
 
   return (
     <StyledComponent>
-      {showBar ? <NavBar title={title} isShowSearchIcon={isRight} onClick={() => setSearchPage(!showSearchPage)}
+      { show ? <NavBar title={title} isShowSearchIcon={isRight} onClick={() => setSearchPage(!showSearchPage)}
                          onBack={handleBack} isShowCloseIcon={isCLose} onClose={onClose}/> : null}
       {props.children}
       <SearchSelector
@@ -39,11 +42,10 @@ function SafeAreaView(props) {
 
 
 SafeAreaView.prototype = {
-  showBar: PropTypes.bool.isRequired,
-  isShowSearchIcon:PropTypes.bool,
-  isCLose:PropTypes.bool,
-  title: PropTypes.string.isRequired,
-  handleBack: PropTypes.func.isRequired
+  showBar: PropTypes.bool.isRequired,  // 只能影响局部的
+  isShowSearchIcon:PropTypes.bool, // 右侧的搜索
+  isCLose:PropTypes.bool, // 关闭按钮
+  title: PropTypes.string.isRequired, // 标题
 };
 
 export default withRouter(SafeAreaView);
