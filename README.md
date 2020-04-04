@@ -213,3 +213,11 @@
       // console.log("movingDirectionY",this.bscroll.movingDirectionY)
       // console.log("directionY",this.bscroll.directionY)
       //this.refs.reservations.style.height = "60px";
+
+
+##### 隐藏H5导航条(默认是隐藏的)
+````angular2
+    1.需要显示H5的导航条则需要改两个地方
+        assets/GlobalStyle 中的isShowNavBar:true
+        assets/varibles.less 中的@navScrolH:80px
+```` 
