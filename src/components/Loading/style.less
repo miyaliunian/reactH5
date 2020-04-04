@@ -1,3 +1,4 @@
+@import '../../assets/less/varibles.less';
 .loading {
   display: none;
   align-items: center;
@@ -8,21 +9,21 @@
   bottom: 0;
   left: 0;
   z-index: 999;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   .loading__contain {
     padding: 0px 10px;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgb(32, 46, 63);
-    border-radius: 10px;
-    box-shadow: 2px 3px 8px #333333;
+    // background: rgb(32, 46, 63);
+    // border-radius: 10px;
+    // box-shadow: 2px 3px 8px #333333;
     .loading__txt {
       margin-left: 10px;
       font-size: 13px;
       font-weight: bold;
-      color: white;
+      color: @theme-blue;
     }
   }
 }
