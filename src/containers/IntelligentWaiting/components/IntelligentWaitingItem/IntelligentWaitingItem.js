@@ -229,7 +229,7 @@ class IntelligentWaitingItem extends Component {
   }
 
   setBtmMessage(item) {
-    if (item.hosResponse.length > 0) {
+    if (item.hosResponse !== '') {
       return (
         <div>
           <div className={"intelligentWaitingItem__bottom__hosresponse"}>
