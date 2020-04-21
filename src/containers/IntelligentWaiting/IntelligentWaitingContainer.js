@@ -17,11 +17,15 @@ import LoadingMask from "../../components/Loading/LoadingMask";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  actions as bindCardActions,
-  getBindCardList,
+    actions as bindCardActions,
+    getBindCardList
+} from "@reduxs/modules/bindCard";
+import {
+  actions as waitingActions,
+  // getBindCardList,
   getIntelligentWaitingList,
   getFetchingStatus
-} from "@reduxs/modules/bindCard";
+} from "@reduxs/modules/intelligentWaiting";
 import SafeAreaView from "@baseUI/SafeAreaView/SafeAreaView";
 
 const IntelligentWaitingRefreshTime = {
@@ -35,7 +39,7 @@ class IntelligentWaitingContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.bindCardList !== this.props.bindCardList) {
       let perObj = nextProps.bindCardList.filter(item => item.isSel);
-      this.props.bindCardActions.loadingWaitingListByPerson(perObj[0]);
+      this.props.waitingActions.loadingWaitingListByPerson(perObj[0]);
     }
   }
 
@@ -94,13 +98,13 @@ class IntelligentWaitingContainer extends Component {
   //重新选择家庭成员后重新刷新数据
   refreshCallBack =(data)=>{
     const {
-      bindCardActions: { loadingWaitingListByPerson }
+      waitingActions: { loadingWaitingListByPerson }
     } = this.props;
     loadingWaitingListByPerson(data);
   }
 
   getWaitingListByPerson() {
-    const { bindCardList,bindCardActions:{resetWaitingList,loadingWaitingListByPerson} } = this.props;
+    const { bindCardList,waitingActions:{resetWaitingList,loadingWaitingListByPerson} } = this.props;
     resetWaitingList()
     setTimeout(()=>{
       bindCardList.map(item => {
@@ -127,7 +131,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    bindCardActions: bindActionCreators(bindCardActions, dispatch)
+      bindCardActions: bindActionCreators(bindCardActions, dispatch),
+      waitingActions: bindActionCreators(waitingActions, dispatch)
   };
 };
 

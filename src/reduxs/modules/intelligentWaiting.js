@@ -1,6 +1,3 @@
-import url from '@api/httpUrl'
-import { FETCH_DATA } from '../middleware/api'
-
 /**
  * Class:
  * Author: liu-h
@@ -10,88 +7,114 @@ import { FETCH_DATA } from '../middleware/api'
  *
  */
 
+import { FETCH_DATA } from '@reduxs/middleware/api'
+import URL from '@api/httpUrl'
+import { post } from '@api/httpUtil'
+import { Toast } from 'antd-mobile/lib/index'
+
 const initialState = {
-  personid: '', //家庭成员id
-  isFetching: false,
-  data: [] //列表数据
+    isFetching: false,
+    waitingList: [] // 智能候诊列表数据
 }
 
 const actionTypes = {
-  FETCH_INTELLIGENT_WAITING_REQUEST: 'INTELLIGENTWAITING/FETCH_INTELLIGENT_WAITING_REQUEST',
-  FETCH_INTELLIGENT_WAITING_SUCCESS: 'INTELLIGENTWAITING/FETCH_INTELLIGENT_WAITING_SUCCESS',
-  FETCH_INTELLIGENT_WAITING_FAILURE: 'INTELLIGENTWAITING/FETCH_INTELLIGENT_WAITING_FAILURE',
-
-  SET_PERSONID: 'INTELLIGENTWAITING/SET_PERSONID' //家庭成员id
-  // SET_INTELLIGENTWAITING_ITEM: 'INTELLIGENTWAITING/SET_INTELLIGENTWAITING_ITEM',
-  // RESET_INTELLIGENTWAITING_ITEM: 'INTELLIGENTWAITING/RESET_INTELLIGENTWAITING_ITEM'
+    FETCH_WAITING_REQUEST: 'INTELLIGENTWAITING/FETCH_WAITING_REQUEST',
+    //智能候诊获取列表
+    FETCH_WAITING_SUCCESS: 'INTELLIGENTWAITING/FETCH_WAITING_SUCCESS',
+    FETCH_WAITING_FAILURE: 'INTELLIGENTWAITING/FETCH_WAITING_FAILURE',
+    //重置智能候诊列表
+    RESET_WAITING_ITEM: 'INTELLIGENTWAITING/RESET_WAITING_ITEM',
 }
 
 export const actions = {
-  loadList: () => {
-    return (dispatch, getstate) => {
-      const targetURL = url.API__INTELLIGENT_WAITING_LIST(getstate().intelligentWaiting.personid)
-      return dispatch(loadIntelligentWaitingList(targetURL))
-    }
-  },
 
-  //状态初始值
-  setPersonid: id => ({
-    type: actionTypes.SET_PERSONID,
-    id
-  })
+    loadWaitingList: () => {
+        let person
+        return (dispatch, getstate) => {
+            const targetURL = URL.API__BIND_CARD_LIST()
+            return post(targetURL).then(data => {
+                data.data.map((item, index) => {
+                    if (item.def) {
+                        person = item
+                    }
+                })
+                if (person) {
+                    const targetURL = URL.API__INTELLIGENT_WAITING_LIST(person.id)
+                    return dispatch(loadIntelligentWaitingList(targetURL))
+                }
+            })
+        }
+    },
+    loadingWaitingListByPerson: (person,from) => {
+        return (dispatch, getstate) => {
+            console.log(person)
+            const {id} = person
+            const targetURL = URL.API__INTELLIGENT_WAITING_LIST(id)
+            return dispatch(loadingWaitingListByPersonId(targetURL))
+        }
+    },
+
+    resetWaitingList: () => ({
+        type: actionTypes.RESET_WAITING_ITEM
+    })
 }
 
 const loadIntelligentWaitingList = targetURL => ({
-  [FETCH_DATA]: {
-    types: [
-      actionTypes.FETCH_INTELLIGENT_WAITING_REQUEST,
-      actionTypes.FETCH_INTELLIGENT_WAITING_SUCCESS,
-      actionTypes.FETCH_INTELLIGENT_WAITING_FAILURE
-    ],
-    targetURL
-  }
+    [FETCH_DATA]: {
+        types: [
+            actionTypes.FETCH_WAITING_REQUEST,
+            actionTypes.FETCH_WAITING_SUCCESS,
+            actionTypes.FETCH_WAITING_FAILURE
+        ],
+        targetURL
+    }
+})
+
+const loadingWaitingListByPersonId = targetURL => ({
+    [FETCH_DATA]: {
+        types: [
+            actionTypes.FETCH_WAITING_REQUEST,
+            actionTypes.FETCH_WAITING_SUCCESS,
+            actionTypes.FETCH_WAITING_FAILURE
+        ],
+        targetURL
+    }
 })
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actionTypes.SET_PERSONID:
-      return {
-        ...state,
-        personid: action.id
-      }
-    case actionTypes.FETCH_INTELLIGENT_WAITING_REQUEST:
-      return { ...state, isFetching: true }
-    case actionTypes.FETCH_INTELLIGENT_WAITING_SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        data: action.response.data
-      }
-    case actionTypes.FETCH_INTELLIGENT_WAITING_FAILURE:
-      return { ...state, isFetching: false }
-    case actionTypes.SET_INTELLIGENTWAITING_ITEM:
-      return {
-        ...state,
-        isFetching: false,
-        data: action.item
-      }
-    case actionTypes.RESET_INTELLIGENTWAITING_ITEM:
-      return {
-        ...state,
-        isFetching: false,
-        data: []
-      }
-    default:
-      return state
-  }
+    switch (action.type) {
+        case actionTypes.FETCH_WAITING_REQUEST:
+            return { ...state, isFetching: true }
+        case actionTypes.FETCH_WAITING_SUCCESS:
+            if (action.response.infocode !== 1) {
+                Toast.info(action.response.infomessage, 2)
+                return { ...state, isFetching: false }
+            }
+            return {
+                ...state,
+                isFetching: false,
+                waitingList: action.response.data
+            }
+        case actionTypes.FETCH_WAITING_FAILURE:
+            return { ...state, isFetching: false }
+        case actionTypes.RESET_WAITING_ITEM:
+            return {
+                ...state,
+                isFetching: false,
+                waitingList: []
+            }
+        default:
+            return state
+    }
 }
 export default reducer
 
 //selectors
 export const getIntelligentWaitingList = state => {
-  return state.intelligentWaitingList.data
+    return state.intelligentWaiting.waitingList
 }
 
 export const getFetchingStatus = state => {
-  return state.intelligentWaitingList.isFetching
+    return state.intelligentWaiting.isFetching
 }
+
