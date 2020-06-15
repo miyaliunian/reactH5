@@ -221,3 +221,6 @@
         assets/GlobalStyle 中的isShowNavBar:true
         assets/varibles.less 中的@navScrolH:80px
 ```` 
+#### JS桥
+- 声明文件采用的是自执行匿名函数
+   > 采用自执行匿名函数的生命桥接文件的作用: 创建一个独立的作用域，避免全面局污染
