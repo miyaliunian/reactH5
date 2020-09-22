@@ -67,10 +67,12 @@ class DoctorItem extends Component {
    * @param data
    */
   handelPageNav(data) {
+    let {params:{type}} =  this.props.match
     let path = {
-      pathname: "/doctor",
+      pathname: `/doctor/${type}`,
       state: {
         doctorInfo: data,
+        seeDate: this.props.seeDate,
         deptInfo: { ...this.props.match.params }
       }
     };

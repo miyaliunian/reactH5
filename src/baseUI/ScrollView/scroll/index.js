@@ -318,7 +318,6 @@ class Scroll extends Component {
   };
 
   renderPullUpLoad() {
-    console.log("renderPullUpLoad");
     let { isLastPgae, isPullUpTipHide } = this.props;
 
     if (isPullUpTipHide) {

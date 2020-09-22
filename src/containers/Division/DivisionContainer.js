@@ -24,7 +24,7 @@ import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 
 class DivisionContainer extends Component {
   render() {
-    const { name } = this.props.match.params
+    const { name,type } = this.props.match.params
     const { divisionList, departmentList } = this.props
     return (
       <SafeAreaView showBar={true} title={name} isRight={false} handleBack={this.handleBack}>
@@ -53,7 +53,7 @@ class DivisionContainer extends Component {
                 <div>
                   {departmentList.map(item => {
                     return (
-                      <Link to={`/doctorList/${item.id}/${item.name}`} key={item.id}>
+                      <Link to={`/doctorList/${item.id}/${item.name}/${type}`} key={item.id}>
                         <li className={'clinic__right__item'}>{item.name}</li>
                       </Link>
                     )
@@ -70,8 +70,7 @@ class DivisionContainer extends Component {
 
   componentDidMount() {
 
-    // 修改导航条
-    window["J2C"].setNativeTitle4RN({title:'南通大学附属医院'}, function(e) {});
+
     // 业务操作
     const { history } = this.props
     this.scroll = new Bscroll(this.refs.clinic__left, {

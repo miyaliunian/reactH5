@@ -16,7 +16,7 @@ const SuspenseComponent = Component => props => {
 }
 
 const HomeComponent = lazy(() => import('@containers/Home/HomeContainer'))
-const HospitalsComponent = lazy(() => import('@containers/Hospitals/HospitalsContainer'))
+const HospitalsComponent = lazy(() => import('@containers/Registered/HospitalsContainer'))
 const LoginComponent = lazy(() => import('@containers/Login/LoginContainer'))
 const DivisionComponent = lazy(() => import('@containers/Division/DivisionContainer'))
 const BindCardComponent = lazy(() => import('@components/BindCard/BindCardContainer'))
@@ -85,10 +85,28 @@ const routerMap = [
     component: SuspenseComponent(HomeComponent)
   },
   {
-    path: '/hospitals',
+    path: '/hospitals/:type',
     exact: true,
-    name: 'Hospitals',
+    name: 'Registered',
     component: SuspenseComponent(HospitalsComponent)
+  },
+  {
+    path: '/division/:id/:name/:type',
+    name: 'Division',
+    exact: true,
+    component: SuspenseComponent(DivisionComponent)
+  },
+  {
+    path: '/doctorList/:id/:name/:type',
+    name: 'DoctorList',
+    exact: true,
+    component: SuspenseComponent(DoctorListComponent)
+  },
+  {
+    //挂号(当日、预约)->医生详情
+    path: '/doctor/:type',
+    name: 'Doctor',
+    component: SuspenseComponent(DoctorComponent)
   },
   {
     path: '/login',
@@ -100,24 +118,6 @@ const routerMap = [
     name: 'Register',
     exact: true,
     component: SuspenseComponent(RegisterContainerComponent)
-  },
-  {
-    path: '/division/:id/:name',
-    name: 'Division',
-    exact: true,
-    component: SuspenseComponent(DivisionComponent)
-  },
-  {
-    path: '/doctorList/:id/:name',
-    name: 'DoctorList',
-    exact: true,
-    component: SuspenseComponent(DoctorListComponent)
-  },
-  {
-    //线上预约->医生详情
-    path: '/doctor',
-    name: 'Doctor',
-    component: SuspenseComponent(DoctorComponent)
   },
   {
     // 从我的订单进入医生详情

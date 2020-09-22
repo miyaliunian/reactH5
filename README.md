@@ -1,5 +1,8 @@
-#React 开发 WebApp 框架： ##使用
-
+#React 开发 WebApp 框架： 
+当日挂号、预约挂号 通过路由中的 type 判断
+type：reservation -> 预约挂号
+type：theDay -> 当日挂号
+ 
 ## 配置 Prettier
 
 - Preference ->Tools->File Watchers 左下角新增 Prettier

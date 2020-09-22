@@ -15,6 +15,7 @@
     "better-scroll": "^1.15.2",
     "classnames": "^2.2.6",
     "customize-cra": "^0.9.1",
+    "dayjs": "^1.8.36",
     "http-proxy-middleware": "^0.20.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",

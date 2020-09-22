@@ -47,16 +47,16 @@ export default {
   //医生详情->科室列表
   API_DOCTOR_CLINIC_LIST: doctid => `${BASE_URL}/hisdept/v1.0/list/${doctid}.action`,
   //医生详情->预约列表
-  API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, pageno) =>
-    `${BASE_URL}/schedule/v1.1/list/${hosid}/${deptid}/${doctid}/${pageno}.action`,
+  API_DOCTOR_VISITING_LIST: (hosid, deptid, doctid, seeDate,pageno) =>
+    `${BASE_URL}/schedule/v1.2/list/${hosid}/${deptid}/${doctid}/${seeDate}/${pageno}.action`,
   //医生详情->预约时间段
   API_DOCTOR_SCHEDULE_TIME: scheduleid => `${BASE_URL}/timeinterval/v1.0/list/${scheduleid}.action`,
 
   /* 6:---------------------------------------------预约信息----------*/
   //支付方式:当日挂号或预约挂号
   API_REGISTER_PAY_TYPE: (hosid, scheduleid) => `/baseURL/paymethod/v1.2/regster/${hosid}/${scheduleid}.do`,
-  //获取医疗类别:使用家庭成员的SiTypeCode
-  API_REGISTER_MEDICAL_TYPE: sitypeCode => `/baseURL/mdicaltype/v1.0/getList/${sitypeCode}.do`,
+  //获取医疗类别(家庭成员)
+  API_REGISTER_MEDICAL_TYPE: personId => `/baseURL/register/v1.0/getMedicalTypeAndDisease/${personId}.do`,
   //挂号统一接口
   API_REGISTER_UNION: () => `/baseURL/register/v1.5/regist.do`,
 

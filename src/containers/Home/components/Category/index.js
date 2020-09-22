@@ -20,7 +20,11 @@ const dataSource = [
       src: 'https://www.dpfile.com/sc/eleconfig/20160126203337jiudian.png'
     },
     {
-      name: '线上预约',
+      name: '预约挂号',
+      src: 'https://www.dpfile.com/sc/eleconfig/20160126202841xiuxianyule.png'
+    },
+    {
+      name: '当日挂号',
       src: 'https://www.dpfile.com/sc/eleconfig/20160126202841xiuxianyule.png'
     },
     {

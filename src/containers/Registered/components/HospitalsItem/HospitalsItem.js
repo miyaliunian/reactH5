@@ -11,9 +11,10 @@ import './style.less'
 
 class HospitalsItem extends Component {
   render() {
-    const { itemData } = this.props
+    const { itemData,match } = this.props
+    const {type} = match.params
     return (
-      <Link to={`/division/${itemData.id}/${itemData.name}`}>
+      <Link to={`/division/${itemData.id}/${itemData.name}/${type}`}>
         <li className="hospitalsItem__con border-topbottom">
           <div className="hospitalsItem__title">{itemData.name}</div>
           <div className="hospitalsItem__middle">

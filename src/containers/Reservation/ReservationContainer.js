@@ -68,8 +68,10 @@ class ReservationContainer extends Component {
       reservationActions: { loadPayType, loadBindCardAndMedicalTypeList }
     } = this.props
     const { doctorInfo, reservationInfo } = location.state
+    debugger
     if (history.action === 'PUSH') {
       loadPayType(doctorInfo.hosId, reservationInfo.id, () => {
+        //获取家庭成员 和 医疗类别
         loadBindCardAndMedicalTypeList()
       })
     }
