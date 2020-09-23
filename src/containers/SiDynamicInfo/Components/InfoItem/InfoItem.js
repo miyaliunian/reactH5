@@ -1,6 +1,6 @@
 /**
  * 医保动态列表中的信息项
- * by Cy 20191217
+ * by WF 20191217
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'

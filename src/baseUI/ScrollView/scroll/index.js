@@ -406,7 +406,6 @@ class Scroll extends Component {
 
   renderEmpty() {
     const { emptyTxt } = this.props;
-    console.log("renderEmpty");
     return (
       <div className={"b-empty-wrapper"}>
         <span>{emptyTxt}</span>

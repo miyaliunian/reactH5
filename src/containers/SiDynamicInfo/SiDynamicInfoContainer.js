@@ -1,6 +1,6 @@
 /**
  * SiDynamicInfoContainer
- * by Cy 20191217
+ * by WF 20191217
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'

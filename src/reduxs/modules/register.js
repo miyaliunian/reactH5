@@ -1,5 +1,5 @@
 /**
- * By Cuiyong 20190708
+ * By WF 20190708
  * 用户注册
  */
 import { Toast } from 'antd-mobile'

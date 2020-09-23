@@ -283,14 +283,9 @@ export const actions = {
             } else {
                 PARAM.isFirst = false
             }
-
+            debugger
             //诊断名称
-            if (getstate().reservation.diagName.length > 0) {
-                PARAM.diagName = getstate().reservation.diagName
-            } else {
-                PARAM.diagName = '尚未确诊'
-            }
-
+            PARAM.diagName = null
             /**
              * 医疗列表
              */

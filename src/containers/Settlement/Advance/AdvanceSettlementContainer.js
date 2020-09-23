@@ -26,7 +26,8 @@ import {
   InfoRow,
   Separation,
   PayInfoContent,
-  BtnContent
+  BtnContent,
+  IconWrapper
 } from './style'
 import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 import SlideDownSnackBar from '@components/SlideDownSnackBar/SlideDownSnackBar'
@@ -58,7 +59,7 @@ class AdvanceSettlementContainer extends Component {
       <div id={'AdvanceSettlementContainer'} style={{ height: '100vh', width: '100%', position: 'fixed' }}>
         <SafeAreaView showBar={true} title={'订单预结算'} isRight={false} handleBack={() => this.handleBack()}>
           <PayStatusContent show={paymentStatus === 1 ? true : false}>
-            <img src={icon_pay} alt="" className={'hospitalsItem__middle__icon'} />
+            <IconWrapper src={icon_pay} alt="" />
             <span>医保支付成功,请继续完成自费支付</span>
           </PayStatusContent>
           <PerContent>

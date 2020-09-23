@@ -42,14 +42,15 @@ export const PayStatusContent = styled.div`
     height: 50px;
     border-bottom: 1px solid #f1f1f1;
     display:${props => (props.show ? "flex" : "none")}
-    .hospitalsItem__middle__icon {
+`;
+
+export const IconWrapper = styled.img`
       width: 24px;
       height: 24px;  
       margin-right: 4px;
       border-radius: 12px;
       overflow: hidden;
-    }
-`;
+`
 
 export const PerContent = styled.div`
   line-height: 50px;

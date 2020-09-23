@@ -58,13 +58,16 @@ class PayResultContainer extends Component {
       history
     } = this.props
     debugger
-    if (fromStatus && (fromStatus === 'register' || fromStatus === 'recipe' || fromStatus === 'medicineScan')) {
-      cleanOrderPayType(() => {
-        window['J2C'].back2NativeVC('back2NativeVC', function(e) {})
-      })
-    } else {
-      history.replace('/')
-    }
+
+    history.replace('/')
+
+    // if (fromStatus && (fromStatus === 'register' || fromStatus === 'recipe' || fromStatus === 'medicineScan')) {
+    //   cleanOrderPayType(() => {
+    //     window['J2C'].back2NativeVC('back2NativeVC', function(e) {})
+    //   })
+    // } else {
+    //   history.replace('/')
+    // }
   }
 
   handleBack() {

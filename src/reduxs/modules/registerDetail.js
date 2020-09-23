@@ -37,15 +37,14 @@ export const actions = {
     },
 
     /**
-     * 门诊缴费’去结算‘按钮的提交，到预结算页
+     * 挂号’去结算‘按钮的提交，到预结算页
      * @param data
      * @param route
      * @returns {function(*, *): Promise<T | never>}
      */
     register2SiPrePay: (detail, route) => {
-        console.log('1234567890 register2SiPrePay')
-        console.log('detail: ' + JSON.stringify(detail))
-        console.group(route)
+        console.log('挂号 去结算')
+        console.log(detail)
         const {push} = route
         return (dispatch, getstate) => {
             //纯医保

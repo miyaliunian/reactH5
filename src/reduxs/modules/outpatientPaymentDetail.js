@@ -1,6 +1,6 @@
 /**
  * 门诊缴费
- * By Cy 2020-01-03
+ * By WF 2020-01-03
  */
 import URL from '@api/httpUrl'
 import {post} from '@api/httpUtil'
@@ -46,32 +46,8 @@ export const actions = {
      * @returns {function(*, *): Promise<T | never>}
      */
     onSubmit: (detail,person,hospital,route) => {
-        console.log("1234567890 onSubmit")
-        console.log("detail: "+JSON.stringify(detail))
-        console.log("person: "+JSON.stringify(person))
-        console.log("hospital: "+JSON.stringify(hospital))
         return (dispatch, getstate) => {
-
             const { push } = route
-            // let PARAM = {}
-            // PARAM.hosId = hospital.id //医院id
-            // PARAM.deptName = detail.deptName //科室名称(依排版信息为准)
-            // PARAM.doctorId = detail.doctCode //医生id
-            //
-            // /**
-            //  * 家庭成员对象
-            //  * @type {T[]}
-            //  */
-            //
-            //
-            // //家庭成员id
-            // PARAM.personId = detail.memberId
-            // //家庭成员mgwid
-            // PARAM.cardId = person.mgwId
-
-
-
-
             detail = JSON.parse(
                 JSON.stringify(detail).replace(
                     /totCost/g,
@@ -118,7 +94,6 @@ const reducer = (state = initialState, action) => {
     }
 }
 export default reducer
-//selectors
 export const getFetchingStatus = state => {
     return state.outpatientPaymentDetail.isFetching
 }

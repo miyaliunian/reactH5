@@ -57,8 +57,11 @@ export default {
   API_REGISTER_PAY_TYPE: (hosid, scheduleid) => `/baseURL/paymethod/v1.2/regster/${hosid}/${scheduleid}.do`,
   //获取医疗类别(家庭成员)
   API_REGISTER_MEDICAL_TYPE: personId => `/baseURL/register/v1.0/getMedicalTypeAndDisease/${personId}.do`,
-  //挂号统一接口
-  API_REGISTER_UNION: () => `/baseURL/register/v1.5/regist.do`,
+  //----------------挂号统一接口
+   //   原来的
+  // API_REGISTER_UNION: () => `/baseURL/register/v1.5/regist.do`,
+  // 新增的
+  API_REGISTER_UNION: () => `register/v1.0/registNoExpired.do`,
 
   API_QUERY_REGISTER_IN_MY_ORDER:(pageno)=>
       `/baseURL/register/v1.0/getPageList/${pageno}.do`,//我的订单页，tab中查询预约挂号

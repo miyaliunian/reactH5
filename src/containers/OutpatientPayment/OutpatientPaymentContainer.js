@@ -1,5 +1,5 @@
 /**
- * 门诊缴费 By Cy 2020/01/02
+ * 门诊缴费 By WF 2020/01/02
  */
 import React, {Component} from 'react'
 import Header from '@components/NavBar/NavBar'

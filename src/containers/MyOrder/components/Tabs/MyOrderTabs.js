@@ -20,9 +20,8 @@ import MyOutpatientPaymentItem from '../../components/MyOutpatientPaymentItem/My
 import MyRegisterItem from '../../components/MyRegisterItem/MyRegisterItem'
 
 //样式
-import "./style.less";
+import {Tab, TabItem, Wrapper} from './style'
 import ScrollView from "@baseUI/ScrollView/scroll";
-
 
 class MyOrderTabs extends Component {
 
@@ -30,8 +29,8 @@ class MyOrderTabs extends Component {
         super(props);
         this.state = {
             selTab: 'register',
-            registerPageno: 1,
-            outpatientPageno: 1
+            registerPageno: 1,  // 挂号:用于翻页
+            outpatientPageno: 1 // 门诊缴费:用于翻页
         };
     }
 
@@ -41,11 +40,8 @@ class MyOrderTabs extends Component {
      * @param key
      */
     onChangeTab(key) {
-        const {myOrderTabActions: {changeTab}, doChangeTab} = this.props;
-        console.log("onChangeTab key: " + key);
-        changeTab(key, () => {
-            doChangeTab(key)
-        })
+        const {myOrderTabActions: {changeTab}} = this.props;
+        changeTab(key)
     }
 
 
@@ -54,19 +50,17 @@ class MyOrderTabs extends Component {
      */
     renderOrderTabs() {
         const {tabs, actionTabKey} = this.props;
-        console.log('MyOrderTabs renderTabs');
-        console.group(this.props)
         let aray = [];
         for (let key in tabs) {
             let item = tabs[key];
-            let cls = item.key + " item";
+            let cls = '';
             if (item.key === actionTabKey) {
                 cls += " current";
             }
             aray.push(
-                <div className={cls} key={item.key} onClick={() => this.onChangeTab(item.key)}>
+                <TabItem className={cls} key={item.key} onClick={() => this.onChangeTab(item.key)}>
                     {item.text}
-                </div>);
+                </TabItem>);
         }
 
         return aray;
@@ -90,7 +84,6 @@ class MyOrderTabs extends Component {
      * 下拉刷新门诊缴费
      */
     pullDownOutpatient = () => {
-        console.log('87776666')
         const {
             myOrderTabActions: {pullDownFreshOutpatient}
         } = this.props
@@ -144,17 +137,12 @@ class MyOrderTabs extends Component {
 
     render() {
         const {actionTabKey, registerList, outpatientList, fetchingStatus, isRegisterLastPage, isOutpatientLastPage} = this.props
-        console.log("MyOrderTabs")
-        console.group(this.props)
         switch (actionTabKey) {
             case MYORDERTABKAY.register:
-                console.log('777777777777777777')
                 return (
-                    <div className={"doctorTabs"}>
-                        <div className={"tab_header border-bottom"}>
-                            {this.renderOrderTabs(actionTabKey)}
-                        </div>
-                        <div className={'register-content'}>
+                    <Tab>
+                        {this.renderOrderTabs(actionTabKey)}
+                        <Wrapper>
                             <ScrollView
                                 pullDownRefresh
                                 doPullDownFresh={this.pullDownRegister}
@@ -175,19 +163,15 @@ class MyOrderTabs extends Component {
                                     />
                                 </ul>
                             </ScrollView>
-                        </div>
-                    </div>
+                        </Wrapper>
+                    </Tab>
                 );
                 break;
             case MYORDERTABKAY.outpatientPayment:
-                console.log('8888888888888888888')
                 return (
-                    <div className={"doctorTabs"}>
-                        <div className={"tab_header border-bottom"}>
-                            {this.renderOrderTabs()}
-                        </div>
-
-                        <div className={'register-content'}>
+                    <Tab>
+                        {this.renderOrderTabs()}
+                        <Wrapper>
                             <ScrollView
                                 pullDownRefresh
                                 doPullDownFresh={this.pullDownOutpatient}
@@ -206,12 +190,8 @@ class MyOrderTabs extends Component {
                                     />
                                 </ul>
                             </ScrollView>
-                        </div>
-                        {/*<MyOutpatientPaymentItem*/}
-                        {/*    {...this.props}*/}
-                        {/*/>*/}
-                        {/*{this.renderOutpatientContent()}*/}
-                    </div>
+                        </Wrapper>
+                    </Tab>
                 );
                 break;
             default:
@@ -219,29 +199,9 @@ class MyOrderTabs extends Component {
         }
     }
 
-
-    componentWillUnmount() {
-        // const {myOrderTabActions: {iniActionKey}} = this.props
-        // iniActionKey()
-    }
-
     componentDidMount() {
-        const {actionTabKey, myOrderTabActions: {resetData}, history} = this.props
-        if (history.action === 'PUSH') {
-            resetData();
-            switch (actionTabKey) {
-                case MYORDERTABKAY.register:
-                    console.log('777777777777777777')
-                    this.props.myOrderTabActions.loadRegisterByPage(this.props.registerPageno)
-                    break;
-                case MYORDERTABKAY.outpatientPayment:
-                    console.log('8888888888888888800')
-                    this.props.myOrderTabActions.loadOutpatientByPage(this.props.registerPageno)
-                    break;
-                default:
-                    return;
-            }
-        }
+        const {myOrderTabActions: {resetData}} = this.props
+        resetData();
     }
 
 }

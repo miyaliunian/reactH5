@@ -20,7 +20,7 @@ tabs[MYORDERTABKAY.outpatientPayment] = {
 
 const initialState = {
     headerTabs: tabs,
-    actionKey: MYORDERTABKAY.register,
+    actionKey: MYORDERTABKAY.register, // 默认选中的tab
     registerList: [],
     outpatientList: [],
     isFetching: false,
@@ -58,12 +58,9 @@ const actionTypes = {
 export const actions = {
 
     //切换tab
-    changeTab: (key, i) => {
-        console.log('key');
-        console.log(key);
+    changeTab: (key) => {
         return (dispatch, getstate) => {
             dispatch({type: actionTypes.CHANGE_TAB_DOCTOR, actionKey: key});
-            i()
         };
     },
 
@@ -74,19 +71,25 @@ export const actions = {
         }
     },
 
+    // 加载挂号的订单
     loadRegisterByPage: (pageno) => {
         return (dispatch, getstate) => {
             if (!pageno)
                 pageno = 1
             const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(pageno)
             dispatch(loadRegisterByPageRequest())
-            return post(targetURL).then(data => {
-                console.log("123456789")
-                console.group(data)
-                if (data && data.infocode) {
-                    dispatch(loadRegisterByPageSuccess(data.data))
-                }
-            })
+            console.log("加载挂号的数据")
+            console.log(targetURL)
+            return post(targetURL)
+                .then(data => {
+                    console.log(data)
+                    if (data && data.infocode) {
+                        dispatch(loadRegisterByPageSuccess(data.data))
+                    }
+                })
+                .catch(err => {
+
+                })
         }
     },
     /**
@@ -115,26 +118,25 @@ export const actions = {
                         })
                         //取消成功之后 重新刷新订单列表
                     } else {
-                        // dispatch({type: Types.FETCH_FAILURE})
-                        // DeviceEventEmitter.emit(ToastResultType.TOAST_NAME, data.infomessage, ToastResultType.FAIL);
                     }
                 })
                 .catch(err => {
                     dispatch({type: actionTypes.CANCEL_REGISTER_FAILURE})
-                    // isEventEmitter(err)
                 })
         }
     },
 
+    //加载门诊缴费的数据
     loadOutpatientByPage: (pageno) => {
         return (dispatch, getstate) => {
             if (!pageno)
                 pageno = 1
             const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(pageno)
             dispatch(loadOutpatientByPageRequest())
+            console.log("加载门诊缴费的数据")
+            console.log(targetURL)
             return post(targetURL).then(data => {
-                console.log("123456789")
-                console.group(data)
+                console.log(data)
                 if (data && data.infocode) {
                     dispatch(loadOutpatientByPageSuccess(data.data))
                 }
@@ -150,9 +152,12 @@ export const actions = {
     pullUpLoadMoreOutpatient: () => {
         return (dispatch, getstate) => {
             const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(getstate().myOrderTabs.outpatientPageno)
+            console.log('门诊缴费：上啦加载更多')
+            console.log(targetURL)
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
+                        console.log(response)
                         dispatch({type: actionTypes.LOAD_MORE_OUTPATIENT_SUCCESS, response: response})
                         resolve()
                     })
@@ -171,10 +176,13 @@ export const actions = {
      */
     pullUpLoadMoreRegister: () => {
         return (dispatch, getstate) => {
+            console.log('挂号：上啦加载更多')
             const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(getstate().myOrderTabs.registerPageno)
+            console.log(targetURL)
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
+                        console.log(response)
                         dispatch({type: actionTypes.LOAD_MORE_REGISTER_SUCCESS, response: response})
                         resolve()
                     })
@@ -212,6 +220,8 @@ export const actions = {
         return (dispatch, getstate) => {
             dispatch(resetData());
             const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(1)
+            console.log('下拉门诊缴费')
+            console.log(targetURL)
             return new Promise((resolve, reject) => {
                 return post(targetURL)
                     .then(response => {
@@ -238,31 +248,6 @@ export const actions = {
         type: actionTypes.RESET_OUTPATIENT_DATA
     }),
 };
-//
-// function loadRegisterByPageNo(pageno) {
-//     if (!pageno)
-//         pageno = 1
-//     const targetURL = URL.API_QUERY_REGISTER_IN_MY_ORDER(pageno)
-//     return post(targetURL).then(data => {
-//         console.log("123456789")
-//         console.group(data)
-//         if (data && data.infocode) {
-//             return data.data.list;
-//         }
-//     })
-// }
-// function loadOutpatientByPage(pageno){
-//     if (!pageno)
-//         pageno = 1
-//     const targetURL = URL.API_QUERY_BALANCEINFO_IN_MY_ORDER(pageno)
-//     return post(targetURL).then(data => {
-//         console.log("987654321")
-//         console.group(data)
-//         if (data && data.infocode) {
-//             return data.data.list;
-//         }
-//     })
-// }
 
 
 const loadRegisterByPageRequest = () => ({

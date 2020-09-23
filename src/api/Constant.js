@@ -46,7 +46,8 @@ export const DOCTORTABKAY = {
 }
 export const MYORDERTABKAY = {
   register: 'register', //预约挂号
-  outpatientPayment: 'outpatientPayment' //门诊缴费
+  outpatientPayment: 'outpatientPayment', //门诊缴费
+  // outpatientPayment: 'outpatientPayment' //扫码购药
 }
 
 // -综合排序

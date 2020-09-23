@@ -1,6 +1,6 @@
 /**
  * 门诊缴费列表组件。包括下拉刷新和显示列表项
- * By Cy 2020-01-02
+ * By WF 2020-01-02
  */
 import React, {Component} from "react";
 import ScrollView from "@baseUI/ScrollView/scroll";

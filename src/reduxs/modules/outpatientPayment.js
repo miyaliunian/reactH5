@@ -1,6 +1,6 @@
 /**
  * 门诊缴费
- * By Cy 2020-01-03
+ * By WF 2020-01-03
  */
 import {FETCH_DATA} from '@reduxs/middleware/api'
 import URL from '@api/httpUrl'

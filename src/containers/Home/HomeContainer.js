@@ -12,12 +12,8 @@ import { connect } from 'react-redux'
 import Category from './components/Category'
 import './HomeContainer.less'
 
-const dayjs = require('dayjs')
 class Home extends Component {
   render() {
-    console.log(dayjs(dayjs().format('YYYY-MM-DD')))
-    console.log(dayjs(dayjs(1600617600000).format('YYYY-MM-DD')))
-    console.log(dayjs(dayjs().format('YYYY-MM-DD')).isSame(dayjs(dayjs(1600704000000).format('YYYY-MM-DD'))))
     return (
       <div className={'home'}>
         <Category

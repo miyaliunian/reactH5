@@ -1,6 +1,6 @@
 /**
  * 门诊缴费列表页头部的选择项
- * By Cy 2020-01-02
+ * By WF 2020-01-02
  */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'

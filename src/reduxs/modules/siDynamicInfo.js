@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 
 /**
  * 医保信息 reduce
- * by Cy 20191217
+ * by WF 20191217
  */
 const initialState = {
   isFetching: false,

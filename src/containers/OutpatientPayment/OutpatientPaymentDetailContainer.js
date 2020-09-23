@@ -1,5 +1,6 @@
 /**
- * 门诊缴费详情 By Cy 2020/01/13
+ * 订单列表:门诊缴费详情 By WF 2020/01/13
+ *
  */
 import React, {Component} from 'react'
 import './style.less'
@@ -10,10 +11,6 @@ import LoadingMask from '../../components/Loading/LoadingMask'
 import SafeAreaView from '@baseUI/SafeAreaView/SafeAreaView'
 import {actions as outpatientPaymentDetailActions, getDetail} from '@reduxs/modules/outpatientPaymentDetail'
 
-const IntelligentWaitingRefreshTime = {
-    time: 60000 // 刷新时间一分钟，单位为毫秒
-}
-
 class OutpatientPaymentDetailContainer extends Component {
     constructor(props) {
         super(props)
@@ -23,24 +20,102 @@ class OutpatientPaymentDetailContainer extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        // if (nextProps.bindCardList !== this.props.bindCardList) {
-        //   let perObj = nextProps.bindCardList.filter(item => item.isSel)
-        //   this.props.bindCardActions.loadingWaitingListByPerson(perObj[0])
-        // }
-    }
 
     handleBack = () => {
         this.props.history.goBack()
     }
 
     render() {
-        console.log('000000000000000000000')
-        console.group(this.props)
         const {detail} = this.props.location.state
         const {reservationEntity, reservationName, reservationCode} = this.props.location.state
-        console.log('OutpatientPaymentDetailContainer render this.props')
-        console.group(this.props)
+        let statusLabel = '';
+        let showPayBtn = false //结算按钮是否显示
+        let showPayItem = false // 是否显示医保支付滑块
+        let statusStyle = {color: '#0084ff'}
+        //订单状态：0.未完成  1.完成(通知医院支付成功) 2.取消(用户主动取消、超期）
+        const {balStatus, paymentMethod, paymentStatus} = detail
+        //switch 滑块状态
+        let isChooseMedicare = false
+        let useMedicarePay = false
+        if (paymentMethod) {
+            isChooseMedicare = true
+            useMedicarePay = true
+        }
+        switch (balStatus) { //  getBalStatus 订单状态
+            case 0:
+                //支付状态：0未支付，1部分支付(混合情况)，2已支付待确认(支付宝)，3已支付，4部分退款(医保已退，支付宝未退) 5已退款
+                if (paymentMethod == 0) {
+                    //线下支付
+                    statusLabel = '支付成功'
+                } else {
+                    //线上支付
+                    //支付状态为：0未支付、1部分支付；显示支付按钮
+                    switch (paymentStatus) {
+                        case 0:
+                        case 1:
+                            statusLabel = '待支付'
+                            showPayBtn = true
+                            showPayItem = true
+                            break
+                        case 2:
+                            //支付确认中(第三方支付)
+                            statusLabel = '支付确认中'
+                            break
+                        case 3:
+                            //已支付
+                            statusLabel = '已支付'
+                            break
+                        case 4://部分退款
+                        case 5://已退款待确认(第三方发送退费申请)
+                            statusLabel = '退款中'
+                            statusStyle = {color: '#686868'}
+                            break
+                        case 6://已退款
+                            statusLabel = '已退款'
+                            statusStyle = {color: '#686868'}
+                            showPayBtn = false
+                            showPayItem = false
+                            break
+                        default:
+                            break
+                    }
+                }
+                break
+            case 1:
+                //支付完成
+                statusLabel = '已完成'
+                showPayBtn = false
+                showPayItem = false
+                break
+            case 2:
+                //取消、超期
+                statusStyle = {color: '#686868'}
+                statusLabel = '已取消'
+                showPayBtn = false
+                showPayItem = false
+                //线上支付
+                //支付状态为：0未支付、1部分支付；显示支付按钮
+                switch (paymentStatus) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                        break
+                    case 4://部分退款
+                    case 5:
+                        //已退款待确认(第三方发送退费申请)
+                        statusLabel = '退款中'
+                        break
+                    case 6:
+                        statusLabel = '已退款'
+                        break
+                    default:
+                        break
+                }
+                break
+            default:
+                break
+        }
         return (
             <SafeAreaView showBar={true} title={'门诊缴费详情'} isRight={false} handleBack={this.handleBack}>
                 <div className={'outpatientPaymentDetail-distance'}></div>
@@ -49,7 +124,7 @@ class OutpatientPaymentDetailContainer extends Component {
                         <div className={'outpatientPaymentDetail-part1-header'}>
                             <div className={'outpatientPaymentDetail-part1-header-name'}>{detail.patientName}</div>
                             <div className={'outpatientPaymentDetail-part1-header-status'}>
-                                {this.paymentStatus2Str(detail.paymentStatus)}
+                                {this.paymentStatus2Str(detail)}
                             </div>
                         </div>
                         <div className={'outpatientPaymentDetail-part1-content border-topbottom'}>
@@ -73,58 +148,58 @@ class OutpatientPaymentDetailContainer extends Component {
                                 <div
                                     className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.doctName}</div>
                             </div>
+                            {/*订单取消状态下  不显示统筹、账户、现金支出*/}
+                            {statusLabel == '已取消' ? <div/> :
+                                <div>
+                                    <div className={'outpatientPaymentDetail-part1-content-item'}>
+                                        <div className={'outpatientPaymentDetail-part1-content-item-key'}>统筹</div>
+                                        <div
+                                            className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.pubCost !== '' || detail.pubCost !== null ? `￥${detail.pubCost.toFixed(2)}` : '0.00'}</div>
+                                    </div>
+                                    <div className={'outpatientPaymentDetail-part1-content-item'}>
+                                        <div className={'outpatientPaymentDetail-part1-content-item-key'}>账户</div>
+                                        <div
+                                            className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.payCost !== '' || detail.payCost !== null ? `￥${detail.payCost.toFixed(2)}` : '0.00'}</div>
+                                    </div>
+                                    <div className={'outpatientPaymentDetail-part1-content-item'}>
+                                        <div className={'outpatientPaymentDetail-part1-content-item-key'}>现金</div>
+                                        <div
+                                            className={'outpatientPaymentDetail-part1-content-item-value'}>{detail.ownCost !== '' || detail.ownCost !== null ? `￥${detail.ownCost.toFixed(2)}` : '0.00'}</div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={'outpatientPaymentDetail-distance'}></div>
                     <div className={'outpatientPaymentDetail-part2 border-topbottom'}>
-                        <div className={'outpatientPaymentDetail-part2-header border-bottom'}>缴费项目</div>
-                        {/*{this.generatePaymentUl(detail.hisRecipeDetailList)}*/}
+                        <div className={'outpatientPaymentDetail-part2-header border-bottom'}>缴费项目：</div>
                         <ul className={'outpatientPaymentDetail-part2-items'}>
                             {this.generatePaymentUl()}
-                            {/*<li className={'outpatientPaymentDetail-part2-item border-bottom'}>*/}
-                            {/*    <div className={'outpatientPaymentDetail-part2-item-txt'}>{'补水针x1'}</div>*/}
-                            {/*    <div className={'outpatientPaymentDetail-part2-item-price'}>￥35.00</div>*/}
-                            {/*</li>*/}
                         </ul>
-                        <div className={'outpatientPaymentDetail-part2-footer border-top'}>
-                            <div className={'outpatientPaymentDetail-part2-footer-txt'}>使用医保支付</div>
-                            <div className={'outpatientPaymentDetail-part2-footer-btn'}>
-                                <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
-                                    <IOSSwitch
-                                        // disabled = {true}
-                                        checked={this.state.btnChecked}
-                                        onChange={() => {
-                                            this.setState({
-                                                btnChecked: !this.state.btnChecked
-                                            })
-                                        }}
-                                    />
+                        {/*是否显示医保支付 滑块*/}
+                        {showPayItem ?
+                            <div className={'outpatientPaymentDetail-part2-footer border-top'}>
+                                <div className={'outpatientPaymentDetail-part2-footer-txt'}>使用医保支付</div>
+                                <div className={'outpatientPaymentDetail-part2-footer-btn'}>
+                                    <div style={{flex: 1, justifyContent: 'flex-end', display: 'flex'}}>
+                                        <IOSSwitch
+                                            // disabled = {true}
+                                            checked={this.state.btnChecked}
+                                            onChange={() => {
+                                                this.setState({
+                                                    btnChecked: !this.state.btnChecked
+                                                })
+                                            }}
+                                        />
+                                    </div>
+
                                 </div>
-                                {/*<List>*/}
-                                {/*<Switch*/}
-                                {/*        checked={this.state.btnChecked}*/}
-                                {/*        onClick={() => {*/}
-                                {/*            // set new value*/}
-                                {/*            this.setState({*/}
-                                {/*                btnChecked: !this.state.btnChecked*/}
-                                {/*            })*/}
-                                {/*        }}*/}
-                                {/*/>*/}
-                                {/*</List>*/}
                             </div>
-                        </div>
+                            : <div/>
+                        }
                     </div>
                 </div>
                 {this.generatePart3()}
-                {/*<div className={'outpatientPaymentDetail-part3'}>*/}
-                {/*    <div className={'outpatientPaymentDetail-part3-fee'}>*/}
-                {/*        <div className={'outpatientPaymentDetail-part3-fee-txt'}>费用总额：</div>*/}
-                {/*        <div className={'outpatientPaymentDetail-part3-fee-cost'}>{'￥' + detail.totCost}</div>*/}
-                {/*    </div>*/}
-                {/*    <div onClick={() => this.onSubmit()} className={'outpatientPaymentDetail-part3-btn'}>*/}
-                {/*        去结算*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <LoadingMask/>
             </SafeAreaView>
         )
@@ -139,48 +214,99 @@ class OutpatientPaymentDetailContainer extends Component {
         onSubmit(detail, defaultPerson, selHospital, {...history})
     }
 
-    // componentDidMount() {
-    //   this.props.bindCardActions.loadWaitingList();
-    //   // 定时器，可以修改IntelligentWaitingRefreshTime.time为自己想要的时间
-    //   this.timer = setInterval(
-    //     () => this.timeToRefresh(),
-    //     IntelligentWaitingRefreshTime.time
-    //   );
-    // }
-    paymentStatus2Str(status) {
-        let statusStr = '';
-        let statusClass = 'outpatientPaymentDetail-part1-header-status';
-        switch (status) {
+    // 订单状态
+    paymentStatus2Str(balanceItem) {
+        let statusLabel = '';
+        let showPayBtn = false //结算按钮是否显示
+        let showPayItem = false
+        let statusStyle = {color: '#0084ff'}
+        //订单状态：0.未完成  1.完成(通知医院支付成功) 2.取消(用户主动取消、超期）
+        const {balStatus, paymentMethod, paymentStatus} = balanceItem
+        //switch 滑块状态
+        let isChooseMedicare = false
+        let useMedicarePay = false
+        if (paymentMethod) {
+            isChooseMedicare = true
+            useMedicarePay = true
+        }
+        switch (balStatus) { //  getBalStatus 订单状态
             case 0:
-                statusStr = '未支付';
-                statusClass = 'outpatientPaymentDetail-part1-header-status-blue';
-                break;
+                //支付状态：0未支付，1部分支付(混合情况)，2已支付待确认(支付宝)，3已支付，4部分退款(医保已退，支付宝未退) 5已退款
+                if (paymentMethod == 0) {
+                    //线下支付
+                    statusLabel = '支付成功'
+                } else {
+                    //线上支付
+                    //支付状态为：0未支付、1部分支付；显示支付按钮
+                    switch (paymentStatus) {
+                        case 0:
+                        case 1:
+                            statusLabel = '待支付'
+                            showPayBtn = true
+                            showPayItem = true
+                            break
+                        case 2:
+                            //支付确认中(第三方支付)
+                            statusLabel = '支付确认中'
+                            break
+                        case 3:
+                            //已支付
+                            statusLabel = '已支付'
+                            break
+                        case 4://部分退款
+                        case 5://已退款待确认(第三方发送退费申请)
+                            statusLabel = '退款中'
+                            statusStyle = {color: '#686868'}
+                            break
+                        case 6://已退款
+                            statusLabel = '已退款'
+                            statusStyle = {color: '#686868'}
+                            showPayBtn = false
+                            showPayItem = false
+                            break
+                        default:
+                            break
+                    }
+                }
+                break
             case 1:
-                statusStr = '部分支付'
-                break;
+                //支付完成
+                statusLabel = '已完成'
+                showPayBtn = false
+                showPayItem = false
+                break
             case 2:
-                statusStr = '已支付'
-                statusClass = 'outpatientPaymentDetail-part1-header-status-blue';
-                break;
-            case 3:
-                statusStr = '已支付'
-                statusClass = 'outpatientPaymentDetail-part1-header-status-blue';
-                break;
-            case 4:
-                statusStr = '部分退款'
-                break;
-            case 5:
-                statusStr = '已退款'
-                break;
-            case 6:
-                statusStr = '已退款'
-                break;
+                //取消、超期
+                statusStyle = {color: '#686868'}
+                statusLabel = '已取消'
+                showPayBtn = false
+                showPayItem = false
+                //线上支付
+                //支付状态为：0未支付、1部分支付；显示支付按钮
+                switch (paymentStatus) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                        break
+                    case 4://部分退款
+                    case 5:
+                        //已退款待确认(第三方发送退费申请)
+                        statusLabel = '退款中'
+                        break
+                    case 6:
+                        statusLabel = '已退款'
+                        break
+                    default:
+                        break
+                }
+                break
             default:
-                statusStr = '未知'
+                break
         }
         return (
-            <div className={statusClass}>
-                {statusStr}
+            <div style={statusStyle}>
+                {statusLabel}
             </div>
         )
     }
@@ -199,7 +325,8 @@ class OutpatientPaymentDetailContainer extends Component {
         return (
             <li className={'outpatientPaymentDetail-part2-item'}>
                 <div className={'outpatientPaymentDetail-part2-item-txt'}>{item.itemName + 'x' + item.qty}</div>
-                <div className={'outpatientPaymentDetail-part2-item-price'}>{'￥' + item.totCost}</div>
+                <div
+                    className={'outpatientPaymentDetail-part2-item-price'}>{item.totCost !== '' || item.totCost !== null ? '￥' + item.totCost.toFixed(2) : '0.00'}</div>
             </li>
         )
     }
@@ -210,30 +337,23 @@ class OutpatientPaymentDetailContainer extends Component {
      * @returns {*}
      */
     generatePart3() {
-        console.log('generatePart3');
         const {detail} = this.props.location.state
         let showPay = false;
-        let showFee = false;
-
-        //
         //订单状态：0.未完成  1.完成(通知医院支付成功) 2.取消(用户主动取消、超期）
         switch (detail.balStatus) { //  getBalStatus 订单状态
             case 0:
                 //支付状态：0未支付，1部分支付(混合情况)，2已支付待确认(支付宝)，3已支付，4部分退款(医保已退，支付宝未退) 5已退款
                 if (detail.paymentMethod == 0) {
                     //线下支付
-                    showFee = true;
                     showPay = true;
                 } else {
                     //线上支付
                     //支付状态为：0未支付、1部分支付；显示支付按钮
                     switch (detail.paymentStatus) {
                         case 0:
-                            showFee = true;
                             showPay = true;
                             break;
                         case 1:
-                            showFee = true;
                             showPay = true;
                             break;
                         case 2:
@@ -241,13 +361,10 @@ class OutpatientPaymentDetailContainer extends Component {
                         case 3:
                             break;
                         case 4://部分退款
-                            showFee = true;
                             break;
                         case 5://已退款待确认(第三方发送退费申请)
-                            showFee = true;
                             break;
                         case 6://已退款
-                            showFee = true;
                             break;
                         default:
                             break;
@@ -256,24 +373,20 @@ class OutpatientPaymentDetailContainer extends Component {
                 break;
             case 1:
                 //支付完成
-                showFee = true;
                 break;
             case 2:
                 //取消、超期
-                showFee = true;
                 break;
             default:
                 break;
         }
         return (
             <div className={'outpatientPaymentDetail-part3'}>
-                {
-                    (showFee) ?
                         <div className={'outpatientPaymentDetail-part3-fee'}>
-                            <div className={'outpatientPaymentDetail-part3-fee-txt'}>费用总额：</div>
-                            <div className={'outpatientPaymentDetail-part3-fee-cost'}>{'￥' + detail.totCost}</div>
-                        </div> : ''
-                }
+                            <div className={'outpatientPaymentDetail-part3-fee-txt'}>费用总额:</div>
+                            <div
+                                className={'outpatientPaymentDetail-part3-fee-cost'}>{detail.totCost !== '' || detail.totCost !== null ? '￥' + detail.totCost.toFixed(2) : '0.00'}</div>
+                        </div>
                 {
                     (showPay) ?
                         <div onClick={() => this.onSubmit()} className={'outpatientPaymentDetail-part3-btn'}>

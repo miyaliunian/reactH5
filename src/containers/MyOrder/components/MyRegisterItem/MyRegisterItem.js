@@ -15,8 +15,6 @@ import {connect} from "react-redux";
 class MyRegisterItem extends Component {
     render() {
         const {realList} = this.props;
-        console.log("000000000000000000000000")
-        console.group(this.props)
         return realList.map((item, index) => {
             return (
                 <li className="my-my-outpatientPayment-item border-topbottom"
@@ -31,7 +29,6 @@ class MyRegisterItem extends Component {
                         </div>
                         <div className={'my-outpatientPayment-item-part1-right'}>
                             {this.packagePaymentStatusDiv(item)}
-                            {/*<div className={'my-outpatientPayment-item-part1-right-status'}>{item.paymentStatus}</div>*/}
                         </div>
                     </div>
                     <div className={'my-outpatientPayment-item-part2 border-bottom'}
@@ -49,15 +46,6 @@ class MyRegisterItem extends Component {
                         <div className={'my-outpatientPayment-item-part3-txt'}>合计：</div>
                         <div className={'my-outpatientPayment-item-part3-cost'}>￥{item.regFee}</div>
                         {this.packagePaymentButtonDiv(item)}
-                        {/*<div className={'my-outpatientPayment-item-part3-btn-div'}>*/}
-                        {/*    <div className={'my-outpatientPayment-item-part3-btn blue'}>去支付</div>*/}
-                        {/*    <div className={'my-outpatientPayment-item-part3-btn'}*/}
-                        {/*         onClick={() => this.cancelRegistration(item)}>取消预约*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'my-outpatientPayment-item-part3-btn blue'}*/}
-                        {/*         onClick={() => this.againRegistration(item)}>再次预约*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                     </div>
                 </li>
             );
@@ -66,9 +54,6 @@ class MyRegisterItem extends Component {
 
     timeChanger(mil) {
         let curTime = new Date(mil);
-        // let year = curTime.getFullYear();
-        // let month = String(curTime.getMonth() + 1).padStart(2,"0");
-        // let day = String(curTime.getDate()).padStart(2,"0");
         let year = curTime.getFullYear();
         let month = curTime.getMonth() + 1;
         let day = curTime.getDate();
@@ -113,7 +98,7 @@ class MyRegisterItem extends Component {
                             break
                         case 6:
                             // statusLabel = "已退款"
-                            statusLabel = "已取消预约"
+                            statusLabel = "已取消"
                             break
                     }
                 }
@@ -123,7 +108,7 @@ class MyRegisterItem extends Component {
                 break
             case 2:
                 //取消
-                statusLabel = '已取消预约'
+                statusLabel = '已取消'
                 break
             default:
                 statusLabel = '预约超期'
@@ -136,18 +121,17 @@ class MyRegisterItem extends Component {
 
 
     packagePaymentButtonDiv(item) {
-        console.log('item');
-        console.log(item);
+        const {regStatus,paymentMethod,paymentStatus} = item
         let statusLabel = '';
         let divClassName = 'my-outpatientPayment-item-part1-right-status';
-        switch (item.regStatus) {
+        switch (regStatus) {
             case 0:
                 //线下支付
-                if (item.paymentMethod == 0) {
+                if (paymentMethod == 0) {
                     return (<di></di>);
                 } else {
                     //支付状态为：0未支付、1部分支付；显示支付按钮
-                    switch (item.paymentStatus) {
+                    switch (paymentStatus) {
                         case 0:
                         case 1:
                             return (
@@ -158,10 +142,7 @@ class MyRegisterItem extends Component {
                         case 2:
                         case 3:
                             return (
-                                <div className={'my-outpatientPayment-item-part3-btn-div'}>
-                                    <div className={'my-outpatientPayment-item-part3-btn'}
-                                         onClick={() => this.cancelRegistration(item)}>取消预约
-                                    </div>
+                                <div className={'my-outpatientPayment-item-part3-btn-div'} onClick={()=>this.againRegistration(item)}>
                                     <div className={'my-outpatientPayment-item-part3-btn blue'}
                                          onClick={() => this.againRegistration(item)}>再次预约
                                     </div>
@@ -189,30 +170,9 @@ class MyRegisterItem extends Component {
         </div>);
     }
 
-    paymentStatus2Str(status) {
-        switch (status) {
-            case 0:
-                return '未支付';
-            case 1:
-                return '部分支付';
-            case 2:
-                return '已支付';
-            case 3:
-                return '已支付';
-            case 4:
-                return '部分退款';
-            case 5:
-                return '已退款';
-            case 6:
-                return '已退款';
-            default:
-                return '未知';
-        }
-    }
-
+    //---------------------------------订单详情
     gotoDetailPage(item) {
         const {history, defaultPerson, selHospital} = this.props;
-        console.log("item: " + JSON.stringify(item));
         let path = {
             pathname: "/registerDetail",
             state: {
@@ -224,38 +184,40 @@ class MyRegisterItem extends Component {
         history.push(path);
     }
 
+    //---------------------------------再次预约
     againRegistration(item) {
         const {history} = this.props;
-        console.log("item: " + JSON.stringify(item));
+        const {doctId, doctName, doctTitle, deptId, deptName, hosId, hosName} = item
         let path = {
-            pathname: "/doctor",
+            pathname: "/doctor/reservation",
             state: {
+                seeDate: null,
                 doctorInfo: {
-                    id: item.doctId,
-                    name: item.doctName,
-                    deptName: item.deptName,
-                    title: item.docTitle,
-                    hosName: item.hosName,
-                    hosId: item.hosId
+                    id: doctId,
+                    name: doctName,
+                    deptName: deptName,
+                    title: doctTitle,
+                    hosName: hosName,
+                    hosId: hosId
                 },
                 deptInfo: {
-                    name: item.deptName
+                    name: deptName
                 }
             }
         };
         history.push(path);
     }
 
+    //---------------------------------取消预约
     cancelRegistration(item) {
-        console.group(item);
         this.props.myOrderTabActions.cancelRegistration(item.id);
     }
 
 
     componentDidMount() {
-        // const {actionTabKey, registerList} = this.props
-        // console.log('66666666666666666666666666666')
-        // this.props.registerActions.loadRegisterByPage(1)
+        console.log('挂号')
+        const {myOrderTabActions:{loadRegisterByPage}} = this.props
+        loadRegisterByPage(1)
     }
 }
 

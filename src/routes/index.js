@@ -70,7 +70,7 @@ const OutpatientPaymentComponent = lazy(() => import('@containers/OutpatientPaym
 const OutpatientPaymentDetailComponent = lazy(() =>
   import('@containers/OutpatientPayment/OutpatientPaymentDetailContainer')
 )
-
+//订单
 const MyOrderComponent = lazy(() => import('@containers/MyOrder/MyOrderContainer'))
 
 const RegisterDetailComponent = lazy(() =>

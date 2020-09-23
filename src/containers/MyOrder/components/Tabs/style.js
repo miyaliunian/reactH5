@@ -1,15 +1,16 @@
-@import '../../../../assets/less/varibles';
+import styled from "styled-components";
 
-.doctorTabs {
+export const Tab = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
-  background: white;
-  flex: 1;
-  .tab_header {
-    display: flex;
-  }
-  .item {
+  height: 40px;
+  border-bottom: 1px solid #eaeaea;
+  background-color:#fff;
+  
+`
+
+export const TabItem = styled.div`
     height: 40px;
     line-height: 40px;
     font-size: 15px;
@@ -24,10 +25,10 @@
       &::after {
         content: '';
         position: absolute;
-        bottom: 3px;
-        left: 0px;
-        height: 2px ;
-        width: 100%;
+        bottom: 1px;
+        left: 25%;
+        height: 2px;
+        width: 50%;
         z-index: 100;
         background-color: #0084ff;
 
@@ -36,22 +37,14 @@
     &:first-child {
       border-right: 0.5px solid #eaeaea;
     }
-  }
+`
 
+export const Wrapper = styled.div`
 
-  .reservaes {
-    display: none;
-    &.current {
-      display: block;
-      z-index: 10;
-    }
-  }
-}
-.register-content {
   overflow: hidden;
   position: fixed;
-  top: @navScrolH;
+  top: 40px;
   left: 0;
   right: 0;
   bottom: 0;
-}
+`
