@@ -8,7 +8,8 @@ material UI和阿里的 ant design mobile。阿里的下拉刷新又不符合项
 采用better-scroll+react实现。
 
 ### 实现的效果
-![image](https://github.com/miyaliunian/reactH5/blob/dev/screens/16f9e1bf0aa7d6cb.gif)
+
+![](./screens/16f9e1bf0aa7d6cb.gif)
 
 ### 为什么要采用better-scroll
 
